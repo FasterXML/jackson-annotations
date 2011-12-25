@@ -16,8 +16,11 @@ import java.lang.annotation.Target;
  * this method (possibly inherited from a super class), a call is made
  * through the method, and return value will be serialized as value of
  * the property.
- * 
- * @deprecated Use {@link JsonProperty} instead (deprecated since version 1.5)
+ *<p>
+ * Note that this annotation was deprecated in versions 1.5 - 1.9; but
+ * is not deprecated for Jackson 2.0. This is because we may consider
+ * allowing getters that take contextual (injectable) arguments; as
+ * well as cases where get-/settable name may differ.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

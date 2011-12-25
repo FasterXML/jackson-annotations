@@ -98,22 +98,16 @@ public @interface JsonAutoDetect
     
     /**
      * Minimum visibility required for auto-detecting regular getter methods.
-     * 
-     * @since 1.5
      */
     Visibility getterVisibility() default Visibility.DEFAULT;
 
     /**
      * Minimum visibility required for auto-detecting is-getter methods.
-     * 
-     * @since 1.5
      */
     Visibility isGetterVisibility() default Visibility.DEFAULT;
     
     /**
      * Minimum visibility required for auto-detecting setter methods.
-     * 
-     * @since 1.5
      */    
     Visibility setterVisibility() default Visibility.DEFAULT;
 
@@ -121,15 +115,11 @@ public @interface JsonAutoDetect
      * Minimum visibility required for auto-detecting Creator methods,
      * except for no-argument constructors (which are always detected
      * no matter what).
-     * 
-     * @since 1.5
      */
     Visibility creatorVisibility() default Visibility.DEFAULT;
 
     /**
      * Minimum visibility required for auto-detecting member fields.
-     * 
-     * @since 1.5
      */ 
     Visibility fieldVisibility() default Visibility.DEFAULT;
 }
