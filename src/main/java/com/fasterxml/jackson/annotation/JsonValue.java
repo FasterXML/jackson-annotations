@@ -24,10 +24,17 @@ import java.lang.annotation.Target;
  * and applications should not rely on specific behavior.
  *<p>
  * A typical use case is that of annotating <code>toString()</code>
- * method so that returned String value is Object's Json serialization.
+ * method so that returned String value is Object's JSON serialization.
  *<p>
  * Boolean argument is only used so that sub-classes can "disable"
  * annotation if necessary.
+ *<p>
+ * NOTE: when use for Java <code>enum</code>s, one additional feature is
+ * that value returned by annotated method is also considered to be the
+ * value to deserialize from, not just JSON String to serialize as.
+ * This is possible since set of Enum values is constant and it is possible
+ * to define mapping, but can not be done in general for POJO types; as such,
+ * this is not used for POJO deserialization.
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
