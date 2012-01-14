@@ -51,7 +51,8 @@ import java.lang.annotation.Target;
  *<p>
  * Also note that annotation only applies if
  *<ul>
- * <li>Value is serialized as JSON Object
+ * <li>Value is serialized as JSON Object (can not unwrap JSON arrays using this
+ *   mechanism)
  *   </li>
  * <li>Serialization is done using <code>BeanSerializer</code>, not a custom serializer
  *   </li>
@@ -59,8 +60,6 @@ import java.lang.annotation.Target;
  *   not be altered regardless of inclusion strategy; so annotation is basically ignored.
  *   </li>
  * </ul>
- * 
- * @since 1.9
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
@@ -73,4 +72,18 @@ public @interface JsonUnwrapped
      * value need not be explicitly included.
      */
     boolean enabled() default true;
+
+    /**
+     * Optional property that can be used to add prefix String to use in front
+     * of names of properties that are unwrapped: this can be done for example to prevent
+     * name collisions.
+     */
+    String prefix() default "";
+
+    /**
+     * Optional property that can be used to add suffix String to append at the end
+     * of names of properties that are unwrapped: this can be done for example to prevent
+     * name collisions.
+     */
+    String suffix() default "";
 }
