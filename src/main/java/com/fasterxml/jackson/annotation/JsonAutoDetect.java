@@ -30,7 +30,7 @@ import java.lang.reflect.Modifier;
  * are different for different types (getters need to be public; setters can
  * have any access modifier, for example).
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonAutoDetect

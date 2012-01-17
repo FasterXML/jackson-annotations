@@ -14,10 +14,8 @@ import java.lang.annotation.Target;
  * of the bean that contains method/field with this annotations.
  * As with {@link JsonAnySetter}, only one property should be annotated
  * with this annotation.
- * 
- * @since 1.6
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonAnyGetter

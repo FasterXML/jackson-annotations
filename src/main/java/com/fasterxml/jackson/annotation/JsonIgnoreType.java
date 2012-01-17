@@ -12,10 +12,8 @@ import java.lang.annotation.Target;
  * Note: annotation does have boolean 'value' property (which defaults
  * to 'true'), so that it is actually possible to override value
  * using mix-in annotations.
- * 
- * @since 1.7
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnoreType

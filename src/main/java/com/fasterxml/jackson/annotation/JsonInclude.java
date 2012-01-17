@@ -15,7 +15,8 @@ import java.lang.annotation.Target;
  * 
  * @since 2.0
  */
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
+    ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonInclude

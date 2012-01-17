@@ -20,10 +20,8 @@ import java.lang.annotation.Target;
  *</pre>
  *<p>
  * Only applicable to classes, not for properties (getters, setters, fields).
- * 
- * @since 1.4
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnoreProperties

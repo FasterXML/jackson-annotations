@@ -40,7 +40,7 @@ import java.lang.annotation.Target;
  *<p>
  * Annotation is similar to {@link javax.xml.bind.annotation.XmlTransient} 
  */
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnore

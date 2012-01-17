@@ -22,11 +22,11 @@ import java.lang.annotation.Target;
  *  <div>@</div>JsonPropertyOrder(alphabetic=true)
  *</pre>
  *<p>
- * This annotation has no effect on deserialization.
- * 
- * @since 1.4
+ * This annotation may or may not have effect on deserialization: for basic JSON
+ * handling there is no effect, but for other supported data types (or structural
+ * conventions) there may be.
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonPropertyOrder

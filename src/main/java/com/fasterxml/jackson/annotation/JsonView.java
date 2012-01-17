@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JacksonAnnotation;
  * If multiple View class identifiers are included, property will
  * be part of all of them.
  */
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonView {

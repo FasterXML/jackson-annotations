@@ -9,10 +9,9 @@ import java.lang.annotation.Target;
  * Annotation used with {@link JsonTypeInfo} to indicate sub types of serializable
  * polymorphic types, and to associate logical names used within JSON content
  * (which is more portable than using physical Java class names).
- * 
- * @since 1.5 (but available to fields, methods and constructor params only since 1.8)
  */
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD,
+    ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonSubTypes {

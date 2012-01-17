@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * be used; but if it is, name used for serialization should be name
  * specified here, and deserializer will expect the name as well.
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonRootName

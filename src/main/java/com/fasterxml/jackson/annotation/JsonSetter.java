@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  * different name when reading and writing JSON), and more importantly to
  * allow multi-argument setter method in future.
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonSetter

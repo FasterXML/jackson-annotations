@@ -13,10 +13,8 @@ import java.lang.annotation.Target;
  * passing javascript function definitions from server to a javascript client.
  *<p>
  * Warning: the resulting JSON stream may be invalid depending on your input value.
- * 
- * @since 1.7.0
  */
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonRawValue

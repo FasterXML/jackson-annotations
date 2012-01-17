@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * 
  * @author tatu
  */
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonBackReference

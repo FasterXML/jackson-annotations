@@ -38,11 +38,10 @@ import java.lang.annotation.*;
  * 
  * @see org.codehaus.jackson.map.annotate.JsonTypeResolver
  * 
- * @since 1.5 (but available to fields, methods and constructor parameters since 1.7)
- * 
  * @author tatu
  */
-@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
+    ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonTypeInfo

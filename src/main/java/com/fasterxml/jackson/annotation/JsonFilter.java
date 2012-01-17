@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * {@link com.fasterxml.jackson.databind.ser.BeanPropertyFilter} and
  * are registered through {@link com.fasterxml.jackson.databind.ObjectMapper}
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonFilter

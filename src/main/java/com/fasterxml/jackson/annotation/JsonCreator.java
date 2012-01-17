@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * methods as one to use for instantiating new instances of the associated
  * class.
  */
-@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonCreator

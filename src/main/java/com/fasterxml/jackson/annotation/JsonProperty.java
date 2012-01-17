@@ -17,14 +17,8 @@ import java.lang.annotation.Target;
  * can be specified to non-empty value to specify different
  * name. Property name refers to name used externally, as
  * the field name in Json objects.
- *<p>
- * NOTE: since version 1.1, annotation has also been applicable
- * to fields (not with 1.0).
- *<p>
- * NOTE: since version 1.2, annotation has also been applicable
- * to (constructor) parameters
  */
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonProperty

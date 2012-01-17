@@ -12,11 +12,9 @@ import java.lang.annotation.Target;
  * {@link JsonTypeInfo#use} property) to establish relationship
  * between type names and types.
  * 
- * @since 1.5
- * 
  * @author tatu
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonTypeName {

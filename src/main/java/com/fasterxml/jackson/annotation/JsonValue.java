@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * to define mapping, but can not be done in general for POJO types; as such,
  * this is not used for POJO deserialization.
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonValue
