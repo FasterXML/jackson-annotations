@@ -162,8 +162,6 @@ public @interface JsonTypeInfo
          * Note that this choice <b>can only be used for properties</b>, not
          * for types (classes). Trying to use it for classes will result in
          * inclusion strategy of basic <code>PROPERTY</code> instead.
-         * 
-         * @since 1.9
          */
         EXTERNAL_PROPERTY
         ;
@@ -213,8 +211,6 @@ public @interface JsonTypeInfo
      * this is used with type-name -based resolution, to cover cases
      * where new sub-types are added, but base type is not changed to
      * reference new sub-types.
-     * 
-     * @since 1.9
      */
     public Class<?> defaultImpl() default None.class;
 
@@ -228,8 +224,6 @@ public @interface JsonTypeInfo
      * This marker class that is only to be used with <code>defaultImpl</code>
      * annotation property, to indicate that there is no default implementation
      * specified.
-     * 
-     * @since 1.9
      */
     public abstract static class None { }
 }
