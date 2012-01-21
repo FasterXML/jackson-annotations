@@ -9,11 +9,12 @@ import java.lang.annotation.Target;
  * Annotation used to indicate which logical filter is to be used
  * for filtering out properties of type (class) annotated;
  * association made by this annotation declaring ids of filters,
- * and  {@link com.fasterxml.jackson.databind.ObjectMapper} (or objects
+ * and  <code>com.fasterxml.jackson.databind.ObjectMapper</code> (or objects
  * it delegates to) providing matching filters by id.
- * Filters to use are of type
- * {@link com.fasterxml.jackson.databind.ser.BeanPropertyFilter} and
- * are registered through {@link com.fasterxml.jackson.databind.ObjectMapper}
+ *<p>
+ * Filters to use are usually of type
+ * <code>com.fasterxml.jackson.databind.ser.BeanPropertyFilter</code> and
+ * are registered through <code>com.fasterxml.jackson.databind.ObjectMapper</code>
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

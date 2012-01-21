@@ -33,7 +33,7 @@ public @interface JsonInclude
      */
 
     /**
-     * Enumeration used with {@link JsonSerialize#include} property
+     * Enumeration used with {@link JsonInclude}
      * to define which properties
      * of Java Beans are to be included in serialization.
      *<p>

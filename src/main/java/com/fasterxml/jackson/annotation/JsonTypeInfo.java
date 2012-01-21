@@ -21,9 +21,9 @@ import java.lang.annotation.*;
  * Alternatively you can also define fully customized type handling by using
  * {@link org.codehaus.jackson.map.annotate.JsonTypeResolver} annotation.
  *<p>
- * NOTE: originally this annotation was only available to use with types (classes),
- * but starting with 1.7, it is also allowed for properties (fields, methods,
- * constructor parameters).
+ * This annotation can be used both for types (classes) and properties.
+ * If both exist, annotation on property has precedence, as it is
+ * considered more specific.
  *<p>
  * When used for properties (fields, methods), this annotation applies
  * to <b>values</b>: so when applied to structure types
@@ -35,10 +35,19 @@ import java.lang.annotation.*;
  * There is no per-property way to force type information to be included
  * for type of container (structured type); for container types one has
  * to use annotation for type declaration.
- * 
- * @see org.codehaus.jackson.map.annotate.JsonTypeResolver
- * 
- * @author tatu
+ *<p>
+ * Note on visibility of type identifier: by default, deserialization
+ * (use during reading of JSON) of type identifier
+ * is completely handled by Jackson, and is <b>not passed to</b>
+ * deserializers. However, if so desired,
+ * it is possible to define property <code>visible = true</code>
+ * in which case property will be passed as-is to deserializers
+ * (and set via setter or field) on deserialization.
+ *<p>
+ * On serialization side, Jackson will generate type id by itself,
+ * except if there is a property with name that matches
+ * {@link #property()}, in which case value of that property is
+ * used instead.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -61,9 +70,6 @@ public @interface JsonTypeInfo
          * This means that no explicit type metadata is included, and typing is
          * purely done using contextual information possibly augmented with other
          * annotations.
-         *<p>
-         * Note: no {@link org.codehaus.jackson.map.jsontype.TypeIdResolver}
-         * is constructed if this value is used.
          */
         NONE(null),
 
@@ -192,6 +198,9 @@ public @interface JsonTypeInfo
     /**
      * Property names used when type inclusion method ({@link As#PROPERTY}) is used
      * (or possibly when using type metadata of type {@link Id#CUSTOM}).
+     * If POJO itself has a property with same name, value of property
+     * will be set with type id metadata: if no such property exists, type id
+     * is only used for determining actual type.
      *<p>
      * Default property name used if this property is not explicitly defined
      * (or is set to empty String) is based on
@@ -214,6 +223,19 @@ public @interface JsonTypeInfo
      */
     public Class<?> defaultImpl() default None.class;
 
+    /**
+     * Property that defines whether type identifier value will be passed
+     * as part of JSON stream to deserializer (true), or handled and
+     * removed by <code>TypeDeserializer</code> (false).
+     *<p>
+     * Default value is false, meaning that Jackson handles and removes
+     * the type identifier from JSON content that is passed to
+     * <code>JsonDeserializer</code>.
+     * 
+     * @since 2.0
+     */
+    public boolean visible() default false;
+    
     /*
     /**********************************************************
     /* Helper classes
