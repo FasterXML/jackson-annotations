@@ -8,9 +8,10 @@ import java.lang.annotation.Target;
 /**
  * Marker annotation that can be used to define a non-static,
  * no-argument value-returning (non-void) method to be used as a "getter"
- * for a logical property,
- * as an alternative to recommended
- * {@link JsonProperty} annotation (which was introduced in version 1.1).
+ * for a logical property.
+ * It can be used as an alternative to more general
+ * {@link JsonProperty} annotation (which is the recommended choice in
+ * general case).
  *<p>
  * Getter means that when serializing Object instance of class that has
  * this method (possibly inherited from a super class), a call is made
@@ -20,7 +21,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-@Deprecated
 public @interface JsonGetter
 {
     /**
