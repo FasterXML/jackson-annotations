@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
  * either using a generator (either one of standard ones, or a custom
  * generator), or using a value of a property. The latter case is
  * indicated by using a placeholder generator marker
- * {@link ObjectIdGenerators#ObjectIdGenerator}; former by using explicit generator.
+ * {@link ObjectIdGenerators.PropertyGenerator}; former by using explicit generator.
  * Object id has to be serialized as a property in case of POJOs;
  * object identity is currently NOT support for JSON Array types
  * (Java arrays or Lists) or Java Map types.
@@ -46,7 +46,7 @@ public @interface JsonIdentityInfo
     /**
      * Generator to use for producing Object Identifier for objects:
      * either one of pre-defined generators from
-     * {@link IdGenerator}, or a custom generator.
+     * {@link ObjectIdGenerator}, or a custom generator.
      * Defined as class to instantiate.
      */
     public Class<? extends ObjectIdGenerator<?>> generator();

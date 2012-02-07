@@ -14,8 +14,6 @@ public abstract class ObjectIdGenerator<T>
      * Factory method called to create a new instance to use for
      * serialization. This includes initializing storage for keeping
      * track of serialized instances, along with id used.
-     * Caller has to make sure to create proper number of instances
-     * to ensure scoping (as implied by {@link #usesGlobalScope()}).
      */
     public abstract ObjectIdGenerator<T> newForSerialization(Class<?> scope);
 
@@ -23,8 +21,6 @@ public abstract class ObjectIdGenerator<T>
      * Factory method called to create a new instance to use for
      * serialization. This includes initializing storage for keeping
      * track of deserialized instances, along with id used.
-     * Caller has to make sure to create proper number of instances
-     * to ensure scoping (as implied by {@link #usesGlobalScope()}).
      */
     public abstract ObjectIdGenerator<T> newForDeserialization(Class<?> scope);
     

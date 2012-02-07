@@ -106,7 +106,7 @@ public class ObjectIdGenerators
     {
         protected int _nextValue;
 
-        public IntSequenceGenerator(Class<?> scope) { this(scope, 1); }
+        public IntSequenceGenerator(Class<?> scope) { this(Object.class, 1); }
         public IntSequenceGenerator(Class<?> scope, int fv) {
             super(scope);
             _nextValue = fv;
@@ -138,6 +138,7 @@ public class ObjectIdGenerators
      */
     public final static class UUIDGenerator extends Base<UUID>
     {
+        public UUIDGenerator() { this(Object.class); }
         public UUIDGenerator(Class<?> scope) {
             super(scope);
         }

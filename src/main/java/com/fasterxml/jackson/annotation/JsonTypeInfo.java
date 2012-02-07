@@ -19,7 +19,7 @@ import java.lang.annotation.*;
  *  &#064;JsonSubTypes({com.myemp.Impl1.class, com.myempl.Impl2.class})
  *</pre>
  * Alternatively you can also define fully customized type handling by using
- * {@link org.codehaus.jackson.map.annotate.JsonTypeResolver} annotation.
+ * <code>&#064;JsonTypeResolver</code> annotation (from databind package).
  *<p>
  * This annotation can be used both for types (classes) and properties.
  * If both exist, annotation on property has precedence, as it is
