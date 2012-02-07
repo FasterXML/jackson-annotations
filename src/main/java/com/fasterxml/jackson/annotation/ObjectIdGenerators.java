@@ -106,7 +106,7 @@ public class ObjectIdGenerators
     {
         protected int _nextValue;
 
-        public IntSequenceGenerator(Class<?> scope) { this(Object.class, 1); }
+        public IntSequenceGenerator() { this(Object.class, 1); }
         public IntSequenceGenerator(Class<?> scope, int fv) {
             super(scope);
             _nextValue = fv;
