@@ -52,15 +52,16 @@ public @interface JsonIdentityInfo
     public Class<? extends ObjectIdGenerator<?>> generator();
 
     /**
-     * Scope is a concept used by {@link ObjectIdGenerator} created based
-     * on {@link #property}, iff {@link ObjectIdGenerator#usesGlobalScope()}
-     * returns false. If so, separate generator instances are created for
-     * each distinct scope. If not defined (i.e. left at default value of
-     * {@link JsonIdentityInfo}), will just use type of the annotated
-     * class or property as scope.
+     * Scope is used to define applicability of an Object Id: all ids
+     * must be unique within their scope; where scope is defined
+     * as combination of this value and generator type.
+     * Comparison is simple equivalence, meaning that both type
+     * generator type and scope class must be the same.
      *<p>
-     * If {@link ObjectIdGenerator#usesGlobalScope()} returns true,
-     * value of this property is ignored.
+     * Scope is used for determining how many generators are needed;
+     * more than one scope is typically only needed if external Object Ids
+     * have overlapping value domains (i.e. are only unique within some
+     * limited scope)
      */
-    public Class<?> scope() default JsonIdentityInfo.class;
+    public Class<?> scope() default Object.class;
 }

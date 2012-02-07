@@ -29,25 +29,13 @@ public abstract class ObjectIdGenerator<T>
     public abstract ObjectIdGenerator<T> newForDeserialization(Class<?> scope);
     
     /**
-     * Accessor called to determine whether scope of Object Identifiers
-     * is global (within context of a single serialization) or not;
-     * if not, scope is assumed to be per-type (using statically declared
-     * type). Definition of scope is that all identifiers produced must
-     * be unique within a scope: thus global scope would guarantee
-     * that all produced identifiers are unique for full serialization
-     * process, whereas local scopes only guarantee it for the supported
-     * type (within single serialization).
-     *<p>
-     * One generator instance is needed per scope, and for deserialization,
-     * separate Maps are kept on per-scope basis.
-     *<p>
-     * Standard generators (UUID, sequence-number) support global scope;
-     * custom generators may support
+     * Method called to check whether this generator instance can
+     * be used for Object Ids of specific generator type and
+     * scope.
      * 
-     * @return True if global (one per serialization) scope is needed by
-     *   generator; false if per-type scope is needed.
+     * @return True if this instance can be used as-is; false if not
      */
-    public abstract boolean usesGlobalScope();
+    public abstract boolean canUseFor(ObjectIdGenerator<?> gen, Class<?> scope);
     
     /**
      * Method used for generating an Object Identifier to serialize
