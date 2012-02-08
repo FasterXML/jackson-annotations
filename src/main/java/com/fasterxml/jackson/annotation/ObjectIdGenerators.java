@@ -51,6 +51,16 @@ public class ObjectIdGenerators
             return _ids.get(item);
         }
 
+        
+        @Override
+        public T generateId(Object forPojo) {
+            T id = _generateId(forPojo);
+            addId(forPojo, id);
+            return id;
+        }
+
+        protected abstract T _generateId(Object forPojo);
+        
         @Override
         public Object findItem(T id) {
             if (_items == null) {
@@ -131,7 +141,7 @@ public class ObjectIdGenerators
         }
 
         @Override
-        public Integer generateId(Object forPojo) {
+        public Integer _generateId(Object forPojo) {
             int id = _nextValue;
             ++_nextValue;
             return id;
@@ -165,17 +175,17 @@ public class ObjectIdGenerators
             return new UUIDGenerator(_scope);
         }
 
+        @Override
+        protected UUID _generateId(Object forPojo) {
+            return UUID.randomUUID();
+        }
+        
         /**
          * Since UUIDs are always unique, let's fully ignore scope definition
          */
         @Override
         public boolean canUseFor(ObjectIdGenerator<?> gen) {
             return (gen.getClass() == getClass());
-        }
-        
-        @Override
-        public UUID generateId(Object forPojo) {
-            return UUID.randomUUID();
         }
     }
 }
