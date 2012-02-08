@@ -34,22 +34,25 @@ public class ObjectIdGenerators
         }
 
         @Override
-        public boolean canUseFor(ObjectIdGenerator<?> gen, Class<?> scope) {
-            return (gen.getClass() == getClass()) && (scope == _scope);
-        }
-        
-        public Class<?> getScope() {
+        public final Class<?> getScope() {
             return _scope;
         }
         
-        protected T findId(Object item) {
+        @Override
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return (gen.getClass() == getClass()) && (gen.getScope() == _scope);
+        }
+        
+        @Override
+        public T findId(Object item) {
             if (_ids == null) {
                 return null;
             }
             return _ids.get(item);
         }
 
-        protected Object findItem(T id) {
+        @Override
+        public Object findItem(T id) {
             if (_items == null) {
                 return null;
             }
@@ -57,9 +60,17 @@ public class ObjectIdGenerators
         }
 
         /**
-         * Method called during serialization to keep track of ids we have
-         * used.
+         * Method called during deserialization to keep track of items we have
+         * deserialized, along with ids they had.
          */
+        @Override
+        public void addItem(Object item, T id) {
+            if (_items == null) {
+                _items = new IdentityHashMap<T, Object>(16);
+            }
+            _ids.put(item, id);
+        }
+
         protected void addId(Object item, T id) {
             if (_ids == null) {
                 _ids = new IdentityHashMap<Object, T>(16);
@@ -67,16 +78,6 @@ public class ObjectIdGenerators
             _ids.put(item, id);
         }
 
-        /**
-         * Method called during deserialization to keep track of items we have
-         * deserialized, along with ids they had.
-         */
-        protected void addItem(Object item, T id) {
-            if (_items == null) {
-                _items = new IdentityHashMap<T, Object>(16);
-            }
-            _ids.put(item, id);
-        }
     }
 
     /*
@@ -106,21 +107,27 @@ public class ObjectIdGenerators
     {
         protected int _nextValue;
 
-        public IntSequenceGenerator() { this(Object.class, 1); }
+        public IntSequenceGenerator() { this(Object.class, -1); }
         public IntSequenceGenerator(Class<?> scope, int fv) {
             super(scope);
             _nextValue = fv;
         }
 
+        protected int initialValue() { return 1; }
+        
         @Override
-        public ObjectIdGenerator<Integer> newForSerialization(Class<?> scope) {
-            return new IntSequenceGenerator(scope, _nextValue);
+        public ObjectIdGenerator<Integer> forScope(Class<?> scope) {
+            return (_scope == scope) ? this : new IntSequenceGenerator(scope, _nextValue);
+        }
+        
+        @Override
+        public ObjectIdGenerator<Integer> newForSerialization() {
+            return new IntSequenceGenerator(_scope, initialValue());
         }
 
-        // we don't really need value for deserialization but...
         @Override
-        public ObjectIdGenerator<Integer> newForDeserialization(Class<?> scope) {
-            return new IntSequenceGenerator(scope, _nextValue);
+        public ObjectIdGenerator<Integer> newForDeserialization() {
+            return new IntSequenceGenerator(_scope, initialValue());
         }
 
         @Override
@@ -142,22 +149,27 @@ public class ObjectIdGenerators
         public UUIDGenerator(Class<?> scope) {
             super(scope);
         }
+
+        @Override
+        public ObjectIdGenerator<UUID> forScope(Class<?> scope) {
+            return (_scope == scope) ? this : new UUIDGenerator(scope);
+        }
         
         @Override
-        public ObjectIdGenerator<UUID> newForSerialization(Class<?> scope) {
-            return new UUIDGenerator(scope);
+        public ObjectIdGenerator<UUID> newForSerialization() {
+            return new UUIDGenerator(_scope);
         }
 
         @Override
-        public ObjectIdGenerator<UUID> newForDeserialization(Class<?> scope) {
-            return new UUIDGenerator(scope);
+        public ObjectIdGenerator<UUID> newForDeserialization() {
+            return new UUIDGenerator(_scope);
         }
 
         /**
          * Since UUIDs are always unique, let's fully ignore scope definition
          */
         @Override
-        public boolean canUseFor(ObjectIdGenerator<?> gen, Class<?> scope) {
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
             return (gen.getClass() == getClass());
         }
         
@@ -166,5 +178,4 @@ public class ObjectIdGenerators
             return UUID.randomUUID();
         }
     }
-    
 }
