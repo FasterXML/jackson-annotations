@@ -17,6 +17,15 @@ public abstract class ObjectIdGenerator<T>
      */
 
     public abstract Class<?> getScope();
+
+    /**
+     * Method called to check whether this generator instance can
+     * be used for Object Ids of specific generator type and
+     * scope.
+     * 
+     * @return True if this instance can be used as-is; false if not
+     */
+    public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
     
     /*
     /**********************************************************
@@ -32,39 +41,22 @@ public abstract class ObjectIdGenerator<T>
     
     /**
      * Factory method called to create a new instance to use for
-     * serialization. This includes initializing storage for keeping
-     * track of serialized instances, along with id used.
+     * serialization: needed since generators may have state
+     * (next id to produce)
      */
     public abstract ObjectIdGenerator<T> newForSerialization();
 
     /**
-     * Factory method called to create a new instance to use for
-     * serialization. This includes initializing storage for keeping
-     * track of deserialized instances, along with id used.
+     * Method for constructing key to use for ObjectId-to-POJO maps.
      */
-    public abstract ObjectIdGenerator<T> newForDeserialization();
+    public abstract IdKey key(Object key);
     
-    /**
-     * Method called to check whether this generator instance can
-     * be used for Object Ids of specific generator type and
-     * scope.
-     * 
-     * @return True if this instance can be used as-is; false if not
-     */
-    public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
-
     /*
     /**********************************************************
     /* Methods for serialization
     /**********************************************************
      */
     
-    /**
-     * Method used during serialization, to try to find an Object Id for given already serialized
-     * Object: if none found, returns null.
-     */
-    public abstract T findId(Object forPojo);
-
     /**
      * Method used for generating a new Object Identifier to serialize
      * for given POJO.
@@ -74,23 +66,63 @@ public abstract class ObjectIdGenerator<T>
      * @return Object Identifier to use.
      */
     public abstract T generateId(Object forPojo);
-    
+
     /*
     /**********************************************************
-    /* Methods for deserialization
+    /* Helper classes
     /**********************************************************
      */
-    
-    /**
-     * Method used during deserialization, to try to find an item for which given
-     * id was used.
-     */
-    public abstract Object findItem(T id);
 
     /**
-     * Method called during deserialization to establishing mapping between
-     * given item, and the id it was using.
+     * Simple key class that can be used as a key for
+     * ObjectId-to-POJO mappings, when multiple ObjectId types
+     * and scopes are used.
      */
-    public abstract void addItem(Object item, T id);
+    public final static class IdKey
+    {
+        /**
+         * Type of {@link ObjectIdGenerator} used for generating Object Id
+         */
+        private final Class<?> type;
 
+        /**
+         * Scope of the Object Id (may be null, to denote global)
+         */
+        private final Class<?> scope;
+
+        /**
+         * Object for which Object Id was generated: can NOT be null.
+         */
+        private final Object key;
+
+        /**
+         * Hash code
+         */
+        private final int hashCode;
+        
+        public IdKey(Class<?> type, Class<?> scope, Object key) {
+            this.type = type;
+            this.scope = scope;
+            this.key = key;
+            
+            int h = key.hashCode() + type.getName().hashCode();
+            if (scope != null) {
+                h ^= scope.getName().hashCode();
+            }
+            hashCode = h;
+        }
+
+        @Override
+        public int hashCode() { return hashCode; }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (o == this) return true;
+            if (o == null) return false;
+            if (o.getClass() != getClass()) return false;
+            IdKey other = (IdKey) o;
+            return (other.key.equals(key)) && (other.type == type) && (other.scope == scope);
+        }
+    }
 }

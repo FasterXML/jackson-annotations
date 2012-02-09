@@ -1,6 +1,5 @@
 package com.fasterxml.jackson.annotation;
 
-import java.util.IdentityHashMap;
 import java.util.UUID;
 
 /**
@@ -22,13 +21,6 @@ public class ObjectIdGenerators
     {
         protected final Class<?> _scope;
 
-        /**
-         * Lazily constructed mapping of "ids-to-Objects" used by deserialization.
-         */
-        protected IdentityHashMap<Object, T> _ids;
-
-        protected IdentityHashMap<T, Object> _items;
-
         protected Base(Class<?> scope) {
             _scope = scope;
         }
@@ -44,50 +36,7 @@ public class ObjectIdGenerators
         }
         
         @Override
-        public T findId(Object item) {
-            if (_ids == null) {
-                return null;
-            }
-            return _ids.get(item);
-        }
-
-        
-        @Override
-        public T generateId(Object forPojo) {
-            T id = _generateId(forPojo);
-            addId(forPojo, id);
-            return id;
-        }
-
-        protected abstract T _generateId(Object forPojo);
-        
-        @Override
-        public Object findItem(T id) {
-            if (_items == null) {
-                return null;
-            }
-            return _items.get(id);
-        }
-
-        /**
-         * Method called during deserialization to keep track of items we have
-         * deserialized, along with ids they had.
-         */
-        @Override
-        public void addItem(Object item, T id) {
-            if (_items == null) {
-                _items = new IdentityHashMap<T, Object>(16);
-            }
-            _ids.put(item, id);
-        }
-
-        protected void addId(Object item, T id) {
-            if (_ids == null) {
-                _ids = new IdentityHashMap<Object, T>(16);
-            }
-            _ids.put(item, id);
-        }
-
+        public abstract T generateId(Object forPojo);
     }
 
     /*
@@ -136,12 +85,12 @@ public class ObjectIdGenerators
         }
 
         @Override
-        public ObjectIdGenerator<Integer> newForDeserialization() {
-            return new IntSequenceGenerator(_scope, initialValue());
+        public IdKey key(Object key) {
+            return new IdKey(getClass(), _scope, key);
         }
-
+        
         @Override
-        public Integer _generateId(Object forPojo) {
+        public Integer generateId(Object forPojo) {
             int id = _nextValue;
             ++_nextValue;
             return id;
@@ -152,34 +101,44 @@ public class ObjectIdGenerators
      * Implementation that just uses {@link java.util.UUID}s as reliably
      * unique identifiers: downside is that resulting String is
      * 36 characters long.
+     *<p>
+     * One difference to other generators is that scope is always
+     * set as <code>Object.class</code> (regardless of arguments): this
+     * because UUIDs are globally unique, and scope has no meaning.
      */
     public final static class UUIDGenerator extends Base<UUID>
     {
         public UUIDGenerator() { this(Object.class); }
-        public UUIDGenerator(Class<?> scope) {
-            super(scope);
+        private UUIDGenerator(Class<?> scope) {
+            super(Object.class);
         }
 
+        /**
+         * Can just return base instance since this is essentially scopeless
+         */
         @Override
         public ObjectIdGenerator<UUID> forScope(Class<?> scope) {
-            return (_scope == scope) ? this : new UUIDGenerator(scope);
+            return this;
         }
         
+        /**
+         * Can just return base instance since this is essentially scopeless
+         */
         @Override
         public ObjectIdGenerator<UUID> newForSerialization() {
-            return new UUIDGenerator(_scope);
+            return this;
         }
 
         @Override
-        public ObjectIdGenerator<UUID> newForDeserialization() {
-            return new UUIDGenerator(_scope);
-        }
-
-        @Override
-        protected UUID _generateId(Object forPojo) {
+        public UUID generateId(Object forPojo) {
             return UUID.randomUUID();
         }
-        
+
+        @Override
+        public IdKey key(Object key) {
+            return new IdKey(getClass(), null, key);
+        }
+
         /**
          * Since UUIDs are always unique, let's fully ignore scope definition
          */
