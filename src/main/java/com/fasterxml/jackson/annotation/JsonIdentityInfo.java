@@ -22,6 +22,10 @@ import java.lang.annotation.Target;
  * Object id has to be serialized as a property in case of POJOs;
  * object identity is currently NOT support for JSON Array types
  * (Java arrays or Lists) or Java Map types.
+ *<p>
+ * Finally, note that generator type of {@link ObjectIdGenerators.None}
+ * indicates that no Object Id should be included or used: it is included
+ * to allow suppressing Object Ids using mix-in annotations.
  * 
  * @since 2.0
  */
@@ -48,6 +52,10 @@ public @interface JsonIdentityInfo
      * either one of pre-defined generators from
      * {@link ObjectIdGenerator}, or a custom generator.
      * Defined as class to instantiate.
+     *<p>
+     * Note that special type
+     * {@link ObjectIdGenerators.None}
+     * can be used to disable inclusion of Object Ids.
      */
     public Class<? extends ObjectIdGenerator<?>> generator();
 

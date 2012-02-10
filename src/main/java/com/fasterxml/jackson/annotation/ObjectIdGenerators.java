@@ -14,10 +14,9 @@ public class ObjectIdGenerators
      */
 
     /**
-     * Helper class that implements scoped storage for Object
-     * references.
+     * Helper class for implementations contained.
      */
-    protected abstract static class Base<T> extends ObjectIdGenerator<T>
+    private abstract static class Base<T> extends ObjectIdGenerator<T>
     {
         protected final Class<?> _scope;
 
@@ -44,6 +43,13 @@ public class ObjectIdGenerators
     /* Implementation classes
     /**********************************************************
      */
+    
+    /**
+     * Abstract marker class used to allow explicitly specifying
+     * that no generator is used; which also implies that no
+     * Object Id is to be included or used.
+     */
+    public abstract class None extends ObjectIdGenerator<Object> { }
     
     /**
      * Abstract place-holder class which is used to denote case
