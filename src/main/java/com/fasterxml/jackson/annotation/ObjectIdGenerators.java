@@ -49,7 +49,7 @@ public class ObjectIdGenerators
      * that no generator is used; which also implies that no
      * Object Id is to be included or used.
      */
-    public abstract class None extends ObjectIdGenerator<Object> { }
+    public abstract static class None extends ObjectIdGenerator<Object> { }
     
     /**
      * Abstract place-holder class which is used to denote case
@@ -60,7 +60,7 @@ public class ObjectIdGenerators
      * Actual implementation class is part of <code>databind</code>
      * package.
      */
-    public abstract class PropertyGenerator<T> extends Base<T> {
+    public abstract static class PropertyGenerator extends Base<Object> {
         protected PropertyGenerator(Class<?> scope) { super(scope); }
     }
     
@@ -86,7 +86,7 @@ public class ObjectIdGenerators
         }
         
         @Override
-        public ObjectIdGenerator<Integer> newForSerialization() {
+        public ObjectIdGenerator<Integer> newForSerialization(Object context) {
             return new IntSequenceGenerator(_scope, initialValue());
         }
 
@@ -131,7 +131,7 @@ public class ObjectIdGenerators
          * Can just return base instance since this is essentially scopeless
          */
         @Override
-        public ObjectIdGenerator<UUID> newForSerialization() {
+        public ObjectIdGenerator<UUID> newForSerialization(Object context) {
             return this;
         }
 

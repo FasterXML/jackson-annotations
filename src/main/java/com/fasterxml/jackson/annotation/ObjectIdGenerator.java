@@ -21,7 +21,9 @@ public abstract class ObjectIdGenerator<T>
     /**
      * Method called to check whether this generator instance can
      * be used for Object Ids of specific generator type and
-     * scope.
+     * scope; determination is based by passing a configured
+     * "blueprint" (prototype) instance; from which the actual
+     * instances are created (using {@link #newForSerialization}).
      * 
      * @return True if this instance can be used as-is; false if not
      */
@@ -35,16 +37,26 @@ public abstract class ObjectIdGenerator<T>
     
     /**
      * Factory method to create a blueprint instance for specified
-     * scope. Generator that do not use scope may return 'this'.
+     * scope. Generators that do not use scope may return 'this'.
      */
     public abstract ObjectIdGenerator<T> forScope(Class<?> scope);
     
     /**
      * Factory method called to create a new instance to use for
      * serialization: needed since generators may have state
-     * (next id to produce)
+     * (next id to produce).
+     *<p>
+     * Note that actual type of 'context' is
+     * <code>com.fasterxml.jackson.databind.SerializerProvider</code>,
+     * but can not be declared here as type itself (as well as call
+     * to this object) comes from databind package.
+     * 
+     * @param config Serialization context object used (of type
+     *    <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
+     *    may be needed by more complex generators to access contextual
+     *    information such as configuration.
      */
-    public abstract ObjectIdGenerator<T> newForSerialization();
+    public abstract ObjectIdGenerator<T> newForSerialization(Object context);
 
     /**
      * Method for constructing key to use for ObjectId-to-POJO maps.
