@@ -17,6 +17,13 @@ import java.lang.annotation.Target;
  * whether {@link java.util.Date} is to be serialized as number (Java timestamp)
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
+ *<p>
+ * As of Jackson 2.0, known special handling include:
+ *<ul>
+ * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
+ *   </li>
+ *</ul>
  * 
  * @since 2.0
  */
@@ -25,7 +32,6 @@ import java.lang.annotation.Target;
 @JacksonAnnotation
 public @interface JsonFormat
 {
-
     /**
      * Datatype-specific additional piece of configuration that may be used
      * to further refine formatting aspects. This may, for example, determine
@@ -38,7 +44,7 @@ public @interface JsonFormat
     
     /*
     /**********************************************************
-    /* Value enumeration(s) needed
+    /* Value enumeration(s), value class(es)
     /**********************************************************
      */
 
@@ -100,5 +106,32 @@ public @interface JsonFormat
          */
         BOOLEAN
         ;
+
+        public boolean isNumeric() {
+            return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
+        }
+
+        public boolean isStructured() {
+            return (this == OBJECT) || (this == ARRAY);
+        }
+    }
+
+    /**
+     * Helper class used to contain information from a single {@link JsonFormat}
+     * annotation.
+     */
+    public static class Value
+    {
+        public final String pattern;
+        public final Shape shape;
+        
+        public Value(JsonFormat annotationInstance) {
+            this(annotationInstance.pattern(), annotationInstance.shape());
+        }
+
+        public Value(String p, Shape sh) {
+            pattern = p;
+            shape = sh;
+        }
     }
 }
