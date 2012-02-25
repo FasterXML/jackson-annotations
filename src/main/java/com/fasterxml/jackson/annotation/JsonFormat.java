@@ -4,6 +4,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * General-purpose annotation used for configuring details of how
@@ -33,6 +35,20 @@ import java.lang.annotation.Target;
 public @interface JsonFormat
 {
     /**
+     * Value that indicates that default {@link java.util.Locale}
+     * (from deserialization or serialization context) should be used:
+     * annotation does not define value to use.
+     */
+    public final static String DEFAULT_LOCALE = "##default";
+
+    /**
+     * Value that indicates that default {@link java.util.TimeZone}
+     * (from deserialization or serialization context) should be used:
+     * annotation does not define value to use.
+     */
+    public final static String DEFAULT_TIMEZONE = "##default";
+    
+    /**
      * Datatype-specific additional piece of configuration that may be used
      * to further refine formatting aspects. This may, for example, determine
      * low-level format String used for {@link java.util.Date} serialization;
@@ -40,7 +56,33 @@ public @interface JsonFormat
      */
     public String pattern() default "";
 
+    /**
+     * Structure to use for serialization: definition of mapping depends on datatype,
+     * but usually has straight-forward counterpart in data format (JSON).
+     * Note that commonly only a subset of shapes is available; and if 'invalid' value
+     * is chosen, defaults are usually used.
+     */
     public Shape shape() default Shape.ANY;
+
+    /**
+     * {@link java.util.Locale} to use for serialization (if needed).
+     * Special value of {@link #DEFAULT_LOCALE}
+     * can be used to mean "just use the default", where default is specified
+     * by the serialization context, which in turn defaults to system
+     * defaults ({@link java.util.Locale#getDefault()}) unless explicitly
+     * set to another locale.
+     */
+    public String locale() default DEFAULT_LOCALE;
+    
+    /**
+     * {@link java.util.TimeZone} to use for serialization (if needed).
+     * Special value of {@link #DEFAULT_TIMEZONE}
+     * can be used to mean "just use the default", where default is specified
+     * by the serialization context, which in turn defaults to system
+     * defaults ({@link java.util.TimeZone#getDefault()}) unless explicitly
+     * set to another locale.
+     */
+    public String timezone() default DEFAULT_TIMEZONE;
     
     /*
     /**********************************************************
@@ -122,16 +164,35 @@ public @interface JsonFormat
      */
     public static class Value
     {
-        public final String pattern;
-        public final Shape shape;
-        
-        public Value(JsonFormat annotationInstance) {
-            this(annotationInstance.pattern(), annotationInstance.shape());
+        private final String pattern;
+        private final Shape shape;
+        private final Locale locale;
+        private final TimeZone timezone;
+
+        public Value(JsonFormat ann) {
+            this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone());
+                    
         }
 
-        public Value(String p, Shape sh) {
+        public Value(String p, Shape sh, String localeStr, String tzStr)
+        {
             pattern = p;
             shape = sh;
+            if (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) {
+                locale = null;
+            } else {
+                locale = new Locale(localeStr);
+            }
+            if (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) {
+                timezone = null;
+            } else {
+                timezone = TimeZone.getTimeZone(tzStr);
+            }
         }
+        
+        public String getPattern() { return pattern; }
+        public Shape getShape() { return shape; }
+        public Locale getLocale() { return locale; }
+        public TimeZone getTimeZone() { return timezone; }
     }
 }
