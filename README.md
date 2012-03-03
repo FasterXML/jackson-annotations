@@ -8,6 +8,8 @@ to the [Databind package](/FasterXML/jackson-databind).
 Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
+[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
+
 -----
 
 ## Usage, general
