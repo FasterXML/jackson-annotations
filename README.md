@@ -8,7 +8,9 @@ to the [Databind package](/FasterXML/jackson-databind).
 Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
-## Basic Usage
+-----
+
+## Usage, general
 
 ### Improvements over typical Java annotations
 
@@ -31,7 +33,13 @@ To use annotations, you need to use Maven dependency:
 
 or download jars from Maven repository or [Download page](wiki.fasterxml.com/JacksonDownload)
 
-### Usage: renaming properties
+## Usage, simple
+
+Let's start with simple use cases: renaming or ignoring properties, and modifying types that are used.
+
+Note: while examples only show field properties, same annotations would work with method (getter/setter) properties.
+
+### Annotations for renaming properties
 
 One of most common tasks is to change JSON name used for a property: for example:
 
@@ -48,7 +56,7 @@ instead of
 
     { "_first_name" : "Bob"
 
-### Usage: Ignoring properties
+### Annotations for Ignoring properties
 
 Sometimes POJOs contain properties that you do not want to write out, so you can do:
 
@@ -72,7 +80,38 @@ which would be able to handle JSON like:
 
     { "value" : 42, "extra" : "fluffy", "uselessValue" : -13 }
 
-### Usage: Changing property auto-detection
+Finally, you may even want to just ignore any "extra" properties from JSON (ones for which there is no counterpart in POJO). This can be done by adding:
+
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    public class PojoWithAny {
+      public int value;
+    }
+
+### Annotations for choosing more/less specific types
+
+Sometimes the type Jackson uses when reading or writing a property is not quite what you want:
+
+* When reading (deserializing), declared type may be a general type, but you know which exact implementation type to use
+* When writing (serializing), Jackson will by default use the specific runtime type; but you may not want to include all information from that type but rather just contents of its supertype.
+
+These cases can be handled by following annotations:
+
+   public class ValueContainer {
+     // although nominal type is 'Value', we want to read JSON as 'ValueImpl'
+     @JsonDeserialize(as=ValueImpl.class)
+     public Value value;
+
+     // although runtime type may be 'AdvancedType', we really want to serialize
+     // as 'BasicType'; two ways to do this:
+     @JsonSerialize(as=BasicType.class)
+     // or could also use: @JsonSerialize(typing=Typing.STATIC)
+     public BasicType another;
+
+-----
+
+## Usage, intermediate
+
+### Changing property auto-detection
 
 The default Jackson property detection rules will find:
 
@@ -96,6 +135,33 @@ or, to disable auto-detection of fields altogether:
       public int value;
     }
 
+### Using constructors or factory methods
+
+By default, Jackson tries to use the "default" constructor (one that takes no arguments), when creating value instances. But you can also choose to use another constructor, or a static factory method to create instance. To do this, you will need to use annotation `@JsonCreator`, and possibly `@JsonProperty` annotations to bind names to arguments:
+
+    public class CtorPOJO {
+       private final int _x, _y;
+
+       @JsonCreator
+       public CtorPOJO(@JsonProperty("x") int x, @JsonProperty("y") int y) {
+          _x = x;
+          _y = y;
+       }
+    }
+
+`@JsonCreator` can be used similarly for static factory methods.
+But there is also an alternative usage, which is so-called "delegating" creator:
+
+    public class DelegatingPOJO {
+       private final int _x, _y;
+
+       @JsonCreator
+       public DelegatingPOJO(Map<String,Object> delegate) {
+          _x = (Integer) delegate.get("x");
+          _y = (Integer) delegate.get("y");
+       }
+      
+the difference being that the creator method can only take one argument, and that argument must NOT have `@JsonProperty` annotation.
 
 ### Handling polymorphic types
 
@@ -135,8 +201,9 @@ Note that this annotation has lots of configuration possibilities: for more info
 # Further reading
 
 * [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
-* [Documentation](http://wiki.fasterxml.com/JacksonDocumentation)
+ * [General Documentation](http://wiki.fasterxml.com/JacksonDocumentation)
+ * [Annotation documentation](http://wiki.fasterxml.com/JacksonAnnotations)
  * [JavaDocs](http://wiki.fasterxml.com/JacksonJavaDocs)
-* [Downloads](http://wiki.fasterxml.com/JacksonDownload)
+ * [Downloads](http://wiki.fasterxml.com/JacksonDownload)
 
 Check out [Wiki].
