@@ -30,7 +30,6 @@ To use annotations, you need to use Maven dependency:
       <version>2.0.0</version>
     </dependency>
 
-
 or download jars from Maven repository or [Download page](wiki.fasterxml.com/JacksonDownload)
 
 ## Usage, simple
@@ -96,44 +95,21 @@ Sometimes the type Jackson uses when reading or writing a property is not quite 
 
 These cases can be handled by following annotations:
 
-   public class ValueContainer {
-     // although nominal type is 'Value', we want to read JSON as 'ValueImpl'
-     @JsonDeserialize(as=ValueImpl.class)
-     public Value value;
+    public class ValueContainer {
+      // although nominal type is 'Value', we want to read JSON as 'ValueImpl'
+      @JsonDeserialize(as=ValueImpl.class)
+      public Value value;
 
-     // although runtime type may be 'AdvancedType', we really want to serialize
-     // as 'BasicType'; two ways to do this:
-     @JsonSerialize(as=BasicType.class)
-     // or could also use: @JsonSerialize(typing=Typing.STATIC)
-     public BasicType another;
+      // although runtime type may be 'AdvancedType', we really want to serialize
+      // as 'BasicType'; two ways to do this:
+      @JsonSerialize(as=BasicType.class)
+      // or could also use: @JsonSerialize(typing=Typing.STATIC)
+      public BasicType another;
+    }
 
 -----
 
 ## Usage, intermediate
-
-### Changing property auto-detection
-
-The default Jackson property detection rules will find:
-
-* All ''public'' fields
-* All ''public'' getters ('getXxx()' methods)
-* All setters ('setXxx(value)' methods), ''regardless of visibility'')
-
-But if this does not work, you can change visibility levels by using annotation `@JsonAutoDetect`.
-If you wanted, for example, to auto-detect ALL fields (similar to how packages like GSON work), you could do:
-
-    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.ANY)
-    public class POJOWithFields {
-      private int value;
-    }
-
-or, to disable auto-detection of fields altogether:
-
-    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.NONE)
-    public class POJOWithNoFields {
-      // will NOT be included, unless there is access 'getValue()'
-      public int value;
-    }
 
 ### Using constructors or factory methods
 
@@ -197,13 +173,39 @@ Note that this annotation has lots of configuration possibilities: for more info
 * [JavaDocs](http://wiki.fasterxml.com/JacksonJavaDocs)
 * [Intro to polymorphic type handling](http://www.cowtowncoder.com/blog/archives/2010/03/entry_372.html)
 
+### Changing property auto-detection
+
+The default Jackson property detection rules will find:
+
+* All ''public'' fields
+* All ''public'' getters ('getXxx()' methods)
+* All setters ('setXxx(value)' methods), ''regardless of visibility'')
+
+But if this does not work, you can change visibility levels by using annotation `@JsonAutoDetect`.
+If you wanted, for example, to auto-detect ALL fields (similar to how packages like GSON work), you could do:
+
+    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.ANY)
+    public class POJOWithFields {
+      private int value;
+    }
+
+or, to disable auto-detection of fields altogether:
+
+    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.NONE)
+    public class POJOWithNoFields {
+      // will NOT be included, unless there is access 'getValue()'
+      public int value;
+    }
+
+-----
 
 # Further reading
 
-* [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
- * [General Documentation](http://wiki.fasterxml.com/JacksonDocumentation)
- * [Annotation documentation](http://wiki.fasterxml.com/JacksonAnnotations)
- * [JavaDocs](http://wiki.fasterxml.com/JacksonJavaDocs)
- * [Downloads](http://wiki.fasterxml.com/JacksonDownload)
+[Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
+In addition, here are other useful links:
 
-Check out [Wiki].
+* [Annotation documentation at FasterXML Wiki](http://wiki.fasterxml.com/JacksonAnnotations)
+* [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
+* [General Jackson Documentation](http://wiki.fasterxml.com/JacksonDocumentation)
+* [Jackson JavaDocs](http://wiki.fasterxml.com/JacksonJavaDocs)
+
