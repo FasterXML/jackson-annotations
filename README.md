@@ -14,7 +14,7 @@ Note that with version 1.x these annotations were part of the 'core jar'.
 
 In addition to regular usage (see below), there are couple of noteworthy improvements Jackson does:
 
-* [Mix-in annotations](wiki/MixinAnnotations) allow associating annotations on third-party classes ''without modifying classes''.
+* [Mix-in annotations](jackson-annotations/wiki/MixinAnnotations) allow associating annotations on third-party classes ''without modifying classes''.
 * Jackson annotations support full inheritance: meaning that you can ''override annotation definitions'', and not just class annotations but also method/field annotations!
 
 ### Renaming properties
