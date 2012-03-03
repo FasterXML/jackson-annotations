@@ -201,6 +201,8 @@ or, to disable auto-detection of fields altogether:
 
 # Further reading
 
+[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
+
 [Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
 In addition, here are other useful links:
 
