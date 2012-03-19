@@ -26,11 +26,12 @@ import java.lang.annotation.Target;
  * be output unless another annotation defines alternative method to use.
  *<p>
  * Before version 1.9, this annotation worked purely on method-by-method (or field-by-field)
- * basis; annotation on one method or field does not imply ignoring other methods
+ * basis; annotation on one method or field did not imply ignoring other methods
  * or fields. However, with version 1.9 and above, annotations associated
  * with various accessors (getter, setter, field, constructor parameter) of
- * a logical property are combined; meaning that annotations may be effectly
- * combined.
+ * a logical property are combined; meaning that annotations in one (say, setter)
+ * can have effects on all of them (if getter or field has nothing indicating
+ * otherwise).
  *<p>
  * Annotation is usually used just a like a marker annotation, that
  * is, without explicitly defining 'value' argument (which defaults
