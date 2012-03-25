@@ -1,14 +1,33 @@
 Version: 2.0.0
 
 Release date:
-  xx-Feb-2012
+  25-Mar-2012
 
 Description:
-  The son of Jackson! Behold...
+  The official 2.0 release of Jackson.
+
+Improvements:
+
+* [JACKSON-437]: Allow injecting of type id as POJO property, by setting
+  new '@JsonTypeInfo.visible' property to true.
+* [JACKSON-669]: Allow prefix/suffix for @JsonUnwrapped properties
+  (requested by Aner P)
+* [JACKSON-787]: @JsonIgnoredProperties can be used on properties too
 
 New features:
 
+* [JACKSON-107]: Add support for Object Identity (to handled cycles, shared refs),
+  with @JsonIdentityInfo
 * [JACKSON-714] Add general-purpose '@JsonFormat' annotation
+* [JACKSON-752]: Add @JsonInclude (replacement of @JsonSerialize.include)
+* [JACKSON-754]: Add @JacksonAnnotationsInside for creating "annotation
+  bundles" (also: AnnotationIntrospector.isAnnotationBundle())
+
+Other:
+
+* Lots of miscellaneous refactoring; moving most annotations from
+  databind into this package; only leaving ones that depend on
+  databind package types
 
 ------------------------------------------------------------------------
 === History: ===
