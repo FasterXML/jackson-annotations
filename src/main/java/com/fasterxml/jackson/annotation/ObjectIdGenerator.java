@@ -51,7 +51,7 @@ public abstract class ObjectIdGenerator<T>
      * but can not be declared here as type itself (as well as call
      * to this object) comes from databind package.
      * 
-     * @param config Serialization context object used (of type
+     * @param context Serialization context object used (of type
      *    <code>com.fasterxml.jackson.databind.SerializerProvider</code>;
      *    may be needed by more complex generators to access contextual
      *    information such as configuration.
