@@ -8,7 +8,7 @@ to the [Databind package](/FasterXML/jackson-databind).
 Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
-[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
+[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.0/) gives more details.
 
 -----
 
@@ -172,7 +172,7 @@ and this could result in serialized JSON like:
 
 Note that this annotation has lots of configuration possibilities: for more information check out:
 
-* [JavaDocs](http://wiki.fasterxml.com/JacksonJavaDocs)
+* [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.0/)
 * [Intro to polymorphic type handling](http://www.cowtowncoder.com/blog/archives/2010/03/entry_372.html)
 
 ### Changing property auto-detection
@@ -206,7 +206,6 @@ or, to disable auto-detection of fields altogether:
 Project-specific documentation:
 
 * [Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
-* [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.0/)
 * [Documentation](jackson-annotations/wiki/Documentation)
 
 Related:
