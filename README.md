@@ -206,15 +206,14 @@ or, to disable auto-detection of fields altogether:
 Project-specific documentation:
 
 * [Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
-* [Documentation](wiki/Documentation)
 * [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.0/)
-
+* [Documentation](jackson-annotations/wiki/Documentation)
 
 Related:
 
 * [Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
 In addition, here are other useful links:
 * [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
-** [Annotation documentation at FasterXML Wiki](http://wiki.fasterxml.com/JacksonAnnotations) covers 1.x annotations as well as 2.0
+ * [Annotation documentation at FasterXML Wiki](http://wiki.fasterxml.com/JacksonAnnotations) covers 1.x annotations as well as 2.0
 
 
