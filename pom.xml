@@ -45,17 +45,4 @@
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
 
-  <dependencies>
-    <!-- No dependencies to core types (annotations that
-         do have dependencies are included in those packages)
-      -->
-    <!-- and for testing, JUnit is needed -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
 </project>
