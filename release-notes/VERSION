@@ -1,20 +1,24 @@
-Version: 2.0.2
+Version: 2.0.3
 
 Release date:
-  14-May-2012
+  xx-Jun-2012
 
 Description:
-  Second patch release for 2.0
+  Another patch release for 2.0
+
+Fixes:
+
+------------------------------------------------------------------------
+=== History: ===
+------------------------------------------------------------------------
+
+2.0.2 (14-May-2012)
 
 Fixes:
 
 * OSGi bundle name was accidentally changed in 2.0.1; reverted back to one
   used in 2.0.0, earlier
  (reported Pascal G)
-
-------------------------------------------------------------------------
-=== History: ===
-------------------------------------------------------------------------
 
 2.0.1 (22-Apr-2012)
 
