@@ -186,14 +186,14 @@ The default Jackson property detection rules will find:
 But if this does not work, you can change visibility levels by using annotation `@JsonAutoDetect`.
 If you wanted, for example, to auto-detect ALL fields (similar to how packages like GSON work), you could do:
 
-    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.ANY)
+    @JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
     public class POJOWithFields {
       private int value;
     }
 
 or, to disable auto-detection of fields altogether:
 
-    @JsonAutoDetect(fieldVisiblity=JsonAutoDetect.Visibility.NONE)
+    @JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
     public class POJOWithNoFields {
       // will NOT be included, unless there is access 'getValue()'
       public int value;
