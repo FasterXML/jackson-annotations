@@ -26,10 +26,17 @@ import java.util.TimeZone;
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
  *   </li>
  *</ul>
+ * Jackson 2.1 added following new features:
+ *<ul>
+ * <li>Can now be used on Classes (types) as well, for modified default behavior, possibly
+ *   overridden by per-property annotation
+ *   </li>
+ *</ul>
  * 
  * @since 2.0
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
+    ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonFormat
