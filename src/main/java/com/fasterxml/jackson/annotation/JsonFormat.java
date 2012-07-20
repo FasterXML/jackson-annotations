@@ -176,6 +176,10 @@ public @interface JsonFormat
         private final Locale locale;
         private final TimeZone timezone;
 
+        public Value() {
+            this("", Shape.ANY, "", "");
+        }
+        
         public Value(JsonFormat ann) {
             this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone());
         }
