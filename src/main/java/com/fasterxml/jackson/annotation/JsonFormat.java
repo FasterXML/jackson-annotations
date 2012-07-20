@@ -178,23 +178,55 @@ public @interface JsonFormat
 
         public Value(JsonFormat ann) {
             this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone());
-                    
         }
 
         public Value(String p, Shape sh, String localeStr, String tzStr)
         {
+            this(p, sh
+                    ,(localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
+                            null : new Locale(localeStr)
+                    ,(tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
+                            null : TimeZone.getTimeZone(tzStr)
+            );
+        }
+
+        /**
+         * @since 2.1
+         */
+        public Value(String p, Shape sh, Locale l, TimeZone tz)
+        {
             pattern = p;
             shape = sh;
-            if (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) {
-                locale = null;
-            } else {
-                locale = new Locale(localeStr);
-            }
-            if (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) {
-                timezone = null;
-            } else {
-                timezone = TimeZone.getTimeZone(tzStr);
-            }
+            locale = l;
+            timezone = tz;
+        }
+
+        /**
+         * @since 2.1
+         */
+        public Value withPattern(String p) {
+            return new Value(p, shape, locale, timezone);
+        }
+
+        /**
+         * @since 2.1
+         */
+        public Value withShape(Shape s) {
+            return new Value(pattern, s, locale, timezone);
+        }
+
+        /**
+         * @since 2.1
+         */
+        public Value withLocale(Locale l) {
+            return new Value(pattern, shape, l, timezone);
+        }
+
+        /**
+         * @since 2.1
+         */
+        public Value withTimeZone(TimeZone tz) {
+            return new Value(pattern, shape, locale, tz);
         }
         
         public String getPattern() { return pattern; }
