@@ -1,20 +1,23 @@
 Version: 2.0.5
 
 Release date:
-  xx-Jul-2012
+  27-Jul-2012
 
 Description:
-  Another patch release for 2.0
+  No fixes or changes, released along with other core components
 
 ------------------------------------------------------------------------
 === History: ===
 ------------------------------------------------------------------------
 
+
 2.0.4 (26-Jun-2012)
 
 No fixes or changes, released along with other core components
 
-(note: skipped 2.0.3 -- only some modules used that version)
+2.0.3
+
+skipped 2.0.3 -- only some modules used that version
 
 2.0.2 (14-May-2012)
 
