@@ -20,7 +20,7 @@ import java.util.TimeZone;
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
  *<p>
- * As of Jackson 2.0, known special handling include:
+ * As of Jackson 2.1, known special handling include:
  *<ul>
  * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
@@ -30,6 +30,17 @@ import java.util.TimeZone;
  *<ul>
  * <li>Can now be used on Classes (types) as well, for modified default behavior, possibly
  *   overridden by per-property annotation
+ *   </li>
+ * <li>{@link java.lang.Enum}s: Shapes {@link Shape#STRING} and {@link Shape#NUMBER} can be
+ *    used to change between numeric (index) and textual (name or <code>toString()</code>);
+ *    but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
+ *    {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
+ *     as JSON Object only works with class annotation; 
+ *    will not work as per-property annotation.
+ *   </li>
+ * <li>{@link java.util.Collection}s can be serialized as (and deserialized from) JSON Objects,
+ *    if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
+ *    will not work as per-property annotation.
  *   </li>
  *</ul>
  * 
