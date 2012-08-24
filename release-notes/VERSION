@@ -6,7 +6,10 @@ Release date:
 Description:
   New minor version.
 
-Fixes:
+New features:
+
+* [Issue#4]: Add '@JsonIdentityReference', to support use case where values of
+  a specific reference property are always serialized as ids, never as full POJO
 
 ------------------------------------------------------------------------
 === History: ===

@@ -72,17 +72,4 @@ public @interface JsonIdentityInfo
      * limited scope)
      */
     public Class<?> scope() default Object.class;
-
-    /**
-     * Marker to indicate whether the first reference to an identifiable
-     * POJO is to be serialized as POJO (false), or as id (true).
-     * All other references will be serialized using id.
-     *<p>
-     * Note that if value of 'true' is used, deserialization will require
-     * additional contextual information; and usually custom handler
-     * is required, and automatic handling may not be possible.
-     * 
-     * @since 2.1
-     */
-    public boolean firstAsId() default false;
 }
