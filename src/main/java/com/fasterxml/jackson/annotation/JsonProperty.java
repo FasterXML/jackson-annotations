@@ -24,9 +24,13 @@ import java.lang.annotation.Target;
 public @interface JsonProperty
 {
     /**
-     * Defines name of the logical property, i.e. Json object field
-     * name to use for the property: if empty String (which is the
-     * default), will use name of the field that is annotated.
+     * Defines name of the logical property, i.e. JSON object field
+     * name to use for the property. If value is empty String (which is the
+     * default), will try to use name of the field that is annotated.
+     * Note that there is
+     * <b>no default name available for constructor arguments</b>,
+     * meaning that
+     * <b>Empty String is not a valid value for constructor arguments</b>
      */
     String value() default "";
 
@@ -41,7 +45,7 @@ public @interface JsonProperty
      *<p>
      * Note that as of 2.0, this property is NOT used by
      * <code>BeanDeserializer</code>: support is expected to be
-     * added for later minor versions.
+     * added for a later minor version.
      * 
      * @since 2.0
      */
