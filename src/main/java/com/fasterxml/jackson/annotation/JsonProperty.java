@@ -24,15 +24,23 @@ import java.lang.annotation.Target;
 public @interface JsonProperty
 {
     /**
+     * Special value that indicates that handlers should use the default
+     * name (derived from method or field name) for property.
+     * 
+     * @since 2.1
+     */
+    public final static String USE_DEFAULT_NAME = "";
+
+    /**
      * Defines name of the logical property, i.e. JSON object field
      * name to use for the property. If value is empty String (which is the
      * default), will try to use name of the field that is annotated.
      * Note that there is
      * <b>no default name available for constructor arguments</b>,
      * meaning that
-     * <b>Empty String is not a valid value for constructor arguments</b>
+     * <b>Empty String is not a valid value for constructor arguments</b>.
      */
-    String value() default "";
+    String value() default USE_DEFAULT_NAME;
 
     /**
      * Property that indicates whether a value (which may be explicit
