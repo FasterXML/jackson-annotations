@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
  * Annotation is usually used just a like a marker annotation, that
  * is, without explicitly defining 'value' argument (which defaults
  * to <code>true</code>): but argument can be explicitly defined.
- * This can be done to override an existing JsonIgnore by explictly
+ * This can be done to override an existing JsonIgnore by explicitly
  * defining one with 'false' argument.
  *<p>
  * Annotation is similar to {@link javax.xml.bind.annotation.XmlTransient} 

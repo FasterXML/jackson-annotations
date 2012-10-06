@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- |  Copyright 2012 FasterXML.com
+ |  Copyright 2012- FasterXML.com
  |
  |  Licensed under the Apache License, Version 2.0 (the "License");
  |  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
   <parent>
     <groupId>com.fasterxml</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>3</version>
+    <version>4</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
