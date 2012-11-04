@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JacksonAnnotation;
  *<p>
  * An example annotation would be:
  *<pre>
- *  \@JsonView(BasicView.class)
+ *  &#064;JsonView(BasicView.class)
  *</pre>
  * which would specify that property annotated would be included
  * when processing (serializing, deserializing) View identified
