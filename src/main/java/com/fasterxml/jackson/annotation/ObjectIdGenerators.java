@@ -16,6 +16,7 @@ public class ObjectIdGenerators
     /**
      * Helper class for implementations contained.
      */
+    @SuppressWarnings("serial")
     private abstract static class Base<T> extends ObjectIdGenerator<T>
     {
         protected final Class<?> _scope;
@@ -49,6 +50,7 @@ public class ObjectIdGenerators
      * that no generator is used; which also implies that no
      * Object Id is to be included or used.
      */
+    @SuppressWarnings("serial")
     public abstract static class None extends ObjectIdGenerator<Object> { }
     
     /**
@@ -61,6 +63,8 @@ public class ObjectIdGenerators
      * package.
      */
     public abstract static class PropertyGenerator extends Base<Object> {
+        private static final long serialVersionUID = 1L;
+
         protected PropertyGenerator(Class<?> scope) { super(scope); }
     }
     
@@ -70,7 +74,9 @@ public class ObjectIdGenerators
      */
     public final static class IntSequenceGenerator extends Base<Integer>
     {
-        protected int _nextValue;
+        private static final long serialVersionUID = 1L;
+
+        protected transient int _nextValue;
 
         public IntSequenceGenerator() { this(Object.class, -1); }
         public IntSequenceGenerator(Class<?> scope, int fv) {
@@ -114,6 +120,8 @@ public class ObjectIdGenerators
      */
     public final static class UUIDGenerator extends Base<UUID>
     {
+        private static final long serialVersionUID = 1L;
+
         public UUIDGenerator() { this(Object.class); }
         private UUIDGenerator(Class<?> scope) {
             super(Object.class);

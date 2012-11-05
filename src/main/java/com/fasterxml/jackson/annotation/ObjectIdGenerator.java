@@ -9,6 +9,7 @@ package com.fasterxml.jackson.annotation;
  * @param <T> Type of Object Identifiers produced.
  */
 public abstract class ObjectIdGenerator<T>
+    implements java.io.Serializable
 {
     /*
     /**********************************************************
@@ -91,7 +92,10 @@ public abstract class ObjectIdGenerator<T>
      * and scopes are used.
      */
     public final static class IdKey
+        implements java.io.Serializable
     {
+        private static final long serialVersionUID = 1L;
+
         /**
          * Type of {@link ObjectIdGenerator} used for generating Object Id
          */
