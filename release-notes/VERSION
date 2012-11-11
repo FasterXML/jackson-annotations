@@ -1,10 +1,21 @@
-Version: 2.1.0
+Version: 2.1.1
 
 Release date:
-  08-Oct-2012
+  11-Nov-2012
 
 Description:
-  New minor version.
+  A tiny update to 2.1.0.
+
+Fixes:
+
+* Make ObjectIdGenerator java.io.Serializable (needed when serializing
+  ObjectMappers/-Writers/-Readers)
+
+------------------------------------------------------------------------
+=== History: ===
+------------------------------------------------------------------------
+
+2.1.0 (08-Oct-2012)
 
 New features:
 
@@ -17,9 +28,6 @@ Improvements:
   to an Object to be serialized as id, including first one.
 * Fix OSGi artifact name to be fully-qualified
 
-------------------------------------------------------------------------
-=== History: ===
-------------------------------------------------------------------------
 
 2.0.2 (14-May-2012)
 
