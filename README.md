@@ -8,7 +8,7 @@ to the [Databind package](/FasterXML/jackson-databind).
 Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
-[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.6/) gives more details.
+[Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.1.0/) gives more details.
 
 -----
 
@@ -29,7 +29,7 @@ To use annotations, you need to use Maven dependency:
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.0.6</version>
+      <version>2.1.0</version>
     </dependency>
 
 or download jars from Maven repository or [Download page](wiki.fasterxml.com/JacksonDownload)
@@ -172,7 +172,7 @@ and this could result in serialized JSON like:
 
 Note that this annotation has lots of configuration possibilities: for more information check out:
 
-* [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.0.6/)
+* [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.1.0/)
 * [Intro to polymorphic type handling](http://www.cowtowncoder.com/blog/archives/2010/03/entry_372.html)
 
 ### Changing property auto-detection
