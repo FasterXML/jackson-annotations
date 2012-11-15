@@ -208,6 +208,10 @@ Project-specific documentation:
 * [Full Listing of Jackson Annotations](jackson-annotations/wiki/JacksonAnnotations) details all available annotations.
 * [Documentation](jackson-annotations/wiki/Documentation)
 
+Usage:
+
+* You can make Jackson 2 use Jackson 1 annotations with [jackson-legacy-introspector](https://github.com/Laures/jackson-legacy-introspector)
+
 Related:
 
 * [Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
