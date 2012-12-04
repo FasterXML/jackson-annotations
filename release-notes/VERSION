@@ -1,19 +1,17 @@
-Version: 2.1.1
+Version: 2.1.2 (04-Dec-2012)
 
-Release date:
-  11-Nov-2012
+No changes since last version.
 
-Description:
-  A tiny update to 2.1.0.
+------------------------------------------------------------------------
+=== History: ===
+------------------------------------------------------------------------
+
+2.1.1 (11-Nov-2012)
 
 Fixes:
 
 * Make ObjectIdGenerator java.io.Serializable (needed when serializing
   ObjectMappers/-Writers/-Readers)
-
-------------------------------------------------------------------------
-=== History: ===
-------------------------------------------------------------------------
 
 2.1.0 (08-Oct-2012)
 
