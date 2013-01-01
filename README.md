@@ -32,7 +32,7 @@ To use annotations, you need to use Maven dependency:
       <version>2.1.1</version>
     </dependency>
 
-or download jars from Maven repository or [Download page](wiki.fasterxml.com/JacksonDownload)
+or download jars from Maven repository or [Download page](http://wiki.fasterxml.com/JacksonDownload)
 
 ## Usage, simple
 
