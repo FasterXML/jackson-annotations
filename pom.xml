@@ -19,7 +19,7 @@
   <parent>
     <groupId>com.fasterxml</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>4</version>
+    <version>7</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>

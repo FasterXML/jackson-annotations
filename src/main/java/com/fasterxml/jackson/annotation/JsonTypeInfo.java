@@ -220,6 +220,14 @@ public @interface JsonTypeInfo
      * this is used with type-name -based resolution, to cover cases
      * where new sub-types are added, but base type is not changed to
      * reference new sub-types.
+     *<p>
+     * There are certain special values that indicate alternate behavior:
+     *<ul>
+     * <li>{@link None} means "there is no default implementation" (in which
+     *   case an error results from unmappable type)
+     * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
+     *   objects with unmappable (or missing) type are to be mapped to null references.
+     * </ul>
      */
     public Class<?> defaultImpl() default None.class;
 
