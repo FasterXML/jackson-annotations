@@ -91,8 +91,9 @@ public @interface JsonAutoDetect
                 // fall through to public case:
             case PUBLIC_ONLY:
                 return Modifier.isPublic(m.getModifiers());
+            default:
+                return false;
             }
-            return false;
         }
     }
     
