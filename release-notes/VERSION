@@ -1,11 +1,15 @@
 Project: jackson-annotations
-Version: 2.2.0 (22-Apr-2013)
+Version: 2.2.1 (xx-May-2013)
 
-New minor version, but no changes since 2.1.0.
+- Moved LICENSE file under 'META-INF/' in jar
 
 ------------------------------------------------------------------------
 === History: ===
 ------------------------------------------------------------------------
+
+2.2.0 (22-Apr-2013)
+
+New minor version, but no changes since 2.1.0.
 
 2.1.1 (11-Nov-2012)
 
