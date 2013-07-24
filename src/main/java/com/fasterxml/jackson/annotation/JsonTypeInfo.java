@@ -160,7 +160,7 @@ public @interface JsonTypeInfo
          * as JSON Object.
          */
         WRAPPER_ARRAY,
-        
+
         /**
          * Inclusion mechanism similar to <code>PROPERTY</code>, except that
          * property is included one-level higher in hierarchy, i.e. as sibling
@@ -169,7 +169,19 @@ public @interface JsonTypeInfo
          * for types (classes). Trying to use it for classes will result in
          * inclusion strategy of basic <code>PROPERTY</code> instead.
          */
-        EXTERNAL_PROPERTY
+        EXTERNAL_PROPERTY,
+
+        /**
+         * Inclusion mechanism similar to <code>PROPERTY</code> with respect
+         * to deserialization; but one that is produced by a "regular" accessible
+         * property during serialization. This means that <code>TypeSerializer</code>
+         * will do nothing, and expect a property with defined name to be output
+         * using some other mechanism (like default POJO property serialization, or
+         * custom serializer).
+         * 
+         * @since 2.3.0
+         */
+        EXISTING_PROPERTY
         ;
     }
     
