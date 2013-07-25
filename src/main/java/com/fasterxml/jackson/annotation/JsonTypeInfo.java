@@ -45,14 +45,9 @@ import java.lang.annotation.*;
  * (and set via setter or field) on deserialization.
  *<p>
  * On serialization side, Jackson will generate type id by itself,
- * except if there is a property annotated with {@link JsonTypeId}:
- * if such explicit id is defined, it will be used instead.
- * Note that simple matching of {@link #property()} and name of
- * a visible POJO property does NOT establish a link.
- * 
- * @see JsonTypeId
- * @see JsonSubTypes
- * @see JsonTypeName
+ * except if there is a property with name that matches
+ * {@link #property()}, in which case value of that property is
+ * used instead.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -174,7 +169,19 @@ public @interface JsonTypeInfo
          * for types (classes). Trying to use it for classes will result in
          * inclusion strategy of basic <code>PROPERTY</code> instead.
          */
-        EXTERNAL_PROPERTY
+        EXTERNAL_PROPERTY,
+
+        /**
+         * Inclusion mechanism similar to <code>PROPERTY</code> with respect
+         * to deserialization; but one that is produced by a "regular" accessible
+         * property during serialization. This means that <code>TypeSerializer</code>
+         * will do nothing, and expect a property with defined name to be output
+         * using some other mechanism (like default POJO property serialization, or
+         * custom serializer).
+         * 
+         * @since 2.3.0
+         */
+        EXISTING_PROPERTY
         ;
     }
     
