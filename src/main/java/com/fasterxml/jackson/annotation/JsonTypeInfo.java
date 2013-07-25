@@ -178,6 +178,12 @@ public @interface JsonTypeInfo
          * will do nothing, and expect a property with defined name to be output
          * using some other mechanism (like default POJO property serialization, or
          * custom serializer).
+         *<p>
+         * Note that this behavior is quite similar to that of using {@link JsonTypeId};
+         * except that here <code>TypeSerializer</code> is basically suppressed;
+         * whereas with {@link JsonTypeId}, output of regular property is suppressed.
+         * This mostly matters with respect to output order; this choice is the only
+         * way to ensure specific placement of type id during serialization.
          * 
          * @since 2.3.0
          */
