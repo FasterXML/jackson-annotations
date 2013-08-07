@@ -8,6 +8,7 @@ package com.fasterxml.jackson.annotation;
  *
  * @param <T> Type of Object Identifiers produced.
  */
+@SuppressWarnings("serial")
 public abstract class ObjectIdGenerator<T>
     implements java.io.Serializable
 {
