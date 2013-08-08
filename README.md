@@ -23,7 +23,7 @@ In addition to regular usage (see below), there are couple of noteworthy improve
 
 ### Maven, Java package
 
-All annotations are in Java package `com.fasterxml.core.annotation`.
+All annotations are in Java package `com.fasterxml.jackson.annotation`.
 To use annotations, you need to use Maven dependency:
 
 ```xml
