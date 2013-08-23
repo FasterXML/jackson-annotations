@@ -1,5 +1,5 @@
 Project: jackson-annotations
-Version: 2.2.2 (26-May-2013)
+Version: 2.2.3 (22-Aug-2013)
 
 No changes from previous version.
 
@@ -7,6 +7,7 @@ No changes from previous version.
 === History: ===
 ------------------------------------------------------------------------
 
+2.2.2 (26-May-2013)
 2.2.1 (03-May-2013)
 
 - Moved LICENSE file under 'META-INF/' in jar
@@ -17,20 +18,13 @@ New minor version, but no changes since 2.1.0.
 
 2.1.1 (11-Nov-2012)
 
-Fixes:
-
 * Make ObjectIdGenerator java.io.Serializable (needed when serializing
   ObjectMappers/-Writers/-Readers)
 
 2.1.0 (08-Oct-2012)
 
-New features:
-
 * [Issue#4]: Add '@JsonIdentityReference', to support use case where values of
   a specific reference property are always serialized as ids, never as full POJO
-
-Improvements:
-
 * Added '@JsonIdentityInfo.firstAsID' property, to allow forcing all references
   to an Object to be serialized as id, including first one.
 * Fix OSGi artifact name to be fully-qualified
@@ -38,15 +32,11 @@ Improvements:
 
 2.0.2 (14-May-2012)
 
-Fixes:
-
 * OSGi bundle name was accidentally changed in 2.0.1; reverted back to one
   used in 2.0.0, earlier
  (reported Pascal G)
 
 2.0.1 (22-Apr-2012)
-
-Fixes:
 
 * [JACKSON-827] Fix incompatibilities with JDK 1.5 (2.0.0 accidentally
   required 1.6)
@@ -54,24 +44,19 @@ Fixes:
 
 2.0.0 (25-Mar-2012)
 
-Improvements:
-
+* [JACKSON-107]: Add support for Object Identity (to handled cycles, shared refs),
+  with @JsonIdentityInfo
 * [JACKSON-437]: Allow injecting of type id as POJO property, by setting
   new '@JsonTypeInfo.visible' property to true.
 * [JACKSON-669]: Allow prefix/suffix for @JsonUnwrapped properties
   (requested by Aner P)
 * [JACKSON-787]: @JsonIgnoredProperties can be used on properties too
-
-New features:
-
-* [JACKSON-107]: Add support for Object Identity (to handled cycles, shared refs),
-  with @JsonIdentityInfo
 * [JACKSON-714] Add general-purpose '@JsonFormat' annotation
 * [JACKSON-752]: Add @JsonInclude (replacement of @JsonSerialize.include)
 * [JACKSON-754]: Add @JacksonAnnotationsInside for creating "annotation
   bundles" (also: AnnotationIntrospector.isAnnotationBundle())
 
-Other:
+Other changes:
 
 * Lots of miscellaneous refactoring; moving most annotations from
   databind into this package; only leaving ones that depend on
