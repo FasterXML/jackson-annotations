@@ -15,8 +15,13 @@ import java.lang.annotation.Target;
  * Filters to use are usually of type
  * <code>com.fasterxml.jackson.databind.ser.BeanPropertyFilter</code> and
  * are registered through <code>com.fasterxml.jackson.databind.ObjectMapper</code>
+ *<p>
+ * Since 2.3, this annotation can also be used on properties (fields, methods,
+ * constructor parameters).
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
+    ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER // new in 2.3
+})
 @Retention(RetentionPolicy.RUNTIME)
 @com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonFilter

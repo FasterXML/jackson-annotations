@@ -7,6 +7,8 @@ New minor version
  (suggested by Net-A-Porter@github)
 #15: Add `JsonTypeInfo.As.EXISTING` property to support new variation
   for including Type Id.
+#20: Allow use of `@JsonFilter` for properties (via fields, methods,
+  constructor parameters)
 
 ------------------------------------------------------------------------
 === History: ===
