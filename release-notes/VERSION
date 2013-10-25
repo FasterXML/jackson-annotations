@@ -1,14 +1,15 @@
 Project: jackson-annotations
-Version: 2.3.0 (xx-xxx-2013)
+Version: 2.3.0 (xx-Oct-2013)
 
 New minor version
 
 #13: Add `@JsonPropertyDescription`
  (suggested by Net-A-Porter@github)
-#15: Add `JsonTypeInfo.As.EXISTING` property to support new variation
-  for including Type Id.
 #20: Allow use of `@JsonFilter` for properties (via fields, methods,
   constructor parameters)
+(note: although #15 -- Add `JsonTypeInfo.As.EXISTING` property to support new
+ variation for including Type Id was included, jackson-databind does not
+ yet support it as of 2.3.0)
 
 ------------------------------------------------------------------------
 === History: ===
