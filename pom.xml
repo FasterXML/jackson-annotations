@@ -30,4 +30,18 @@
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
 
+  <build>
+    <plugins>
+      <!-- not much to debug, but let's add all the info -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <optimize>true</optimize>
+          <debug>true</debug>
+          <debuglevel>lines,source,vars</debuglevel>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
