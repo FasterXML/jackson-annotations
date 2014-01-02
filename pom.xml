@@ -32,7 +32,7 @@
 
   <build>
     <plugins>
-      <!-- not much to debug, but let's add all the info -->
+      <!-- not much to debug, but let's add all the info (2.4+); size diff +4%  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>

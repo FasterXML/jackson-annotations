@@ -1,7 +1,14 @@
 Project: jackson-annotations
-Version: 2.3.0 (13-Nov-2013)
+Version: 2.4 (xx-xxx-2013)
 
-New minor version
+NOTE: version number changed to NOT include patch version, as no patch
+releases are planned for annotations set.
+
+------------------------------------------------------------------------
+=== History: ===
+------------------------------------------------------------------------
+
+2.3.0 (13-Nov-2013)
 
 #13: Add `@JsonPropertyDescription`
  (suggested by Net-A-Porter@github)
@@ -11,10 +18,7 @@ New minor version
  variation for including Type Id was included, jackson-databind does not
  yet support it as of 2.3.0)
 
-------------------------------------------------------------------------
-=== History: ===
-------------------------------------------------------------------------
-
+2.2.3 (23-Aug-2013)
 2.2.2 (26-May-2013)
 
 No changes from previous version.
@@ -25,7 +29,7 @@ No changes from previous version.
 
 2.2.0 (22-Apr-2013)
 
-New minor version, but no changes since 2.1.0.
+No changes since 2.1.1.
 
 2.1.1 (11-Nov-2012)
 
