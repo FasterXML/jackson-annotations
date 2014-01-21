@@ -235,7 +235,7 @@ public class POJOWithNoFields {
 
 Project-specific documentation:
 
-* [Full Listing of Jackson Annotations](../../wiki/JacksonAnnotations) details all available annotations.
+* [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations.
 * [Documentation](../../wiki/Documentation)
 
 Usage:
