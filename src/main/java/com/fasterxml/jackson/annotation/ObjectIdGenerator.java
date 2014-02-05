@@ -100,17 +100,17 @@ public abstract class ObjectIdGenerator<T>
         /**
          * Type of {@link ObjectIdGenerator} used for generating Object Id
          */
-        private final Class<?> type;
+        public final Class<?> type;
 
         /**
          * Scope of the Object Id (may be null, to denote global)
          */
-        private final Class<?> scope;
+        public final Class<?> scope;
 
         /**
          * Object for which Object Id was generated: can NOT be null.
          */
-        private final Object key;
+        public final Object key;
 
         /**
          * Hash code
