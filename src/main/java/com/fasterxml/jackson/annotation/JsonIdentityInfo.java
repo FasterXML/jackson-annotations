@@ -60,6 +60,15 @@ public @interface JsonIdentityInfo
     public Class<? extends ObjectIdGenerator<?>> generator();
 
     /**
+     * Resolver to use for producing POJO from Object Identifier.
+     * <p>
+     * Default value is {@link SimpleObjectIdResolver}
+     * 
+     * @since 2.4
+     */
+    public Class<? extends ObjectIdResolver> resolver() default SimpleObjectIdResolver.class;
+
+    /**
      * Scope is used to define applicability of an Object Id: all ids
      * must be unique within their scope; where scope is defined
      * as combination of this value and generator type.
