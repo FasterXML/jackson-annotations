@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion> 
   <parent>
     <groupId>com.fasterxml</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>12</version>
+    <artifactId>jackson-parent</artifactId>
+    <version>2.4-SNAPSHOT</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
@@ -24,24 +24,6 @@
   </scm>
 
   <properties>
-    <!--
-     | Configuration properties for the OSGi maven-bundle-plugin
-    -->
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
-
-  <build>
-    <plugins>
-      <!-- not much to debug, but let's add all the info (2.4+); size diff +4%  -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <optimize>true</optimize>
-          <debug>true</debug>
-          <debuglevel>lines,source,vars</debuglevel>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
