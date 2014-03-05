@@ -10,6 +10,8 @@ Note that with version 1.x these annotations were part of the 'core jar'.
 
 [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.2.0/) gives more details.
 
+Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
 -----
 
 ## Usage, general
