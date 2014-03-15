@@ -1,8 +1,10 @@
 Project: jackson-annotations
-Version: 2.4 (xx-xxx-2013)
+Version: 2.4.0 (xx-xxx-2013)
 
 NOTE: version number changed to NOT include patch version, as no patch
 releases are planned for annotations set.
+
+#31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
 
 ------------------------------------------------------------------------
 === History: ===
