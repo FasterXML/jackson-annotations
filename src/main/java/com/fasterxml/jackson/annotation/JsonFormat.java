@@ -283,9 +283,36 @@ public @interface JsonFormat
         public TimeZone getTimeZone() {
             TimeZone tz = _timezone;
             if (tz == null) {
+                if (timezoneStr == null) {
+                    return null;
+                }
                 _timezone = tz = TimeZone.getTimeZone(timezoneStr);
             }
             return tz;
+        }
+
+        /**
+         * @since 2.4
+         */
+        public boolean hasShape() { return shape != Shape.ANY; }
+        
+        /**
+         * @since 2.4
+         */
+        public boolean hasPattern() {
+            return (pattern != null) && (pattern.length() > 0);
+        }
+        
+        /**
+         * @since 2.4
+         */
+        public boolean hasLocale() { return locale != null; }
+
+        /**
+         * @since 2.4
+         */
+        public boolean hasTimeZone() {
+            return (_timezone != null) || (timezoneStr != null && !timezoneStr.isEmpty());
         }
     }
 }
