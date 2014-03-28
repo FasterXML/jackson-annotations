@@ -185,7 +185,11 @@ public @interface JsonFormat
         private final String pattern;
         private final Shape shape;
         private final Locale locale;
-        private final TimeZone timezone;
+
+        private final String timezoneStr;
+
+        // lazily constructed when created from annotations
+        private TimeZone _timezone;
 
         public Value() {
             this("", Shape.ANY, "", "");
@@ -197,11 +201,12 @@ public @interface JsonFormat
 
         public Value(String p, Shape sh, String localeStr, String tzStr)
         {
-            this(p, sh
-                    ,(localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
-                            null : new Locale(localeStr)
-                    ,(tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
-                            null : TimeZone.getTimeZone(tzStr)
+            this(p, sh,
+                    (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
+                            null : new Locale(localeStr),
+                    (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
+                            null : tzStr,
+                    null
             );
         }
 
@@ -213,40 +218,74 @@ public @interface JsonFormat
             pattern = p;
             shape = sh;
             locale = l;
-            timezone = tz;
+            _timezone = tz;
+            timezoneStr = null;
+        }
+
+        /**
+         * @since 2.4
+         */
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz)
+        {
+            pattern = p;
+            shape = sh;
+            locale = l;
+            _timezone = tz;
+            timezoneStr = tzStr;
         }
 
         /**
          * @since 2.1
          */
         public Value withPattern(String p) {
-            return new Value(p, shape, locale, timezone);
+            return new Value(p, shape, locale, timezoneStr, _timezone);
         }
 
         /**
          * @since 2.1
          */
         public Value withShape(Shape s) {
-            return new Value(pattern, s, locale, timezone);
+            return new Value(pattern, s, locale, timezoneStr, _timezone);
         }
 
         /**
          * @since 2.1
          */
         public Value withLocale(Locale l) {
-            return new Value(pattern, shape, l, timezone);
+            return new Value(pattern, shape, l, timezoneStr, _timezone);
         }
 
         /**
          * @since 2.1
          */
         public Value withTimeZone(TimeZone tz) {
-            return new Value(pattern, shape, locale, tz);
+            return new Value(pattern, shape, locale, null, tz);
         }
         
         public String getPattern() { return pattern; }
         public Shape getShape() { return shape; }
         public Locale getLocale() { return locale; }
-        public TimeZone getTimeZone() { return timezone; }
+
+        /**
+         * Alternate access (compared to {@link #getTimeZone()}) which is useful
+         * when caller just wants time zone id to convert, but not as JDK
+         * provided {@link TimeZone}
+         * 
+         * @since 2.4
+         */
+        public String timeZoneAsString() {
+            if (_timezone != null) {
+                return _timezone.getID();
+            }
+            return timezoneStr;
+        }
+        
+        public TimeZone getTimeZone() {
+            TimeZone tz = _timezone;
+            if (tz == null) {
+                _timezone = tz = TimeZone.getTimeZone(timezoneStr);
+            }
+            return tz;
+        }
     }
 }
