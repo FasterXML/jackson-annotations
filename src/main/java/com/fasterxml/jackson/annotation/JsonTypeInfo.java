@@ -198,15 +198,17 @@ public @interface JsonTypeInfo
      */
     
     /**
-     * What kind of type metadata is to be used for serializing and deserializing
-     * type information for instances of annotated type (and its subtypes
-     * unless overridden)
+     * Specifies kind of type metadata to use when serializing
+     * type information for instances of annotated type
+     * and its subtypes; as well as what is expected during
+     * deserialization.
      */
     public Id use();    
     
     /**
-     * What mechanism is used for including type metadata (if any; for
-     * {@link Id#NONE} nothing is included). Default
+     * Specifies mechanism to use for including type metadata (if any; for
+     * {@link Id#NONE} nothing is included); used when serializing,
+     * and expected when deserializing.
      *<p>
      * Note that for type metadata type of {@link Id#CUSTOM},
      * this setting may or may not have any effect.
@@ -221,16 +223,17 @@ public @interface JsonTypeInfo
      * is only used for determining actual type.
      *<p>
      * Default property name used if this property is not explicitly defined
-     * (or is set to empty String) is based on
+     * (or is set to empty <code>String</code>) is based on
      * type metadata type ({@link #use}) used.
      */
     public String property() default "";
 
     /**
      * Optional property that can be used to specify default implementation
-     * class to use if type identifier is either not present, or can not
-     * be mapped to a registered type (which can occur for ids, but not when
-     * specifying explicit class to use).
+     * class to use for deserialization if type identifier is either not present,
+     * or can not be mapped to a registered type (which can occur for ids,
+     * but not when specifying explicit class to use).
+     * Property has no effect on serialization.
      *<p>
      * Note that while this property allows specification of the default
      * implementation to use, it does not help with structural issues that
@@ -253,6 +256,7 @@ public @interface JsonTypeInfo
      * Property that defines whether type identifier value will be passed
      * as part of JSON stream to deserializer (true), or handled and
      * removed by <code>TypeDeserializer</code> (false).
+     * Property has no effect on serialization.
      *<p>
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
