@@ -32,6 +32,15 @@ public @interface JsonProperty
     public final static String USE_DEFAULT_NAME = "";
 
     /**
+     * Marker value used to indicate that no index has been specified.
+     * Used as the default value as annotations do not allow "missing"
+     * values.
+     * 
+     * @since 2.4
+     */
+    public final static int INDEX_UNKNOWN = -1;
+    
+    /**
      * Defines name of the logical property, i.e. JSON object field
      * name to use for the property. If value is empty String (which is the
      * default), will try to use name of the field that is annotated.
@@ -59,6 +68,16 @@ public @interface JsonProperty
      */
     boolean required() default false;
 
+    /**
+     * Property that indicates numerical index of this property (relative
+     * to other properties specified for the Object). This index
+     * is typically used by binary formats, but may also be useful
+     * for schema languages and other tools.
+     * 
+     * @since 2.4
+     */
+    int index() default INDEX_UNKNOWN;
+    
     /* NOTE: considering of adding ability to specify default
      * String value -- would work well for scalar types, most of
      * which can coerce from Strings. But won't add for 2.0 yet.

@@ -5,6 +5,7 @@ NOTE: Annotations module will never contain changes in patch versions,
  only .0 releases can have changes.
 
 #31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
+#32: Add `@JsonProperty.index`
 - Add `JsonFormat.Value#timeZoneAsString` (needed by Joda module)
 
 ------------------------------------------------------------------------
