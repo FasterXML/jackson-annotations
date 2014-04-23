@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
  * property.
  * Currently used to populate the description field in generated JSON
  * Schemas.
+ *
+ * @since 2.3
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
