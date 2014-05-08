@@ -6,7 +6,6 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 #31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
 #32: Add `@JsonProperty.index`
-#33: Add `@JsonRootName.alwaysWrap`
 - Add `JsonFormat.Value#timeZoneAsString` (needed by Joda module)
 - Add `@JsonRootName.namespace` to allow specifying of namespace with
   standard Jackson annotations (not just XML-specific ones that dataformat-xml
