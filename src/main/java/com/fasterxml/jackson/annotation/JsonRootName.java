@@ -22,4 +22,23 @@ public @interface JsonRootName
      */
     public String value();
 
+    /**
+     * Optioanl marker property that can be defined as <code>true</code> to force
+     * wrapping of root element, regardless of whether globally
+     * "root wrapping" is enabled or not.
+     *<p>
+     * Note that value of <code>false</code> is taken to mean "use defaults",
+     * and will not block use of wrapper if use is indicated by global features.
+     *
+     * @since 2.4
+     */
+    public boolean alwaysWrap() default false;
+    
+    /**
+     * Optional namespace to use with data formats that support such
+     * concept (specifically XML).
+     *
+     * @since 2.4
+     */
+    public String namespace() default "";
 }
