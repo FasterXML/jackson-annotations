@@ -43,7 +43,15 @@ import java.util.TimeZone;
  *    will not work as per-property annotation.
  *   </li>
  *</ul>
- * 
+ * In Jackson 2.4:
+ * <ul>
+ * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
+ *    {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
+ *    scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
+ *    will not work as per-property annotation.
+ *   </li>
+ *</ul>
+ *
  * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
