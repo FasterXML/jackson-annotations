@@ -1,8 +1,10 @@
 Project: jackson-annotations
-Version: 2.4.0-RC1 (26-Apr-2013)
+Version: 2.4.0 (29-May-2014)
 
 NOTE: Annotations module will never contain changes in patch versions,
- only .0 releases can have changes.
+ only .0 releases can have changes. We may still release patch versions, but
+ they will be identical to .0 versions, and only released for convenience
+ (developers can line up all Jackson components with same patch version number)
 
 #31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
 #32: Add `@JsonProperty.index`
@@ -15,7 +17,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === History: ===
 ------------------------------------------------------------------------
 
-2.3.2 (01-Mar-2015)
+2.3.2 (01-Mar-2014)
 2.3.1 (28-Dec-2013)
 2.3.0 (13-Nov-2013)
 
