@@ -36,7 +36,7 @@ To use annotations, you need to use Maven dependency:
 </dependency>
 ```
 
-or download jars from Maven repository or [Download page](http://wiki.fasterxml.com/JacksonDownload)
+or download jars from Maven repository (or via quick links on [Wiki](../../wiki)
 
 ## Usage, simple
 
@@ -238,7 +238,7 @@ public class POJOWithNoFields {
 Project-specific documentation:
 
 * [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations.
-* [Documentation](../../wiki/Documentation)
+* [Other documentation](../../wiki)
 
 Usage:
 
