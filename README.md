@@ -8,7 +8,7 @@ to the [Databind package](/FasterXML/jackson-databind).
 Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
-[Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.4.0/) gives more details.
+[Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations; [Javadocs](http://fasterxml.github.com/jackson-annotations/javadoc/2.4/) gives more details.
 
 Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
