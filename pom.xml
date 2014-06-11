@@ -4,11 +4,12 @@
   <parent>
     <groupId>com.fasterxml</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>10</version>
+    <version>11</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-annotations</artifactId>
+  <packaging>bundle</packaging>
   <name>Jackson-annotations</name>
   <version>2.2.4-SNAPSHOT</version>
   <description>Core annotations used for value types, used by Jackson data binding package.
