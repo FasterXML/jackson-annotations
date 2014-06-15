@@ -1,10 +1,18 @@
 Project: jackson-annotations
-Version: 2.4.0 (29-May-2014)
+Version: 2.4.1 (16-Jun-2014)
 
 NOTE: Annotations module will never contain changes in patch versions,
  only .0 releases can have changes. We may still release patch versions, but
  they will be identical to .0 versions, and only released for convenience
  (developers can line up all Jackson components with same patch version number)
+
+No changes since 2.4.0.
+
+------------------------------------------------------------------------
+=== History: ===
+------------------------------------------------------------------------
+
+2.4.0 (29-May-2014)
 
 #31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
 #32: Add `@JsonProperty.index`
@@ -12,10 +20,6 @@ NOTE: Annotations module will never contain changes in patch versions,
 - Add `@JsonRootName.namespace` to allow specifying of namespace with
   standard Jackson annotations (not just XML-specific ones that dataformat-xml
   provides)
-
-------------------------------------------------------------------------
-=== History: ===
-------------------------------------------------------------------------
 
 2.3.2 (01-Mar-2014)
 2.3.1 (28-Dec-2013)
