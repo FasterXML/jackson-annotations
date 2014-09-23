@@ -172,14 +172,21 @@ public @interface JsonTypeInfo
         EXTERNAL_PROPERTY,
 
         /**
+         * NOTE: <b>this inclusion mechanism is NOT support</b> as of Jackson
+         * 2.5. Support will be added in future, but please note that it does
+         * not yet exist.
+         * Following description explains how it is intended to work, when support
+         * has been added.
+         *<p>
          * Inclusion mechanism similar to <code>PROPERTY</code> with respect
          * to deserialization; but one that is produced by a "regular" accessible
          * property during serialization. This means that <code>TypeSerializer</code>
-         * will do nothing, and expect a property with defined name to be output
+         * will do nothing, and expects a property with defined name to be output
          * using some other mechanism (like default POJO property serialization, or
          * custom serializer).
          *<p>
-         * Note that this behavior is quite similar to that of using {@link JsonTypeId};
+         * Note that this behavior is quite similar to that of using {@link JsonTypeId}
+         * annotation;
          * except that here <code>TypeSerializer</code> is basically suppressed;
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
