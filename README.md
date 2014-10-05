@@ -41,7 +41,7 @@ or download jars from Maven repository (or via quick links on [Wiki](../../wiki)
 
 ## Usage, simple
 
-Let's start with simple use cases: renaming or ignoring properties, and modifying types that are used.
+Let's start with simple use cases: renaming or ignoring properties during object serialization, and modifying types that are used.
 
 Note: while examples only show field properties, same annotations would work with method (getter/setter) properties.
 
