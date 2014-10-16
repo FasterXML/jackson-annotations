@@ -172,12 +172,6 @@ public @interface JsonTypeInfo
         EXTERNAL_PROPERTY,
 
         /**
-         * NOTE: <b>this inclusion mechanism is NOT support</b> as of Jackson
-         * 2.5. Support will be added in future, but please note that it does
-         * not yet exist.
-         * Following description explains how it is intended to work, when support
-         * has been added.
-         *<p>
          * Inclusion mechanism similar to <code>PROPERTY</code> with respect
          * to deserialization; but one that is produced by a "regular" accessible
          * property during serialization. This means that <code>TypeSerializer</code>
@@ -192,7 +186,7 @@ public @interface JsonTypeInfo
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
          * 
-         * @since 2.3.0
+         * @since 2.3.0 but databind <b>only since 2.5.0</b>.
          */
         EXISTING_PROPERTY
         ;
