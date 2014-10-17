@@ -22,10 +22,19 @@ import java.lang.annotation.Target;
 public @interface JsonInclude
 {
     /**
-     * Inclusion rule to use.
+     * Inclusion rule to use for instances (values) of types (Classes) or
+     * properties annotated.
      */
     public Include value() default Include.ALWAYS;
-    
+
+    /**
+     * Inclusion rule to use for entries ("content") of annotated
+     * {@link java.util.Map}s; defaults to {@link Include#ALWAYS}.
+     * 
+     * @since 2.5
+     */
+    public Include content() default Include.ALWAYS;
+
     /*
     /**********************************************************
     /* Value enumerations needed
