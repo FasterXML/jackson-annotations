@@ -13,6 +13,9 @@ Note that with version 1.x these annotations were part of the 'core jar'.
 
 Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
+
+[![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations)
+
 -----
 
 ## Usage, general
