@@ -3,17 +3,25 @@ Project: jackson-annotations
 NOTE: Annotations module will never contain changes in patch versions,
  only .0 releases can have changes. We may still release patch versions, but
  they will be identical to .0 versions, and only released for convenience
- (developers can line up all Jackson components with same patch version number)
+ (developers can line up all Jackson components with same patch version number).
+ Main components will typically depend on .0 versions: please do NOT file
+ issues against this being a bug; it is intentional.
 
 ------------------------------------------------------------------------
 === Releases ===
 ------------------------------------------------------------------------
 
-2.5.0 (xx-xxx-2014)
+2.5.0 (not yet released)
 
 - Added `@JsonInclude.content` to allow specifying inclusion criteria
   for `java.util.Map` entries separate from inclusion of `Map` values
   themselves
+
+2.4.3 (02-Oct-2014)
+2.4.2 (13-Aug-2014)
+2.4.1
+
+No changes since 2.4.0.
 
 2.4.0 (29-May-2014)
 
