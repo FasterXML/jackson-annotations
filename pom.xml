@@ -15,7 +15,7 @@
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
 
-  <url>http://wiki.fasterxml.com/JacksonHome</url>
+  <url>http://github.com/FasterXML/jackson</url>
   <scm>
     <connection>scm:git:git@github.com:FasterXML/jackson-annotations.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/jackson-annotations.git</developerConnection>
