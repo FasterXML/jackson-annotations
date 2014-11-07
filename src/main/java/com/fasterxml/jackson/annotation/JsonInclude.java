@@ -47,7 +47,7 @@ public @interface JsonInclude
      * of Java Beans are to be included in serialization.
      *<p>
      * Note: Jackson 1.x had similarly named ("Inclusion") enumeration included
-     * in <code>JsonSerialize</code> annotation: it is not deprecated
+     * in <code>JsonSerialize</code> annotation: it is now deprecated
      * and this value used instead.
      */
     public enum Include
