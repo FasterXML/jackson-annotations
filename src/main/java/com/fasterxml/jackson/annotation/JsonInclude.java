@@ -78,6 +78,8 @@ public @interface JsonInclude
          * Value that indicates that only properties that have values
          * that values that are null or what is considered empty are
          * not to be included.
+         * Definition of emptiness is data type specific; see below
+         * for details on actual handling.
          *<p>
          * Default emptiness is defined for following type:
          *<ul>
@@ -90,8 +92,11 @@ public @interface JsonInclude
          *   and return value of 0 indicates empty String (note that <code>String.isEmpty()</code>
          *   was added in Java 1.6 and as such can not be used by Jackson
          *   </li>
+         * <li>For date/time types, if timestamp from Epoch is zero (January 1st, 1970, UTC),
+         *    value is considered empty.
+         *   </li>
          * <ul>
-         *  and for other types, non-null values are to be included.
+         *  and for other types, null values are excluded but other exclusions (if any).
          *<p>
          * Note that this default handling can be overridden by custom
          * <code>JsonSerializer</code> implementation: if method <code>isEmpty()</code>

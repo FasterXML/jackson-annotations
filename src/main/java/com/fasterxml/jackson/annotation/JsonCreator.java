@@ -26,6 +26,10 @@ import java.lang.annotation.Target;
  * Also note that all {@link JsonProperty} annotations MUST use actual name
  * (NOT empty String for "default"): this because Java bytecode does not
  * retain names of method or constructor arguments.
+ *<br />
+ * NOTE: as of JDK 8, some of above changes, with introduction of names for
+ * constructor and method parameters.
+ *
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
