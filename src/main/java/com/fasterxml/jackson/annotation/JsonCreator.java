@@ -36,5 +36,48 @@ import java.lang.annotation.Target;
 @JacksonAnnotation
 public @interface JsonCreator
 {
-    // no values, since there's no property
+    /**
+     * Property that is used to indicate how argument(s) is/are bound for creator,
+     * in cases there may be multiple alternatives. Currently the one case is that
+     * of a single-argument creator method, for which both so-called "delegating" and
+     * "property-based" bindings are possible: since
+     * delegating mode can not be used for multi-argument creators, the only choice
+     * there is "property-based" mode.
+     * Check {@link Mode} for more complete explanation of possible choices.
+     *<p>
+     * Default value of {@link Mode#DEFAULT} means that caller is to use standard
+     * heuristics for choosing mode to use.
+     * 
+     * @since 2.5
+     */
+    public Mode mode() default Mode.DEFAULT;
+    
+    /**
+     * @since 2.5
+     */
+    public enum Mode {
+        /**
+         * Pseudo-mode that indicates that caller is to use default heuristics for
+         * choosing mode to use. This typically favors use of delegating mode for
+         * single-argument creators that take structured types.
+         */
+        DEFAULT,
+
+        /**
+         * Mode that indicates that if creator takes a single argument, the whole incoming
+         * data value is to be bound into declared type of that argument; this "delegate"
+         * value is then passed as the argument to creator.
+         */
+        DELEGATING,
+
+        /**
+         * Mode that indicates that the argument(s) for creator are to be bound from matching
+         * properties of incoming Object value, using creator argument names (explicit or implicit)
+         * to match incoming Object properties to arguments.
+         *<p>
+         * Note that this mode is currently (2.5) always used for multiple-argument creators;
+         * the only ambiguous case is that of a single-argument creator.
+         */
+        PROPERTIES
+    }
 }
