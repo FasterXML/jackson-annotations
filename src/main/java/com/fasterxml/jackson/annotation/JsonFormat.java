@@ -224,7 +224,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, TimeZone tz)
         {
             pattern = p;
-            shape = sh;
+            shape = (sh == null) ? Shape.ANY : sh;
             locale = l;
             _timezone = tz;
             timezoneStr = null;
@@ -236,7 +236,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz)
         {
             pattern = p;
-            shape = sh;
+            shape = (sh == null) ? Shape.ANY : sh;
             locale = l;
             _timezone = tz;
             timezoneStr = tzStr;
@@ -294,7 +294,8 @@ public @interface JsonFormat
                 if (timezoneStr == null) {
                     return null;
                 }
-                _timezone = tz = TimeZone.getTimeZone(timezoneStr);
+                tz = TimeZone.getTimeZone(timezoneStr);
+                _timezone = tz;
             }
             return tz;
         }
