@@ -1,5 +1,4 @@
 Project: jackson-annotations
-Version: 2.4.3 (02-Oct-2014)
 
 NOTE: Annotations module will never contain changes in patch versions,
  only .0 releases can have changes. We may still release patch versions, but
@@ -7,9 +6,11 @@ NOTE: Annotations module will never contain changes in patch versions,
  (developers can line up all Jackson components with same patch version number)
 
 ------------------------------------------------------------------------
-=== History: ===
+=== Releases ===
 ------------------------------------------------------------------------
 
+2.4.4 (24-Nov-2014)
+2.4.3 (02-Oct-2014)
 2.4.2 (13-Aug-2014)
 2.4.1
 
