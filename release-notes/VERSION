@@ -13,11 +13,12 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.5.0 (not yet released)
 
-#47: Add `@JsonCreatore.mode` property to explicitly choose between delegating- and property-based creators
+#47: Add `@JsonCreator.mode` property to explicitly choose between delegating- and property-based creators
 - Added `@JsonInclude.content` to allow specifying inclusion criteria
   for `java.util.Map` entries separate from inclusion of `Map` values
   themselves
 
+2.4.4 (24-Nov-2014)
 2.4.3 (02-Oct-2014)
 2.4.2 (13-Aug-2014)
 2.4.1
