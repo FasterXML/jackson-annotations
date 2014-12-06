@@ -272,6 +272,8 @@ public @interface JsonTypeInfo
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
      * If true, omission is allowed (although writer may or may not be able to do that);
      * if false, type id should always be written still.
+     *
+     * @since 2.5
      */
     public boolean skipWritingDefault() default false;
     
