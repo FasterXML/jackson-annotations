@@ -15,6 +15,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 #47: Add `@JsonCreator.mode` property to explicitly choose between delegating- and property-based creators
 #48: Allow `@JsonView` for (method) parameters too
+#49: Add `@JsonTypeInfo.skipWritingDefault`
 - Added `@JsonInclude.content` to allow specifying inclusion criteria
   for `java.util.Map` entries separate from inclusion of `Map` values
   themselves

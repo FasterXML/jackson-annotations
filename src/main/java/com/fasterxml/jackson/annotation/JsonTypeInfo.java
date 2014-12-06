@@ -250,10 +250,8 @@ public @interface JsonTypeInfo
      * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
      *   objects with unmappable (or missing) type are to be mapped to null references.
      * </ul>
-     * 
-     * TODO: In 2.5, change default to {@link java.lang.Void}
      */
-    public Class<?> defaultImpl() default None.class;
+    public Class<?> defaultImpl() default Void.class;
 
     /**
      * Property that defines whether type identifier value will be passed
@@ -268,6 +266,14 @@ public @interface JsonTypeInfo
      * @since 2.0
      */
     public boolean visible() default false;
+
+    /**
+     * Property that defines whether type serializer is allowed to omit writing
+     * of type id, in case that value written has type same as {@link #defaultImpl()}.
+     * If true, omission is allowed (although writer may or may not be able to do that);
+     * if false, type id should always be written still.
+     */
+    public boolean skipWritingDefault() default false;
     
     /*
     /**********************************************************
