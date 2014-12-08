@@ -250,8 +250,12 @@ public @interface JsonTypeInfo
      * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
      *   objects with unmappable (or missing) type are to be mapped to null references.
      * </ul>
+     *<p>
+     * NOTE: starting with 2.5, jackson-databind recognizes both {@link None}
+     * and {@link java.lang.Void}.
+     * as missing values; so with 2.6 we should switch over to using {@link java.lang.Void}
      */
-    public Class<?> defaultImpl() default Void.class;
+    public Class<?> defaultImpl() default None.class;
 
     /**
      * Property that defines whether type identifier value will be passed
@@ -288,7 +292,7 @@ public @interface JsonTypeInfo
      * annotation property, to indicate that there is no default implementation
      * specified.
      * 
-     * @deprecated Since 2.4, use {@link java.lang.Void} instead.
+     * @deprecated Since 2.5, use {@link java.lang.Void} instead.
      */
     @Deprecated
     public abstract static class None { }
