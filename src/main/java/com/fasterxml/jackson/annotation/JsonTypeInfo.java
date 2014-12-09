@@ -246,14 +246,16 @@ public @interface JsonTypeInfo
      * There are certain special values that indicate alternate behavior:
      *<ul>
      * <li>{@link None} means "there is no default implementation" (in which
-     *   case an error results from unmappable type)
+     *   case an error results from unmappable type).
+     *   With Jackson 2.5 and above, {@link JsonTypeInfo} itself will also be
+     *   accepted to meanb "no default implementation specified"
      * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
      *   objects with unmappable (or missing) type are to be mapped to null references.
+     *   With Jackson 2.5, {@link java.util.Void} may also be used to indicate this
+     *   behavior
      * </ul>
      *<p>
-     * NOTE: starting with 2.5, jackson-databind recognizes both {@link None}
-     * and {@link java.lang.Void}.
-     * as missing values; so with 2.6 we should switch over to using {@link java.lang.Void}
+     * TODO: change default value to be {@link JsonTypeInfo}.class in 2.6
      */
     public Class<?> defaultImpl() default None.class;
 
