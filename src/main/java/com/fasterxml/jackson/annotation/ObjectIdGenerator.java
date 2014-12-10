@@ -30,7 +30,25 @@ public abstract class ObjectIdGenerator<T>
      * @return True if this instance can be used as-is; false if not
      */
     public abstract boolean canUseFor(ObjectIdGenerator<?> gen);
-    
+
+    /**
+     * Accessor that needs to be overridden to return <code>true</code>
+     * if the Object Id may be serialized as JSON Object; used by, for example,
+     * JSOG handling.
+     * The reason accessor is needed is because handling such Object Ids is
+     * more complex and may incur additional buffering or performance overhead,
+     * avoiding of which makes sense for common case of scalar object ids
+     * (or native object ids some formats support).
+     *<p>
+     * Default implementation returns <code>false</code>, so needs to be overridden
+     * by Object-producing generators.
+     *
+     * @since 2.5
+     */
+    public boolean maySerializeAsObject() {
+        return false;
+    }
+
     /*
     /**********************************************************
     /* Factory methods
