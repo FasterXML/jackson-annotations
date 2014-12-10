@@ -7,14 +7,8 @@ import java.util.UUID;
  */
 public class ObjectIdGenerators
 {
-    /*
-    /**********************************************************
-    /* Shared base class for concrete implementations
-    /**********************************************************
-     */
-
     /**
-     * Helper class for implementations contained.
+     * Shared base class for concrete implementations.
      */
     @SuppressWarnings("serial")
     private abstract static class Base<T> extends ObjectIdGenerator<T>

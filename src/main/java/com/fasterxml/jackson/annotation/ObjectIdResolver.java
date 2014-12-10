@@ -3,19 +3,18 @@ package com.fasterxml.jackson.annotation;
 import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 
 /**
- * Definition of API used for constructing POJO from Object Identifiers (as
- * annotated using {@link JsonIdentityInfo}).
- * 
+ * Definition of API used for resolving actual Java object from
+ * Object Identifiers (as annotated using {@link JsonIdentityInfo}).
+ *
  * @since 2.4
  */
 public interface ObjectIdResolver {
     /**
      * Method called when a POJO is deserialized and has an Object Identifier.
      * Method exists so that implementation can keep track of existing object in
-     * json stream that could be useful for further resolution.
+     * JSON stream that could be useful for further resolution.
      * 
-     * @param id
-     *            The Object Identifer
+     * @param id The Object Identifer
      * @param ob
      *            The POJO associated to that Identifier
      */
@@ -25,8 +24,7 @@ public interface ObjectIdResolver {
      * Method called when deserialization encounters the given Object Identifier
      * and requires the POJO associated with it.
      * 
-     * @param id
-     *            The Object Identifier
+     * @param id The Object Identifier
      * @return The POJO, or null if unable to resolve.
      */
     Object resolveId(IdKey id);

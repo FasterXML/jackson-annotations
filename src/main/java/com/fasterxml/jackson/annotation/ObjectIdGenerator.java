@@ -49,6 +49,21 @@ public abstract class ObjectIdGenerator<T>
         return false;
     }
 
+    /**
+     * Accessor that may be called (after verifying (via {@link #maySerializeAsObject()})
+     * whether given name 
+     * 
+     * @param name Name of property to check
+     * @param parser Parser that points to property name, in case generator needs
+     *    further verification (note: untyped, because <code>JsonParser</code> is defined
+     *    in `jackson-core`, and this package does not depend on it).
+     * 
+     * @since 2.5
+     */
+    public boolean isValidReferencePropertyName(String name, Object parser) {
+        return false;
+    }
+    
     /*
     /**********************************************************
     /* Factory methods

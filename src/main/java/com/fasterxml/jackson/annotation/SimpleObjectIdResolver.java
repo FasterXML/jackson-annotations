@@ -11,12 +11,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
  * @author Pascal Gélinas
  */
 public class SimpleObjectIdResolver implements ObjectIdResolver {
-    private Map<IdKey,Object> _items = new HashMap<ObjectIdGenerator.IdKey,Object>();
+    private Map<IdKey,Object> _items;
 
     @Override
     public void bindItem(IdKey id, Object ob)
     {
-        if (_items.containsKey(id)) {
+        if (_items == null) {
+            _items = new HashMap<ObjectIdGenerator.IdKey,Object>();
+        } else if (_items.containsKey(id)) {
             throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
                     + "]");
         }
@@ -24,20 +26,17 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
     }
 
     @Override
-    public Object resolveId(IdKey id)
-    {
-        return _items.get(id);
+    public Object resolveId(IdKey id) {
+        return (_items == null) ? null : _items.get(id);
     }
 
     @Override
-    public boolean canUseFor(ObjectIdResolver resolverType)
-    {
+    public boolean canUseFor(ObjectIdResolver resolverType) {
         return resolverType.getClass() == getClass();
     }
     
     @Override
-    public ObjectIdResolver newForDeserialization(Object context)
-    {
+    public ObjectIdResolver newForDeserialization(Object context) {
         return this;
     }
 }
