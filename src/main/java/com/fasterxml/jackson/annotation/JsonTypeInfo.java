@@ -251,7 +251,7 @@ public @interface JsonTypeInfo
      *   accepted to meanb "no default implementation specified"
      * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
      *   objects with unmappable (or missing) type are to be mapped to null references.
-     *   With Jackson 2.5, {@link java.util.Void} may also be used to indicate this
+     *   With Jackson 2.5, {@link java.lang.Void} may also be used to indicate this
      *   behavior
      * </ul>
      *<p>
