@@ -37,6 +37,8 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
     
     @Override
     public ObjectIdResolver newForDeserialization(Object context) {
-        return this;
+        // 19-Dec-2014, tatu: Important: must re-create without existing mapping; otherwise bindings leak
+        //    (and worse, cause unnecessary memory retention)
+        return new SimpleObjectIdResolver();
     }
 }
