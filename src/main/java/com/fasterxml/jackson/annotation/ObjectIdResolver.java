@@ -15,8 +15,7 @@ public interface ObjectIdResolver {
      * JSON stream that could be useful for further resolution.
      * 
      * @param id The Object Identifer
-     * @param ob
-     *            The POJO associated to that Identifier
+     * @param pojo The POJO associated to that Identifier
      */
     void bindItem(IdKey id, Object pojo);
 

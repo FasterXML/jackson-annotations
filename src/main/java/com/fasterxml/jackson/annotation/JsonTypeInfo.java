@@ -248,7 +248,7 @@ public @interface JsonTypeInfo
      * <li>{@link None} means "there is no default implementation" (in which
      *   case an error results from unmappable type).
      *   With Jackson 2.5 and above, {@link JsonTypeInfo} itself will also be
-     *   accepted to meanb "no default implementation specified"
+     *   accepted to mean "no default implementation specified"
      * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
      *   objects with unmappable (or missing) type are to be mapped to null references.
      *   With Jackson 2.5, {@link java.lang.Void} may also be used to indicate this
@@ -273,6 +273,8 @@ public @interface JsonTypeInfo
      */
     public boolean visible() default false;
 
+    // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
+    //   Hope for better luck with 2.6.
     /**
      * Property that defines whether type serializer is allowed to omit writing
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
@@ -280,8 +282,8 @@ public @interface JsonTypeInfo
      * if false, type id should always be written still.
      *
      * @since 2.5
-     */
     public boolean skipWritingDefault() default false;
+    /*
     
     /*
     /**********************************************************
