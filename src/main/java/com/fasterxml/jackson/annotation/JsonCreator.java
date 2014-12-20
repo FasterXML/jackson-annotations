@@ -51,7 +51,16 @@ public @interface JsonCreator
      * @since 2.5
      */
     public Mode mode() default Mode.DEFAULT;
-    
+
+    /**
+     * Property that may be used to disable annotation: this is mostly useful with
+     * annotation mix-ins, where one can suppress existing annotation from class
+     * in case it causes problems, or if different creator should be used.
+     *
+     * @since 2.5
+     */
+    public boolean enabled() default true;
+
     /**
      * @since 2.5
      */
