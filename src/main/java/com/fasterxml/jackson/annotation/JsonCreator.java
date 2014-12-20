@@ -53,15 +53,6 @@ public @interface JsonCreator
     public Mode mode() default Mode.DEFAULT;
 
     /**
-     * Property that may be used to disable annotation: this is mostly useful with
-     * annotation mix-ins, where one can suppress existing annotation from class
-     * in case it causes problems, or if different creator should be used.
-     *
-     * @since 2.5
-     */
-    public boolean enabled() default true;
-
-    /**
      * @since 2.5
      */
     public enum Mode {
@@ -87,6 +78,13 @@ public @interface JsonCreator
          * Note that this mode is currently (2.5) always used for multiple-argument creators;
          * the only ambiguous case is that of a single-argument creator.
          */
-        PROPERTIES
+        PROPERTIES,
+
+        /**
+         * Pseudo-mode that indicates that creator is not to be used. This can be used as a result
+         * value for explicit disabling, usually either by custom annotation introspector,
+         * or by annotation mix-ins (for example when choosing different creator).
+         */
+        DISABLED
     }
 }

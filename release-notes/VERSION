@@ -13,12 +13,12 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.5.0 (not yet released)
 
-#47: Add `@JsonCreator.mode` property to explicitly choose between delegating- and property-based creators
+#47: Add `@JsonCreator.mode` property to explicitly choose between delegating-
+ and property-based creators, or to disable specific creator (Mode.DISABLED)
 #48: Allow `@JsonView` for (method) parameters too
 #49: Add `@JsonTypeInfo.skipWritingDefault`
 #50: Add `ObjectIdGenerator.maySerializeAsObject()`,
   `ObjectIdGenerator.ObjectIdGenerator.maySerializeAsObject()` to support JSOG
-- Added `@JsonCreator.enabled` to allow suppression of existing annotation via mix-ins.
 - Added `@JsonInclude.content` to allow specifying inclusion criteria
   for `java.util.Map` entries separate from inclusion of `Map` values
   themselves
