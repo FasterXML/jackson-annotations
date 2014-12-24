@@ -23,6 +23,7 @@ NOTE: Annotations module will never contain changes in patch versions,
   for `java.util.Map` entries separate from inclusion of `Map` values
   themselves
 - Finalize fix for [databind#490], by ensuring new mapping initialized for new context
+- Added `@JsonProperty.defaultValue()` (related to [databind#596])
 
 2.4.4 (24-Nov-2014)
 2.4.3 (02-Oct-2014)

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
  * @author Pascal Gélinas
  */
 public class SimpleObjectIdResolver implements ObjectIdResolver {
-    private Map<IdKey,Object> _items;
+    protected Map<IdKey,Object> _items;
+
+    public SimpleObjectIdResolver() { }
 
     @Override
     public void bindItem(IdKey id, Object ob)
@@ -34,7 +36,7 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
     public boolean canUseFor(ObjectIdResolver resolverType) {
         return resolverType.getClass() == getClass();
     }
-    
+
     @Override
     public ObjectIdResolver newForDeserialization(Object context) {
         // 19-Dec-2014, tatu: Important: must re-create without existing mapping; otherwise bindings leak

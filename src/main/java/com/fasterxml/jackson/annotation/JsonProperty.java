@@ -77,10 +77,16 @@ public @interface JsonProperty
      * @since 2.4
      */
     int index() default INDEX_UNKNOWN;
-    
-    /* NOTE: considering of adding ability to specify default
-     * String value -- would work well for scalar types, most of
-     * which can coerce from Strings. But won't add for 2.0 yet.
+
+    /**
+     * Property that may be used to <b>document</b> expected default value
+     * for the property: most often used as source information for generating
+     * schemas (like JSON Schema or protobuf/thrift schema), or documentation.
+     * It may also be used by Jackson extension modules; core jackson databind
+     * does not have any automated handling beyond simply exposing this
+     * value through bean property introspection.
+     *
+     * @since 2.5
      */
-    //String defaultValue() default "";
+    String defaultValue() default "";
 }
