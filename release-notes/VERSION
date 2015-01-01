@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.5.0 (not yet released)
+2.5.0 (01-Jan-2015)
 
 #47: Add `@JsonCreator.mode` property to explicitly choose between delegating-
  and property-based creators, or to disable specific creator (Mode.DISABLED)
