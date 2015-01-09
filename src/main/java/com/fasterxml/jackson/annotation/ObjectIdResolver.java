@@ -55,4 +55,16 @@ public interface ObjectIdResolver {
      * @return True if this instance can be used as-is; false if not
      */
     boolean canUseFor(ObjectIdResolver resolverType);
+
+    /**
+     * Method called when a reference was not resolved at all and the deserializer
+     * is about to throw an UnresolvedForwardReference exception.
+     *
+     * This is the last chance to resolve all missing pieces. If you want to report
+     * an UnresolvedForwardReference exception, simply return null.
+     *
+     * @param id The Object Identifier
+     * @return The POJO, or null if unable to resolve.
+     */
+    Object createItem(IdKey id);
 }

@@ -43,4 +43,10 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
         //    (and worse, cause unnecessary memory retention)
         return new SimpleObjectIdResolver();
     }
+
+    @Override
+    public Object createItem(IdKey id) {
+        // The default resolver reports unresolved forward references
+        return null;
+    }
 }
