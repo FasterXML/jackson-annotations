@@ -12,6 +12,16 @@ import java.lang.annotation.Target;
  * Without annotation property values are always included, but by using
  * this annotation one can specify simple exclusion rules to reduce
  * amount of properties to write out.
+ *<p>
+ * Note that inclusion criteria is checked on <b>Java object level</b>
+ * and <b>NOT</b> on JSON output -- so even with {@link Include#NON_NULL}
+ * it is possible that JSON null values are output, if object reference
+ * in question is not `null`. An example is {@link java.util.concurrent.AtomicReference}
+ * instance constructed to reference <code>null</code> value: such a value
+ * would be serialized as JSON null, and not filtered out.
+ * In such cases {@link Include#NON_EMPTY} should be used instead, since missing
+ * reference (that is, reference to Java null) is considered "empty" (it is also
+ * considered "default", so match {@link Include#NON_DEFAULT}).
  * 
  * @since 2.0
  */

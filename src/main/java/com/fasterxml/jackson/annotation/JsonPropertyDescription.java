@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotaion used to define a human readable description for a logical
+ * Annotation used to define a human readable description for a logical
  * property.
  * Currently used to populate the description field in generated JSON
  * Schemas.
