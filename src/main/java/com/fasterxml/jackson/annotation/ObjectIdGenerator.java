@@ -151,6 +151,9 @@ public abstract class ObjectIdGenerator<T>
         private final int hashCode;
         
         public IdKey(Class<?> type, Class<?> scope, Object key) {
+            if (key == null) {
+                throw new IllegalArgumentException("Can not construct IdKey for null key");
+            }
             this.type = type;
             this.scope = scope;
             this.key = key;

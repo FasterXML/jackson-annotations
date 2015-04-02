@@ -11,6 +11,10 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.6.0 (not yet released)
+
+#56: Improve `ObjectIdGenerators.key()` to handle `null` appropriately by returning `null`
+
 2.5.0 (01-Jan-2015)
 
 #47: Add `@JsonCreator.mode` property to explicitly choose between delegating-
