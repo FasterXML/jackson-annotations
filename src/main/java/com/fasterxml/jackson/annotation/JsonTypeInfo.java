@@ -234,7 +234,8 @@ public @interface JsonTypeInfo
      * class to use for deserialization if type identifier is either not present,
      * or can not be mapped to a registered type (which can occur for ids,
      * but not when specifying explicit class to use).
-     * Property has no effect on serialization.
+     * Property has no effect on choice of type id used for serialization;
+     * it is only used in deciding what to do for otherwise unmappable cases.
      *<p>
      * Note that while this property allows specification of the default
      * implementation to use, it does not help with structural issues that
