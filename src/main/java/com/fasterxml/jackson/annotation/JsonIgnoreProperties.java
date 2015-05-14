@@ -48,4 +48,30 @@ public @interface JsonIgnoreProperties
      * Does not have any effect on serialization.
      */
     public boolean ignoreUnknown() default false;
+
+    /**
+     * Property that can be enabled to allow "getters" to be used (that is,
+     * prevent ignoral of getters for properties listed in {@link #value()}).
+     * This is commonly set to support defining "read-only" properties; ones
+     * for which there is a getter, but no matching setter: in this case,
+     * properties should be ignored for deserialization but NOT serialization.
+     * Default value is `false`, which means that getters with matching names
+     * will be ignored.
+     * 
+     * @since 2.6
+     */
+    public boolean allowGetters() default false;
+
+    /**
+     * Property that can be enabled to allow "setters" to be used (that is,
+     * prevent ignoral of setters for properties listed in {@link #value()}).
+     * This could be used to specify "write-only" properties; ones
+     * that should not be serialized out, but that may be provided in for
+     * deserialization.
+     * Default value is `false`, which means that setters with matching names
+     * will be ignored.
+     * 
+     * @since 2.6
+     */
+    public boolean allowSetters() default false;
 }

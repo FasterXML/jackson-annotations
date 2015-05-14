@@ -23,13 +23,15 @@ import java.lang.annotation.Target;
  *   of property to bind to
  *  </li>
  * </ul>
- * Also note that all {@link JsonProperty} annotations MUST use actual name
- * (NOT empty String for "default"): this because Java bytecode does not
- * retain names of method or constructor arguments.
- *<br />
- * NOTE: as of JDK 8, some of above changes, with introduction of names for
- * constructor and method parameters.
- *
+ * Also note that all {@link JsonProperty} annotations must specify actual name
+ * (NOT empty String for "default") unless you use one of extension modules
+ * that can detect parameter name; this because default JDK versions before 8
+ * have not been able to store and/or retrieve parameter names from bytecode.
+ * But with JDK 8 (or using helper libraries such as Paranamer, or other JVM
+ * languages like Scala or Kotlin), specifying name is optional.
+ *<p>
+ * NOTE: As of Jackson 2.6, use of {@link JsonProperty#required()} is supported
+ * for Creator methods (but not necessarily for regular setters or fields!).
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
