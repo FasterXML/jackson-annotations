@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * Note that inclusion criteria is checked on <b>Java object level</b>
  * and <b>NOT</b> on JSON output -- so even with {@link Include#NON_NULL}
  * it is possible that JSON null values are output, if object reference
- * in question is not `null`. An example is {@link java.util.concurrent.AtomicReference}
+ * in question is not `null`. An example is {@link java.util.concurrent.atomic.AtomicReference}
  * instance constructed to reference <code>null</code> value: such a value
  * would be serialized as JSON null, and not filtered out.
  * In such cases {@link Include#NON_EMPTY} should be used instead, since missing
@@ -75,14 +75,19 @@ public @interface JsonInclude
         NON_NULL,
 
         /**
-         * Value that indicates that only properties that have values
-         * that differ from default settings (meaning values they have
-         * when Bean is constructed with its no-arguments constructor)
-         * are to be included. Value is generally not useful with
-         * {@link java.util.Map}s, since they have no default values;
-         * and if used, works same as {@link #ALWAYS}.
+         * Value that indicates that properties are included unless their value
+         * is:
+         *<ul>
+         *  <li>null</li>
+         *  <li>"absent" value of a referential type (like Java 8 `Optional`, or
+         *     {link java.utl.concurrent.atomic.AtomicReference}); that is, something
+         *     that would not deference to a non-null value.
+         * </ul>
+         * This option is mostly used to work with "Optional"s (Java 8, Guava).
+         *
+         * @since 2.6
          */
-        NON_DEFAULT,
+        NON_ABSENT,
 
         /**
          * Value that indicates that only properties that have values
@@ -113,8 +118,18 @@ public @interface JsonInclude
          * is overridden, it will be called to see if non-null values are
          * considered empty (null is always considered empty).
          */
-        NON_EMPTY
+        NON_EMPTY,
+
+        /**
+         * Value that indicates that only properties that have values
+         * that differ from default settings (meaning values they have
+         * when Bean is constructed with its no-arguments constructor)
+         * are to be included. Value is generally not useful with
+         * {@link java.util.Map}s, since they have no default values;
+         * and if used, works same as {@link #ALWAYS}.
+         */
+        NON_DEFAULT
+        
         ;
     }
-
 }
