@@ -15,6 +15,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 #56: Improve `ObjectIdGenerators.key()` to handle `null` appropriately by returning `null`
 #58: Add new properties for `@JsonIgnoreProperties`, "allowGetters", "allowSetters" 
+#60: Add new value type, `Nullean`, for "nullable booleans", to support proper handling
+  and usage of default values, not just explicit true/false.
 - Add `JsonInclude.Include.NON_ABSENT` value, for excluding "absent" Optional values.
 
 2.5.0 (01-Jan-2015)
