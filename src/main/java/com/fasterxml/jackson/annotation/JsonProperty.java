@@ -60,10 +60,15 @@ public @interface JsonProperty
      * rectify the problem, for example, by supplying a default
      * value).
      *<p>
-     * Note that as of 2.0, this property is NOT used by
-     * <code>BeanDeserializer</code>: support is expected to be
-     * added for a later minor version.
-     * 
+     * Note that as of 2.6, this property is only used for Creator
+     * Properties, to ensure existence of property value in JSON:
+     * for other properties (ones injected using a setter or mutable
+     * field), no validation is performed. Support for those cases
+     * may be added in future.
+     * State of this property is exposed via introspection, and its
+     * value is typically used by Schema generators, such as one for
+     * JSON Schema.
+     *
      * @since 2.0
      */
     boolean required() default false;
