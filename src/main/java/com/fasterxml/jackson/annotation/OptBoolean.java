@@ -1,7 +1,7 @@
 package com.fasterxml.jackson.annotation;
 
 /**
- * Nullable Boolean value, "nullean". Needed just because Java annotations
+ * Optional Boolean value ("nullean"). Needed just because Java annotations
  * can not take 'null' as a value (even as default), so there is no
  * way to distinguish between explicit `true` and `false`, and lack of
  * choice (related: annotations are limited to primitives, so
@@ -14,7 +14,7 @@ package com.fasterxml.jackson.annotation;
  *
  * @since 2.6
  */
-public enum Nullean
+public enum OptBoolean
 {
     /**
      * Value that indicates that the annotation property is explicitly defined to

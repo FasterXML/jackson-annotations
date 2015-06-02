@@ -90,8 +90,71 @@ public @interface JsonProperty
      * It may also be used by Jackson extension modules; core jackson databind
      * does not have any automated handling beyond simply exposing this
      * value through bean property introspection.
+     *<p>
+     * It is possible that in future this annotation could be used for value
+     * defaulting, and especially for default values of Creator properties,
+     * since they support {@link #required()} in 2.6 and above.
      *
      * @since 2.5
      */
     String defaultValue() default "";
+
+    /**
+     * Optional property that may be used to change the way visibility of
+     * accessors (getter, field-as-getter) and mutators (contructor parameter,
+     * setter, field-as-setter) is determined, either so that otherwise
+     * non-visible accessors (like private getters) may be used; or that
+     * otherwise visible accessors are ignored.
+     *<p>
+     * Default value os {@link Access#AUTO} which means that access is determined
+     * solely based on visibility and other annotations.
+     *
+     * @since 2.6
+     */
+    Access access() default Access.AUTO;
+    
+    /**
+     * Various options for {@link #access} property, specifying how property
+     * may be accessed during serialization ("read") and deserialization ("write")
+     * (note that the direction of read and write is from perspective of the property,
+     * not from external data format: this may be confusing in some contexts).
+     *<p>
+     * Note that while this annotation modifies access to annotated property,
+     * its effects may be further overridden by {@link JsonIgnore} property:
+     * if both annotations are present on an accessors, {@link JsonIgnore}
+     * has precedence over this property.
+     *
+     * @since 2.6
+     */
+    public enum Access
+    {
+        /**
+         * Access setting which means that visibility rules are to be used
+         * to automatically determine read- and/or write-access of this property.
+         */
+        AUTO,
+
+        /**
+         * Access setting that means that the property may only be read for serialization,
+         * but not written (set) during deserialization.
+         */
+        READ_ONLY,
+
+        /**
+         * Access setting that means that the property may only be written (set)
+         * for deserialization,
+         * but will not be read (get) on serialization, that is, the value of the property
+         * is not included in serialization.
+         */
+        WRITE_ONLY,
+
+        /**
+         * Access setting that means that the property will be accessed for both
+         * serialization (writing out values as external representation)
+         * and deserialization (reading values from external representation),
+         * regardless of visibility rules.
+         */
+        READ_WRITE
+        ;
+    }
 }

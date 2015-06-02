@@ -55,6 +55,9 @@ public @interface JsonIgnoreProperties
      * This is commonly set to support defining "read-only" properties; ones
      * for which there is a getter, but no matching setter: in this case,
      * properties should be ignored for deserialization but NOT serialization.
+     * Another way to think about this setting is that setting it to `true`
+     * will "disable" ignoring of getters.
+     *<p>
      * Default value is `false`, which means that getters with matching names
      * will be ignored.
      * 
@@ -68,6 +71,9 @@ public @interface JsonIgnoreProperties
      * This could be used to specify "write-only" properties; ones
      * that should not be serialized out, but that may be provided in for
      * deserialization.
+     * Another way to think about this setting is that setting it to `true`
+     * will "disable" ignoring of setters.
+     *<p>
      * Default value is `false`, which means that setters with matching names
      * will be ignored.
      * 
