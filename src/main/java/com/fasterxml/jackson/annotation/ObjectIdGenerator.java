@@ -180,7 +180,9 @@ public abstract class ObjectIdGenerator<T>
 
         @Override
         public String toString() {
-            return String.format("[ObjectId: key=%s, type=%s, scope=%s]", key, type, scope);
+            return String.format("[ObjectId: key=%s, type=%s, scope=%s]", key,
+                    (type == null) ? "NONE" : type.getName(),
+                    (scope == null) ? "NONE" : scope.getName());
         }
     }
 }
