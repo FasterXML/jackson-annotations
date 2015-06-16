@@ -177,5 +177,10 @@ public abstract class ObjectIdGenerator<T>
             IdKey other = (IdKey) o;
             return (other.key.equals(key)) && (other.type == type) && (other.scope == scope);
         }
+
+        @Override
+        public String toString() {
+            return String.format("[ObjectId: key=%s, type=%s, scope=%s]", key, type, scope);
+        }
     }
 }
