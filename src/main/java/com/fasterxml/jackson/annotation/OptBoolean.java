@@ -21,7 +21,7 @@ public enum OptBoolean
      * be enabled, or true.
      */
     TRUE,
-    
+
     /**
      * Value that indicates that the annotation property is explicitly defined to
      * be disabled, or false.
@@ -35,4 +35,20 @@ public enum OptBoolean
      * default.
      */
     DEFAULT;
+
+    public Boolean asBoolean() {
+        if (this == DEFAULT) return null;
+        return (this == TRUE) ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    public boolean asPrimitive() {
+        return (this == TRUE);
+    }
+
+    public static OptBoolean fromBoolean(Boolean b) {
+        if (b == null) {
+            return DEFAULT;
+        }
+        return b.booleanValue() ? TRUE : FALSE;
+    }
 }

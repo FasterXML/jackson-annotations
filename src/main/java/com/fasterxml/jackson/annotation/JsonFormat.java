@@ -20,15 +20,12 @@ import java.util.TimeZone;
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
  *<p>
- * As of Jackson 2.1, known special handling include:
+ * As of Jackson 2.6, known special handling includes:
  *<ul>
  * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
  *   </li>
- *</ul>
- * Jackson 2.1 added following new features:
- *<ul>
- * <li>Can now be used on Classes (types) as well, for modified default behavior, possibly
+ * <li>Can be used on Classes (types) as well, for modified default behavior, possibly
  *   overridden by per-property annotation
  *   </li>
  * <li>{@link java.lang.Enum}s: Shapes {@link Shape#STRING} and {@link Shape#NUMBER} can be
@@ -42,9 +39,6 @@ import java.util.TimeZone;
  *    if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
  *    will not work as per-property annotation.
  *   </li>
- *</ul>
- * In Jackson 2.4:
- * <ul>
  * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
  *    {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
  *    scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
@@ -109,6 +103,24 @@ public @interface JsonFormat
      * set to another locale.
      */
     public String timezone() default DEFAULT_TIMEZONE;
+
+    /**
+     * Set of {@link JsonFormat.Feature}s to explicitly enable with respect
+     * to handling of annotated property. This will have precedence over possible
+     * global configuration.
+     *
+     * @since 2.6
+     */
+    public JsonFormat.Feature[] with() default { };
+
+    /**
+     * Set of {@link JsonFormat.Feature}s to explicitly disable with respect
+     * to handling of annotated property. This will have precedence over possible
+     * global configuration.
+     *
+     * @since 2.6
+     */
+    public JsonFormat.Feature[] without() default { };
     
     /*
     /**********************************************************
@@ -185,6 +197,103 @@ public @interface JsonFormat
     }
 
     /**
+     * Set of features that can be enabled/disabled for property annotated.
+     * These often relate to specific <code>SerializationFeature</code>
+     * or <code>DeserializationFeature</code>, as noted by entries.
+     *
+     * @since 2.6
+     */
+    public enum Feature {
+        /**
+         * Local override for <code>DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY</code>
+         * which will allow deserialization of JSON non-array values into single-element
+         * Java arrays and {@link java.util.Collection}s.
+         */
+        ACCEPT_SINGLE_VALUE_AS_ARRAY,
+
+        /**
+         * Local override for <code>SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED</code>
+         * which will force serialization of single-element arrays and {@link java.util.Collection}s
+         * as that single element and excluding array wrapper.
+         */
+        WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED,
+
+        /**
+         * Local override for <code>SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS</code>,
+         * enabling of which will force sorting of {@link java.util.Map} keys before
+         * serialization.
+         */
+        WRITE_SORTED_MAP_ENTRIES,
+        ;
+    }
+
+    /**
+     * Helper class that encapsulates information equivalent to {@link java.lang.Boolean}
+     * valued {@link java.util.EnumMap}.
+     *
+     * @since 2.6
+     */
+    public static class Features
+    {
+        private final int enabled, disabled;
+
+        private final static Features EMPTY = new Features(0, 0);
+        
+        private Features(int e, int d) {
+            enabled = e;
+            disabled = d;
+        }
+
+        public static Features empty() {
+            return EMPTY;
+        }
+        
+        public static Features construct(JsonFormat f) {
+            return construct(f.with(), f.without());
+        }
+        
+        public static Features construct(Feature[] enabled, Feature[] disabled)
+        {
+            int e = 0;
+            for (Feature f : enabled) {
+                e |= (1 << f.ordinal());
+            }
+            int d = 0;
+            for (Feature f : enabled) {
+                d |= (1 << f.ordinal());
+            }
+            return new Features(e, d);
+        }
+
+        public Features with(Feature...features) {
+            int e = enabled;
+            for (Feature f : features) {
+                e |= (1 << f.ordinal());
+            }
+            return (e == enabled) ? this : new Features(e, disabled);
+        }
+
+        public Features without(Feature...features) {
+            int d = disabled;
+            for (Feature f : features) {
+                d |= (1 << f.ordinal());
+            }
+            return (d == disabled) ? this : new Features(enabled, d);
+        }
+        
+        public Boolean get(Feature f) {
+            int mask = (1 << f.ordinal());
+            if ((disabled & mask) != 0) {
+                return Boolean.FALSE;
+            }
+            if ((enabled & mask) != 0) {
+                return Boolean.TRUE;
+            }
+            return null;
+        }
+    }
+    
+    /**
      * Helper class used to contain information from a single {@link JsonFormat}
      * annotation.
      */
@@ -196,78 +305,129 @@ public @interface JsonFormat
 
         private final String timezoneStr;
 
+        /**
+         * @since 2.6
+         */
+        private final Features features;
+        
         // lazily constructed when created from annotations
         private TimeZone _timezone;
-
+        
         public Value() {
-            this("", Shape.ANY, "", "");
+            this("", Shape.ANY, "", "", Features.empty());
         }
         
         public Value(JsonFormat ann) {
-            this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone());
+            this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone(),
+                    Features.construct(ann));
         }
 
-        public Value(String p, Shape sh, String localeStr, String tzStr)
+        /**
+         * @since 2.6
+         */
+        public Value(String p, Shape sh, String localeStr, String tzStr, Features f)
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
                             null : new Locale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
-                    null
-            );
+                    null, f);
         }
 
         /**
-         * @since 2.1
+         * @since 2.6
          */
-        public Value(String p, Shape sh, Locale l, TimeZone tz)
+        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f)
         {
             pattern = p;
             shape = (sh == null) ? Shape.ANY : sh;
             locale = l;
             _timezone = tz;
             timezoneStr = null;
+            features = (f == null) ? Features.empty() : f;
         }
 
         /**
-         * @since 2.4
+         * @since 2.6
          */
-        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz)
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f)
         {
             pattern = p;
             shape = (sh == null) ? Shape.ANY : sh;
             locale = l;
             _timezone = tz;
             timezoneStr = tzStr;
+            features = (f == null) ? Features.empty() : f;
+        }
+
+        /**
+         * @deprecated since 2.6
+         */
+        public Value(String p, Shape sh, Locale l, TimeZone tz) {
+            this(p, sh, l, tz, Features.empty());
+        }
+
+        /**
+         * @deprecated since 2.6
+         */
+        @Deprecated
+        public Value(String p, Shape sh, String localeStr, String tzStr) {
+            this(p, sh, localeStr, tzStr, Features.empty());
+        }
+        
+        /**
+         * @deprecated since 2.6
+         */
+        @Deprecated
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz) {
+            this(p, sh, l, tzStr, tz, Features.empty());
         }
 
         /**
          * @since 2.1
          */
         public Value withPattern(String p) {
-            return new Value(p, shape, locale, timezoneStr, _timezone);
+            return new Value(p, shape, locale, timezoneStr, _timezone, features);
         }
 
         /**
          * @since 2.1
          */
         public Value withShape(Shape s) {
-            return new Value(pattern, s, locale, timezoneStr, _timezone);
+            return new Value(pattern, s, locale, timezoneStr, _timezone, features);
         }
 
         /**
          * @since 2.1
          */
         public Value withLocale(Locale l) {
-            return new Value(pattern, shape, l, timezoneStr, _timezone);
+            return new Value(pattern, shape, l, timezoneStr, _timezone, features);
         }
 
         /**
          * @since 2.1
          */
         public Value withTimeZone(TimeZone tz) {
-            return new Value(pattern, shape, locale, null, tz);
+            return new Value(pattern, shape, locale, null, tz, features);
+        }
+
+        /**
+         * @since 2.6
+         */
+        public Value withFeature(JsonFormat.Feature f) {
+            Features newFeats = features.with(f);
+            return (newFeats == features) ? this :
+                new Value(pattern, shape, locale, timezoneStr, _timezone, newFeats);
+        }
+
+        /**
+         * @since 2.6
+         */
+        public Value withoutFeature(JsonFormat.Feature f) {
+            Features newFeats = features.without(f);
+            return (newFeats == features) ? this :
+                new Value(pattern, shape, locale, timezoneStr, _timezone, newFeats);
         }
         
         public String getPattern() { return pattern; }
@@ -322,6 +482,19 @@ public @interface JsonFormat
          */
         public boolean hasTimeZone() {
             return (_timezone != null) || (timezoneStr != null && !timezoneStr.isEmpty());
+        }
+
+        /**
+         * Accessor for checking whether this format value has specific setting for
+         * given feature. Result is 3-valued with either `null`, {@link Boolean#TRUE} or
+         * {@link Boolean#FALSE}, indicating 'yes/no/dunno' choices, where `null` ("dunno")
+         * indicates that the default handling should be used based on global defaults,
+         * and there is no format override.
+         *
+         * @since 2.6
+         */
+        public Boolean getFeature(JsonFormat.Feature f) {
+            return features.get(f);
         }
     }
 }

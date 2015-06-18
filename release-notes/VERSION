@@ -13,6 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.6.0 (not yet released)
 
+#43: Add `@JsonFormat(with=Feature.xxx)` to support things like
+ `DeserializationFeature.ACCEEPT_SINGLE_VALUE_AS_ARRAY`.
 #56: Improve `ObjectIdGenerators.key()` to handle `null` appropriately by returning `null`
 #58: Add new properties for `@JsonIgnoreProperties`, "allowGetters", "allowSetters" 
 #60: Add new value type, `OptBoolean`, for "optional booleans", to support proper handling
