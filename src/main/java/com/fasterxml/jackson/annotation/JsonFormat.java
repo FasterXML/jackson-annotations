@@ -200,26 +200,44 @@ public @interface JsonFormat
      * Set of features that can be enabled/disabled for property annotated.
      * These often relate to specific <code>SerializationFeature</code>
      * or <code>DeserializationFeature</code>, as noted by entries.
+     *<p>
+     * Note that whether specific setting has an effect depends on whether
+     * <code>JsonSerializer</code> / <code>JsonDeserializer</code> being used
+     * takes the format setting into account. If not, please file an issue
+     * for adding support via issue tracker for package that has handlers
+     * (if you know which one; if not, just use `jackson-databind`).
      *
      * @since 2.6
      */
     public enum Feature {
         /**
-         * Local override for <code>DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY</code>
+         * Override for <code>DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY</code>
          * which will allow deserialization of JSON non-array values into single-element
          * Java arrays and {@link java.util.Collection}s.
          */
         ACCEPT_SINGLE_VALUE_AS_ARRAY,
 
         /**
-         * Local override for <code>SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED</code>
+         * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>,
+         * similar constraints apply.
+         */
+        WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS,
+
+        /**
+         * Override for <code>SerializationFeature.WRITE_DATES_WITH_ZONE_ID</code>,
+         * similar constraints apply.
+         */
+        WRITE_DATES_WITH_ZONE_ID,
+
+        /**
+         * Override for <code>SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED</code>
          * which will force serialization of single-element arrays and {@link java.util.Collection}s
          * as that single element and excluding array wrapper.
          */
         WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED,
 
         /**
-         * Local override for <code>SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS</code>,
+         * Override for <code>SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS</code>,
          * enabling of which will force sorting of {@link java.util.Map} keys before
          * serialization.
          */
