@@ -277,7 +277,7 @@ public @interface JsonFormat
                 e |= (1 << f.ordinal());
             }
             int d = 0;
-            for (Feature f : enabled) {
+            for (Feature f : disabled) {
                 d |= (1 << f.ordinal());
             }
             return new Features(e, d);
@@ -382,6 +382,7 @@ public @interface JsonFormat
         /**
          * @deprecated since 2.6
          */
+        @Deprecated
         public Value(String p, Shape sh, Locale l, TimeZone tz) {
             this(p, sh, l, tz, Features.empty());
         }
