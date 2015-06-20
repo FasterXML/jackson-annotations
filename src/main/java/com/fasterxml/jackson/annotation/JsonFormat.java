@@ -404,6 +404,13 @@ public @interface JsonFormat
         }
 
         /**
+         * @since 2.6
+         */
+        public static Value forPattern(String p) {
+            return new Value(p, null, null, null, null, Features.empty());
+        }
+
+        /**
          * @since 2.1
          */
         public Value withPattern(String p) {
