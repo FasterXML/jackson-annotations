@@ -124,11 +124,24 @@ public @interface JsonInclude
          * Value that indicates that only properties that have values
          * that differ from default settings (meaning values they have
          * when Bean is constructed with its no-arguments constructor)
-         * are to be included. Value is generally not useful with
-         * {@link java.util.Map}s, since they have no default values;
+         * are to be included.
+         *<p>
+         * Note that value does not make sense for
+         * {@link java.util.Map} types, since they have no default values;
          * and if used, works same as {@link #ALWAYS}.
          */
-        NON_DEFAULT
+        NON_DEFAULT,
+        
+        /**
+         * Pseudo-value used to indicate that the higher-level defaults make
+         * sense, to avoid overriding inclusion value. For example, if returned
+         * for a property this would use defaults for the class that contains
+         * property, if any defined; and if none defined for that, then 
+         * global serialization inclusion details.
+         *
+         * @since 2.6
+         */
+        USE_DEFAULTS
         
         ;
     }
@@ -148,12 +161,33 @@ public @interface JsonInclude
     public static class Value
         implements JacksonAnnotationValue<JsonInclude> // since 2.6
     {
+        protected final static Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS);
+
         protected final Include valueInclusion;
         protected final Include contentInclusion;
-        
+
         public Value(JsonInclude src) {
-            valueInclusion = src.value();
-            contentInclusion = src.content();
+            this(src.value(), src.content());
+        }
+
+        public Value(Include vi, Include ci) {
+            this.valueInclusion = (vi == null) ? Include.USE_DEFAULTS : vi;
+            this.contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
+        }
+
+        /**
+         * Mutant factory method that merges values of this value with given override
+         * values, so that any explicitly defined inclusion in overrides has precedence over
+         * settings of this value instance. If no overrides exist will return <code>this</code>
+         * instance; otherwise new {@link Value} with changed inclusion values.
+         */
+        public Value withOverrides(Value overrides) {
+            return withValueInclusion(overrides.valueInclusion)
+                    .withContentInclusion(overrides.contentInclusion);
+        }
+
+        public static Value empty() {
+            return EMPTY;
         }
 
         /**
@@ -165,6 +199,14 @@ public @interface JsonInclude
                 return null;
             }
             return new Value(src);
+        }
+
+        public Value withValueInclusion(Include incl) {
+            return (incl == valueInclusion) ? this : new Value(incl, contentInclusion);
+        }
+
+        public Value withContentInclusion(Include incl) {
+            return (incl == contentInclusion) ? this : new Value(valueInclusion, incl);
         }
 
         @Override
@@ -179,5 +221,5 @@ public @interface JsonInclude
         public Include getContentInclusion() {
             return contentInclusion;
         }
-    }    
+    }
 }
