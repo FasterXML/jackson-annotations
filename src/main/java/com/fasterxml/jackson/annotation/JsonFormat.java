@@ -316,6 +316,7 @@ public @interface JsonFormat
      * annotation.
      */
     public static class Value
+        implements JacksonAnnotationValue<JsonFormat> // since 2.6
     {
         private final String pattern;
         private final Shape shape;
@@ -454,6 +455,11 @@ public @interface JsonFormat
             Features newFeats = features.without(f);
             return (newFeats == features) ? this :
                 new Value(pattern, shape, locale, timezoneStr, _timezone, newFeats);
+        }
+
+        @Override
+        public Class<JsonFormat> valueFor() {
+            return JsonFormat.class;
         }
         
         public String getPattern() { return pattern; }

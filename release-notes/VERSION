@@ -21,6 +21,8 @@ NOTE: Annotations module will never contain changes in patch versions,
   and usage of default values, not just explicit true/false.
 #61: dd new property, `@JsonProperty.access` (and matching enum) to support read-only/write-only properties
 - Add `JsonInclude.Include.NON_ABSENT` value, for excluding "absent" Optional values.
+- Add tag interface `JacksonAnnotationValue` for helper types used for encapsuating information
+  for "complex" annotations (multi-property ones)
 
 2.5.0 (01-Jan-2015)
 

@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
     ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@com.fasterxml.jackson.annotation.JacksonAnnotation
+@JacksonAnnotation
 public @interface JsonInclude
 {
     /**
@@ -132,4 +132,52 @@ public @interface JsonInclude
         
         ;
     }
+
+    /*
+    /**********************************************************
+    /* Value class used to enclose information
+    /**********************************************************
+     */
+
+    /**
+     * Helper class used to contain information from a single {@link JsonInclude}
+     * annotation.
+     *
+     * @since 2.6
+     */
+    public static class Value
+        implements JacksonAnnotationValue<JsonInclude> // since 2.6
+    {
+        protected final Include valueInclusion;
+        protected final Include contentInclusion;
+        
+        public Value(JsonInclude src) {
+            valueInclusion = src.value();
+            contentInclusion = src.content();
+        }
+
+        /**
+         * Factory method to use for constructing an instance from instance of
+         * {@link JsonInclude}
+         */
+        public static Value from(JsonInclude src) {
+            if (src == null) {
+                return null;
+            }
+            return new Value(src);
+        }
+
+        @Override
+        public Class<JsonInclude> valueFor() {
+            return JsonInclude.class;
+        }
+
+        public Include getValueInclusion() {
+            return valueInclusion;
+        }
+
+        public Include getContentInclusion() {
+            return contentInclusion;
+        }
+    }    
 }
