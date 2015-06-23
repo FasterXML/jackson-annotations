@@ -55,10 +55,6 @@ public @interface JsonInclude
      * Enumeration used with {@link JsonInclude}
      * to define which properties
      * of Java Beans are to be included in serialization.
-     *<p>
-     * Note: Jackson 1.x had similarly named ("Inclusion") enumeration included
-     * in <code>JsonSerialize</code> annotation: it is now deprecated
-     * and this value used instead.
      */
     public enum Include
     {
@@ -170,7 +166,7 @@ public @interface JsonInclude
             this(src.value(), src.content());
         }
 
-        public Value(Include vi, Include ci) {
+        protected Value(Include vi, Include ci) {
             this.valueInclusion = (vi == null) ? Include.USE_DEFAULTS : vi;
             this.contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
         }
@@ -182,12 +178,26 @@ public @interface JsonInclude
          * instance; otherwise new {@link Value} with changed inclusion values.
          */
         public Value withOverrides(Value overrides) {
+            if (overrides == null) {
+                return this;
+            }
             return withValueInclusion(overrides.valueInclusion)
                     .withContentInclusion(overrides.contentInclusion);
         }
 
         public static Value empty() {
             return EMPTY;
+        }
+
+        /**
+         * Factory method to use for constructing an instance for components
+         */
+        public static Value construct(Include valueIncl, Include contentIncl) {
+            if ((valueIncl == Include.USE_DEFAULTS)
+                    && (contentIncl == Include.USE_DEFAULTS)) {
+                return EMPTY;
+            }
+            return new Value(valueIncl, contentIncl);
         }
 
         /**
