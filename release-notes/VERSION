@@ -14,14 +14,16 @@ NOTE: Annotations module will never contain changes in patch versions,
 2.6.0 (not yet released)
 
 #43: Add `@JsonFormat(with=Feature.xxx)` to support things like
- `DeserializationFeature.ACCEEPT_SINGLE_VALUE_AS_ARRAY`.
+ `DeserializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED` on per-property basis.
 #56: Improve `ObjectIdGenerators.key()` to handle `null` appropriately by returning `null`
 #58: Add new properties for `@JsonIgnoreProperties`, "allowGetters", "allowSetters" 
 #60: Add new value type, `OptBoolean`, for "optional booleans", to support proper handling
   and usage of default values, not just explicit true/false.
-#61: dd new property, `@JsonProperty.access` (and matching enum) to support read-only/write-only properties
+#61: Add new property, `@JsonProperty.access` (and matching enum) to support read-only/write-only properties
+#64: Add `@Documented` for `@JsonPropertyDescription`
+ (suggested by Zoltan S)
 - Add `JsonInclude.Include.NON_ABSENT` value, for excluding "absent" Optional values.
-- Add tag interface `JacksonAnnotationValue` for helper types used for encapsuating information
+- Add tag interface `JacksonAnnotationValue` for helper types used for encapsulating information
   for "complex" annotations (multi-property ones)
 
 2.5.0 (01-Jan-2015)
