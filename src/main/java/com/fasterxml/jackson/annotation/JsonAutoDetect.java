@@ -24,7 +24,7 @@ import java.lang.reflect.Modifier;
  * global defaults: for example, to require that all setters must be public,
  * you would use:
  *<pre>
- *   @JsonAutoDetect(setterVisibility=Visibility.PUBLIC_ONLY)
+ *   &#64;JsonAutoDetect(setterVisibility=Visibility.PUBLIC_ONLY)
  *</pre>
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})

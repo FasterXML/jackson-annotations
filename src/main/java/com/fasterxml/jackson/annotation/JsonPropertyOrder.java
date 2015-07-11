@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
  * Examples:
  *<pre>
  *  // ensure that "id" and "name" are output before other properties
- *  <div>@</div>JsonPropertyOrder({ "id", "name" })
+ *  &#64;JsonPropertyOrder({ "id", "name" })
  *  // order any properties that don't have explicit setting using alphabetic order
- *  <div>@</div>JsonPropertyOrder(alphabetic=true)
+ *  &#64;JsonPropertyOrder(alphabetic=true)
  *</pre>
  *<p>
  * This annotation may or may not have effect on deserialization: for basic JSON

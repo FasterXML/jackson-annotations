@@ -86,7 +86,8 @@ public @interface JsonTypeInfo
          * leading dot ('.') must be used to indicate that partial class name is used.
          * For example, for supertype "com.foobar.Base", and concrete type
          * "com.foo.Impl", only ".Impl" would be included; and for "com.foo.impl.Impl2"
-         * only ".impl.Impl2" would be included.<br />
+         * only ".impl.Impl2" would be included.
+         *<br>
          * <b>NOTE</b>: leading dot ('.') MUST be used to denote partial (minimal) name;
          * if it is missing, value is assumed to be fully-qualified name. Fully-qualified
          * name is used in cases where subtypes are not in same package (or sub-package
