@@ -106,7 +106,7 @@ public @interface JsonInclude
          * <li>For date/time types, if timestamp from Epoch is zero (January 1st, 1970, UTC),
          *    value is considered empty.
          *   </li>
-         * <ul>
+         * </ul>
          *  and for other types, null values are excluded but other exclusions (if any).
          *<p>
          * Note that this default handling can be overridden by custom
