@@ -36,6 +36,8 @@ import java.lang.annotation.Target;
  * This is possible since set of Enum values is constant and it is possible
  * to define mapping, but can not be done in general for POJO types; as such,
  * this is not used for POJO deserialization.
+ *
+ * @see JsonCreator
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

@@ -16,7 +16,8 @@ import java.lang.annotation.Target;
  * <li>Single-argument constructor/factory method without {@link JsonProperty}
  *    annotation for the argument: if so, this is so-called "delegate creator",
  *    in which case Jackson first binds JSON into type of the argument, and
- *    then calls creator
+ *    then calls creator. This is often used in conjunction with {@link JsonValue}
+ *    (used for serialization).
  *   </li>
  * <li>Constructor/factory method where <b>every argument</b> is annotated with
  *   either {@link JsonProperty} or {@link JacksonInject}, to indicate name
@@ -30,8 +31,14 @@ import java.lang.annotation.Target;
  * But with JDK 8 (or using helper libraries such as Paranamer, or other JVM
  * languages like Scala or Kotlin), specifying name is optional.
  *<p>
+ * One common use case is to use a delegating Creator to construct instances from
+ * scalar values (like <code>java.lang.String</code>) during deserialization,
+ * and serialize values using {@link JsonValue}.
+ *<p>
  * NOTE: As of Jackson 2.6, use of {@link JsonProperty#required()} is supported
  * for Creator methods (but not necessarily for regular setters or fields!).
+ * 
+ * @see JsonCreator
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
