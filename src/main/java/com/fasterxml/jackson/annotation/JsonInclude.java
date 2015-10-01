@@ -159,16 +159,16 @@ public @interface JsonInclude
     {
         protected final static Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS);
 
-        protected final Include valueInclusion;
-        protected final Include contentInclusion;
+        protected final Include _valueInclusion;
+        protected final Include _contentInclusion;
 
         public Value(JsonInclude src) {
             this(src.value(), src.content());
         }
 
         protected Value(Include vi, Include ci) {
-            this.valueInclusion = (vi == null) ? Include.USE_DEFAULTS : vi;
-            this.contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
+            _valueInclusion = (vi == null) ? Include.USE_DEFAULTS : vi;
+            _contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
         }
 
         /**
@@ -178,11 +178,22 @@ public @interface JsonInclude
          * instance; otherwise new {@link Value} with changed inclusion values.
          */
         public Value withOverrides(Value overrides) {
-            if (overrides == null) {
+            if ((overrides == null) || (overrides == EMPTY)) {
                 return this;
             }
-            return withValueInclusion(overrides.valueInclusion)
-                    .withContentInclusion(overrides.contentInclusion);
+            Include vi = overrides._valueInclusion;
+            Include ci = overrides._contentInclusion;
+
+            boolean viDiff = (vi != _valueInclusion) && (vi != Include.USE_DEFAULTS);
+            boolean ciDiff = (ci != _valueInclusion) && (ci != Include.USE_DEFAULTS);
+
+            if (viDiff) {
+                if (ciDiff) {
+                    return new Value(vi, ci);
+                }
+                return new Value(vi, _contentInclusion);
+            }
+            return this;
         }
 
         public static Value empty() {
@@ -205,18 +216,24 @@ public @interface JsonInclude
          * {@link JsonInclude}
          */
         public static Value from(JsonInclude src) {
-            if (src == null) {
+            if (src == null) { // should this return EMPTY?
                 return null;
             }
-            return new Value(src);
+            Include vi = src.value();
+            Include ci = src.content();
+
+            if ((vi == Include.USE_DEFAULTS) && (ci == Include.USE_DEFAULTS)) {
+                return EMPTY;
+            }
+            return new Value(vi, ci);
         }
 
         public Value withValueInclusion(Include incl) {
-            return (incl == valueInclusion) ? this : new Value(incl, contentInclusion);
+            return (incl == _valueInclusion) ? this : new Value(incl, _contentInclusion);
         }
 
         public Value withContentInclusion(Include incl) {
-            return (incl == contentInclusion) ? this : new Value(valueInclusion, incl);
+            return (incl == _contentInclusion) ? this : new Value(_valueInclusion, incl);
         }
 
         @Override
@@ -225,11 +242,11 @@ public @interface JsonInclude
         }
 
         public Include getValueInclusion() {
-            return valueInclusion;
+            return _valueInclusion;
         }
 
         public Include getContentInclusion() {
-            return contentInclusion;
+            return _contentInclusion;
         }
     }
 }
