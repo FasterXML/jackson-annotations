@@ -171,6 +171,10 @@ public @interface JsonInclude
             _contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
         }
 
+        public static Value empty() {
+            return EMPTY;
+        }
+
         /**
          * Mutant factory method that merges values of this value with given override
          * values, so that any explicitly defined inclusion in overrides has precedence over
@@ -194,10 +198,6 @@ public @interface JsonInclude
                 return new Value(vi, _contentInclusion);
             }
             return this;
-        }
-
-        public static Value empty() {
-            return EMPTY;
         }
 
         /**

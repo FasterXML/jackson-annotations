@@ -18,7 +18,7 @@ import java.util.TimeZone;
  * Common uses include choosing between alternate representations -- for example,
  * whether {@link java.util.Date} is to be serialized as number (Java timestamp)
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
- * exact details with {@link #pattern} property.
+ * exact details with {@link #_pattern} property.
  *<p>
  * As of Jackson 2.6, known special handling includes:
  *<ul>
@@ -253,13 +253,13 @@ public @interface JsonFormat
      */
     public static class Features
     {
-        private final int enabled, disabled;
+        private final int _enabled, _disabled;
 
         private final static Features EMPTY = new Features(0, 0);
         
         private Features(int e, int d) {
-            enabled = e;
-            disabled = d;
+            _enabled = e;
+            _disabled = d;
         }
 
         public static Features empty() {
@@ -283,28 +283,53 @@ public @interface JsonFormat
             return new Features(e, d);
         }
 
+        public Features withOverrides(Features overrides) {
+            // Cheap checks first: maybe one is empty?
+            if (overrides == null) {
+                return this;
+            }
+            int overrideD = overrides._disabled;
+            int overrideE = overrides._enabled;
+            if ((overrideD == 0) && (overrideE == 0)) {
+                return this;
+            }
+            if ((_enabled == 0) && (_disabled == 0)) {
+                return overrides;
+            }
+            // If not, calculate combination with overrides
+            int newE = (_enabled & ~overrideD) | overrideE;
+            int newD = (_disabled & ~overrideE) | overrideD;
+            
+            // one more thing; no point in creating new instance if there's no change
+            if ((newE == _enabled) && (newD == _disabled)) {
+                return this;
+            }
+            
+            return new Features(newE, newD);
+        }
+
         public Features with(Feature...features) {
-            int e = enabled;
+            int e = _enabled;
             for (Feature f : features) {
                 e |= (1 << f.ordinal());
             }
-            return (e == enabled) ? this : new Features(e, disabled);
+            return (e == _enabled) ? this : new Features(e, _disabled);
         }
 
         public Features without(Feature...features) {
-            int d = disabled;
+            int d = _disabled;
             for (Feature f : features) {
                 d |= (1 << f.ordinal());
             }
-            return (d == disabled) ? this : new Features(enabled, d);
+            return (d == _disabled) ? this : new Features(_enabled, d);
         }
         
         public Boolean get(Feature f) {
             int mask = (1 << f.ordinal());
-            if ((disabled & mask) != 0) {
+            if ((_disabled & mask) != 0) {
                 return Boolean.FALSE;
             }
-            if ((enabled & mask) != 0) {
+            if ((_enabled & mask) != 0) {
                 return Boolean.TRUE;
             }
             return null;
@@ -318,17 +343,19 @@ public @interface JsonFormat
     public static class Value
         implements JacksonAnnotationValue<JsonFormat> // since 2.6
     {
-        private final String pattern;
-        private final Shape shape;
-        private final Locale locale;
+        private final static Value EMPTY = new Value();
 
-        private final String timezoneStr;
+        private final String _pattern;
+        private final Shape _shape;
+        private final Locale _locale;
+
+        private final String _timezoneStr;
 
         /**
          * @since 2.6
          */
-        private final Features features;
-        
+        private final Features _features;
+
         // lazily constructed when created from annotations
         private TimeZone _timezone;
         
@@ -359,12 +386,12 @@ public @interface JsonFormat
          */
         public Value(String p, Shape sh, Locale l, TimeZone tz, Features f)
         {
-            pattern = p;
-            shape = (sh == null) ? Shape.ANY : sh;
-            locale = l;
+            _pattern = p;
+            _shape = (sh == null) ? Shape.ANY : sh;
+            _locale = l;
             _timezone = tz;
-            timezoneStr = null;
-            features = (f == null) ? Features.empty() : f;
+            _timezoneStr = null;
+            _features = (f == null) ? Features.empty() : f;
         }
 
         /**
@@ -372,12 +399,12 @@ public @interface JsonFormat
          */
         public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f)
         {
-            pattern = p;
-            shape = (sh == null) ? Shape.ANY : sh;
-            locale = l;
+            _pattern = p;
+            _shape = (sh == null) ? Shape.ANY : sh;
+            _locale = l;
             _timezone = tz;
-            timezoneStr = tzStr;
-            features = (f == null) ? Features.empty() : f;
+            _timezoneStr = tzStr;
+            _features = (f == null) ? Features.empty() : f;
         }
 
         /**
@@ -405,6 +432,65 @@ public @interface JsonFormat
         }
 
         /**
+         * @since 2.7
+         */
+        public final static Value empty() {
+            return EMPTY;
+        }
+
+        /**
+         * @since 2.7
+         */
+        public final static Value from(JsonFormat ann) {
+            if (ann == null) { // os EMPTY?
+                return null;
+            }
+            return new Value(ann);
+        }
+
+        /**
+         * @since 2.7
+         */
+        public final Value withOverrides(Value overrides) {
+            if ((overrides == null) || (overrides == EMPTY)) {
+                return this;
+            }
+            if (this == EMPTY) { // cheesy, but probably common enough
+                return overrides;
+            }
+            String p = overrides._pattern;
+            if ((p == null) || p.isEmpty()) {
+                p = _pattern;
+            }
+            Shape sh = overrides._shape;
+            if (sh == Shape.ANY) {
+                sh = _shape;
+            }
+            Locale l = overrides._locale;
+            if (l == null) {
+                l = _locale;
+            }
+            Features f = _features;
+            if (f == null) {
+                f = overrides._features;
+            } else {
+                f = f.withOverrides(overrides._features);
+            }
+
+            // timezone not merged, just choose one
+            String tzStr = overrides._timezoneStr;
+            TimeZone tz;
+            
+            if ((tzStr == null) || tzStr.isEmpty()) { // no overrides, use space
+                tzStr = _timezoneStr;
+                tz = _timezone;
+            } else {
+                tz = overrides._timezone;
+            }
+            return new Value(p, sh, l, tzStr, tz, f);
+        }
+
+        /**
          * @since 2.6
          */
         public static Value forPattern(String p) {
@@ -412,49 +498,56 @@ public @interface JsonFormat
         }
 
         /**
+         * @since 2.7
+         */
+        public static Value forShape(Shape sh) {
+            return new Value(null, sh, null, null, null, Features.empty());
+        }
+
+        /**
          * @since 2.1
          */
         public Value withPattern(String p) {
-            return new Value(p, shape, locale, timezoneStr, _timezone, features);
+            return new Value(p, _shape, _locale, _timezoneStr, _timezone, _features);
         }
 
         /**
          * @since 2.1
          */
         public Value withShape(Shape s) {
-            return new Value(pattern, s, locale, timezoneStr, _timezone, features);
+            return new Value(_pattern, s, _locale, _timezoneStr, _timezone, _features);
         }
 
         /**
          * @since 2.1
          */
         public Value withLocale(Locale l) {
-            return new Value(pattern, shape, l, timezoneStr, _timezone, features);
+            return new Value(_pattern, _shape, l, _timezoneStr, _timezone, _features);
         }
 
         /**
          * @since 2.1
          */
         public Value withTimeZone(TimeZone tz) {
-            return new Value(pattern, shape, locale, null, tz, features);
+            return new Value(_pattern, _shape, _locale, null, tz, _features);
         }
 
         /**
          * @since 2.6
          */
         public Value withFeature(JsonFormat.Feature f) {
-            Features newFeats = features.with(f);
-            return (newFeats == features) ? this :
-                new Value(pattern, shape, locale, timezoneStr, _timezone, newFeats);
+            Features newFeats = _features.with(f);
+            return (newFeats == _features) ? this :
+                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone, newFeats);
         }
 
         /**
          * @since 2.6
          */
         public Value withoutFeature(JsonFormat.Feature f) {
-            Features newFeats = features.without(f);
-            return (newFeats == features) ? this :
-                new Value(pattern, shape, locale, timezoneStr, _timezone, newFeats);
+            Features newFeats = _features.without(f);
+            return (newFeats == _features) ? this :
+                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone, newFeats);
         }
 
         @Override
@@ -462,9 +555,9 @@ public @interface JsonFormat
             return JsonFormat.class;
         }
         
-        public String getPattern() { return pattern; }
-        public Shape getShape() { return shape; }
-        public Locale getLocale() { return locale; }
+        public String getPattern() { return _pattern; }
+        public Shape getShape() { return _shape; }
+        public Locale getLocale() { return _locale; }
 
         /**
          * Alternate access (compared to {@link #getTimeZone()}) which is useful
@@ -477,16 +570,16 @@ public @interface JsonFormat
             if (_timezone != null) {
                 return _timezone.getID();
             }
-            return timezoneStr;
+            return _timezoneStr;
         }
         
         public TimeZone getTimeZone() {
             TimeZone tz = _timezone;
             if (tz == null) {
-                if (timezoneStr == null) {
+                if (_timezoneStr == null) {
                     return null;
                 }
-                tz = TimeZone.getTimeZone(timezoneStr);
+                tz = TimeZone.getTimeZone(_timezoneStr);
                 _timezone = tz;
             }
             return tz;
@@ -495,25 +588,25 @@ public @interface JsonFormat
         /**
          * @since 2.4
          */
-        public boolean hasShape() { return shape != Shape.ANY; }
+        public boolean hasShape() { return _shape != Shape.ANY; }
         
         /**
          * @since 2.4
          */
         public boolean hasPattern() {
-            return (pattern != null) && (pattern.length() > 0);
+            return (_pattern != null) && (_pattern.length() > 0);
         }
         
         /**
          * @since 2.4
          */
-        public boolean hasLocale() { return locale != null; }
+        public boolean hasLocale() { return _locale != null; }
 
         /**
          * @since 2.4
          */
         public boolean hasTimeZone() {
-            return (_timezone != null) || (timezoneStr != null && !timezoneStr.isEmpty());
+            return (_timezone != null) || (_timezoneStr != null && !_timezoneStr.isEmpty());
         }
 
         /**
@@ -526,7 +619,7 @@ public @interface JsonFormat
          * @since 2.6
          */
         public Boolean getFeature(JsonFormat.Feature f) {
-            return features.get(f);
+            return _features.get(f);
         }
     }
 }
