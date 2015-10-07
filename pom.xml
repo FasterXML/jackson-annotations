@@ -14,6 +14,7 @@
   <packaging>bundle</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
+  <inceptionYear>2008</inceptionYear>
 
   <url>http://github.com/FasterXML/jackson</url>
   <scm>
