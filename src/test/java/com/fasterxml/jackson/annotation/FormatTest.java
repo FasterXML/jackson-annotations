@@ -6,6 +6,8 @@ package com.fasterxml.jackson.annotation;
  */
 public class FormatTest extends TestBase
 {
+    private final JsonFormat.Value EMPTY = JsonFormat.Value.empty();
+
     public void testEmptyInstanceDefaults() {
         JsonFormat.Value empty = JsonFormat.Value.empty();
         for (JsonFormat.Feature f : JsonFormat.Feature.values()) {
@@ -13,14 +15,37 @@ public class FormatTest extends TestBase
         }
     }
 
+    public void testEquality() {
+        assertTrue(EMPTY.equals(EMPTY));
+        assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
+
+        JsonFormat.Value v1 = JsonFormat.Value.forShape(JsonFormat.Shape.BOOLEAN);
+        JsonFormat.Value v2 = JsonFormat.Value.forShape(JsonFormat.Shape.BOOLEAN);
+        JsonFormat.Value v3 = JsonFormat.Value.forShape(JsonFormat.Shape.SCALAR);
+
+        assertTrue(v1.equals(v2));
+        assertTrue(v2.equals(v1));
+
+        assertFalse(v1.equals(v3));
+        assertFalse(v3.equals(v1));
+        assertFalse(v2.equals(v3));
+        assertFalse(v3.equals(v2));
+    }
+    
+    public void testToString() {
+        assertEquals("[pattern=null,shape=STRING,locale=null,timezone=null]",
+                JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
+        assertEquals("[pattern=[.],shape=ANY,locale=null,timezone=null]",
+                JsonFormat.Value.forPattern("[.]").toString());
+    }
+
     public void testSimpleMerge()
     {
         // Start with an empty instance
-        JsonFormat.Value empty = JsonFormat.Value.empty();
-        assertFalse(empty.hasLocale());
-        assertFalse(empty.hasPattern());
-        assertFalse(empty.hasShape());
-        assertFalse(empty.hasTimeZone());
+        assertFalse(EMPTY.hasLocale());
+        assertFalse(EMPTY.hasPattern());
+        assertFalse(EMPTY.hasShape());
+        assertFalse(EMPTY.hasTimeZone());
 
         // then with a non-empty one
         final String TEST_PATTERN = "format-string"; // not parsed, usage varies
@@ -33,14 +58,14 @@ public class FormatTest extends TestBase
         assertFalse(v.hasTimeZone());
 
         // and ensure nothing overridden with empty
-        JsonFormat.Value merged = v.withOverrides(empty);
+        JsonFormat.Value merged = v.withOverrides(EMPTY);
         assertEquals(TEST_PATTERN, merged.getPattern());
         assertFalse(merged.hasLocale());
         assertFalse(merged.hasShape());
         assertFalse(merged.hasTimeZone());
 
         // but that empty is overridden
-        merged = empty.withOverrides(v);
+        merged = EMPTY.withOverrides(v);
         assertEquals(TEST_PATTERN, merged.getPattern());
         assertFalse(merged.hasLocale());
         assertFalse(merged.hasShape());

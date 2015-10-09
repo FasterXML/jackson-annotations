@@ -248,5 +248,27 @@ public @interface JsonInclude
         public Include getContentInclusion() {
             return _contentInclusion;
         }
+
+        @Override
+        public String toString() {
+            return String.format("[value=%s,content=%s]", _valueInclusion, _contentInclusion);
+        }
+
+        @Override
+        public int hashCode() {
+            return (_valueInclusion.hashCode() << 2)
+                    + _contentInclusion.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            if (o.getClass() != getClass()) return false;
+            Value other = (Value) o;
+            
+            return (other._valueInclusion == _valueInclusion)
+                    && (other._contentInclusion == _contentInclusion);
+        }
     }
 }
