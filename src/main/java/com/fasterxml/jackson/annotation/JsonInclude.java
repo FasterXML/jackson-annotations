@@ -204,8 +204,8 @@ public @interface JsonInclude
          * Factory method to use for constructing an instance for components
          */
         public static Value construct(Include valueIncl, Include contentIncl) {
-            if ((valueIncl == Include.USE_DEFAULTS)
-                    && (contentIncl == Include.USE_DEFAULTS)) {
+            if (((valueIncl == Include.USE_DEFAULTS) || (valueIncl == null))
+                    && ((contentIncl == Include.USE_DEFAULTS) || (contentIncl == null))) {
                 return EMPTY;
             }
             return new Value(valueIncl, contentIncl);
