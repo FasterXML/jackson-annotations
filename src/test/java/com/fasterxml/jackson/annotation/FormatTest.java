@@ -4,8 +4,15 @@ package com.fasterxml.jackson.annotation;
  * Tests to verify that it is possibly to merge {@link JsonFormat.Value}
  * instances for overrides.
  */
-public class FormatMergeTest extends TestBase
+public class FormatTest extends TestBase
 {
+    public void testEmptyInstanceDefaults() {
+        JsonFormat.Value empty = JsonFormat.Value.empty();
+        for (JsonFormat.Feature f : JsonFormat.Feature.values()) {
+            assertNull(empty.getFeature(f));
+        }
+    }
+
     public void testSimpleMerge()
     {
         // Start with an empty instance
