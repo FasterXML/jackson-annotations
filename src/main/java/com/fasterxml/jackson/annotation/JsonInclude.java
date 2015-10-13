@@ -155,8 +155,11 @@ public @interface JsonInclude
      * @since 2.6
      */
     public static class Value
-        implements JacksonAnnotationValue<JsonInclude> // since 2.6
+        implements JacksonAnnotationValue<JsonInclude>, // since 2.6
+            java.io.Serializable
     {
+        private static final long serialVersionUID = 1L;
+
         protected final static Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS);
 
         protected final Include _valueInclusion;
@@ -175,6 +178,15 @@ public @interface JsonInclude
             return EMPTY;
         }
 
+        // for JDK serialization
+        protected Object readResolve() {
+            if ((_valueInclusion == Include.USE_DEFAULTS)
+                    && (_contentInclusion == Include.USE_DEFAULTS)) {
+                return EMPTY;
+            }
+            return this;
+        }
+        
         /**
          * Mutant factory method that merges values of this value with given override
          * values, so that any explicitly defined inclusion in overrides has precedence over

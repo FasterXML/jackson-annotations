@@ -18,7 +18,7 @@ import java.util.TimeZone;
  * Common uses include choosing between alternate representations -- for example,
  * whether {@link java.util.Date} is to be serialized as number (Java timestamp)
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
- * exact details with {@link #_pattern} property.
+ * exact details with {@link #pattern} property.
  *<p>
  * As of Jackson 2.6, known special handling includes:
  *<ul>
@@ -341,8 +341,11 @@ public @interface JsonFormat
      * annotation.
      */
     public static class Value
-        implements JacksonAnnotationValue<JsonFormat> // since 2.6
+        implements JacksonAnnotationValue<JsonFormat>, // since 2.6
+            java.io.Serializable
     {
+        private static final long serialVersionUID = 1L;
+
         private final static Value EMPTY = new Value();
 
         private final String _pattern;
@@ -357,7 +360,7 @@ public @interface JsonFormat
         private final Features _features;
 
         // lazily constructed when created from annotations
-        private TimeZone _timezone;
+        private transient TimeZone _timezone;
         
         public Value() {
             this("", Shape.ANY, "", "", Features.empty());
