@@ -1,9 +1,6 @@
 package com.fasterxml.jackson.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -334,6 +331,20 @@ public @interface JsonFormat
             }
             return null;
         }
+
+        @Override
+        public int hashCode() {
+            return _disabled + _enabled;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            if (o.getClass() != getClass()) return false;
+            Features other = (Features) o;
+            return (other._enabled == _enabled) && (other._disabled == _disabled);
+        }
     }
     
     /**
@@ -623,6 +634,53 @@ public @interface JsonFormat
          */
         public Boolean getFeature(JsonFormat.Feature f) {
             return _features.get(f);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("[pattern=%s,shape=%s,locale=%s,timezone=%s]",
+                    _pattern, _shape, _locale, _timezoneStr);
+        }
+
+        @Override
+        public int hashCode() {
+             int hash = (_timezoneStr == null) ? 1 : _timezoneStr.hashCode();
+             if (_pattern != null) {
+                 hash ^= _pattern.hashCode();
+             }
+             hash += _shape.hashCode();
+             if (_locale != null) {
+                 hash ^= _locale.hashCode();
+             }
+             hash += _features.hashCode();
+             return hash;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            if (o.getClass() != getClass()) return false;
+            Value other = (Value) o;
+
+            if ((_shape != other._shape) 
+                    || !_features.equals(other._features)) {
+                return false;
+            }
+            return _equal(_timezoneStr, other._timezoneStr)
+                    && _equal(_pattern, other._pattern)
+                    && _equal(_timezone, other._timezone)
+                    && _equal(_locale, other._locale);
+        }
+
+        private static <T> boolean _equal(T value1, T value2)
+        {
+            if (value1 == null) {
+                return (value2 == null);
+            } else if (value2 == null) {
+                return false;
+            }
+            return value1.equals(value2);
         }
     }
 }

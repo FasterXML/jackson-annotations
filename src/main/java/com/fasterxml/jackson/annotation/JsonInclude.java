@@ -216,8 +216,8 @@ public @interface JsonInclude
          * Factory method to use for constructing an instance for components
          */
         public static Value construct(Include valueIncl, Include contentIncl) {
-            if ((valueIncl == Include.USE_DEFAULTS)
-                    && (contentIncl == Include.USE_DEFAULTS)) {
+            if (((valueIncl == Include.USE_DEFAULTS) || (valueIncl == null))
+                    && ((contentIncl == Include.USE_DEFAULTS) || (contentIncl == null))) {
                 return EMPTY;
             }
             return new Value(valueIncl, contentIncl);
@@ -259,6 +259,28 @@ public @interface JsonInclude
 
         public Include getContentInclusion() {
             return _contentInclusion;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("[value=%s,content=%s]", _valueInclusion, _contentInclusion);
+        }
+
+        @Override
+        public int hashCode() {
+            return (_valueInclusion.hashCode() << 2)
+                    + _contentInclusion.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            if (o.getClass() != getClass()) return false;
+            Value other = (Value) o;
+            
+            return (other._valueInclusion == _valueInclusion)
+                    && (other._contentInclusion == _contentInclusion);
         }
     }
 }

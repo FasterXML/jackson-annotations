@@ -6,8 +6,32 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * Tests to verify that it is possibly to merge {@link JsonInclude.Value}
  * instances for overrides
  */
-public class IncludeMergeTest extends TestBase
+public class IncludeTest extends TestBase
 {
+    private final JsonInclude.Value EMPTY = JsonInclude.Value.empty();
+
+    public void testEquality() {
+        assertTrue(EMPTY.equals(EMPTY));
+        assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
+
+        JsonInclude.Value v1 = JsonInclude.Value.construct(Include.NON_ABSENT, null);
+        JsonInclude.Value v2 = JsonInclude.Value.construct(Include.NON_ABSENT, null);
+        JsonInclude.Value v3 = JsonInclude.Value.construct(Include.NON_ABSENT, Include.NON_EMPTY);
+
+        assertTrue(v1.equals(v2));
+        assertTrue(v2.equals(v1));
+
+        assertFalse(v1.equals(v3));
+        assertFalse(v3.equals(v1));
+        assertFalse(v2.equals(v3));
+        assertFalse(v3.equals(v2));
+    }
+    
+    public void testToString() {
+        assertEquals("[value=NON_ABSENT,content=USE_DEFAULTS]",
+                JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
+    }
+    
     public void testSimpleMerge()
     {
         JsonInclude.Value empty = JsonInclude.Value.empty();
