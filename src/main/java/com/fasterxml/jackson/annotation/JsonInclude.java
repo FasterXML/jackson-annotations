@@ -13,15 +13,29 @@ import java.lang.annotation.Target;
  * this annotation one can specify simple exclusion rules to reduce
  * amount of properties to write out.
  *<p>
- * Note that inclusion criteria is checked on <b>Java object level</b>
+ * Note that the main inclusion criteria (one annotated with {@link #value})
+ * is checked on <b>Java object level</b>, for the annotated type,
  * and <b>NOT</b> on JSON output -- so even with {@link Include#NON_NULL}
  * it is possible that JSON null values are output, if object reference
  * in question is not `null`. An example is {@link java.util.concurrent.atomic.AtomicReference}
  * instance constructed to reference <code>null</code> value: such a value
  * would be serialized as JSON null, and not filtered out.
- * In such cases {@link Include#NON_EMPTY} should be used instead, since missing
- * reference (that is, reference to Java null) is considered "empty" (it is also
- * considered "default", so match {@link Include#NON_DEFAULT}).
+ *<p>
+ * To base inclusion on value of contained value(s), you will typically also need
+ * to specify {@link #content()} annotation; for example, specifying only
+ * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.List} would
+ * exclude <code>List</code>s with no Java elements, but would include <code>List</code>s
+ * with `null` elements. To exclude Lists with only nulls, you would use both
+ * annotations like so:
+ *<pre>
+ *public class Bean {
+ *   @JsonInclude(value=Include.NON_EMPTY, content=Include.NON_NULL)
+ *   public List&lt;String> entries;
+ *}
+ *</pre>
+ * Similarly you could further exclude Lists, Maps or arrays that only contain
+ * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
+ * {@link Include#NON_DEFAULT} for more details).
  * 
  * @since 2.0
  */
@@ -86,13 +100,20 @@ public @interface JsonInclude
         NON_ABSENT,
 
         /**
-         * Value that indicates that only properties that have values
-         * that values that are null or what is considered empty are
-         * not to be included.
+         * Value that indicates that only properties with null value,
+         * or what is considered empty, are not to be included.
          * Definition of emptiness is data type specific; see below
          * for details on actual handling.
          *<p>
-         * Default emptiness is defined for following type:
+         * Default emptiness for all types includes:
+         *<ul>
+         * <li><code>Null</code> values.</li>
+         * <li>"Absent" values (see {@link #NON_ABSENT})</li>
+         *</ul>
+         * so that as baseline, "empty" set includes values that would be
+         * excluded by both {@link #NON_NULL} and {@link #NON_ABSENT}.
+         * <br />
+         * Additionally following types have additional empty values:
          *<ul>
          * <li>For {@link java.util.Collection}s and {@link java.util.Map}s,
          *    method <code>isEmpty()</code> is called;
@@ -103,9 +124,6 @@ public @interface JsonInclude
          *   and return value of 0 indicates empty String (note that <code>String.isEmpty()</code>
          *   was added in Java 1.6 and as such can not be used by Jackson
          *   </li>
-         * <li>For date/time types, if timestamp from Epoch is zero (January 1st, 1970, UTC),
-         *    value is considered empty.
-         *   </li>
          * </ul>
          *  and for other types, null values are excluded but other exclusions (if any).
          *<p>
@@ -113,18 +131,42 @@ public @interface JsonInclude
          * <code>JsonSerializer</code> implementation: if method <code>isEmpty()</code>
          * is overridden, it will be called to see if non-null values are
          * considered empty (null is always considered empty).
+         *<p>
+         * Compatibility note: Jackson 2.6 included a wider range of "empty" values than
+         * either earlier (up to 2.5) or later (2.7 and beyond) types; specifically:
+         *<ul>
+         * <li>Default values of primitive types (like <code>0</code> for `int`/`java.lang.Integer`
+         *  and `false` for `bool`/`Boolean`)
+         *  </li>
+         * <li>Timestamp 0 for date/time types
+         *  </li>
+         *</ul>
+         * With 2.7, definition has been tightened back to only containing types explained
+         * above (null, absent, empty String, empty containers), and now
+         * extended definition may be specified using {@link #NON_DEFAULT}.
          */
         NON_EMPTY,
 
         /**
-         * Value that indicates that only properties that have values
-         * that differ from default settings (meaning values they have
-         * when Bean is constructed with its no-arguments constructor)
-         * are to be included.
+         * Meaning of this setting depends on context: whether annotation is
+         * specified for POJO type (class), or not. In latter case annotation
+         * is either used as the global default, or as property override.
          *<p>
-         * Note that value does not make sense for
-         * {@link java.util.Map} types, since they have no default values;
-         * and if used, works same as {@link #ALWAYS}.
+         * When used for a POJO, definition is that only values that differ from
+         * the default values of POJO properties are included. This is done
+         * by creating an instance of POJO using zero-argument constructor,
+         * and accessing property values: value is used as the default value
+         * by using <code>equals()</code> method, except for the case where property
+         * has `null` value in which straight null check is used.
+         *<p>
+         * When NOT used for a POJO (that is, as a global default, or as property
+         * override), definition is such that:
+         *<ul>
+         * <li>All values considered "empty" (as per {@link #NON_EMPTY}) are excluded</li>
+         * <li>Primitive/wrapper default values are excluded</li>
+         * <li>Date/time values that have timestamp (`long` value of milliseconds since
+         *   epoch, see {@link java.util.Date}) of `0L` are excluded</li>
+         * </ul>
          */
         NON_DEFAULT,
         
