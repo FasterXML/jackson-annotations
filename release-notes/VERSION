@@ -11,6 +11,11 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.7.0 (not yet released)
+
+#73: Add `@JsonClassDescription`
+ (suggested by ufoscout@github)
+
 2.6.0 (17-Jul-2015)
 
 #43: Add `@JsonFormat(with=Feature.xxx)` to support things like
@@ -40,13 +45,6 @@ NOTE: Annotations module will never contain changes in patch versions,
 - Finalize fix for [databind#490], by ensuring new mapping initialized for new context
 - Added `@JsonProperty.defaultValue()` (related to [databind#596])
 
-2.4.4 (24-Nov-2014)
-2.4.3 (02-Oct-2014)
-2.4.2 (13-Aug-2014)
-2.4.1
-
-No changes since 2.4.0.
-
 2.4.0 (29-May-2014)
 
 #31: Allow use of `@JsonPropertyOrder` for properties (not just classes)
@@ -56,8 +54,6 @@ No changes since 2.4.0.
   standard Jackson annotations (not just XML-specific ones that dataformat-xml
   provides)
 
-2.3.2 (01-Mar-2014)
-2.3.1 (28-Dec-2013)
 2.3.0 (13-Nov-2013)
 
 #13: Add `@JsonPropertyDescription`
@@ -67,15 +63,6 @@ No changes since 2.4.0.
 (note: although #15 -- Add `JsonTypeInfo.As.EXISTING` property to support new
  variation for including Type Id was included, jackson-databind does not
  yet support it as of 2.3.0)
-
-2.2.3 (23-Aug-2013)
-2.2.2 (26-May-2013)
-
-No changes since 2.2.1
-
-2.2.1 (03-May-2013)
-
-- Moved LICENSE file under 'META-INF/' in jar
 
 2.2.0 (22-Apr-2013)
 

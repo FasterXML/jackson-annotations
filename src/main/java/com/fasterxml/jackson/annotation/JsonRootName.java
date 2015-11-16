@@ -11,10 +11,6 @@ import java.lang.annotation.Target;
  * enabled. Annotation itself does not indicate that wrapping should
  * be used; but if it is, name used for serialization should be name
  * specified here, and deserializer will expect the name as well.
- *<p>
- * As of 2.4, one missing feature is property "alwaysWrap", which is hoped
- * to be added in 2.5, and would be used to force root name wrapping
- * for individual types.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
