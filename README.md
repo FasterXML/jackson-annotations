@@ -40,7 +40,7 @@ To use annotations, you need to use Maven dependency:
 </dependency>
 ```
 
-or download jars from Maven repository (or via quick links on [Wiki](../../wiki)
+or download jars from Maven repository (or via quick links on [Wiki](../../wiki))
 
 ## Usage, simple
 
