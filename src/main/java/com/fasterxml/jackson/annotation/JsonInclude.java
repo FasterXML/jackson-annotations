@@ -243,13 +243,15 @@ public @interface JsonInclude
             Include ci = overrides._contentInclusion;
 
             boolean viDiff = (vi != _valueInclusion) && (vi != Include.USE_DEFAULTS);
-            boolean ciDiff = (ci != _valueInclusion) && (ci != Include.USE_DEFAULTS);
+            boolean ciDiff = (ci != _contentInclusion) && (ci != Include.USE_DEFAULTS);
 
             if (viDiff) {
                 if (ciDiff) {
                     return new Value(vi, ci);
                 }
                 return new Value(vi, _contentInclusion);
+            } else if (ciDiff) {
+                return new Value(_valueInclusion, ci);
             }
             return this;
         }

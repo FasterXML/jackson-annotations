@@ -31,7 +31,7 @@ public class IncludeTest extends TestBase
         assertEquals("[value=NON_ABSENT,content=USE_DEFAULTS]",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
     }
-    
+
     public void testSimpleMerge()
     {
         JsonInclude.Value empty = JsonInclude.Value.empty();
@@ -62,5 +62,25 @@ public class IncludeTest extends TestBase
         merged = empty.withOverrides(v3);
         assertEquals(v3.getValueInclusion(), merged.getValueInclusion());
         assertEquals(v3.getContentInclusion(), merged.getContentInclusion());
+    }
+
+    // for [annotations#76]
+    public void testContentMerge76()
+    {
+        JsonInclude.Value v1 = JsonInclude.Value.empty()
+                .withContentInclusion(JsonInclude.Include.ALWAYS)
+                .withValueInclusion(JsonInclude.Include.NON_ABSENT);
+        JsonInclude.Value v2 = JsonInclude.Value.empty()
+                .withContentInclusion(JsonInclude.Include.NON_EMPTY)
+                .withValueInclusion(JsonInclude.Include.USE_DEFAULTS);
+
+        JsonInclude.Value v12 = v2.withOverrides(v1); // v1 priority
+        JsonInclude.Value v21 = v1.withOverrides(v2); // v2 priority
+
+        assertEquals(JsonInclude.Include.ALWAYS, v12.getContentInclusion());
+        assertEquals(JsonInclude.Include.NON_ABSENT, v12.getValueInclusion());
+
+        assertEquals(JsonInclude.Include.NON_EMPTY, v21.getContentInclusion());
+        assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
     }
 }
