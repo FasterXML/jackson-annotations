@@ -145,9 +145,6 @@ public abstract class ObjectIdGenerator<T>
          */
         public final Object key;
 
-        /**
-         * Hash code
-         */
         private final int hashCode;
         
         public IdKey(Class<?> type, Class<?> scope, Object key) {

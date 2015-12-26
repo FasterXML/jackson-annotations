@@ -3,7 +3,13 @@ package com.fasterxml.jackson.annotation;
 import java.util.UUID;
 
 /**
- * Container class for standard {@link ObjectIdGenerator} implementations.
+ * Container class for standard {@link ObjectIdGenerator} implementations:
+ *<ul>
+ *  <li>{@link IntSequenceGenerator}
+ *  <li>{@link PropertyGenerator}
+ *  <li>{@link StringIdGenerator} (since 2.7)
+ *  <li>{@link UUIDGenerator}
+ *</ul>
  */
 public class ObjectIdGenerators
 {
@@ -165,6 +171,60 @@ public class ObjectIdGenerators
         @Override
         public boolean canUseFor(ObjectIdGenerator<?> gen) {
             return (gen.getClass() == getClass());
+        }
+    }
+
+    /**
+     * Implementation that will accept arbitrary (but unique) String Ids on
+     * deserialization, and (by default) use random UUID generation similar
+     * to {@link UUIDGenerator} for generation ids.
+     *<p>
+     * This generator is most useful for cases where another system creates
+     * String Ids (of arbitrary structure, if any), and Jackson only needs to
+     * keep track of id-to-Object mapping. Generation also works, although if
+     * UUIDs are always used, {@link UUIDGenerator} is a better match as it
+     * will also validate ids being used.
+     *
+     * @since 2.7
+     */
+    public final static class StringIdGenerator extends Base<String>
+    {
+        private static final long serialVersionUID = 1L;
+
+        public StringIdGenerator() { this(Object.class); }
+        private StringIdGenerator(Class<?> scope) {
+            super(Object.class);
+        }
+
+        // Can just return base instance since this is essentially scopeless
+        @Override
+        public ObjectIdGenerator<String> forScope(Class<?> scope) {
+            return this;
+        }
+
+        // Can just return base instance since this is essentially scopeless
+        @Override
+        public ObjectIdGenerator<String> newForSerialization(Object context) {
+            return this;
+        }
+
+        @Override
+        public String generateId(Object forPojo) {
+            return UUID.randomUUID().toString();
+        }
+
+        @Override
+        public IdKey key(Object key) {
+            if (key == null) {
+                return null;
+            }
+            return new IdKey(getClass(), null, key);
+        }
+
+        // Should be usable for generic Opaque String ids?
+        @Override
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return (gen instanceof StringIdGenerator);
         }
     }
 }
