@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.7.0 (not yet released)
+2.7.0 (10-Jan-2016)
 
 #73: Add `@JsonClassDescription`
  (suggested by ufoscout@github)
