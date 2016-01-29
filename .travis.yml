@@ -1,6 +1,10 @@
 language: java
+
+# jdk6 is enough for annotations package
 jdk:
   - openjdk6
+  - oraclejdk7
+  - oraclejdk8
 
 # Below this line is configuration for deploying to the Sonatype OSS repo
 # http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html
@@ -11,7 +15,7 @@ after_success: "mvn deploy --settings target/travis/settings.xml"
 branches:
   only:
     - master
-    - "2.3"
+    - "2.6"
 
 env:
   global:
