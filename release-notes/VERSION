@@ -13,7 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.8.0 (not yet released)
 
-No changes since 2.7.
+#83: Add `@JsonEnumDefaultValue` for indicating default enum choice if no real match found
+ (suggested by Alejandro R)
 
 2.7.0 (10-Jan-2016)
 
