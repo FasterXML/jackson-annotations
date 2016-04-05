@@ -638,6 +638,7 @@ public @interface JsonFormat
 
         @Override
         public String toString() {
+            // !!! TODO: Features?
             return String.format("[pattern=%s,shape=%s,locale=%s,timezone=%s]",
                     _pattern, _shape, _locale, _timezoneStr);
         }
