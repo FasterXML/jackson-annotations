@@ -3,9 +3,9 @@
 This project contains general purpose annotations for
 Jackson Data Processor, used on value and handler types.
 The only annotations not included are ones that require dependency
-to the [Databind package](/FasterXML/jackson-databind).
+to the [Databind package](../../../jackson-databind).
 
-Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
+Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Jackson-1](../../../jackson-1) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
 [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations;
