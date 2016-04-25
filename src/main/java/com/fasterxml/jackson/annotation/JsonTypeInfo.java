@@ -247,19 +247,21 @@ public @interface JsonTypeInfo
      *<p>
      * There are certain special values that indicate alternate behavior:
      *<ul>
-     * <li>{@link None} means "there is no default implementation" (in which
+     * <li>{@link java.lang.Void} means that objects with unmappable (or missing)
+     *    type are to be mapped to null references.
+     *    For backwards compatibility (2.5 and below), value of
+     *    <code>com.fasterxml.jackson.databind.annotation.NoClass</code> is also allowed
+     *    for such usage.
+     *  </li>
+     * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
+     *    itself} means "there is no default implementation" (in which
      *   case an error results from unmappable type).
-     *   With Jackson 2.5 and above, {@link JsonTypeInfo} itself will also be
-     *   accepted to mean "no default implementation specified"
-     * <li><code>com.fasterxml.jackson.databind.annotation.NoClass</code> means that
-     *   objects with unmappable (or missing) type are to be mapped to null references.
-     *   With Jackson 2.5, {@link java.lang.Void} may also be used to indicate this
-     *   behavior
+     *   For backwards compatibility with earlier versions (2.5 and below),
+     *   value of {@link JsonTypeInfo.None} may also be used.
+     *  </li>
      * </ul>
-     *<p>
-     * TODO: change default value to be {@link JsonTypeInfo}.class in 2.6
      */
-    public Class<?> defaultImpl() default None.class;
+    public Class<?> defaultImpl() default JsonTypeInfo.class;
 
     /**
      * Property that defines whether type identifier value will be passed
@@ -276,7 +278,7 @@ public @interface JsonTypeInfo
     public boolean visible() default false;
 
     // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
-    //   Hope for better luck with 2.6.
+    //   Hope for better luck with 2.8 or later
     /**
      * Property that defines whether type serializer is allowed to omit writing
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
@@ -298,7 +300,8 @@ public @interface JsonTypeInfo
      * annotation property, to indicate that there is no default implementation
      * specified.
      * 
-     * @deprecated Since 2.5, use {@link java.lang.Void} instead.
+     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo},
+     *    if such behavior is needed; this is rarely necessary.
      */
     @Deprecated
     public abstract static class None { }
