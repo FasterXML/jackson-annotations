@@ -220,6 +220,23 @@ public @interface JsonInclude
             return EMPTY;
         }
 
+        /**
+         * Helper method that will try to combine values from two {@link Value}
+         * instances, using one as base settings, and the other as overrides
+         * to use instead of base values when defined; base values are only
+         * use if override does not specify a value (matching value is null
+         * or logically missing).
+         * Note that one or both of value instances may be `null`, directly;
+         * if both are `null`, result will also be `null`; otherwise never null.
+         *
+         * @since 2.8
+         */
+        public static Value merge(Value base, Value overrides)
+        {
+            return (base == null) ? overrides
+                    : base.withOverrides(overrides);
+        } 
+
         // for JDK serialization
         protected Object readResolve() {
             if ((_valueInclusion == Include.USE_DEFAULTS)
@@ -228,7 +245,7 @@ public @interface JsonInclude
             }
             return this;
         }
-        
+
         /**
          * Mutant factory method that merges values of this value with given override
          * values, so that any explicitly defined inclusion in overrides has precedence over

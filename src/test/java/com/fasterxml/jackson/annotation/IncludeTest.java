@@ -10,9 +10,11 @@ public class IncludeTest extends TestBase
 {
     private final JsonInclude.Value EMPTY = JsonInclude.Value.empty();
 
+    @JsonInclude(value=JsonInclude.Include.NON_EMPTY, content=JsonInclude.Include.NON_DEFAULT)
+    private final static class Bogus { }
+    
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
-        assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
 
         JsonInclude.Value v1 = JsonInclude.Value.construct(Include.NON_ABSENT, null);
         JsonInclude.Value v2 = JsonInclude.Value.construct(Include.NON_ABSENT, null);
@@ -25,6 +27,14 @@ public class IncludeTest extends TestBase
         assertFalse(v3.equals(v1));
         assertFalse(v2.equals(v3));
         assertFalse(v3.equals(v2));
+    }
+
+    public void testFromAnnotation()
+    {
+        JsonInclude ann = Bogus.class.getAnnotation(JsonInclude.class);
+        JsonInclude.Value v = JsonInclude.Value.from(ann);
+        assertEquals(Include.NON_EMPTY, v.getValueInclusion());
+        assertEquals(Include.NON_DEFAULT, v.getValueInclusion());
     }
     
     public void testToString() {
