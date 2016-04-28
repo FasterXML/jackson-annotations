@@ -34,7 +34,7 @@ public class IncludeTest extends TestBase
         JsonInclude ann = Bogus.class.getAnnotation(JsonInclude.class);
         JsonInclude.Value v = JsonInclude.Value.from(ann);
         assertEquals(Include.NON_EMPTY, v.getValueInclusion());
-        assertEquals(Include.NON_DEFAULT, v.getValueInclusion());
+        assertEquals(Include.NON_DEFAULT, v.getContentInclusion());
     }
     
     public void testToString() {
