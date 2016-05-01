@@ -311,6 +311,34 @@ public @interface JsonIgnoreProperties
             return _ignored;
         }
 
+        /**
+         * Method called to find names of properties to ignore when used for
+         * serialization: functionally
+         * same as {@link #getIgnored} if {@link #getAllowGetters()} is false
+         * (that is, there is "allowGetters=false" or equivalent),
+         * otherwise returns empty {@link java.util.Set}.
+         */
+        public Set<String> findIgnoredForSerialization() {
+            if (_allowGetters) {
+                return Collections.emptySet();
+            }
+            return _ignored;
+        }
+
+        /**
+         * Method called to find names of properties to ignore when used for
+         * serialization: functionally
+         * same as {@link #getIgnored} if {@link #getAllowSetters()} is false
+         * (that is, there is "allowSetters=false" or equivalent),
+         * otherwise returns empty {@link java.util.Set}.
+         */
+        public Set<String> findIgnoredForDeserialization() {
+            if (_allowSetters) {
+                return Collections.emptySet();
+            }
+            return _ignored;
+        }
+        
         public boolean getIgnoreUnknown() {
             return _ignoreUnknown;
         }
