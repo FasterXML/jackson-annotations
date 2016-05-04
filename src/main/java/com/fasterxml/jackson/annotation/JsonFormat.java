@@ -470,10 +470,24 @@ public @interface JsonFormat
         }
 
         /**
+         * @since 2.8
+         */
+        public static Value mergeAll(Value... values)
+        {
+            Value result = null;
+            for (Value curr : values) {
+                if (curr != null) {
+                    result = (result == null)  ? curr : result.withOverrides(curr);
+                }
+            }
+            return result;
+        }
+        
+        /**
          * @since 2.7
          */
         public final static Value from(JsonFormat ann) {
-            if (ann == null) { // os EMPTY?
+            if (ann == null) { // or EMPTY?
                 return null;
             }
             return new Value(ann);

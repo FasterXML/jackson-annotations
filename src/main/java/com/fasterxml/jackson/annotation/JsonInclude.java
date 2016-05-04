@@ -235,7 +235,21 @@ public @interface JsonInclude
         {
             return (base == null) ? overrides
                     : base.withOverrides(overrides);
-        } 
+        }
+
+        /**
+         * @since 2.8
+         */
+        public static Value mergeAll(Value... values)
+        {
+            Value result = null;
+            for (Value curr : values) {
+                if (curr != null) {
+                    result = (result == null)  ? curr : result.withOverrides(curr);
+                }
+            }
+            return result;
+        }
 
         // for JDK serialization
         protected Object readResolve() {
