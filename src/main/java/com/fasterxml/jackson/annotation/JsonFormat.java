@@ -215,6 +215,13 @@ public @interface JsonFormat
         ACCEPT_SINGLE_VALUE_AS_ARRAY,
 
         /**
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>.
+         * 
+         * @since 2.8
+         */
+        ACCEPT_CASE_INSENSITIVE_PROPERTIES,
+
+        /**
          * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>,
          * similar constraints apply.
          */

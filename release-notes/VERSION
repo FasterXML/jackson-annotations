@@ -17,6 +17,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 #83: Add `@JsonEnumDefaultValue` for indicating default enum choice if no real match found
  (suggested by Alejandro R)
 #87: Add `@JsonIgnoreProperties.Value` to support merging of settings
+#89: Add `JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES`
 
 2.7.0 (10-Jan-2016)
 
