@@ -133,11 +133,24 @@ public @interface JsonFormat
     public enum Shape
     {
         /**
-         * Marker enum value that indicates "default" (or "whatever") choice; needed
-         * since Annotations can not have null values for enums.
+         * Marker enum value that indicates "whatever" choice, meaning that annotation
+         * does NOT specify shape to use.
+         * Note that this is different from {@link Shape#NATURAL}, which
+         * specifically instructs use of the "natural" shape for datatype.
          */
         ANY,
 
+        /**
+         * Marker enum value that indicates the "default" choice for given datatype;
+         * for example, JSON String for {@link java.lang.String}, or JSON Number
+         * for Java numbers.
+         * Note that this is different from {@link Shape#ANY} in that this is actual
+         * explicit choice that overrides possible default settings.
+         *
+         * @since 2.8
+         */
+        NATURAL,
+        
         /**
          * Value that indicates shape should not be structural (that is, not
          * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
