@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  * If used, all otherwise unmapped key-value pairs from JSON Object values
  * are added to the property (of type Map or bean).
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonAnySetter
