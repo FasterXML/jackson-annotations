@@ -263,7 +263,14 @@ public @interface JsonFormat
          * serialization.
          */
         WRITE_SORTED_MAP_ENTRIES,
-        ;
+
+        /**
+         * Override for <code>DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIMEZONE</code>
+         * that specifies whether context provided timezone
+         * <code>DeserializationContext.getTimeZone()</code> should be used to adjust Date/Time
+         * values on deserialization, even if value itself contains timezone information
+         */
+        ADJUST_DATES_TO_CONTEXT_TIME_ZONE
     }
 
     /**
