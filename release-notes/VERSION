@@ -19,6 +19,8 @@ NOTE: Annotations module will never contain changes in patch versions,
  (suggested by Alejandro R)
 #87: Add `@JsonIgnoreProperties.Value` to support merging of settings
 #89: Add `JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES`
+#95: Add `JsonFormat.Feature#ADJUST_DATES_TO_CONTEXT_TIME_ZONE`
+ (suggested by Alexey B)
 
 2.7.0 (10-Jan-2016)
 
