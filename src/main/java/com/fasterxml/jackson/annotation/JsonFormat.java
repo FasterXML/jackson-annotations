@@ -700,6 +700,15 @@ public @interface JsonFormat
             return _features.get(f);
         }
 
+        /**
+         * Accessor for getting full set of features enabled/disabled.
+         *
+         * @since 2.8
+         */
+        public Features getFeatures() {
+            return _features;
+        }
+
         @Override
         public String toString() {
             // !!! TODO: Features?
