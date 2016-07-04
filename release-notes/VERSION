@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.8.0 (not yet released)
+2.8.0 (04-Jul-2016)
 
 #65: Add new choice for `JsonFormat.Shape`, `NATURAL`
 #79: Change `@JsonTypeInfo.defaultImpl` default value to deprecate `JsonTypeInfo.None.class`
