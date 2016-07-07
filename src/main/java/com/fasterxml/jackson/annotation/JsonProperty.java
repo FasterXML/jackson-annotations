@@ -17,6 +17,16 @@ import java.lang.annotation.Target;
  * can be specified to non-empty value to specify different
  * name. Property name refers to name used externally, as
  * the field name in JSON objects.
+ *<p>
+ * Starting with Jackson 2.6 this annotation may also be
+ * used to change serialization of <code>Enum</code> like so:
+ *<pre>
+public enum MyEnum {
+    {@literal @JsonProperty}("theFirstValue") THE_FIRST_VALUE,
+    {@literal @JsonProperty}("another_value") ANOTHER_VALUE;
+}
+</pre>
+ * as an alternative to using {@link JsonValue} annotation.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
