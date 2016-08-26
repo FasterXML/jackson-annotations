@@ -156,7 +156,7 @@ public @interface JsonInclude
          * by creating an instance of POJO using zero-argument constructor,
          * and accessing property values: value is used as the default value
          * by using <code>equals()</code> method, except for the case where property
-         * has `null` value in which straight null check is used.
+         * has `null` value in which case straight null check is used.
          *<p>
          * When NOT used for a POJO (that is, as a global default, or as property
          * override), definition is such that:
