@@ -47,7 +47,7 @@ public @interface JsonInclude
 {
     /**
      * Inclusion rule to use for instances (values) of types (Classes) or
-     * properties annotated.
+     * properties annotated; defaults to {@link Include#ALWAYS}.
      */
     public Include value() default Include.ALWAYS;
 
