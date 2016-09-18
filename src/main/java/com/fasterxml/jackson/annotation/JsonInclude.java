@@ -29,8 +29,8 @@ import java.lang.annotation.Target;
  * annotations like so:
  *<pre>
  *public class Bean {
- *   @JsonInclude(value=Include.NON_EMPTY, content=Include.NON_NULL)
- *   public List&lt;String> entries;
+ *   {@literal @}JsonInclude(value=Include.NON_EMPTY, content=Include.NON_NULL)
+ *   public{@code List<String>} entries;
  *}
  *</pre>
  * Similarly you could further exclude Lists, Maps or arrays that only contain
@@ -112,7 +112,7 @@ public @interface JsonInclude
          *</ul>
          * so that as baseline, "empty" set includes values that would be
          * excluded by both {@link #NON_NULL} and {@link #NON_ABSENT}.
-         * <br />
+         * <br>
          * Additionally following types have additional empty values:
          *<ul>
          * <li>For {@link java.util.Collection}s and {@link java.util.Map}s,
