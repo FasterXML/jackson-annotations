@@ -13,11 +13,6 @@ import java.lang.annotation.Target;
  *<p>
  * Setter means that when a property with matching name is encountered in
  * JSON content, this method will be used to set value of the property.
- *<p>
- * NOTE: this annotation was briefly deprecated for version 1.5; but has
- * since been un-deprecated to both allow for asymmetric naming (possibly
- * different name when reading and writing JSON), and more importantly to
- * allow multi-argument setter method in future.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
