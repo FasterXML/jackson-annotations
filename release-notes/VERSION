@@ -13,6 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.9.0 (not yet released)
 
+#103: Add `JsonInclude.Include.CUSTOM`, properties for specifying filter(s) to use
+
 2.8.0 (04-Jul-2016)
 
 #65: Add new choice for `JsonFormat.Shape`, `NATURAL`

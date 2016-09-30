@@ -59,6 +59,28 @@ public @interface JsonInclude
      */
     public Include content() default Include.ALWAYS;
 
+    /**
+     * Specifies type of "Filter Object" to use in case
+     * {@link #value} is {@link JsonInclude.Include#CUSTOM}:
+     * if so, an instance is created by calling <code>HandlerInstantiator</code>
+     * (of <code>ObjectMapper</code>), which by default simply calls
+     * zero-argument constructor of the Filter Class.
+     *
+     * @since 2.9
+     */
+    public Class<?> valueFilter() default Void.class;
+
+    /**
+     * Specifies type of "Filter Object" to use in case
+     * {@link #content} is {@link JsonInclude.Include#CUSTOM}:
+     * if so, an instance is created by calling <code>HandlerInstantiator</code>
+     * (of <code>ObjectMapper</code>), which by default simply calls
+     * zero-argument constructor of the Filter Class.
+     *
+     * @since 2.9
+     */
+    public Class<?> contentFilter() default Void.class;
+    
     /*
     /**********************************************************
     /* Value enumerations needed
@@ -168,6 +190,19 @@ public @interface JsonInclude
          * </ul>
          */
         NON_DEFAULT,
+
+        /**
+         * Value that indicates that separate `filter` Object (specified by
+         * {@link JsonInclude#valueFilter} for value itself, and/or
+         * {@link JsonInclude#contentFilter} for contents of structured types)
+         * is to be used for determining inclusion criteria.
+         * Filter object's <code>equals()</code> method is called with value
+         * to serialize; if it returns <code>true</code> value is <b>excluded</b>
+         * (that is, filtered out); if <code>false</code> value is <b>included</b>.
+         *
+         * @since 2.9
+         */
+        CUSTOM,
         
         /**
          * Pseudo-value used to indicate that the higher-level defaults make
@@ -201,18 +236,33 @@ public @interface JsonInclude
     {
         private static final long serialVersionUID = 1L;
 
-        protected final static Value EMPTY = new Value(Include.USE_DEFAULTS, Include.USE_DEFAULTS);
+        protected final static Value EMPTY = new Value(Include.USE_DEFAULTS,
+                Include.USE_DEFAULTS, null, null);
 
         protected final Include _valueInclusion;
         protected final Include _contentInclusion;
 
+        /**
+         * @since 2.9
+         */
+        protected final Class<?> _valueFilter;
+
+        /**
+         * @since 2.9
+         */
+        protected final Class<?> _contentFilter;
+        
         public Value(JsonInclude src) {
-            this(src.value(), src.content());
+            this(src.value(), src.content(),
+                    src.valueFilter(), src.contentFilter());
         }
 
-        protected Value(Include vi, Include ci) {
+        protected Value(Include vi, Include ci,
+                Class<?> valueFilter, Class<?> contentFilter) {
             _valueInclusion = (vi == null) ? Include.USE_DEFAULTS : vi;
             _contentInclusion = (ci == null) ? Include.USE_DEFAULTS : ci;
+            _valueFilter = (valueFilter == Void.class) ? null : valueFilter;
+            _contentFilter = (contentFilter == Void.class) ? null : contentFilter;
         }
 
         public static Value empty() {
@@ -253,7 +303,10 @@ public @interface JsonInclude
         // for JDK serialization
         protected Object readResolve() {
             if ((_valueInclusion == Include.USE_DEFAULTS)
-                    && (_contentInclusion == Include.USE_DEFAULTS)) {
+                    && (_contentInclusion == Include.USE_DEFAULTS)
+                    && (_valueFilter == null)
+                    && (_contentFilter == null)
+                    ) {
                 return EMPTY;
             }
             return this;
@@ -271,17 +324,22 @@ public @interface JsonInclude
             }
             Include vi = overrides._valueInclusion;
             Include ci = overrides._contentInclusion;
+            Class<?> vf = overrides._valueFilter;
+            Class<?> cf = overrides._contentFilter;
 
             boolean viDiff = (vi != _valueInclusion) && (vi != Include.USE_DEFAULTS);
             boolean ciDiff = (ci != _contentInclusion) && (ci != Include.USE_DEFAULTS);
+            boolean filterDiff = (vf != _valueFilter) || (cf != _valueFilter);
 
             if (viDiff) {
                 if (ciDiff) {
-                    return new Value(vi, ci);
+                    return new Value(vi, ci, vf, cf);
                 }
-                return new Value(vi, _contentInclusion);
+                return new Value(vi, _contentInclusion, vf, cf);
             } else if (ciDiff) {
-                return new Value(_valueInclusion, ci);
+                return new Value(_valueInclusion, ci, vf, cf);
+            } else if (filterDiff) {
+                return new Value(_valueInclusion, _contentInclusion, vf, cf);
             }
             return this;
         }
@@ -294,9 +352,33 @@ public @interface JsonInclude
                     && ((contentIncl == Include.USE_DEFAULTS) || (contentIncl == null))) {
                 return EMPTY;
             }
-            return new Value(valueIncl, contentIncl);
+            return new Value(valueIncl, contentIncl, null, null);
         }
 
+        /**
+         * Factory method to use for constructing an instance for components
+         *
+         * @since 2.9
+         */
+        public static Value construct(Include valueIncl, Include contentIncl,
+                Class<?> valueFilter, Class<?> contentFilter)
+        {
+            if (valueFilter == Void.class) {
+                valueFilter = null;
+            }
+            if (contentFilter == Void.class) {
+                contentFilter = null;
+            }
+            if (((valueIncl == Include.USE_DEFAULTS) || (valueIncl == null))
+                    && ((contentIncl == Include.USE_DEFAULTS) || (contentIncl == null))
+                    && (valueFilter == null)
+                    && (contentFilter == null)
+                    ) {
+                return EMPTY;
+            }
+            return new Value(valueIncl, contentIncl, valueFilter, contentFilter);
+        }
+        
         /**
          * Factory method to use for constructing an instance from instance of
          * {@link JsonInclude}
@@ -311,15 +393,71 @@ public @interface JsonInclude
             if ((vi == Include.USE_DEFAULTS) && (ci == Include.USE_DEFAULTS)) {
                 return EMPTY;
             }
-            return new Value(vi, ci);
+            Class<?> vf = src.valueFilter();
+            if (vf == Void.class) {
+                vf = null;
+            }
+            Class<?> cf = src.contentFilter();
+            if (cf == Void.class) {
+                cf = null;
+            }
+            return new Value(vi, ci, vf, cf);
         }
 
         public Value withValueInclusion(Include incl) {
-            return (incl == _valueInclusion) ? this : new Value(incl, _contentInclusion);
+            return (incl == _valueInclusion) ? this
+                    : new Value(incl, _contentInclusion, _valueFilter, _contentFilter);
+        }
+
+        /**
+         * Mutant factory that will either
+         *<ul>
+         * <li>Set <code>value</code> as <code>USE_DEFAULTS</code>
+         * and <code>valueFilter</code> to <code>filter</code> (if filter not null);
+         * or</li>
+         * <li>Set <code>value</code> as <code>ALWAYS</code> (if filter null)
+         *  </li>
+         *  </ul>
+         *
+         * @since 2.9
+         */
+        public Value withValueFilter(Class<?> filter) {
+            Include incl;
+            if (filter == null || filter == Void.class) { // clear filter
+                incl = Include.USE_DEFAULTS;
+                filter = null;
+            } else {
+                incl = Include.CUSTOM;
+            }
+            return construct(incl, _contentInclusion, filter, _contentFilter);
+        }
+
+        /**
+         * Mutant factory that will either
+         *<ul>
+         * <li>Set <code>content</code> as <code>USE_DEFAULTS</code>
+         * and <code>contentFilter</code> to <code>filter</code> (if filter not null);
+         * or</li>
+         * <li>Set <code>content</code> as <code>ALWAYS</code> (if filter null)
+         *  </li>
+         *  </ul>
+         *
+         * @since 2.9
+         */
+        public Value withContentFilter(Class<?> filter) {
+            Include incl;
+            if (filter == null || filter == Void.class) { // clear filter
+                incl = Include.USE_DEFAULTS;
+                filter = null;
+            } else {
+                incl = Include.CUSTOM;
+            }
+            return construct(_valueInclusion, incl, _valueFilter, filter);
         }
 
         public Value withContentInclusion(Include incl) {
-            return (incl == _contentInclusion) ? this : new Value(_valueInclusion, incl);
+            return (incl == _contentInclusion) ? this
+                    : new Value(_valueInclusion, incl, _valueFilter, _contentFilter);
         }
 
         @Override
@@ -335,9 +473,28 @@ public @interface JsonInclude
             return _contentInclusion;
         }
 
+        public Class<?> getValueFilter() {
+            return _valueFilter;
+        }
+
+        public Class<?> getContentFilter() {
+            return _contentFilter;
+        }
+        
         @Override
         public String toString() {
-            return String.format("[value=%s,content=%s]", _valueInclusion, _contentInclusion);
+            StringBuilder sb = new StringBuilder(40);
+            sb.append("[value=")
+                .append(_valueInclusion)
+                .append(",content=")
+                .append(_contentInclusion);
+            if (_valueFilter != null) {
+                sb.append(",valueFilter=").append(_valueFilter.getName()).append(".class");
+            }
+            if (_contentFilter != null) {
+                sb.append(",contentFilter=").append(_contentFilter.getName()).append(".class");
+            }
+            return sb.append("]").toString();
         }
 
         @Override
@@ -354,7 +511,10 @@ public @interface JsonInclude
             Value other = (Value) o;
             
             return (other._valueInclusion == _valueInclusion)
-                    && (other._contentInclusion == _contentInclusion);
+                    && (other._contentInclusion == _contentInclusion)
+                    && (other._valueFilter == _valueFilter)
+                    && (other._contentFilter == _contentFilter)
+                    ;
         }
     }
 }
