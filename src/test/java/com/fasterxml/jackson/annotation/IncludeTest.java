@@ -12,6 +12,10 @@ public class IncludeTest extends TestBase
 
     @JsonInclude(value=JsonInclude.Include.NON_EMPTY, content=JsonInclude.Include.NON_DEFAULT)
     private final static class Bogus { }
+
+    @JsonInclude(value=JsonInclude.Include.CUSTOM, valueFilter=Integer.class,
+            content=JsonInclude.Include.CUSTOM, contentFilter=Long.class)
+    private final static class Custom { }
     
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
@@ -36,7 +40,21 @@ public class IncludeTest extends TestBase
         assertEquals(Include.NON_EMPTY, v.getValueInclusion());
         assertEquals(Include.NON_DEFAULT, v.getContentInclusion());
     }
-    
+
+    public void testFromAnnotationWithCustom()
+    {
+        JsonInclude ann = Custom.class.getAnnotation(JsonInclude.class);
+        JsonInclude.Value v = JsonInclude.Value.from(ann);
+        assertEquals(Include.CUSTOM, v.getValueInclusion());
+        assertEquals(Include.CUSTOM, v.getContentInclusion());
+        assertEquals(Integer.class, v.getValueFilter());
+        assertEquals(Long.class, v.getContentFilter());
+
+        assertEquals(
+"[value=CUSTOM,content=CUSTOM,valueFilter=java.lang.Integer.class,contentFilter=java.lang.Long.class]",
+                v.toString());
+    }
+
     public void testToString() {
         assertEquals("[value=NON_ABSENT,content=USE_DEFAULTS]",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
@@ -54,7 +72,8 @@ public class IncludeTest extends TestBase
         assertEquals(Include.NON_ABSENT, v2.getValueInclusion());
         assertEquals(Include.USE_DEFAULTS, v2.getContentInclusion());
 
-        JsonInclude.Value v3 = new JsonInclude.Value(Include.NON_EMPTY, Include.ALWAYS);
+        JsonInclude.Value v3 = new JsonInclude.Value(Include.NON_EMPTY, Include.ALWAYS,
+                null, null);
         assertEquals(Include.NON_EMPTY, v3.getValueInclusion());
         assertEquals(Include.ALWAYS, v3.getContentInclusion());
 
@@ -92,5 +111,25 @@ public class IncludeTest extends TestBase
 
         assertEquals(JsonInclude.Include.NON_EMPTY, v21.getContentInclusion());
         assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
+    }
+
+    public void testFilters()
+    {
+        JsonInclude.Value empty = JsonInclude.Value.empty();
+        assertNull(empty.getValueFilter());
+        assertNull(empty.getContentFilter());
+
+        // note: filter class choices are arbitrary, just confirming assingments
+        JsonInclude.Value v1 = empty.withValueFilter(String.class);
+        assertEquals(JsonInclude.Include.CUSTOM, v1.getValueInclusion());
+        assertEquals(String.class, v1.getValueFilter());
+        assertNull(v1.withValueFilter(null).getValueFilter());
+        assertNull(v1.withValueFilter(Void.class).getValueFilter());
+
+        JsonInclude.Value v2 = empty.withContentFilter(Long.class);
+        assertEquals(JsonInclude.Include.CUSTOM, v2.getContentInclusion());
+        assertEquals(Long.class, v2.getContentFilter());
+        assertNull(v2.withValueFilter(null).getValueFilter());
+        assertNull(v2.withValueFilter(Void.class).getValueFilter());
     }
 }
