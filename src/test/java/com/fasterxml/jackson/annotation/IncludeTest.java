@@ -129,7 +129,7 @@ public class IncludeTest extends TestBase
         JsonInclude.Value v2 = empty.withContentFilter(Long.class);
         assertEquals(JsonInclude.Include.CUSTOM, v2.getContentInclusion());
         assertEquals(Long.class, v2.getContentFilter());
-        assertNull(v2.withValueFilter(null).getValueFilter());
-        assertNull(v2.withValueFilter(Void.class).getValueFilter());
+        assertNull(v2.withContentFilter(null).getContentFilter());
+        assertNull(v2.withContentFilter(Void.class).getContentFilter());
     }
 }
