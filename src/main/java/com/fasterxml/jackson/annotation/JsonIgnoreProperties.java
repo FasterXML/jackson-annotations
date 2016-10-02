@@ -84,7 +84,8 @@ public @interface JsonIgnoreProperties
 
     /*
     /**********************************************************
-    /* Value class used to enclose information
+    /* Value class used to enclose information, allow for
+    /* merging of layered configuration settings.
     /**********************************************************
      */
 
@@ -149,7 +150,7 @@ public @interface JsonIgnoreProperties
         /**
          * Factory method that may be used (although is NOT the recommended way)
          * to construct an instance from a full set of properties. Most users would
-         * be better of starting by {@link #empty()} instance and using `withXxx`/`withoutXxx`)
+         * be better of starting by {@link #empty()} instance and using `withXxx()`/`withoutXxx()`
          * methods, as this factory method may need to be changed if new properties
          * are added in {@link JsonIgnoreProperties} annotation.
          */
