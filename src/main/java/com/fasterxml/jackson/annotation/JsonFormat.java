@@ -121,7 +121,7 @@ public @interface JsonFormat
      * @since 2.6
      */
     public JsonFormat.Feature[] without() default { };
-    
+
     /*
     /**********************************************************
     /* Value enumeration(s), value class(es)

@@ -83,7 +83,7 @@ public @interface JsonInclude
     
     /*
     /**********************************************************
-    /* Value enumerations needed
+    /* Value enumerations
     /**********************************************************
      */
 
