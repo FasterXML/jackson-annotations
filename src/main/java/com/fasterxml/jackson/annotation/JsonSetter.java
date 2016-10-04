@@ -26,8 +26,10 @@ public @interface JsonSetter
 
     /**
      * Specifies action to take when input contains explicit `null` value
-     * (if format has one). Default action, in absence of any explicit
-     * configuration, is usually {@link Nulls#SET}.
+     * (if format has one).
+     * Default action, in absence of any explicit configuration,
+     * is usually {@link Nulls#SET}, meaning that the `null` is set as
+     * value using setter.
      *<p>
      * NOTE: is not usually used in case property value is missing, unless
      * data format specifies that there is defaulting which would result
@@ -35,6 +37,16 @@ public @interface JsonSetter
      */
     Nulls nulls() default Nulls.DEFAULT;
 
+    /**
+     * Specifies action to take when input to match into content value
+     * (of a {@link java.util.Collection}, {@link java.util.Map}, array,
+     * or referential value) contains explicit `null` value
+     * (if format has one) to bind.
+     * Default action, in absence of any explicit configuration,
+     * is usually {@link Nulls#SET}, meaning that the `null` is included as usual.
+     */
+    Nulls contentNulls() default Nulls.DEFAULT;
+    
     /**
      * Specifies whether property value should use "merging" approach, in which
      * current value is first accessed (with a getter), or not; if not,
@@ -139,19 +151,22 @@ public @interface JsonSetter
 
         private final Nulls _nulls;
 
+        private final Nulls _contentNulls;
+        
         /**
          * Default instance used in place of "default settings".
          */
-        protected final static Value EMPTY = new Value(null, Nulls.DEFAULT);
+        protected final static Value EMPTY = new Value(null, Nulls.DEFAULT, Nulls.DEFAULT);
 
-        protected Value(Boolean merge, Nulls nulls) {
+        protected Value(Boolean merge, Nulls nulls, Nulls contentNulls) {
             _merge = merge;
             _nulls = nulls;
+            _contentNulls = contentNulls;
         }
 
         // for JDK serialization
         protected Object readResolve() {
-            if (_empty(_merge, _nulls)) {
+            if (_empty(_merge, _nulls, _contentNulls)) {
                 return EMPTY;
             }
             return this;
@@ -159,7 +174,7 @@ public @interface JsonSetter
 
         public static Value from(JsonSetter src) {
             return construct(src.merge().asBoolean(),
-                    src.nulls());
+                    src.nulls(), src.contentNulls());
         }
 
         /**
@@ -169,14 +184,17 @@ public @interface JsonSetter
          * methods, as this factory method may need to be changed if new properties
          * are added in {@link JsonIgnoreProperties} annotation.
          */
-        public static Value construct(Boolean merge, Nulls nulls) {
+        public static Value construct(Boolean merge, Nulls nulls, Nulls contentNulls) {
             if (nulls == null) {
                 nulls = Nulls.DEFAULT;
             }
-            if (_empty(merge, nulls)) {
+            if (contentNulls == null) {
+                contentNulls = Nulls.DEFAULT;
+            }
+            if (_empty(merge, nulls, contentNulls)) {
                 return EMPTY;
             }
-            return new Value(merge, nulls);
+            return new Value(merge, nulls, contentNulls);
         }
 
         /**
@@ -219,15 +237,27 @@ public @interface JsonSetter
         }
 
         public static Value forNulls(Nulls nulls) {
-            return construct(null, nulls);
+            return construct(null, nulls, Nulls.DEFAULT);
+        }
+
+        public static Value forNulls(Nulls nulls, Nulls contentNulls) {
+            return construct(null, nulls, contentNulls);
+        }
+        
+        public static Value forContentNulls(Nulls nulls) {
+            return construct(null, Nulls.DEFAULT, nulls);
+        }
+        
+        public static Value forMerging(Boolean merge) {
+            return construct(merge, Nulls.DEFAULT, Nulls.DEFAULT);
         }
 
         public static Value forMerging() {
-            return construct(Boolean.TRUE, Nulls.DEFAULT);
+            return construct(Boolean.TRUE, Nulls.DEFAULT, Nulls.DEFAULT);
         }
 
         public static Value forNonMerging() {
-            return construct(Boolean.FALSE, Nulls.DEFAULT);
+            return construct(Boolean.FALSE, Nulls.DEFAULT, Nulls.DEFAULT);
         }
         
         /**
@@ -242,6 +272,7 @@ public @interface JsonSetter
             }
             Boolean merge = overrides._merge;
             Nulls nulls = overrides._nulls;
+            Nulls contentNulls = overrides._contentNulls;
 
             if (merge == null) {
                 merge = _merge;
@@ -249,11 +280,14 @@ public @interface JsonSetter
             if (nulls == Nulls.DEFAULT) {
                 nulls = _nulls;
             }
+            if (contentNulls == Nulls.DEFAULT) {
+                contentNulls = _contentNulls;
+            }
 
-            if ((merge == _merge) && (nulls == _nulls)) {
+            if ((merge == _merge) && (nulls == _nulls) && (contentNulls == _contentNulls)) {
                 return this;
             }
-            return construct(merge, nulls);
+            return construct(merge, nulls, contentNulls);
         }
 
         public Value withNulls(Nulls nulls) {
@@ -263,11 +297,34 @@ public @interface JsonSetter
             if (nulls == _nulls) {
                 return this;
             }
-            return construct(_merge, nulls);
+            return construct(_merge, nulls, _contentNulls);
         }
 
+        public Value withNulls(Nulls valueNulls, Nulls contentNulls) {
+            if (valueNulls == null) {
+                valueNulls = Nulls.DEFAULT;
+            }
+            if (contentNulls == null) {
+                contentNulls = Nulls.DEFAULT;
+            }
+            if ((valueNulls == _nulls) && (contentNulls == _contentNulls)) {
+                return this;
+            }
+            return construct(_merge, valueNulls, contentNulls);
+        }
+        
+        public Value withContentNulls(Nulls nulls) {
+            if (nulls == null) {
+                nulls = Nulls.DEFAULT;
+            }
+            if (nulls == _contentNulls) {
+                return this;
+            }
+            return construct(_merge, _nulls, nulls);
+        }
+        
         public Value withMerge(Boolean merge) {
-            return (merge == _merge) ? this : construct(merge, _nulls);
+            return (merge == _merge) ? this : construct(merge, _nulls, _contentNulls);
         }
         
         @Override
@@ -277,14 +334,15 @@ public @interface JsonSetter
 
         @Override
         public String toString() {
-            return String.format("[@JsonSetter.Value/merge=%s,nulls=%s]",
-                    _merge, _nulls);
+            return String.format("[@JsonSetter.Value/merge=%s,nulls=%s,contentNulls=%s]",
+                    _merge, _nulls, _contentNulls);
         }
 
         @Override
         public int hashCode() {
-            return (_merge == null) ? 0 : (_merge.booleanValue() ? 10 : -20)
-                    + _nulls.ordinal();
+            return (_merge == null) ? 0 : (_merge.booleanValue() ? 30 : -30)
+                    + _nulls.ordinal()
+                    + (_contentNulls.ordinal() << 2);
         }
 
         @Override
@@ -294,13 +352,16 @@ public @interface JsonSetter
             if (o.getClass() == getClass()) {
                 Value other = (Value) o;
                 return (other._merge == _merge)
-                        && (other._nulls == _nulls);
+                        && (other._nulls == _nulls)
+                        && (other._contentNulls == _contentNulls);
             }
             return false;
         }
 
-        private static boolean _empty(Boolean merge, Nulls nulls) {
-            return (merge == null) && (nulls == Nulls.DEFAULT);
+        private static boolean _empty(Boolean merge, Nulls nulls, Nulls contentNulls) {
+            return (merge == null)
+                    && (nulls == Nulls.DEFAULT)
+                    && (contentNulls == Nulls.DEFAULT);
         }
     }
 }
