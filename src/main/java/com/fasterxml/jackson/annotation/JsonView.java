@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JacksonAnnotation;
  * be part of all of them.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
-	    ElementType.PARAMETER // since 2.5
+	    ElementType.PARAMETER, // since 2.5
+	    ElementType.TYPE // since 2.9, to indicate "default view" for properties
 })
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
