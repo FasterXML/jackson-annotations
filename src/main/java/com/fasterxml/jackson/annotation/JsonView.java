@@ -20,6 +20,10 @@ import com.fasterxml.jackson.annotation.JacksonAnnotation;
  * by <code>BasicView.class</code> (or its sub-class).
  * If multiple View class identifiers are included, property will
  * be part of all of them.
+ *<p>
+ * Starting with 2.9, it is also possible to use this annotation on
+ * POJO classes to indicate the default view(s) for properties of the
+ * type, unless overridden by per-property annotation.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
 	    ElementType.PARAMETER, // since 2.5
