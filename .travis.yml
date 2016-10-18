@@ -13,9 +13,9 @@ after_success: "mvn deploy --settings target/travis/settings.xml"
 
 # whitelist
 branches:
+  # no changes in legacy branches (minus pom updates), no need to build
   only:
     - master
-    - "2.7"
 
 env:
   global:
