@@ -326,7 +326,11 @@ public @interface JsonSetter
         public Value withMerge(Boolean merge) {
             return (merge == _merge) ? this : construct(merge, _nulls, _contentNulls);
         }
-        
+
+        public Nulls getValueNulls() { return _nulls; }
+        public Nulls getContentNulls() { return _contentNulls; }
+        public Boolean getMerge() { return _merge; }
+
         @Override
         public Class<JsonSetter> valueFor() {
             return JsonSetter.class;
@@ -334,7 +338,7 @@ public @interface JsonSetter
 
         @Override
         public String toString() {
-            return String.format("[@JsonSetter.Value/merge=%s,nulls=%s,contentNulls=%s]",
+            return String.format("@JsonSetter.Value(merge=%s,valueNulls=%s,contentNulls=%s)",
                     _merge, _nulls, _contentNulls);
         }
 
