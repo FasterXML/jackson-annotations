@@ -173,6 +173,9 @@ public @interface JsonSetter
         }
 
         public static Value from(JsonSetter src) {
+            if (src == null) {
+                return EMPTY;
+            }
             return construct(src.merge().asBoolean(),
                     src.nulls(), src.contentNulls());
         }
