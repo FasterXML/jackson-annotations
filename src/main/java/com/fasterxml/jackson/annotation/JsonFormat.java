@@ -520,10 +520,7 @@ public @interface JsonFormat
          * @since 2.7
          */
         public final static Value from(JsonFormat ann) {
-            if (ann == null) { // or EMPTY?
-                return null;
-            }
-            return new Value(ann);
+            return (ann == null) ? EMPTY : new Value(ann);
         }
 
         /**

@@ -136,8 +136,8 @@ public @interface JsonIgnoreProperties
         }
 
         public static Value from(JsonIgnoreProperties src) {
-            if (src == null) { // should this return EMPTY?
-                return null;
+            if (src == null) {
+                return EMPTY; // since 2.9
             }
             return construct(_asSet(src.value()),
                     src.ignoreUnknown(), src.allowGetters(), src.allowSetters(),

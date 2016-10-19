@@ -384,8 +384,8 @@ public @interface JsonInclude
          * {@link JsonInclude}
          */
         public static Value from(JsonInclude src) {
-            if (src == null) { // should this return EMPTY?
-                return null;
+            if (src == null) {
+                return EMPTY;
             }
             Include vi = src.value();
             Include ci = src.content();
