@@ -12,7 +12,8 @@ import java.lang.annotation.*;
  *<p>
  *
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+// ^^^ allowed on Fields, (constructor) parameters since 2.9
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonSetter
