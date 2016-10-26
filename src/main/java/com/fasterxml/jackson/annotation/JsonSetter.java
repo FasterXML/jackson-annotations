@@ -335,6 +335,8 @@ public @interface JsonSetter
         public Nulls getContentNulls() { return _contentNulls; }
         public Boolean getMerge() { return _merge; }
 
+        public boolean shouldMerge() { return (_merge != null) && _merge.booleanValue(); }
+
         @Override
         public Class<JsonSetter> valueFor() {
             return JsonSetter.class;
