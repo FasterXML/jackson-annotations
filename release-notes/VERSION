@@ -14,7 +14,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 2.9.0 (not yet released)
 
 #103: Add `JsonInclude.Include.CUSTOM`, properties for specifying filter(s) to use
-#xxx: Add `merge` and `nulls` properties for `@JsonSetter`
+#104: Add new properties in `@JsonSetter`: `merge`, `null`/`contentNulls`
 - Allow use of `@JsonView` on classes, to specify Default View to use on non-annotated
   properties.
 
