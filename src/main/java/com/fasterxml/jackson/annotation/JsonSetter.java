@@ -337,6 +337,14 @@ public @interface JsonSetter
 
         public boolean shouldMerge() { return (_merge != null) && _merge.booleanValue(); }
 
+        public Nulls valueNullsOrNull() {
+            return (_nulls == Nulls.DEFAULT) ? null : _nulls;
+        }
+
+        public Nulls contentNullsOrNull() {
+            return (_contentNulls == Nulls.DEFAULT) ? null : _contentNulls;
+        }
+
         @Override
         public Class<JsonSetter> valueFor() {
             return JsonSetter.class;
