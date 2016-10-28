@@ -349,7 +349,7 @@ public @interface JsonSetter
          * Returns same as {@link #getContentNulls()} unless value would be
          * {@link Nulls.DEFAULT} in which case `null` is returned.
          */
-        public Nulls nonDefaultcontentNulls() {
+        public Nulls nonDefaultContentNulls() {
             return (_contentNulls == Nulls.DEFAULT) ? null : _contentNulls;
         }
 
