@@ -337,11 +337,19 @@ public @interface JsonSetter
 
         public boolean shouldMerge() { return (_merge != null) && _merge.booleanValue(); }
 
-        public Nulls valueNullsOrNull() {
+        /**
+         * Returns same as {@link #getValueNulls()} unless value would be
+         * {@link Nulls.DEFAULT} in which case `null` is returned.
+         */
+        public Nulls nonDefaultValueNulls() {
             return (_nulls == Nulls.DEFAULT) ? null : _nulls;
         }
 
-        public Nulls contentNullsOrNull() {
+        /**
+         * Returns same as {@link #getContentNulls()} unless value would be
+         * {@link Nulls.DEFAULT} in which case `null` is returned.
+         */
+        public Nulls nonDefaultcontentNulls() {
             return (_contentNulls == Nulls.DEFAULT) ? null : _contentNulls;
         }
 
