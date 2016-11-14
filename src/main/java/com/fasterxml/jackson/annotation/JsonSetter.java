@@ -92,7 +92,9 @@ public @interface JsonSetter
     {
         /**
          * Value that indicates that an input null should result in assignment
-         * of Java `null` value of matching property.
+         * of Java `null` value of matching property (except where deserializer
+         * indicates other "null value" by overriding <code>getNullValue(...)</code>
+         * method)
          */
         SET,
 
@@ -339,7 +341,7 @@ public @interface JsonSetter
 
         /**
          * Returns same as {@link #getValueNulls()} unless value would be
-         * {@link Nulls.DEFAULT} in which case `null` is returned.
+         * {@link JsonSetter.Nulls#DEFAULT} in which case `null` is returned.
          */
         public Nulls nonDefaultValueNulls() {
             return (_nulls == Nulls.DEFAULT) ? null : _nulls;
@@ -347,7 +349,7 @@ public @interface JsonSetter
 
         /**
          * Returns same as {@link #getContentNulls()} unless value would be
-         * {@link Nulls.DEFAULT} in which case `null` is returned.
+         * {@link JsonSetter.Nulls#DEFAULT} in which case `null` is returned.
          */
         public Nulls nonDefaultContentNulls() {
             return (_contentNulls == Nulls.DEFAULT) ? null : _contentNulls;
