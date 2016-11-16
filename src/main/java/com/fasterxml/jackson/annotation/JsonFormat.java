@@ -104,6 +104,15 @@ public @interface JsonFormat
     public String timezone() default DEFAULT_TIMEZONE;
 
     /**
+     * Property that indicates whether "lenient" handling should be enabled or
+     * disabled. This is relevant mostly for deserialization of some textual
+     * datatypes, especially date/time types.
+     * 
+     * @since 2.9
+     */
+    public OptBoolean lenient() default OptBoolean.DEFAULT;
+
+    /**
      * Set of {@link JsonFormat.Feature}s to explicitly enable with respect
      * to handling of annotated property. This will have precedence over possible
      * global configuration.
@@ -398,6 +407,11 @@ public @interface JsonFormat
         private final String _timezoneStr;
 
         /**
+         * @since 2.9
+         */
+        private final Boolean _lenient;
+
+        /**
          * @since 2.6
          */
         private final Features _features;
@@ -406,31 +420,33 @@ public @interface JsonFormat
         private transient TimeZone _timezone;
         
         public Value() {
-            this("", Shape.ANY, "", "", Features.empty());
+            this("", Shape.ANY, "", "", Features.empty(), null);
         }
         
         public Value(JsonFormat ann) {
             this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone(),
-                    Features.construct(ann));
+                    Features.construct(ann), ann.lenient().asBoolean());
         }
 
         /**
-         * @since 2.6
+         * @since 2.9
          */
-        public Value(String p, Shape sh, String localeStr, String tzStr, Features f)
+        public Value(String p, Shape sh, String localeStr, String tzStr, Features f,
+                Boolean lenient)
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
                             null : new Locale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
-                    null, f);
+                    null, f, lenient);
         }
 
         /**
-         * @since 2.6
+         * @since 2.9
          */
-        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f)
+        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f,
+                Boolean lenient)
         {
             _pattern = p;
             _shape = (sh == null) ? Shape.ANY : sh;
@@ -438,12 +454,14 @@ public @interface JsonFormat
             _timezone = tz;
             _timezoneStr = null;
             _features = (f == null) ? Features.empty() : f;
+            _lenient = lenient;
         }
 
         /**
-         * @since 2.6
+         * @since 2.9
          */
-        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f)
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f,
+                Boolean lenient)
         {
             _pattern = p;
             _shape = (sh == null) ? Shape.ANY : sh;
@@ -451,32 +469,23 @@ public @interface JsonFormat
             _timezone = tz;
             _timezoneStr = tzStr;
             _features = (f == null) ? Features.empty() : f;
+            _lenient = lenient;
         }
 
-        /**
-         * @deprecated since 2.6
-         */
-        @Deprecated
-        public Value(String p, Shape sh, Locale l, TimeZone tz) {
-            this(p, sh, l, tz, Features.empty());
-        }
-
-        /**
-         * @deprecated since 2.6
-         */
-        @Deprecated
-        public Value(String p, Shape sh, String localeStr, String tzStr) {
-            this(p, sh, localeStr, tzStr, Features.empty());
+        @Deprecated // since 2.9
+        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f) {
+            this(p, sh, l, tzStr, tz, f, null);
         }
         
-        /**
-         * @deprecated since 2.6
-         */
-        @Deprecated
-        public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz) {
-            this(p, sh, l, tzStr, tz, Features.empty());
+        @Deprecated // since 2.9
+        public Value(String p, Shape sh, String localeStr, String tzStr, Features f) {
+            this(p, sh, localeStr, tzStr, f, null);
         }
-
+        @Deprecated // since 2.9
+        public Value(String p, Shape sh, Locale l, TimeZone tz, Features f) {
+            this(p, sh, l, tz, f, null);
+        }
+        
         /**
          * @since 2.7
          */
@@ -526,7 +535,7 @@ public @interface JsonFormat
          * @since 2.7
          */
         public final Value withOverrides(Value overrides) {
-            if ((overrides == null) || (overrides == EMPTY)) {
+            if ((overrides == null) || (overrides == EMPTY) || (overrides == this)) {
                 return this;
             }
             if (this == EMPTY) { // cheesy, but probably common enough
@@ -550,6 +559,10 @@ public @interface JsonFormat
             } else {
                 f = f.withOverrides(overrides._features);
             }
+            Boolean lenient = overrides._lenient;
+            if (lenient == null) {
+                lenient = _lenient;
+            }
 
             // timezone not merged, just choose one
             String tzStr = overrides._timezoneStr;
@@ -561,49 +574,75 @@ public @interface JsonFormat
             } else {
                 tz = overrides._timezone;
             }
-            return new Value(p, sh, l, tzStr, tz, f);
+            return new Value(p, sh, l, tzStr, tz, f, lenient);
         }
 
         /**
          * @since 2.6
          */
         public static Value forPattern(String p) {
-            return new Value(p, null, null, null, null, Features.empty());
+            return new Value(p, null, null, null, null, Features.empty(), null);
         }
 
         /**
          * @since 2.7
          */
         public static Value forShape(Shape sh) {
-            return new Value(null, sh, null, null, null, Features.empty());
+            return new Value(null, sh, null, null, null, Features.empty(), null);
         }
 
+        /**
+         * @since 2.9
+         */
+        public static Value forLeniency(boolean lenient) {
+            return new Value(null, null, null, null, null, Features.empty(),
+                    Boolean.valueOf(lenient));
+        }
+        
         /**
          * @since 2.1
          */
         public Value withPattern(String p) {
-            return new Value(p, _shape, _locale, _timezoneStr, _timezone, _features);
+            return new Value(p, _shape, _locale, _timezoneStr, _timezone,
+                    _features, _lenient);
         }
 
         /**
          * @since 2.1
          */
         public Value withShape(Shape s) {
-            return new Value(_pattern, s, _locale, _timezoneStr, _timezone, _features);
+            if (s == _shape) {
+                return this;
+            }
+            return new Value(_pattern, s, _locale, _timezoneStr, _timezone,
+                    _features, _lenient);
         }
 
         /**
          * @since 2.1
          */
         public Value withLocale(Locale l) {
-            return new Value(_pattern, _shape, l, _timezoneStr, _timezone, _features);
+            return new Value(_pattern, _shape, l, _timezoneStr, _timezone,
+                    _features, _lenient);
         }
 
         /**
          * @since 2.1
          */
         public Value withTimeZone(TimeZone tz) {
-            return new Value(_pattern, _shape, _locale, null, tz, _features);
+            return new Value(_pattern, _shape, _locale, null, tz,
+                    _features, _lenient);
+        }
+
+        /**
+         * @since 2.9
+         */
+        public Value withLenient(Boolean lenient) {
+            if (lenient == _lenient) {
+                return this;
+            }
+            return new Value(_pattern, _shape, _locale, _timezoneStr, _timezone,
+                    _features, lenient);
         }
 
         /**
@@ -612,7 +651,8 @@ public @interface JsonFormat
         public Value withFeature(JsonFormat.Feature f) {
             Features newFeats = _features.with(f);
             return (newFeats == _features) ? this :
-                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone, newFeats);
+                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone,
+                        newFeats, _lenient);
         }
 
         /**
@@ -621,7 +661,8 @@ public @interface JsonFormat
         public Value withoutFeature(JsonFormat.Feature f) {
             Features newFeats = _features.without(f);
             return (newFeats == _features) ? this :
-                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone, newFeats);
+                new Value(_pattern, _shape, _locale, _timezoneStr, _timezone,
+                        newFeats, _lenient);
         }
 
         @Override
@@ -632,6 +673,19 @@ public @interface JsonFormat
         public String getPattern() { return _pattern; }
         public Shape getShape() { return _shape; }
         public Locale getLocale() { return _locale; }
+
+        /**
+         * @since 2.9
+         */
+        public Boolean getLenient() {
+            return _lenient;
+        }
+        /**
+         * @since 2.9
+         */
+        public boolean isLenient() {
+            return Boolean.TRUE.equals(_lenient);
+        }
 
         /**
          * Alternate access (compared to {@link #getTimeZone()}) which is useful
@@ -684,6 +738,17 @@ public @interface JsonFormat
         }
 
         /**
+         * Accessor for checking whether there is a setting for leniency.
+         * NOTE: does NOT mean that `lenient` is `true` necessarily; just that
+         * it has been set.
+         *
+         * @since 2.9
+         */
+        public boolean hasLenient() {
+            return _lenient != null;
+        }
+
+        /**
          * Accessor for checking whether this format value has specific setting for
          * given feature. Result is 3-valued with either `null`, {@link Boolean#TRUE} or
          * {@link Boolean#FALSE}, indicating 'yes/no/dunno' choices, where `null` ("dunno")
@@ -708,8 +773,8 @@ public @interface JsonFormat
         @Override
         public String toString() {
             // !!! TODO: Features?
-            return String.format("[pattern=%s,shape=%s,locale=%s,timezone=%s]",
-                    _pattern, _shape, _locale, _timezoneStr);
+            return String.format("JsonFormat.Value(pattern=%s,shape=%s,lenient=%s,locale=%s,timezone=%s)",
+                    _pattern, _shape, _lenient, _locale, _timezoneStr);
         }
 
         @Override
@@ -719,10 +784,13 @@ public @interface JsonFormat
                  hash ^= _pattern.hashCode();
              }
              hash += _shape.hashCode();
-             if (_locale != null) {
-                 hash ^= _locale.hashCode();
+             if (_lenient != null) {
+                 hash ^= _lenient.hashCode();
              }
-             hash += _features.hashCode();
+             if (_locale != null) {
+                 hash += _locale.hashCode();
+             }
+             hash ^= _features.hashCode();
              return hash;
         }
 
@@ -737,7 +805,8 @@ public @interface JsonFormat
                     || !_features.equals(other._features)) {
                 return false;
             }
-            return _equal(_timezoneStr, other._timezoneStr)
+            return _equal(_lenient, other._lenient)
+                    && _equal(_timezoneStr, other._timezoneStr)
                     && _equal(_pattern, other._pattern)
                     && _equal(_timezone, other._timezone)
                     && _equal(_locale, other._locale);
@@ -747,7 +816,8 @@ public @interface JsonFormat
         {
             if (value1 == null) {
                 return (value2 == null);
-            } else if (value2 == null) {
+            }
+            if (value2 == null) {
                 return false;
             }
             return value1.equals(value2);

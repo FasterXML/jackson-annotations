@@ -372,7 +372,7 @@ public @interface JsonIgnoreProperties
 
         @Override
         public String toString() {
-            return String.format("[ignored=%s,ignoreUnknown=%s,allowGetters=%s,allowSetters=%s,merge=%s]",
+            return String.format("JsonIgnoreProperties.Value(ignored=%s,ignoreUnknown=%s,allowGetters=%s,allowSetters=%s,merge=%s)",
                     _ignored, _ignoreUnknown, _allowGetters, _allowSetters, _merge);
         }
 

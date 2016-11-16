@@ -19,6 +19,13 @@ public class FormatTest extends TestBase
         for (Feature f : Feature.values()) {
             assertNull(empty.getFeature(f));
         }
+        assertFalse(empty.hasLocale());
+        assertFalse(empty.hasPattern());
+        assertFalse(empty.hasShape());
+        assertFalse(empty.hasTimeZone());
+        assertFalse(empty.hasLenient());
+
+        assertFalse(empty.isLenient());
     }
 
     public void testEquality() {
@@ -48,9 +55,9 @@ public class FormatTest extends TestBase
     }
     
     public void testToString() {
-        assertEquals("[pattern=null,shape=STRING,locale=null,timezone=null]",
+        assertEquals("JsonFormat.Value(pattern=null,shape=STRING,lenient=null,locale=null,timezone=null)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
-        assertEquals("[pattern=[.],shape=ANY,locale=null,timezone=null]",
+        assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null)",
                 JsonFormat.Value.forPattern("[.]").toString());
     }
 
@@ -91,6 +98,9 @@ public class FormatTest extends TestBase
         assertFalse(merged.hasShape());
         assertFalse(merged.hasTimeZone());
 
+        // minor optimization: overriding with itself has no effect
+        assertSame(merged, merged.withOverrides(merged));
+
         // but that empty is overridden
         merged = EMPTY.withOverrides(v);
         assertEquals(TEST_PATTERN, merged.getPattern());
@@ -113,6 +123,50 @@ public class FormatTest extends TestBase
         assertFalse(merged.hasLocale());
         assertEquals(TEST_SHAPE, merged.getShape());
         assertFalse(merged.hasTimeZone());
+    }
+
+    /*
+    /**********************************************************
+    /* Test specific value properties
+    /**********************************************************
+     */
+
+    public void testLeniency() {
+        JsonFormat.Value empty = JsonFormat.Value.empty();
+        assertFalse(empty.hasLenient());
+        assertFalse(empty.isLenient());
+        assertNull(empty.getLenient());
+
+        JsonFormat.Value lenient = empty.withLenient(Boolean.TRUE);
+        assertTrue(lenient.hasLenient());
+        assertTrue(lenient.isLenient());
+        assertEquals(Boolean.TRUE, lenient.getLenient());
+        assertTrue(lenient.equals(lenient));
+        assertFalse(empty.equals(lenient));
+        assertFalse(lenient.equals(empty));
+
+        // should NOT create now one if no change:
+        assertSame(lenient, lenient.withLenient(Boolean.TRUE));
+
+        JsonFormat.Value strict = lenient.withLenient(Boolean.FALSE);
+        assertTrue(strict.hasLenient());
+        assertFalse(strict.isLenient());
+        assertEquals(Boolean.FALSE, strict.getLenient());
+        assertTrue(strict.equals(strict));
+        assertFalse(empty.equals(strict));
+        assertFalse(strict.equals(empty));
+        assertFalse(lenient.equals(strict));
+        assertFalse(strict.equals(lenient));
+
+        // and finally, can also clear up setting
+        JsonFormat.Value dunno = lenient.withLenient(null);
+        assertFalse(dunno.hasLenient());
+        assertFalse(dunno.isLenient());
+        assertNull(dunno.getLenient());
+        assertTrue(empty.equals(dunno));
+        assertTrue(dunno.equals(empty));
+        assertFalse(lenient.equals(dunno));
+        assertFalse(dunno.equals(lenient));
     }
 
     public void testShape() {

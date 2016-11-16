@@ -242,11 +242,11 @@ public @interface JsonSetter
             return result;
         }
 
-        public static Value forNulls(Nulls nulls) {
+        public static Value forValueNulls(Nulls nulls) {
             return construct(null, nulls, Nulls.DEFAULT);
         }
 
-        public static Value forNulls(Nulls nulls, Nulls contentNulls) {
+        public static Value forValueNulls(Nulls nulls, Nulls contentNulls) {
             return construct(null, nulls, contentNulls);
         }
         
@@ -296,7 +296,7 @@ public @interface JsonSetter
             return construct(merge, nulls, contentNulls);
         }
 
-        public Value withNulls(Nulls nulls) {
+        public Value withValueNulls(Nulls nulls) {
             if (nulls == null) {
                 nulls = Nulls.DEFAULT;
             }
@@ -306,7 +306,7 @@ public @interface JsonSetter
             return construct(_merge, nulls, _contentNulls);
         }
 
-        public Value withNulls(Nulls valueNulls, Nulls contentNulls) {
+        public Value withValueNulls(Nulls valueNulls, Nulls contentNulls) {
             if (valueNulls == null) {
                 valueNulls = Nulls.DEFAULT;
             }
@@ -362,7 +362,7 @@ public @interface JsonSetter
 
         @Override
         public String toString() {
-            return String.format("@JsonSetter.Value(merge=%s,valueNulls=%s,contentNulls=%s)",
+            return String.format("JsonSetter.Value(merge=%s,valueNulls=%s,contentNulls=%s)",
                     _merge, _nulls, _contentNulls);
         }
 
