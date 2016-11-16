@@ -99,8 +99,7 @@ public @interface JsonFormat
      * Special value of {@link #DEFAULT_TIMEZONE}
      * can be used to mean "just use the default", where default is specified
      * by the serialization context, which in turn defaults to system
-     * defaults ({@link java.util.TimeZone#getDefault()}) unless explicitly
-     * set to another locale.
+     * default (UTC) unless explicitly set to another timezone.
      */
     public String timezone() default DEFAULT_TIMEZONE;
 
