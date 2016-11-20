@@ -276,7 +276,12 @@ public @interface JsonFormat
          * Override for <code>DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIMEZONE</code>
          * that specifies whether context provided timezone
          * <code>DeserializationContext.getTimeZone()</code> should be used to adjust Date/Time
-         * values on deserialization, even if value itself contains timezone information
+         * values on deserialization, even if value itself contains timezone informatio
+         *<p>
+         * NOTE: due to limitations of "old" JDK date/time types (that is,
+         * {@link java.util.Date} and {@link java.util.Calendar}), this setting is only
+         * applicable to <code>Joda</code> and <code>Java 8 date/time</code> values,
+         * but not to <code>java.util.Date</code> or <code>java.util.Calendar</code>.
          *
          * @since 2.8
          */
