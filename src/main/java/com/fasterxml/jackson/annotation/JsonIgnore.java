@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  * [of {@link JsonCreator}-annotated constructor or factory method])
  * is to be ignored by introspection-based
  * serialization and deserialization functionality.
+ *<p>
  * Annotation only needs to be added to one of the accessors (often
  * getter method, but may be setter, field or creator parameter),
  * if the complete removal of the property is desired.
@@ -21,6 +22,12 @@ import java.lang.annotation.Target;
  * so-called "split property" case and allows definitions of
  * "read-only" (read from input into POJO) and "write-only" (write
  * in output but ignore on output)
+ *<br>
+ * NOTE! As Jackson 2.6, there is a new and improved way to define
+ * `read-only` and `write-only` properties, using
+ * {@link JsonProperty#access()} annotation: this is recommended over
+ * use of separate <code>JsonIgnore</code> and {@link JsonProperty}
+ * annotations.
  *<p>
  * For example, a "getter" method that would otherwise denote
  * a property (like, say, "getValue" to suggest property "value")

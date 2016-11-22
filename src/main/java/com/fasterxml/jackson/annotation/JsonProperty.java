@@ -133,6 +133,8 @@ public @interface JsonProperty
      * its effects may be further overridden by {@link JsonIgnore} property:
      * if both annotations are present on an accessors, {@link JsonIgnore}
      * has precedence over this property.
+     * This annotation property is, however, preferred over use of "split"
+     * {@link JsonIgnore}/<code>JsonProperty</code> combination.
      *
      * @since 2.6
      */
