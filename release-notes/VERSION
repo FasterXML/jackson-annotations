@@ -17,6 +17,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 #104: Add new properties in `@JsonSetter`: `merge`, `null`/`contentNulls`
 #105: Add `@JsonFormat.lenient` to allow configuring lenience of date/time deserializers
 #108: Allow `@JsonValue` on fields
+#109: Add `enabled` for `@JsonAnyGetter`, `@JsonAnySetter`, to allow disabling via mix-ins
 - Allow use of `@JsonView` on classes, to specify Default View to use on non-annotated
   properties.
 
