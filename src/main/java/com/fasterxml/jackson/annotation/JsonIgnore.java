@@ -6,40 +6,38 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation that indicates that the annotated method or field is to be
- * ignored by introspection-based
- * serialization and deserialization functionality. That is, it should
- * not be consider a "getter", "setter" or "creator".
+ * Marker annotation that indicates that the logical property that
+ * the accessor (field, getter/setter method or Creator parameter
+ * [of {@link JsonCreator}-annotated constructor or factory method])
+ * is to be ignored by introspection-based
+ * serialization and deserialization functionality.
+ * Annotation only needs to be added to one of the accessors (often
+ * getter method, but may be setter, field or creator parameter),
+ * if the complete removal of the property is desired.
+ * However: if only particular accessor is to be ignored (for example,
+ * when ignoring one of potentially conflicting setter methods),
+ * this can be done by annotating other not-to-be-ignored accessors
+ * with {@link JsonProperty} (or its equivalents). This is considered
+ * so-called "split property" case and allows definitions of
+ * "read-only" (read from input into POJO) and "write-only" (write
+ * in output but ignore on output)
  *<p>
- * In addition, starting with Jackson 1.9, if this is the only annotation
- * associated with a property, it will also cause cause the whole
- * property to be ignored: that is, if setter has this annotation and
- * getter has no annotations, getter is also effectively ignored.
- * It is still possible for different accessors to use different
- * annotations; so if only "getter" is to be ignored, other accessors
- * (setter or field) would need explicit annotation to prevent
- * ignoral (usually {@link JsonProperty}).
- * <p>
  * For example, a "getter" method that would otherwise denote
  * a property (like, say, "getValue" to suggest property "value")
  * to serialize, would be ignored and no such property would
  * be output unless another annotation defines alternative method to use.
  *<p>
- * Before version 1.9, this annotation worked purely on method-by-method (or field-by-field)
- * basis; annotation on one method or field did not imply ignoring other methods
- * or fields. However, with version 1.9 and above, annotations associated
- * with various accessors (getter, setter, field, constructor parameter) of
- * a logical property are combined; meaning that annotations in one (say, setter)
- * can have effects on all of them (if getter or field has nothing indicating
- * otherwise).
+ * When ignoring the whole property, the default behavior if encountering
+ * such property in input is to ignore it without exception; but if there
+ * is a {@link JsonAnySetter} it will be called instead. Either way,
+ * no exception will be thrown.
  *<p>
  * Annotation is usually used just a like a marker annotation, that
  * is, without explicitly defining 'value' argument (which defaults
  * to <code>true</code>): but argument can be explicitly defined.
- * This can be done to override an existing JsonIgnore by explicitly
- * defining one with 'false' argument.
- *<p>
- * Annotation is similar to {@link javax.xml.bind.annotation.XmlTransient} 
+ * This can be done to override an existing `JsonIgnore` by explicitly
+ * defining one with 'false' argument: either in a sub-class, or by
+ * using "mix-in annotations".
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
