@@ -7,13 +7,17 @@ import java.lang.annotation.Target;
 
 /**
  * Marker annotation that can be used to define a non-static,
- * no-argument method or member field as something of a reverse of
- * {@link JsonAnySetter} method; basically being used like a
- * getter but such that contents of the returned Map (type <b>must</b> be
- * {@link java.util.Map}) are serialized as if they were actual properties
- * of the bean that contains method/field with this annotations.
+ * no-argument method to be an "any getter"; accessor for getting
+ * a set of key/value pairs, to be serialized as part of containing POJO
+ * (similar to unwrapping) along with regular property values it has.
+ * This typically serves as a counterpart
+ * to "any setter" mutators (see {@link JsonAnySetter}).
+ * Note that the return type of annotated methods <b>must</b> be
+ * {@link java.util.Map}).
+ *<p>
  * As with {@link JsonAnySetter}, only one property should be annotated
- * with this annotation.
+ * with this annotation; if multiple methods are annotated, an exception
+ * may be thrown.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

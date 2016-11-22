@@ -18,6 +18,9 @@ import java.lang.annotation.Target;
  *<p>
  * If used, all otherwise unmapped key-value pairs from JSON Object values
  * are added using mutator.
+ *<p>
+ * NOTE: ability to annotated fields was added in version 2.8; earlier only
+ * methods could be annotated.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
