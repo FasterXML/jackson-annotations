@@ -20,4 +20,15 @@ import java.lang.annotation.Target;
 @JacksonAnnotation
 public @interface JsonAnyGetter
 {
+    /**
+     * Optional argument that defines whether this annotation is active
+     * or not. The only use for value 'false' if for overriding purposes.
+     * Overriding may be necessary when used
+     * with "mix-in annotations" (aka "annotation overrides").
+     * For most cases, however, default value of "true" is just fine
+     * and should be omitted.
+     *
+     * @since 2.9
+     */
+    boolean enabled() default true;
 }
