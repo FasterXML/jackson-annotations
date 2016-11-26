@@ -107,6 +107,10 @@ public @interface JsonFormat
      * Property that indicates whether "lenient" handling should be enabled or
      * disabled. This is relevant mostly for deserialization of some textual
      * datatypes, especially date/time types.
+     *<p>
+     * Note that underlying default setting depends on datatype (or more precisely
+     * deserializer for it): for most date/time types, default is for leniency
+     * to be enabled.
      * 
      * @since 2.9
      */

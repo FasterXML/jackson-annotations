@@ -160,9 +160,6 @@ public @interface JsonIgnoreProperties
             if (_empty(ignored, ignoreUnknown, allowGetters, allowSetters, merge)) {
                 return EMPTY;
             }
-            if (_empty(ignored, ignoreUnknown, allowGetters, allowSetters, merge)) {
-                return EMPTY;
-            }
             return new Value(ignored, ignoreUnknown, allowGetters, allowSetters, merge);
         }
 
@@ -428,7 +425,7 @@ public @interface JsonIgnoreProperties
             result.addAll(s2);
             return result;
         }
-        
+
         private static boolean _empty(Set<String> ignored, boolean ignoreUnknown,
                 boolean allowGetters, boolean allowSetters, boolean merge)
         {

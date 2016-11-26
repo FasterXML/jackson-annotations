@@ -483,8 +483,8 @@ public @interface JsonInclude
         
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder(40);
-            sb.append("[value=")
+            StringBuilder sb = new StringBuilder(80);
+            sb.append("JsonInclude.Value(value=")
                 .append(_valueInclusion)
                 .append(",content=")
                 .append(_contentInclusion);
@@ -494,7 +494,7 @@ public @interface JsonInclude
             if (_contentFilter != null) {
                 sb.append(",contentFilter=").append(_contentFilter.getName()).append(".class");
             }
-            return sb.append("]").toString();
+            return sb.append(')').toString();
         }
 
         @Override

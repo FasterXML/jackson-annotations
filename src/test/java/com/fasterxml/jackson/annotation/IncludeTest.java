@@ -51,12 +51,12 @@ public class IncludeTest extends TestBase
         assertEquals(Long.class, v.getContentFilter());
 
         assertEquals(
-"[value=CUSTOM,content=CUSTOM,valueFilter=java.lang.Integer.class,contentFilter=java.lang.Long.class]",
+"JsonInclude.Value(value=CUSTOM,content=CUSTOM,valueFilter=java.lang.Integer.class,contentFilter=java.lang.Long.class)",
                 v.toString());
     }
 
     public void testToString() {
-        assertEquals("[value=NON_ABSENT,content=USE_DEFAULTS]",
+        assertEquals("JsonInclude.Value(value=NON_ABSENT,content=USE_DEFAULTS)",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
     }
 
