@@ -69,8 +69,11 @@ public class FormatTest extends TestBase
         assertEquals(JsonFormat.Shape.BOOLEAN, v.getShape());
         // note: since it's not valid, should not try access as real thing
         assertEquals("bogus", v.timeZoneAsString());
+
+        // also:
+        assertSame(EMPTY, JsonFormat.Value.from(null));
     }
-    
+
     public void testSimpleMerge()
     {
         // Start with an empty instance
@@ -102,11 +105,14 @@ public class FormatTest extends TestBase
         assertSame(merged, merged.withOverrides(merged));
 
         // but that empty is overridden
-        merged = EMPTY.withOverrides(v);
+        merged = JsonFormat.Value.merge(EMPTY, v);
         assertEquals(TEST_PATTERN, merged.getPattern());
         assertFalse(merged.hasLocale());
         assertFalse(merged.hasShape());
         assertFalse(merged.hasTimeZone());
+
+        // also some shortcuts:
+        assertSame(merged, merged.withOverrides(null));
 
         // then with some other combinations
         final JsonFormat.Shape TEST_SHAPE = JsonFormat.Shape.NUMBER;
@@ -123,6 +129,17 @@ public class FormatTest extends TestBase
         assertFalse(merged.hasLocale());
         assertEquals(TEST_SHAPE, merged.getShape());
         assertFalse(merged.hasTimeZone());
+    }
+
+    public void testMultiMerge()
+    {
+        final String TEST_PATTERN = "format-string"; // not parsed, usage varies
+        JsonFormat.Value format2 = JsonFormat.Value.forPattern(TEST_PATTERN);
+        JsonFormat.Value format3 = JsonFormat.Value.forLeniency(Boolean.FALSE);
+
+        JsonFormat.Value merged = JsonFormat.Value.mergeAll(EMPTY, format2, format3);
+        assertEquals(TEST_PATTERN, merged.getPattern());
+        assertEquals(Boolean.FALSE, merged.getLenient());
     }
 
     /*

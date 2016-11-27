@@ -104,7 +104,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertFalse(v3a.getAllowSetters());
 
         // when NOT merging, simply replacing values
-        JsonIgnoreProperties.Value v3b = v1.withOverrides(v2b);
+        JsonIgnoreProperties.Value v3b = JsonIgnoreProperties.Value.merge(v1, v2b);
         assertEquals(Collections.emptySet(), v3b.getIgnored());
         assertFalse(v3b.getIgnoreUnknown());
         assertFalse(v3b.getAllowGetters());
@@ -115,6 +115,20 @@ public class JsonIgnorePropertiesTest extends TestBase
 
         assertSame(v2b, v2b.withOverrides(null));
         assertSame(v2b, v2b.withOverrides(EMPTY));
+    }
+
+    public void testMergeIgnoreProperties()
+    {
+        JsonIgnoreProperties.Value v1 = EMPTY.withIgnored("a");
+        JsonIgnoreProperties.Value v2 = EMPTY.withIgnored("b");
+        JsonIgnoreProperties.Value v3 = EMPTY.withIgnored("c");
+
+        JsonIgnoreProperties.Value merged = JsonIgnoreProperties.Value.mergeAll(v1, v2, v3);
+        Set<String> all = merged.getIgnored();
+        assertEquals(3, all.size());
+        assertTrue(all.contains("a"));
+        assertTrue(all.contains("b"));
+        assertTrue(all.contains("c"));
     }
 
     public void testToString() {

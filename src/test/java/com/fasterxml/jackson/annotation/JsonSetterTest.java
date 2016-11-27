@@ -24,9 +24,16 @@ public class JsonSetterTest extends TestBase
         assertNull(EMPTY.nonDefaultContentNulls());
     }
 
-    public void testToString() {
+    public void testStdMethods() {
         assertEquals("JsonSetter.Value(merge=null,valueNulls=DEFAULT,contentNulls=DEFAULT)",
                 EMPTY.toString());
+        int x = EMPTY.hashCode();
+        if (x == 0) { // no fixed value, but should not evalute to 0
+            fail();
+        }
+        assertEquals(EMPTY, EMPTY);
+        assertFalse(EMPTY.equals(null));
+        assertFalse(EMPTY.equals("xyz"));
     }
 
     public void testFromAnnotation() throws Exception
@@ -38,6 +45,12 @@ public class JsonSetterTest extends TestBase
         assertEquals(JsonSetter.Nulls.FAIL, v.getValueNulls());
         assertEquals(JsonSetter.Nulls.SKIP, v.getContentNulls());
         assertEquals(Boolean.TRUE, v.getMerge());
+    }
+
+    public void testConstruct() throws Exception
+    {
+        JsonSetter.Value v = JsonSetter.Value.construct(null,  null, null);
+        assertSame(EMPTY, v);
     }
 
     public void testFactories() throws Exception
@@ -74,5 +87,28 @@ public class JsonSetterTest extends TestBase
         assertEquals(Nulls.FAIL, v.getValueNulls());
         v = v.withMerge(Boolean.FALSE);
         assertEquals(Boolean.FALSE, v.getMerge());
+
+        JsonSetter.Value override = JsonSetter.Value.forMerging(Boolean.TRUE);
+        JsonSetter.Value merged = JsonSetter.Value.merge(v, override);
+        assertEquals(Boolean.TRUE, merged.getMerge());
+        assertEquals(Nulls.SKIP, merged.getContentNulls());
+        assertEquals(Nulls.FAIL, merged.getValueNulls());
+        assertTrue(merged.shouldMerge());
+    }
+
+    public void testWithMethods()
+    {
+        JsonSetter.Value v = EMPTY.withContentNulls(null);
+        assertSame(EMPTY, v);
+        v = v.withContentNulls(Nulls.FAIL);
+        assertEquals(Nulls.FAIL, v.getContentNulls());
+
+        v = v.withValueNulls(Nulls.SKIP);
+        assertEquals(Nulls.SKIP, v.getValueNulls());
+
+        v = v.withValueNulls(null, null);
+        assertEquals(Nulls.DEFAULT, v.getContentNulls());
+        assertEquals(Nulls.DEFAULT, v.getValueNulls());
+        assertSame(v, v.withValueNulls(null, null));
     }
 }

@@ -21,7 +21,7 @@ public class VisibilityTest extends TestBase
     private final static JsonAutoDetect.Value NO_OVERRIDES = JsonAutoDetect.Value.noOverrides();
     private final static JsonAutoDetect.Value DEFAULTS = JsonAutoDetect.Value.defaultVisibility();
     
-    public void testProperties() throws Exception
+    public void testAnnotationProperties() throws Exception
     {
         Member m = Bogus.class.getField("value");
         
@@ -35,6 +35,22 @@ public class VisibilityTest extends TestBase
 
         // forget why DEFAULT would give false but
         assertFalse(JsonAutoDetect.Visibility.DEFAULT.isVisible(m));
+    }
+
+    public void testBasicValueProperties() {
+        JsonAutoDetect.Value v = JsonAutoDetect.Value.DEFAULT;
+        assertEquals(JsonAutoDetect.class, v.valueFor());
+
+        // and then standard method override basics...
+        int x = v.hashCode();
+        if (x == 0) { // not guaranteed in theory but...
+            fail();
+        }
+
+        assertTrue(v.equals(v));
+        // mostly to ensure no NPE or class cast exception:
+        assertFalse(v.equals(null));
+        assertFalse(v.equals("foo"));
     }
     
     public void testEquality() {
@@ -72,7 +88,40 @@ public class VisibilityTest extends TestBase
     }
 
     public void testSimpleMerge() {
-        
+        JsonAutoDetect.Value base = JsonAutoDetect.Value.construct(
+                Visibility.ANY, 
+                Visibility.PUBLIC_ONLY, 
+                Visibility.ANY, 
+                Visibility.NONE,
+                Visibility.ANY);
+        JsonAutoDetect.Value overrides = JsonAutoDetect.Value.construct(
+                Visibility.NON_PRIVATE, 
+                Visibility.DEFAULT, 
+                Visibility.PUBLIC_ONLY,
+                Visibility.DEFAULT, 
+                Visibility.DEFAULT);
+        JsonAutoDetect.Value merged = JsonAutoDetect.Value.merge(base, overrides);
+        assertFalse(merged.equals(base));
+        assertFalse(merged.equals(overrides));
+        assertEquals(merged, merged);
+
+        assertEquals(Visibility.NON_PRIVATE, merged.getFieldVisibility());
+        assertEquals(Visibility.PUBLIC_ONLY, merged.getGetterVisibility());
+        assertEquals(Visibility.PUBLIC_ONLY, merged.getIsGetterVisibility());
+        assertEquals(Visibility.NONE, merged.getSetterVisibility());
+        assertEquals(Visibility.ANY, merged.getCreatorVisibility());
+
+        // try the other way around too
+        merged = JsonAutoDetect.Value.merge(overrides, base);
+        assertEquals(Visibility.ANY, merged.getFieldVisibility());
+        assertEquals(Visibility.PUBLIC_ONLY, merged.getGetterVisibility());
+        assertEquals(Visibility.ANY, merged.getIsGetterVisibility());
+        assertEquals(Visibility.NONE, merged.getSetterVisibility());
+        assertEquals(Visibility.ANY, merged.getCreatorVisibility());
+
+        // plus, special cases
+        assertSame(overrides, JsonAutoDetect.Value.merge(null, overrides));
+        assertSame(overrides, JsonAutoDetect.Value.merge(overrides, null));
     }
 
     public void testSimpleChanges() {

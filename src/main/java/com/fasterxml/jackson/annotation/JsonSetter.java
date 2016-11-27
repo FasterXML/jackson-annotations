@@ -142,7 +142,7 @@ public @interface JsonSetter
      * Helper class used to contain information from a single {@link JsonSetter}
      * annotation, as well as to provide possible overrides from non-annotation sources.
      *
-     * @since 2.8
+     * @since 2.9
      */
     public static class Value
         implements JacksonAnnotationValue<JsonSetter>,
@@ -229,17 +229,6 @@ public @interface JsonSetter
         {
             return (base == null) ? overrides
                     : base.withOverrides(overrides);
-        }
-
-        public static Value mergeAll(Value... values)
-        {
-            Value result = null;
-            for (Value curr : values) {
-                if (curr != null) {
-                    result = (result == null)  ? curr : result.withOverrides(curr);
-                }
-            }
-            return result;
         }
 
         public static Value forValueNulls(Nulls nulls) {
@@ -368,7 +357,7 @@ public @interface JsonSetter
 
         @Override
         public int hashCode() {
-            return (_merge == null) ? 0 : (_merge.booleanValue() ? 30 : -30)
+            return (_merge == null) ? 1 : (_merge.booleanValue() ? 30 : -30)
                     + _nulls.ordinal()
                     + (_contentNulls.ordinal() << 2);
         }

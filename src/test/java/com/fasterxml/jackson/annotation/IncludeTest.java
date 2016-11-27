@@ -55,9 +55,15 @@ public class IncludeTest extends TestBase
                 v.toString());
     }
 
-    public void testToString() {
+    public void testStdOverrides() {
         assertEquals("JsonInclude.Value(value=NON_ABSENT,content=USE_DEFAULTS)",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
+        int x = EMPTY.hashCode();
+        if (x == 0) {
+            fail();
+        }
+        assertFalse(EMPTY.equals(null));
+        assertFalse(EMPTY.equals(""));
     }
 
     public void testSimpleMerge()
@@ -84,11 +90,11 @@ public class IncludeTest extends TestBase
         assertEquals(v3.getContentInclusion(), merged.getContentInclusion());
 
         // but other values ought to be overridden (value, yes, content, no because it's default)
-        merged = v3.withOverrides(v2);
+        merged = JsonInclude.Value.merge(v3, v2);
         assertEquals(v2.getValueInclusion(), merged.getValueInclusion());
         assertEquals(v3.getContentInclusion(), merged.getContentInclusion());
 
-        merged = empty.withOverrides(v3);
+        merged = JsonInclude.Value.mergeAll(empty, v3);
         assertEquals(v3.getValueInclusion(), merged.getValueInclusion());
         assertEquals(v3.getContentInclusion(), merged.getContentInclusion());
     }
