@@ -124,6 +124,24 @@ public class VisibilityTest extends TestBase
         assertSame(overrides, JsonAutoDetect.Value.merge(overrides, null));
     }
 
+    public void testFactoryMethods() {
+        JsonAutoDetect.Value v = JsonAutoDetect.Value.construct(PropertyAccessor.FIELD,
+                Visibility.ANY);
+        assertEquals(Visibility.ANY, v.getFieldVisibility());
+        assertEquals(Visibility.DEFAULT, v.getGetterVisibility());
+        assertEquals(Visibility.DEFAULT, v.getIsGetterVisibility());
+        assertEquals(Visibility.DEFAULT, v.getSetterVisibility());
+        assertEquals(Visibility.DEFAULT, v.getCreatorVisibility());
+
+        JsonAutoDetect.Value all = JsonAutoDetect.Value.construct(PropertyAccessor.ALL,
+                Visibility.NONE);
+        assertEquals(Visibility.NONE, all.getFieldVisibility());
+        assertEquals(Visibility.NONE, all.getGetterVisibility());
+        assertEquals(Visibility.NONE, all.getIsGetterVisibility());
+        assertEquals(Visibility.NONE, all.getSetterVisibility());
+        assertEquals(Visibility.NONE, all.getCreatorVisibility());
+    }
+    
     public void testSimpleChanges() {
         assertSame(NO_OVERRIDES, NO_OVERRIDES.withFieldVisibility(Visibility.DEFAULT));
         JsonAutoDetect.Value v = NO_OVERRIDES.withCreatorVisibility(Visibility.PUBLIC_ONLY);

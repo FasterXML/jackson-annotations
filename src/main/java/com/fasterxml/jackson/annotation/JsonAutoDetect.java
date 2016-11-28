@@ -191,7 +191,43 @@ public @interface JsonAutoDetect
                     src.creatorVisibility());
                     
         }
-    
+
+        /**
+         * Factory method for cnstructing instance with visibility of specified accessor
+         * (or, in case of <code>ALL</code>, all of them) set as specified; and the
+         * rest (if any) set as {@link Visibility#DEFAULT}).
+         */
+        public static Value construct(PropertyAccessor acc, Visibility visibility) {
+            Visibility fields = Visibility.DEFAULT;
+            Visibility getters = Visibility.DEFAULT;
+            Visibility isGetters = Visibility.DEFAULT;
+            Visibility setters = Visibility.DEFAULT;
+            Visibility creators = Visibility.DEFAULT;
+            switch (acc) {
+            case CREATOR:
+                creators = visibility;
+                break;
+            case FIELD:
+                fields = visibility;
+                break;
+            case GETTER:
+                getters = visibility;
+                break;
+            case IS_GETTER:
+                isGetters = visibility;
+                break;
+            case NONE:
+                break;
+            case SETTER:
+                setters = visibility;
+                break;
+            case ALL: // default
+                fields = getters = isGetters = setters = creators = visibility;
+                break;
+            }
+            return construct(fields, getters, isGetters, setters, creators);
+        }
+
         public static Value construct(Visibility fields,
                 Visibility getters, Visibility isGetters, Visibility setters,
                 Visibility creators)
