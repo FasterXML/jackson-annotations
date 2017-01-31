@@ -115,7 +115,7 @@ public @interface JsonSetter
          * Value that indicates that value to assign should come from the value
          * deserializer of the type, using method <code>getEmptyValue()</code>.
          */
-        DESERIALIZER_EMPTY,
+        AS_EMPTY,
 
         /**
          * Pseudo-value used to indicate that defaults are to be used for handling,
