@@ -113,12 +113,6 @@ public @interface JsonSetter
 
         /**
          * Value that indicates that value to assign should come from the value
-         * deserializer of the type, using method <code>getNullValue()</code>.
-         */
-        DESERIALIZER_NULL,
-
-        /**
-         * Value that indicates that value to assign should come from the value
          * deserializer of the type, using method <code>getEmptyValue()</code>.
          */
         DESERIALIZER_EMPTY,
