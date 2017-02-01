@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSetter.Nulls;
 public class JsonSetterTest extends TestBase
 {
     private final static class Bogus {
-        @JsonSetter(nulls=Nulls.FAIL, contentNulls=Nulls.SKIP, merge=OptBoolean.TRUE)
+        @JsonSetter(nulls=Nulls.FAIL, contentNulls=Nulls.SKIP)
         public int field;
     }
 
@@ -15,8 +15,6 @@ public class JsonSetterTest extends TestBase
     {
         assertEquals(JsonSetter.Nulls.DEFAULT, EMPTY.getValueNulls());
         assertEquals(JsonSetter.Nulls.DEFAULT, EMPTY.getContentNulls());
-        assertNull(EMPTY.getMerge());
-        assertFalse(EMPTY.shouldMerge());
 
         assertEquals(JsonSetter.class, EMPTY.valueFor());
 
@@ -25,7 +23,7 @@ public class JsonSetterTest extends TestBase
     }
 
     public void testStdMethods() {
-        assertEquals("JsonSetter.Value(merge=null,valueNulls=DEFAULT,contentNulls=DEFAULT)",
+        assertEquals("JsonSetter.Value(valueNulls=DEFAULT,contentNulls=DEFAULT)",
                 EMPTY.toString());
         int x = EMPTY.hashCode();
         if (x == 0) { // no fixed value, but should not evalute to 0
@@ -44,12 +42,11 @@ public class JsonSetterTest extends TestBase
         JsonSetter.Value v = JsonSetter.Value.from(ann);
         assertEquals(JsonSetter.Nulls.FAIL, v.getValueNulls());
         assertEquals(JsonSetter.Nulls.SKIP, v.getContentNulls());
-        assertEquals(Boolean.TRUE, v.getMerge());
     }
 
     public void testConstruct() throws Exception
     {
-        JsonSetter.Value v = JsonSetter.Value.construct(null,  null, null);
+        JsonSetter.Value v = JsonSetter.Value.construct(null, null);
         assertSame(EMPTY, v);
     }
 
@@ -58,25 +55,12 @@ public class JsonSetterTest extends TestBase
         JsonSetter.Value v = JsonSetter.Value.forContentNulls(Nulls.SET);
         assertEquals(Nulls.DEFAULT, v.getValueNulls());
         assertEquals(Nulls.SET, v.getContentNulls());
-        assertNull(v.getMerge());
         assertEquals(Nulls.SET, v.nonDefaultContentNulls());
 
         JsonSetter.Value skip = JsonSetter.Value.forValueNulls(Nulls.SKIP);
         assertEquals(Nulls.SKIP, skip.getValueNulls());
         assertEquals(Nulls.DEFAULT, skip.getContentNulls());
         assertEquals(Nulls.SKIP, skip.nonDefaultValueNulls());
-        assertNull(skip.getMerge());
-
-        JsonSetter.Value merging = JsonSetter.Value.forMerging();
-        assertEquals(Nulls.DEFAULT, merging.getValueNulls());
-        assertEquals(Nulls.DEFAULT, merging.getContentNulls());
-        assertEquals(Boolean.TRUE, merging.getMerge());
-
-        assertFalse(skip.equals(merging));
-        assertFalse(merging.equals(skip));
-
-        assertFalse(merging.equals(EMPTY));
-        assertFalse(EMPTY.equals(merging));
     }
 
     public void testSimpleMerge()
@@ -85,15 +69,6 @@ public class JsonSetterTest extends TestBase
         assertEquals(Nulls.SKIP, v.getContentNulls());
         v = v.withValueNulls(Nulls.FAIL);
         assertEquals(Nulls.FAIL, v.getValueNulls());
-        v = v.withMerge(Boolean.FALSE);
-        assertEquals(Boolean.FALSE, v.getMerge());
-
-        JsonSetter.Value override = JsonSetter.Value.forMerging(Boolean.TRUE);
-        JsonSetter.Value merged = JsonSetter.Value.merge(v, override);
-        assertEquals(Boolean.TRUE, merged.getMerge());
-        assertEquals(Nulls.SKIP, merged.getContentNulls());
-        assertEquals(Nulls.FAIL, merged.getValueNulls());
-        assertTrue(merged.shouldMerge());
     }
 
     public void testWithMethods()
