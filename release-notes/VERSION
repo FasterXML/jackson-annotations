@@ -19,6 +19,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 #108: Allow `@JsonValue` on fields
 #109: Add `enabled` for `@JsonAnyGetter`, `@JsonAnySetter`, to allow disabling via mix-ins
 #113: Add `@JsonMerge` to support (deep) merging of properties
+#116: Add `@JsonAlias` annotation to allow specifying alternate names for a property
 - Allow use of `@JsonView` on classes, to specify Default View to use on non-annotated
   properties.
 
