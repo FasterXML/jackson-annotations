@@ -245,7 +245,11 @@ public @interface JsonFormat
         /**
          * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>.
          * Only affects deserialization, has no effect on serialization.
-         * 
+         *
+         *  *<p>
+         -         * NOTE: starting with 2.9 can also effect Enum handling (and potentially other
+         -         * places where case-insensitive property values are accepted).
+         *
          * @since 2.8
          */
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
