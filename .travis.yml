@@ -1,5 +1,8 @@
 language: java
 
+# required for oraclejdk9
+dist: trusty
+
 jdk:
   - oraclejdk9
 
