@@ -3,14 +3,15 @@
   <modelVersion>4.0.0</modelVersion> 
   <parent>
     <groupId>com.fasterxml.jackson</groupId>
+    <!-- this is one of few Jackson modules that depends on parent and NOT jackson-bom -->
     <artifactId>jackson-parent</artifactId>
-    <version>2.9.pr1</version>
+    <version>2.9.pr1b</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-annotations</artifactId>
   <name>Jackson-annotations</name>
-  <version>2.9.0.pr2-SNAPSHOT</version>
+  <version>2.9.0.pr1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
