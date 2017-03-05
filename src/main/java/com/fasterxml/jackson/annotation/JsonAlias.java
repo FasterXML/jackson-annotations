@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
  * @since 2.9
  */
 @Target({ElementType.ANNOTATION_TYPE, // for combo-annotations
-        ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER// for properties (field, setter, ctor param)
+    ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER// for properties (field, setter, ctor param)
 })
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
