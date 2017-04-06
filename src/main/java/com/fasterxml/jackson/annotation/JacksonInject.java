@@ -25,4 +25,77 @@ public @interface JacksonInject
      * as empty String), will use id based on declared type of property.
      */
     public String value() default "";
+
+    /*
+    /**********************************************************
+    /* Value class used to enclose information, allow for
+    /* merging of layered configuration settings.
+    /**********************************************************
+     */
+    
+    /**
+     * Helper class used to contain information from a single {@link JacksonInject}
+     * annotation, as well as to provide possible overrides from non-annotation sources.
+     *
+     * @since 2.9
+     */
+    public static class Value
+        implements JacksonAnnotationValue<JacksonInject>,
+            java.io.Serializable
+    {
+        private static final long serialVersionUID = 1L;
+
+        protected final static Value EMPTY = new Value(null);        
+
+        /**
+         * Id to use to access injected value; if `null`, "default" name, derived
+         * from accessor will be used.
+         */
+        protected final Object _id;
+
+        protected Value(Object id) {
+            _id = id;
+        }
+
+        @Override
+        public Class<JacksonInject> valueFor() {
+            return JacksonInject.class;
+        }
+
+        /*
+        /**********************************************************
+        /* Factory methods
+        /**********************************************************
+         */
+        
+        public static Value construct(Object id) {
+            if (id == null) {
+                return EMPTY;
+            }
+            return new Value(id);
+        }
+
+        public static Value from(JacksonInject src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            String id = src.value();
+            if ("".equals(id)) {
+                id = null;
+            }
+            return construct(id);
+        }
+
+        /*
+        /**********************************************************
+        /* Accessors
+        /**********************************************************
+         */
+        
+        public boolean hasId() {
+            return _id != null;
+        }
+
+        public Object getId() { return _id; }
+    }
 }
