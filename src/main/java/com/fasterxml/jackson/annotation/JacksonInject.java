@@ -67,7 +67,7 @@ public @interface JacksonInject
         /* Factory methods
         /**********************************************************
          */
-        
+
         public static Value construct(Object id) {
             if (id == null) {
                 return EMPTY;
@@ -84,6 +84,30 @@ public @interface JacksonInject
                 id = null;
             }
             return construct(id);
+        }
+
+        public static Value forId(Object id) {
+            if (id == null) {
+                return EMPTY;
+            }
+            return new Value(id);
+        }
+
+        /*
+        /**********************************************************
+        /* Mutant factory methods
+        /**********************************************************
+         */
+
+        public Value withId(Object id) {
+            if (id == null) {
+                if (_id == null) {
+                    return this;
+                }
+            } else if (id.equals(_id)) {
+                return this;
+            }
+            return new Value(id);
         }
 
         /*
