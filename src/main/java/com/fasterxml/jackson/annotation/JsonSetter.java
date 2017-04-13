@@ -127,6 +127,11 @@ public @interface JsonSetter
             _contentNulls = contentNulls;
         }
 
+        @Override
+        public Class<JsonSetter> valueFor() {
+            return JsonSetter.class;
+        }
+        
         // for JDK serialization
         protected Object readResolve() {
             if (_empty(_nulls, _contentNulls)) {
@@ -278,11 +283,12 @@ public @interface JsonSetter
             return (_contentNulls == Nulls.DEFAULT) ? null : _contentNulls;
         }
 
-        @Override
-        public Class<JsonSetter> valueFor() {
-            return JsonSetter.class;
-        }
-
+        /*
+        /**********************************************************
+        /* Std method overrides
+        /**********************************************************
+         */
+        
         @Override
         public String toString() {
             return String.format("JsonSetter.Value(valueNulls=%s,contentNulls=%s)",
@@ -306,6 +312,12 @@ public @interface JsonSetter
             return false;
         }
 
+        /*
+        /**********************************************************
+        /* Internal methods
+        /**********************************************************
+         */
+        
         private static boolean _empty(Nulls nulls, Nulls contentNulls) {
             return (nulls == Nulls.DEFAULT)
                     && (contentNulls == Nulls.DEFAULT);

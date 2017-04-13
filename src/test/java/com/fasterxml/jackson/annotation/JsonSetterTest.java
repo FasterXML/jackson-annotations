@@ -77,13 +77,21 @@ public class JsonSetterTest extends TestBase
         assertSame(EMPTY, v);
         v = v.withContentNulls(Nulls.FAIL);
         assertEquals(Nulls.FAIL, v.getContentNulls());
+        assertSame(v, v.withContentNulls(Nulls.FAIL));
 
-        v = v.withValueNulls(Nulls.SKIP);
-        assertEquals(Nulls.SKIP, v.getValueNulls());
+        JsonSetter.Value v2 = v.withValueNulls(Nulls.SKIP);
+        assertEquals(Nulls.SKIP, v2.getValueNulls());
+        assertFalse(v.equals(v2));
+        assertFalse(v2.equals(v));
 
-        v = v.withValueNulls(null, null);
-        assertEquals(Nulls.DEFAULT, v.getContentNulls());
-        assertEquals(Nulls.DEFAULT, v.getValueNulls());
-        assertSame(v, v.withValueNulls(null, null));
+        JsonSetter.Value v3 = v2.withValueNulls(null, null);
+        assertEquals(Nulls.DEFAULT, v3.getContentNulls());
+        assertEquals(Nulls.DEFAULT, v3.getValueNulls());
+        assertSame(v3, v3.withValueNulls(null, null));
+
+        JsonSetter.Value merged = v3.withOverrides(v2);
+        assertNotSame(v2, merged);
+        assertEquals(merged, v2);
+        assertEquals(v2, merged);
     }
 }

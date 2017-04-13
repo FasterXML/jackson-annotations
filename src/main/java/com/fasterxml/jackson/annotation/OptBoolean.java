@@ -51,4 +51,11 @@ public enum OptBoolean
         }
         return b.booleanValue() ? TRUE : FALSE;
     }
+
+    public static boolean equals(Boolean b1, Boolean b2) {
+        if (b1 == null) {
+            return (b2 == null);
+        }
+        return b1.equals(b2);
+    }
 }
