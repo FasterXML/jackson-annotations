@@ -1,7 +1,5 @@
 package com.fasterxml.jackson.annotation;
 
-import com.fasterxml.jackson.annotation.JsonSetter.Nulls;
-
 public class JsonSetterTest extends TestBase
 {
     private final static class Bogus {
@@ -13,8 +11,8 @@ public class JsonSetterTest extends TestBase
 
     public void testEmpty()
     {
-        assertEquals(JsonSetter.Nulls.DEFAULT, EMPTY.getValueNulls());
-        assertEquals(JsonSetter.Nulls.DEFAULT, EMPTY.getContentNulls());
+        assertEquals(Nulls.DEFAULT, EMPTY.getValueNulls());
+        assertEquals(Nulls.DEFAULT, EMPTY.getContentNulls());
 
         assertEquals(JsonSetter.class, EMPTY.valueFor());
 
@@ -40,8 +38,8 @@ public class JsonSetterTest extends TestBase
         
         JsonSetter ann = Bogus.class.getField("field").getAnnotation(JsonSetter.class);
         JsonSetter.Value v = JsonSetter.Value.from(ann);
-        assertEquals(JsonSetter.Nulls.FAIL, v.getValueNulls());
-        assertEquals(JsonSetter.Nulls.SKIP, v.getContentNulls());
+        assertEquals(Nulls.FAIL, v.getValueNulls());
+        assertEquals(Nulls.SKIP, v.getContentNulls());
     }
 
     public void testConstruct() throws Exception

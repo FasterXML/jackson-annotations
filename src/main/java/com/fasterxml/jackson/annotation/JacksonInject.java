@@ -41,7 +41,9 @@ public @interface JacksonInject
     /*
     /**********************************************************
     /* Value class used to enclose information, allow for
-    /* merging of layered configuration settings.
+    /* merging of layered configuration settings, and eventually
+    /* decouple higher level handling from Annotation types
+    /* (which can not be implemented etc)
     /**********************************************************
      */
     
