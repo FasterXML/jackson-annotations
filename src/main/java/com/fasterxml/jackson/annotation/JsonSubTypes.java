@@ -6,9 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used with {@link JsonTypeInfo} to indicate sub types of serializable
+ * Annotation used with {@link JsonTypeInfo} to indicate sub-types of serializable
  * polymorphic types, and to associate logical names used within JSON content
  * (which is more portable than using physical Java class names).
+ *<p>
+ * Note that just annotating a property or base type with this annotation does
+ * NOT enable polymorphic type handling: in addition, {@link JsonTypeInfo}
+ * or equivalent (such as enabling of so-called "default typing") annotation
+ * is needed, and only in such case is subtype information used.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.FIELD,
     ElementType.METHOD, ElementType.PARAMETER})
