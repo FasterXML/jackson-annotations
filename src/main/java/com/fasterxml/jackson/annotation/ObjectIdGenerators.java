@@ -10,6 +10,13 @@ import java.util.UUID;
  *  <li>{@link StringIdGenerator} (since 2.7)
  *  <li>{@link UUIDGenerator}
  *</ul>
+ *<p>
+ * NOTE: {@link PropertyGenerator} applicability is limited in one case: it can only
+ * be used on polymorphic base types (ones indicated using {@link JsonTypeInfo} or
+ * default typing) via class annotations: property annotation will fail due to lack
+ * of access to property, needed to determine type of Object Id for deserialization.
+ * This limitation may be lifted in future versions but it is the limitation at least
+ * up to and including Jackson 2.9.
  */
 public class ObjectIdGenerators
 {
