@@ -23,20 +23,26 @@ import java.lang.annotation.Target;
  *<p>
  * To base inclusion on value of contained value(s), you will typically also need
  * to specify {@link #content()} annotation; for example, specifying only
- * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.List} would
- * exclude <code>List</code>s with no Java elements, but would include <code>List</code>s
- * with `null` elements. To exclude Lists with only nulls, you would use both
+ * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.Map} would
+ * exclude <code>Map</code>s with no values, but would include <code>Map</code>s
+ * with `null` values. To exclude Map with only `null` value, you would use both
  * annotations like so:
  *<pre>
  *public class Bean {
  *   {@literal @JsonInclude}(value=Include.NON_EMPTY, content=Include.NON_NULL)
- *   public List&lt;String&gt; entries;
+ *   public Map&lt;String,String&gt; entries;
  *}
  *</pre>
- * Similarly you could further exclude Lists, Maps or arrays that only contain
+ * Similarly you could Maps that only contain
  * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
  * {@link Include#NON_DEFAULT} for more details).
- * 
+ *<p>
+ * In addition to `Map`s, `content` concept is also supported for referential
+ * types (like {@link java.util.concurrent.atomic.AtomicReference}).
+ * Note that `content` is NOT currently (as of Jackson 2.9) supported for
+ * arrays or {@link java.util.Collection}s, but supported may be added in
+ * future versions.
+ *
  * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
@@ -53,7 +59,9 @@ public @interface JsonInclude
 
     /**
      * Inclusion rule to use for entries ("content") of annotated
-     * {@link java.util.Map}s; defaults to {@link Include#ALWAYS}.
+     * {@link java.util.Map}s and referential types (like
+     * {@link java.util.concurrent.atomic.AtomicReference});
+     * defaults to {@link Include#ALWAYS}.
      * 
      * @since 2.5
      */
