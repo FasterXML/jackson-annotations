@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.9.0 (not yet released)
+2.9.0 (30-Jul-2017)
 
 #103: Add `JsonInclude.Include.CUSTOM`, properties for specifying filter(s) to use
 #104: Add `JsonSetter.nulls`, `JsonSetter.contentNulls` for configurable null handling
