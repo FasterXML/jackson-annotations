@@ -36,8 +36,6 @@ import java.lang.annotation.Target;
  * and <code>Object</code> have "updating reader" operations.
  *<p>
  * Default value is {@link OptBoolean#TRUE}, that is, merging <b>is enabled</b>.
- *
- * @since 2.9
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

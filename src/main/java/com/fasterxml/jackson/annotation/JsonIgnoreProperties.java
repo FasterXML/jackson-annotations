@@ -61,8 +61,6 @@ public @interface JsonIgnoreProperties
      *<p>
      * Default value is `false`, which means that getters with matching names
      * will be ignored.
-     * 
-     * @since 2.6
      */
     public boolean allowGetters() default false;
 
@@ -77,8 +75,6 @@ public @interface JsonIgnoreProperties
      *<p>
      * Default value is `false`, which means that setters with matching names
      * will be ignored.
-     * 
-     * @since 2.6
      */
     public boolean allowSetters() default false;
 
@@ -92,8 +88,6 @@ public @interface JsonIgnoreProperties
     /**
      * Helper class used to contain information from a single {@link JsonIgnoreProperties}
      * annotation, as well as to provide possible overrides from non-annotation sources.
-     *
-     * @since 2.8
      */
     public static class Value
         implements JacksonAnnotationValue<JsonIgnoreProperties>,
@@ -137,7 +131,7 @@ public @interface JsonIgnoreProperties
 
         public static Value from(JsonIgnoreProperties src) {
             if (src == null) {
-                return EMPTY; // since 2.9
+                return EMPTY;
             }
             return construct(_asSet(src.value()),
                     src.ignoreUnknown(), src.allowGetters(), src.allowSetters(),
@@ -198,9 +192,6 @@ public @interface JsonIgnoreProperties
                     : base.withOverrides(overrides);
         }
 
-        /**
-         * @since 2.8
-         */
         public static Value mergeAll(Value... values)
         {
             Value result = null;

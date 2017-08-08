@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
  * type (class).
  * Currently used to populate the description field in generated JSON
  * Schemas.
- *
- * @since 2.7
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

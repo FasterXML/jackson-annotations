@@ -193,8 +193,6 @@ public @interface JsonTypeInfo
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
-         * 
-         * @since 2.3.0 but databind <b>only since 2.5.0</b>.
          */
         EXISTING_PROPERTY
         ;
@@ -263,8 +261,6 @@ public @interface JsonTypeInfo
      * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
      *    itself} means "there is no default implementation" (in which
      *   case an error results from unmappable type).
-     *   For backwards compatibility with earlier versions (2.5 and below),
-     *   value of {@link JsonTypeInfo.None} may also be used.
      *  </li>
      * </ul>
      */
@@ -279,8 +275,6 @@ public @interface JsonTypeInfo
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
      * <code>JsonDeserializer</code>.
-     * 
-     * @since 2.0
      */
     public boolean visible() default false;
 
@@ -291,25 +285,6 @@ public @interface JsonTypeInfo
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
      * If true, omission is allowed (although writer may or may not be able to do that);
      * if false, type id should always be written still.
-     *
-     * @since 2.5
     public boolean skipWritingDefault() default false;
-    /*
-    
-    /*
-    /**********************************************************
-    /* Helper classes
-    /**********************************************************
-     */
-
-    /**
-     * This marker class that is only to be used with <code>defaultImpl</code>
-     * annotation property, to indicate that there is no default implementation
-     * specified.
-     * 
-     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo},
-     *    if such behavior is needed; this is rarely necessary.
-     */
-    @Deprecated
-    public abstract static class None { }
+    */
 }

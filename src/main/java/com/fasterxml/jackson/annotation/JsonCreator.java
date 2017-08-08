@@ -56,14 +56,9 @@ public @interface JsonCreator
      *<p>
      * Default value of {@link Mode#DEFAULT} means that caller is to use standard
      * heuristics for choosing mode to use.
-     * 
-     * @since 2.5
      */
     public Mode mode() default Mode.DEFAULT;
 
-    /**
-     * @since 2.5
-     */
     public enum Mode {
         /**
          * Pseudo-mode that indicates that caller is to use default heuristics for

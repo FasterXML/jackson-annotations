@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 /**
  * Definition of API used for resolving actual Java object from
  * Object Identifiers (as annotated using {@link JsonIdentityInfo}).
- *
- * @since 2.4
  */
 public interface ObjectIdResolver {
     /**

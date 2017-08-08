@@ -42,8 +42,6 @@ public abstract class ObjectIdGenerator<T>
      *<p>
      * Default implementation returns <code>false</code>, so needs to be overridden
      * by Object-producing generators.
-     *
-     * @since 2.5
      */
     public boolean maySerializeAsObject() {
         return false;
@@ -57,8 +55,6 @@ public abstract class ObjectIdGenerator<T>
      * @param parser Parser that points to property name, in case generator needs
      *    further verification (note: untyped, because <code>JsonParser</code> is defined
      *    in `jackson-core`, and this package does not depend on it).
-     * 
-     * @since 2.5
      */
     public boolean isValidReferencePropertyName(String name, Object parser) {
         return false;

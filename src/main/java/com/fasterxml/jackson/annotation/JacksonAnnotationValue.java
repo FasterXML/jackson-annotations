@@ -9,8 +9,6 @@ import java.lang.annotation.Annotation;
  * and possibly merged. The reason for such marker is to allow generic handling of
  * some of the annotations, as well as to allow easier injection of configuration
  * from sources other than annotations.
- *
- * @since 2.6
  */
 public interface JacksonAnnotationValue<A extends Annotation>
 {

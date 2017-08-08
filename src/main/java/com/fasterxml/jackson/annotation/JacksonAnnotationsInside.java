@@ -13,8 +13,6 @@ import java.lang.annotation.Target;
  * This can be useful in creating "combo-annotations" by having
  * a container annotation, which needs to be annotated with this
  * annotation as well as all annotations it 'contains'.
- * 
- * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)

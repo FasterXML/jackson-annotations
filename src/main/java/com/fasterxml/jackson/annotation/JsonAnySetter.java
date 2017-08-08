@@ -34,8 +34,6 @@ public @interface JsonAnySetter
      * with "mix-in annotations" (aka "annotation overrides").
      * For most cases, however, default value of "true" is just fine
      * and should be omitted.
-     *
-     * @since 2.9
      */
     boolean enabled() default true;
 }
