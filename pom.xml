@@ -45,4 +45,22 @@
     </dependency>
   </dependencies>
 
+
+  <build>
+    <plugins>
+      <!-- 06-Sep-2017, tatu: Try to generate "automatic module name" -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+	<!-- IMPORTANT! Parent defines plenty of defaults; make sure to merge config -->
+        <configuration combine.self="override">
+          <!-- note: usually would use `packageVersion.package`, but not used with annotations pkg -->
+          <instructions>
+            <Automatic-Module-Name>com.fasterxml.jackson.annotation</Automatic-Module-Name>
+          </instructions>
+	</configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
