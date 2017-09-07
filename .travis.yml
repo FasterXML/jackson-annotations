@@ -1,8 +1,6 @@
 language: java
 
-# jdk6 is enough for annotations package
 jdk:
-  - openjdk6
   - openjdk7
   - openjdk8
 
