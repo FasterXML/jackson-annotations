@@ -55,7 +55,7 @@
 	<!-- IMPORTANT! Parent defines plenty of defaults; make sure to merge config -->
         <configuration>
           <!-- note: usually would use `packageVersion.package`, but not used with annotations pkg -->
-          <instructions combine.children="append">
+          <instructions combine.children="merge">
             <Automatic-Module-Name>com.fasterxml.jackson.annotation</Automatic-Module-Name>
           </instructions>
 	</configuration>
