@@ -11,6 +11,10 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.9.1 (not released yet)
+
+#123: Add Automatic-Module-Name (`com.fasterxml.jackson.annotation`) for JDK9 interoperability
+
 2.9.0 (30-Jul-2017)
 
 #103: Add `JsonInclude.Include.CUSTOM`, properties for specifying filter(s) to use
