@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.9.1 (not released yet)
+2.9.1 (07-Sep-2017)
 
 #123: Add Automatic-Module-Name (`com.fasterxml.jackson.annotation`) for JDK9 interoperability
 
