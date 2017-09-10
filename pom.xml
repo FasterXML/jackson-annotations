@@ -5,7 +5,7 @@
     <groupId>com.fasterxml.jackson</groupId>
     <!-- this is one of few Jackson modules that depends on parent and NOT jackson-bom -->
     <artifactId>jackson-parent</artifactId>
-    <version>2.9.1</version>
+    <version>3.0-SNAPSHOT</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
@@ -26,12 +26,6 @@
   </scm>
 
   <properties>
-    <!-- 07-Aug-2017: Although we could retain Java 6 compatibility for annotations,
-       there is little benefit as databind requires Java 8. So.
-      -->
-    <javac.src.version>1.8</javac.src.version>
-    <javac.target.version>1.8</javac.target.version>
-
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
 
