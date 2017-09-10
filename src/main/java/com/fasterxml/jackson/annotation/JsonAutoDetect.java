@@ -129,8 +129,6 @@ public @interface JsonAutoDetect
     /**
      * Helper class used to contain information from a single {@link JsonIgnoreProperties}
      * annotation, as well as to provide possible overrides from non-annotation sources.
-     *
-     * @since 2.9
      */
     public static class Value
         implements JacksonAnnotationValue<JsonAutoDetect>,

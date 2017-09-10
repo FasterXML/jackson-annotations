@@ -42,8 +42,6 @@ import java.lang.annotation.Target;
  * Note that `content` is NOT currently (as of Jackson 2.9) supported for
  * arrays or {@link java.util.Collection}s, but supported may be added in
  * future versions.
- *
- * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
     ElementType.TYPE, ElementType.PARAMETER})
@@ -62,8 +60,6 @@ public @interface JsonInclude
      * {@link java.util.Map}s and referential types (like
      * {@link java.util.concurrent.atomic.AtomicReference});
      * defaults to {@link Include#ALWAYS}.
-     * 
-     * @since 2.5
      */
     public Include content() default Include.ALWAYS;
 
@@ -73,8 +69,6 @@ public @interface JsonInclude
      * if so, an instance is created by calling <code>HandlerInstantiator</code>
      * (of <code>ObjectMapper</code>), which by default simply calls
      * zero-argument constructor of the Filter Class.
-     *
-     * @since 2.9
      */
     public Class<?> valueFilter() default Void.class;
 
@@ -84,8 +78,6 @@ public @interface JsonInclude
      * if so, an instance is created by calling <code>HandlerInstantiator</code>
      * (of <code>ObjectMapper</code>), which by default simply calls
      * zero-argument constructor of the Filter Class.
-     *
-     * @since 2.9
      */
     public Class<?> contentFilter() default Void.class;
     
@@ -124,8 +116,6 @@ public @interface JsonInclude
          *     that would not deference to a non-null value.
          * </ul>
          * This option is mostly used to work with "Optional"s (Java 8, Guava).
-         *
-         * @since 2.6
          */
         NON_ABSENT,
 
@@ -207,8 +197,6 @@ public @interface JsonInclude
          * Filter object's <code>equals()</code> method is called with value
          * to serialize; if it returns <code>true</code> value is <b>excluded</b>
          * (that is, filtered out); if <code>false</code> value is <b>included</b>.
-         *
-         * @since 2.9
          */
         CUSTOM,
         
@@ -218,8 +206,6 @@ public @interface JsonInclude
          * for a property this would use defaults for the class that contains
          * property, if any defined; and if none defined for that, then 
          * global serialization inclusion details.
-         *
-         * @since 2.6
          */
         USE_DEFAULTS
         
@@ -235,11 +221,9 @@ public @interface JsonInclude
     /**
      * Helper class used to contain information from a single {@link JsonInclude}
      * annotation.
-     *
-     * @since 2.6
      */
     public static class Value
-        implements JacksonAnnotationValue<JsonInclude>, // since 2.6
+        implements JacksonAnnotationValue<JsonInclude>,
             java.io.Serializable
     {
         private static final long serialVersionUID = 1L;
@@ -250,14 +234,8 @@ public @interface JsonInclude
         protected final Include _valueInclusion;
         protected final Include _contentInclusion;
 
-        /**
-         * @since 2.9
-         */
         protected final Class<?> _valueFilter;
 
-        /**
-         * @since 2.9
-         */
         protected final Class<?> _contentFilter;
         
         public Value(JsonInclude src) {
@@ -285,8 +263,6 @@ public @interface JsonInclude
          * or logically missing).
          * Note that one or both of value instances may be `null`, directly;
          * if both are `null`, result will also be `null`; otherwise never null.
-         *
-         * @since 2.8
          */
         public static Value merge(Value base, Value overrides)
         {
@@ -294,9 +270,6 @@ public @interface JsonInclude
                     : base.withOverrides(overrides);
         }
 
-        /**
-         * @since 2.8
-         */
         public static Value mergeAll(Value... values)
         {
             Value result = null;
@@ -365,8 +338,6 @@ public @interface JsonInclude
 
         /**
          * Factory method to use for constructing an instance for components
-         *
-         * @since 2.9
          */
         public static Value construct(Include valueIncl, Include contentIncl,
                 Class<?> valueFilter, Class<?> contentFilter)
@@ -426,8 +397,6 @@ public @interface JsonInclude
          * <li>Set <code>value</code> as <code>ALWAYS</code> (if filter null)
          *  </li>
          *  </ul>
-         *
-         * @since 2.9
          */
         public Value withValueFilter(Class<?> filter) {
             Include incl;
@@ -449,8 +418,6 @@ public @interface JsonInclude
          * <li>Set <code>content</code> as <code>ALWAYS</code> (if filter null)
          *  </li>
          *  </ul>
-         *
-         * @since 2.9
          */
         public Value withContentFilter(Class<?> filter) {
             Include incl;

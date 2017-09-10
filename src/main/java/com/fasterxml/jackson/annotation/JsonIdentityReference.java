@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
  * The main use case is that of enforcing use of Object Id even for the first
  * time an Object is referenced, instead of first instance being serialized
  * as full POJO.
- *
- * @since 2.1
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -28,8 +26,6 @@ public @interface JsonIdentityReference
      * Note that if value of 'true' is used, deserialization may require
      * additional contextual information, and possibly using a custom
      * id resolver -- the default handling may not be sufficient.
-     * 
-     * @since 2.1
      */
     public boolean alwaysAsId() default false;
 }

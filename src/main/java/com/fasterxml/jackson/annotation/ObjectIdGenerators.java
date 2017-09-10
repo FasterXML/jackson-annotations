@@ -7,7 +7,7 @@ import java.util.UUID;
  *<ul>
  *  <li>{@link IntSequenceGenerator}
  *  <li>{@link PropertyGenerator}
- *  <li>{@link StringIdGenerator} (since 2.7)
+ *  <li>{@link StringIdGenerator}
  *  <li>{@link UUIDGenerator}
  *</ul>
  *<p>
@@ -191,8 +191,6 @@ public class ObjectIdGenerators
      * keep track of id-to-Object mapping. Generation also works, although if
      * UUIDs are always used, {@link UUIDGenerator} is a better match as it
      * will also validate ids being used.
-     *
-     * @since 2.7
      */
     public final static class StringIdGenerator extends Base<String>
     {

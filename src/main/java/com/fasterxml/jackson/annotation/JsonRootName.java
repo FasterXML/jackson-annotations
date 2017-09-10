@@ -28,8 +28,6 @@ public @interface JsonRootName
      * Optional namespace to use with data formats that support such
      * concept (specifically XML); if so, used with {@link #value} to
      * construct fully-qualified name.
-     *
-     * @since 2.4
      */
     public String namespace() default "";
     
@@ -41,7 +39,6 @@ public @interface JsonRootName
      * Note that value of <code>false</code> is taken to mean "use defaults",
      * and will not block use of wrapper if use is indicated by global features.
      *
-     * @since 2.4
     public boolean alwaysWrap() default false;
      */
 }

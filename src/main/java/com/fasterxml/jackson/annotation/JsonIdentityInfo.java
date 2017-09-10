@@ -26,8 +26,6 @@ import java.lang.annotation.Target;
  * Finally, note that generator type of {@link ObjectIdGenerators.None}
  * indicates that no Object Id should be included or used: it is included
  * to allow suppressing Object Ids using mix-in annotations.
- * 
- * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
@@ -63,8 +61,6 @@ public @interface JsonIdentityInfo
      * Resolver to use for producing POJO from Object Identifier.
      * <p>
      * Default value is {@link SimpleObjectIdResolver}
-     * 
-     * @since 2.4
      */
     public Class<? extends ObjectIdResolver> resolver() default SimpleObjectIdResolver.class;
 

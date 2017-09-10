@@ -11,8 +11,6 @@ package com.fasterxml.jackson.annotation;
  * can not be chosen since they are Java keyword and compiler won't allow
  * the choice. And since enum naming convention suggests all-upper-case,
  * that is what is done here.
- *
- * @since 2.6
  */
 public enum OptBoolean
 {

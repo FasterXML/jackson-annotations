@@ -7,16 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to define a human readable description for a logical
- * property.
- * Currently used to populate the description field in generated JSON
- * Schemas.
- *
- * @since 2.3
+ * Annotation used to define a human readable description for a logical property.
+ * Currently used to populate the description field in generated JSON Schemas.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Documented // since 2.6
+@Documented
 @JacksonAnnotation
 public @interface JsonPropertyDescription
 {
