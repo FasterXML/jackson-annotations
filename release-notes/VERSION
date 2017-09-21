@@ -14,6 +14,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 2.9.1 (07-Sep-2017)
 
 #123: Add Automatic-Module-Name (`com.fasterxml.jackson.annotation`) for JDK9 interoperability
+#124: Add new `PropertyAccessor` `SCALAR_CONSTRUCTOR`; `JsonAutoDetect.scalarConstructorVisibility
 
 2.9.0 (30-Jul-2017)
 

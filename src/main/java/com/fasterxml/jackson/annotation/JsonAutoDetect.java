@@ -110,9 +110,24 @@ public @interface JsonAutoDetect
     /**
      * Minimum visibility required for auto-detecting Creator methods,
      * except for no-argument constructors (which are always detected
-     * no matter what).
+     * no matter what), and (since 3.0) single-scalar-argument
+     * Creators for which there is separate setting.
      */
     Visibility creatorVisibility() default Visibility.DEFAULT;
+
+    /**
+     * Minimum visibility required for auto-detecting single-scalar-argument
+     * constructors, as distinct from "regular" creators
+     * (see {@link #creatorVisibility}).
+     * Specifically a small set of scalar types is allowed; see
+     * {@link PropertyAccessor#SCALAR_CONSTRUCTOR} for list.
+     *<p>
+     * Default value is more permissive than that of general Creators:
+     * all non-private scalar-constructors are detected by default.
+     *
+     * @since 3.0
+     */
+    Visibility scalarConstructorVisibility() default Visibility.DEFAULT;
 
     /**
      * Minimum visibility required for auto-detecting member fields.
@@ -144,12 +159,13 @@ public @interface JsonAutoDetect
          * <li>Only public fields visible</li>
          * <li>Only public getters, is-getters visible</li>
          * <li>All setters (regardless of access) visible</li>
-         * <li>Only public Creators visible</li>
+         * <li>Only public Creators visible (except see below)</li>
+         * <li>All non-private single-scalar constructors are visible</li>
          *</ul>
          */
         protected final static Value DEFAULT = new Value(DEFAULT_FIELD_VISIBILITY,
                 Visibility.PUBLIC_ONLY, Visibility.PUBLIC_ONLY, Visibility.ANY,
-                Visibility.PUBLIC_ONLY);
+                Visibility.PUBLIC_ONLY, Visibility.NON_PRIVATE);
 
         /**
          * Empty instance that specifies no overrides, that is, all visibility
@@ -157,7 +173,7 @@ public @interface JsonAutoDetect
          */
         protected final static Value NO_OVERRIDES = new Value(Visibility.DEFAULT,
                 Visibility.DEFAULT, Visibility.DEFAULT, Visibility.DEFAULT,
-                Visibility.DEFAULT);
+                Visibility.DEFAULT, Visibility.DEFAULT);
 
         protected final Visibility _fieldVisibility;
         protected final Visibility _getterVisibility;
@@ -165,14 +181,20 @@ public @interface JsonAutoDetect
         protected final Visibility _setterVisibility;
         protected final Visibility _creatorVisibility;
 
+        /**
+         * @since 3.0
+         */
+        protected final Visibility _scalarConstructorVisibility;
+
         private Value(Visibility fields,
                 Visibility getters, Visibility isGetters, Visibility setters,
-                Visibility creators) {
+                Visibility creators, Visibility scalarCtors) {
             _fieldVisibility = fields;
             _getterVisibility = getters;
             _isGetterVisibility = isGetters;
             _setterVisibility = setters;
             _creatorVisibility = creators;
+            _scalarConstructorVisibility = scalarCtors;
         }
 
         public static Value defaultVisibility() {
@@ -186,7 +208,7 @@ public @interface JsonAutoDetect
         public static Value from(JsonAutoDetect src) {
             return construct(src.fieldVisibility(),
                     src.getterVisibility(), src.isGetterVisibility(), src.setterVisibility(),
-                    src.creatorVisibility());
+                    src.creatorVisibility(), src.scalarConstructorVisibility());
                     
         }
 
@@ -201,10 +223,8 @@ public @interface JsonAutoDetect
             Visibility isGetters = Visibility.DEFAULT;
             Visibility setters = Visibility.DEFAULT;
             Visibility creators = Visibility.DEFAULT;
+            Visibility scalarCtors = Visibility.DEFAULT;
             switch (acc) {
-            case CREATOR:
-                creators = visibility;
-                break;
             case FIELD:
                 fields = visibility;
                 break;
@@ -214,54 +234,65 @@ public @interface JsonAutoDetect
             case IS_GETTER:
                 isGetters = visibility;
                 break;
-            case NONE:
-                break;
             case SETTER:
                 setters = visibility;
                 break;
+            case CREATOR:
+                creators = visibility;
+                break;
+            case SCALAR_CONSTRUCTOR:
+                scalarCtors = visibility;
+                break;
+            case NONE:
+                break;
             case ALL: // default
-                fields = getters = isGetters = setters = creators = visibility;
+                fields = getters = isGetters = setters = creators = scalarCtors = visibility;
                 break;
             }
-            return construct(fields, getters, isGetters, setters, creators);
+            return construct(fields, getters, isGetters, setters, creators, scalarCtors);
         }
 
         public static Value construct(Visibility fields,
                 Visibility getters, Visibility isGetters, Visibility setters,
-                Visibility creators)
+                Visibility creators, Visibility scalarCtors)
         {
-            Value v = _predefined(fields, getters, isGetters, setters, creators);
+            Value v = _predefined(fields, getters, isGetters, setters, creators, scalarCtors);
             if (v == null) {
-                v = new Value(fields, getters, isGetters, setters, creators);
+                v = new Value(fields, getters, isGetters, setters, creators, scalarCtors);
             }
             return v;
         }
 
         public Value withFieldVisibility(Visibility v) {
             return construct(v, _getterVisibility, _isGetterVisibility,
-                    _setterVisibility, _creatorVisibility);
+                    _setterVisibility, _creatorVisibility, _scalarConstructorVisibility);
         }
 
         public Value withGetterVisibility(Visibility v) {
             return construct(_fieldVisibility, v, _isGetterVisibility,
-                    _setterVisibility, _creatorVisibility);
+                    _setterVisibility, _creatorVisibility, _scalarConstructorVisibility);
         }
 
         public Value withIsGetterVisibility(Visibility v) {
             return construct(_fieldVisibility, _getterVisibility, v,
-                    _setterVisibility, _creatorVisibility);
+                    _setterVisibility, _creatorVisibility, _scalarConstructorVisibility);
         }
 
         public Value withSetterVisibility(Visibility v) {
             return construct(_fieldVisibility, _getterVisibility, _isGetterVisibility,
-                    v, _creatorVisibility);
+                    v, _creatorVisibility, _scalarConstructorVisibility);
         }
 
         public Value withCreatorVisibility(Visibility v) {
             return construct(_fieldVisibility, _getterVisibility, _isGetterVisibility,
-                    _setterVisibility, v);
+                    _setterVisibility, v, _scalarConstructorVisibility);
         }
 
+        public Value withScalarConstructorVisibility(Visibility v) {
+            return construct(_fieldVisibility, _getterVisibility, _isGetterVisibility,
+                    _setterVisibility, _creatorVisibility, v);
+        }
+        
         public static Value merge(Value base, Value overrides)
         {
             return (base == null) ? overrides
@@ -272,32 +303,22 @@ public @interface JsonAutoDetect
             if ((overrides == null) || (overrides == NO_OVERRIDES) || (overrides == this)) {
                 return this;
             }
-            if (_equals(this, overrides)) {
+            Visibility fields = _override(_fieldVisibility, overrides._fieldVisibility);
+            Visibility getters = _override(_getterVisibility, overrides._getterVisibility);
+            Visibility isGetters = _override(_isGetterVisibility, overrides._isGetterVisibility);
+            Visibility setters = _override(_setterVisibility, overrides._setterVisibility);
+            Visibility creators = _override(_creatorVisibility, overrides._creatorVisibility);
+            Visibility scalarCtors = _override(_scalarConstructorVisibility, overrides._scalarConstructorVisibility);
+            if (_equals(this, fields, getters, isGetters, setters, creators, scalarCtors)) {
                 return this;
             }
-            Visibility fields = overrides._fieldVisibility;
-            if (fields == Visibility.DEFAULT) {
-                fields = _fieldVisibility;
-            }
-            Visibility getters = overrides._getterVisibility;
-            if (getters == Visibility.DEFAULT) {
-                getters = _getterVisibility;
-            }
-            Visibility isGetters = overrides._isGetterVisibility;
-            if (isGetters == Visibility.DEFAULT) {
-                isGetters = _isGetterVisibility;
-            }
-            Visibility setters = overrides._setterVisibility;
-            if (setters == Visibility.DEFAULT) {
-                setters = _setterVisibility;
-            }
-            Visibility creators = overrides._creatorVisibility;
-            if (creators == Visibility.DEFAULT) {
-                creators = _creatorVisibility;
-            }
-            return construct(fields, getters, isGetters, setters, creators);
+            return construct(fields, getters, isGetters, setters, creators, scalarCtors);
         }
 
+        private static Visibility _override(Visibility base, Visibility override) {
+            return (override == Visibility.DEFAULT) ? base : override;
+        }
+        
         @Override
         public Class<JsonAutoDetect> valueFor() {
             return JsonAutoDetect.class;
@@ -308,20 +329,21 @@ public @interface JsonAutoDetect
         public Visibility getIsGetterVisibility() { return _isGetterVisibility; }
         public Visibility getSetterVisibility() { return _setterVisibility; }
         public Visibility getCreatorVisibility() { return _creatorVisibility; }
+        public Visibility getScalarConstructorVisibility() { return _scalarConstructorVisibility; }
 
         // for JDK serialization
         protected Object readResolve() {
             Value v = _predefined(_fieldVisibility, _getterVisibility, _isGetterVisibility,
-                    _setterVisibility, _creatorVisibility);
+                    _setterVisibility, _creatorVisibility, _scalarConstructorVisibility);
             return (v == null) ? this : v;
         }
 
         @Override
         public String toString() {
             return String.format(
-"JsonAutoDetect.Value(fields=%s,getters=%s,isGetters=%s,setters=%s,creators=%s)",
-_fieldVisibility, _getterVisibility, _isGetterVisibility, _setterVisibility, _creatorVisibility
-                    );
+"JsonAutoDetect.Value(fields=%s,getters=%s,isGetters=%s,setters=%s,creators=%s,scalarConstructors=%s)",
+_fieldVisibility, _getterVisibility, _isGetterVisibility, _setterVisibility,
+_creatorVisibility, _scalarConstructorVisibility);
         }
 
         @Override
@@ -331,6 +353,7 @@ _fieldVisibility, _getterVisibility, _isGetterVisibility, _setterVisibility, _cr
                 - (7 * _isGetterVisibility.ordinal())
                 + (11 * _setterVisibility.ordinal())
                 ^ (13 * _creatorVisibility.ordinal())
+                + (17 * _scalarConstructorVisibility.ordinal())
                     ;
         }
 
@@ -338,39 +361,50 @@ _fieldVisibility, _getterVisibility, _isGetterVisibility, _setterVisibility, _cr
         public boolean equals(Object o) {
             if (o == this) return true;
             if (o == null) return false;
-            return (o.getClass() == getClass()) && _equals(this, (Value) o);
+            if (o.getClass() != getClass()) return false;
+            Value v = (Value) o;
+            return _equals(this, v._fieldVisibility,
+                    v._getterVisibility, v._isGetterVisibility, v._setterVisibility,
+                    v._creatorVisibility, v._scalarConstructorVisibility)
+            ;
         }
 
         private static Value _predefined(Visibility fields,
                 Visibility getters, Visibility isGetters, Visibility setters,
-                Visibility creators)
+                Visibility creators, Visibility scalarCtors)
         {
             if (fields == DEFAULT_FIELD_VISIBILITY) {
                 if ((getters == DEFAULT._getterVisibility)
                     && (isGetters == DEFAULT._isGetterVisibility)
                     && (setters == DEFAULT._setterVisibility)
-                    && (creators == DEFAULT._creatorVisibility)) {
+                    && (creators == DEFAULT._creatorVisibility)
+                    && (scalarCtors == DEFAULT._scalarConstructorVisibility)) {
                     return DEFAULT;
                 }
             } else if (fields == Visibility.DEFAULT) {
                 if ((getters == Visibility.DEFAULT)
                         && (isGetters == Visibility.DEFAULT)
                         && (setters == Visibility.DEFAULT)
-                        && (creators == Visibility.DEFAULT)) {
+                        && (creators == Visibility.DEFAULT)
+                        && (scalarCtors == Visibility.DEFAULT)) {
                     return NO_OVERRIDES;
                 }
             }
             return null;
         }
 
-        private static boolean _equals(Value a, Value b)
+        private static boolean _equals(Value v,
+                Visibility fields,
+                Visibility getters, Visibility isGetters, Visibility setters,
+                Visibility creators, Visibility scalarCtors)
         {
-            return (a._fieldVisibility == b._fieldVisibility)
-                    && (a._getterVisibility == b._getterVisibility)
-                    && (a._isGetterVisibility == b._isGetterVisibility)
-                    && (a._setterVisibility == b._setterVisibility)
-                    && (a._creatorVisibility == b._creatorVisibility)
-                    ;
+            return (v._fieldVisibility == fields)
+                    && (v._getterVisibility == getters)
+                    && (v._isGetterVisibility == isGetters)
+                    && (v._setterVisibility == setters)
+                    && (v._creatorVisibility == creators)
+                    && (v._scalarConstructorVisibility == scalarCtors)
+                ;
         }
     }
 }

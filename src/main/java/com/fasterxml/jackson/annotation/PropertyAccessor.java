@@ -4,7 +4,7 @@ package com.fasterxml.jackson.annotation;
  * Enumeration used to define kinds of elements (called "property accessors")
  * that annotations like {@link JsonAutoDetect} apply to.
  *<p>
- * In addition to method types (GETTER/IS_GETTER, SETTER, CREATOR) and the
+ * In addition to method types (GETTER/IS_GETTER, SETTER, CREATOR, SCALAR_CONSTRUCTOR) and the
  * field type (FIELD), 2 pseudo-types
  * are defined for convenience: <code>ALWAYS</code> and <code>NONE</code>. These
  * can be used to indicate, all or none of available method types (respectively),
@@ -31,12 +31,6 @@ public enum PropertyAccessor
     SETTER,
 
     /**
-     * Creators are constructors and (static) factory methods used to
-     * construct POJO instances for deserialization
-     */
-    CREATOR,
-
-    /**
      * Field refers to fields of regular Java objects. Although
      * they are not really methods, addition of optional field-discovery
      * in version 1.1 meant that there was need to enable/disable
@@ -53,6 +47,24 @@ public enum PropertyAccessor
     IS_GETTER,
 
     /**
+     * Creators are constructors and (static) factory methods used to
+     * construct POJO instances for deserialization, not including
+     * single-scalar-argument constructors (for which
+     * <code>SCALAR_CONSTRUCTOR</code> is used).
+     */
+    CREATOR,
+
+    /**
+     * Scalar constructors are special case creators: constructors that
+     * take just one scalar argument of one types <code>int</code>,
+     * <code>long</code>, <code>boolean</code>, <code>double</code>
+     * or <code>String</code>.
+     *
+     * @since 3.0
+     */
+    SCALAR_CONSTRUCTOR,
+    
+    /**
      * This pseudo-type indicates that none of accessors if affected.
      */
     NONE,
@@ -67,6 +79,10 @@ public enum PropertyAccessor
 
     public boolean creatorEnabled() {
         return (this == CREATOR) || (this == ALL);
+    }
+
+    public boolean scalarConstructorEnabled() {
+        return (this == SCALAR_CONSTRUCTOR) || (this == ALL);
     }
 
     public boolean getterEnabled() {

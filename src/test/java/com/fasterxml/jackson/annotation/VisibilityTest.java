@@ -79,11 +79,11 @@ public class VisibilityTest extends TestBase
     public void testToString() {
         assertEquals(
 "JsonAutoDetect.Value(fields=PUBLIC_ONLY,getters=PUBLIC_ONLY,"+
-"isGetters=PUBLIC_ONLY,setters=ANY,creators=PUBLIC_ONLY)",
+"isGetters=PUBLIC_ONLY,setters=ANY,creators=PUBLIC_ONLY,scalarConstructors=NON_PRIVATE)",
                 JsonAutoDetect.Value.defaultVisibility().toString());
         assertEquals(
 "JsonAutoDetect.Value(fields=DEFAULT,getters=DEFAULT,"+
-"isGetters=DEFAULT,setters=DEFAULT,creators=DEFAULT)",
+"isGetters=DEFAULT,setters=DEFAULT,creators=DEFAULT,scalarConstructors=DEFAULT)",
                 JsonAutoDetect.Value.noOverrides().toString());
     }
 
@@ -93,13 +93,15 @@ public class VisibilityTest extends TestBase
                 Visibility.PUBLIC_ONLY, 
                 Visibility.ANY, 
                 Visibility.NONE,
-                Visibility.ANY);
+                Visibility.ANY,
+                Visibility.PROTECTED_AND_PUBLIC);
         JsonAutoDetect.Value overrides = JsonAutoDetect.Value.construct(
                 Visibility.NON_PRIVATE, 
                 Visibility.DEFAULT, 
                 Visibility.PUBLIC_ONLY,
                 Visibility.DEFAULT, 
-                Visibility.DEFAULT);
+                Visibility.DEFAULT,
+                Visibility.PUBLIC_ONLY);
         JsonAutoDetect.Value merged = JsonAutoDetect.Value.merge(base, overrides);
         assertFalse(merged.equals(base));
         assertFalse(merged.equals(overrides));
@@ -110,6 +112,7 @@ public class VisibilityTest extends TestBase
         assertEquals(Visibility.PUBLIC_ONLY, merged.getIsGetterVisibility());
         assertEquals(Visibility.NONE, merged.getSetterVisibility());
         assertEquals(Visibility.ANY, merged.getCreatorVisibility());
+        assertEquals(Visibility.PUBLIC_ONLY, merged.getScalarConstructorVisibility());
 
         // try the other way around too
         merged = JsonAutoDetect.Value.merge(overrides, base);
@@ -118,6 +121,7 @@ public class VisibilityTest extends TestBase
         assertEquals(Visibility.ANY, merged.getIsGetterVisibility());
         assertEquals(Visibility.NONE, merged.getSetterVisibility());
         assertEquals(Visibility.ANY, merged.getCreatorVisibility());
+        assertEquals(Visibility.PROTECTED_AND_PUBLIC, merged.getScalarConstructorVisibility());
 
         // plus, special cases
         assertSame(overrides, JsonAutoDetect.Value.merge(null, overrides));
@@ -132,6 +136,7 @@ public class VisibilityTest extends TestBase
         assertEquals(Visibility.DEFAULT, v.getIsGetterVisibility());
         assertEquals(Visibility.DEFAULT, v.getSetterVisibility());
         assertEquals(Visibility.DEFAULT, v.getCreatorVisibility());
+        assertEquals(Visibility.DEFAULT, v.getScalarConstructorVisibility());
 
         JsonAutoDetect.Value all = JsonAutoDetect.Value.construct(PropertyAccessor.ALL,
                 Visibility.NONE);
@@ -140,6 +145,7 @@ public class VisibilityTest extends TestBase
         assertEquals(Visibility.NONE, all.getIsGetterVisibility());
         assertEquals(Visibility.NONE, all.getSetterVisibility());
         assertEquals(Visibility.NONE, all.getCreatorVisibility());
+        assertEquals(Visibility.NONE, all.getScalarConstructorVisibility());
     }
     
     public void testSimpleChanges() {
@@ -159,5 +165,8 @@ public class VisibilityTest extends TestBase
 
         v = NO_OVERRIDES.withSetterVisibility(Visibility.PUBLIC_ONLY);
         assertEquals(Visibility.PUBLIC_ONLY, v.getSetterVisibility());
+
+        v = NO_OVERRIDES.withScalarConstructorVisibility(Visibility.PUBLIC_ONLY);
+        assertEquals(Visibility.PUBLIC_ONLY, v.getScalarConstructorVisibility());
     }
 }
