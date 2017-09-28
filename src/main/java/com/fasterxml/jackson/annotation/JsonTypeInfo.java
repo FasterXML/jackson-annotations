@@ -254,9 +254,6 @@ public @interface JsonTypeInfo
      *<ul>
      * <li>{@link java.lang.Void} means that objects with unmappable (or missing)
      *    type are to be mapped to null references.
-     *    For backwards compatibility (2.5 and below), value of
-     *    <code>com.fasterxml.jackson.databind.annotation.NoClass</code> is also allowed
-     *    for such usage.
      *  </li>
      * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
      *    itself} means "there is no default implementation" (in which
@@ -279,7 +276,7 @@ public @interface JsonTypeInfo
     public boolean visible() default false;
 
     // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
-    //   Hope for better luck with 2.8 or later
+    //   Hope for better luck with 3.0 or later
     /**
      * Property that defines whether type serializer is allowed to omit writing
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
