@@ -355,7 +355,7 @@ public @interface JsonFormat
             }
             return (d == _disabled) ? this : new Features(_enabled, d);
         }
-        
+
         public Boolean get(Feature f) {
             int mask = (1 << f.ordinal());
             if ((_disabled & mask) != 0) {
@@ -368,10 +368,18 @@ public @interface JsonFormat
         }
 
         @Override
+        public String toString() {
+            if (this == EMPTY) {
+                return "EMPTY";
+            }
+            return String.format("(enabled=0x%x,disabled=0x%x)", _enabled, _disabled);
+        }
+
+        @Override
         public int hashCode() {
             return _disabled + _enabled;
         }
-        
+
         @Override
         public boolean equals(Object o) {
             if (o == this) return true;
@@ -381,7 +389,7 @@ public @interface JsonFormat
             return (other._enabled == _enabled) && (other._disabled == _disabled);
         }
     }
-    
+
     /**
      * Helper class used to contain information from a single {@link JsonFormat}
      * annotation.
@@ -668,9 +676,8 @@ public @interface JsonFormat
 
         @Override
         public String toString() {
-            // !!! TODO: Features?
-            return String.format("JsonFormat.Value(pattern=%s,shape=%s,lenient=%s,locale=%s,timezone=%s)",
-                    _pattern, _shape, _lenient, _locale, _timezoneStr);
+            return String.format("JsonFormat.Value(pattern=%s,shape=%s,lenient=%s,locale=%s,timezone=%s,features=%s)",
+                    _pattern, _shape, _lenient, _locale, _timezoneStr, _features);
         }
 
         @Override
