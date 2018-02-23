@@ -27,7 +27,7 @@ import java.util.*;
  * per-property annotation.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
-    ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+    ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnoreProperties

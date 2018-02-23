@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
  * handling there is no effect, but for other supported data types (or structural
  * conventions) there may be.
  *<p>
- * NOTE: annotation is allowed for properties, starting with 2.4, mostly to support
+ * NOTE: annotation is allowed for properties mostly to support
  * alphabetic ordering of {@link java.util.Map} entries.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
-    ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+    ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonPropertyOrder
