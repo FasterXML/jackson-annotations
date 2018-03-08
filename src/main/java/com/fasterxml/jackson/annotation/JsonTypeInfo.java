@@ -1,6 +1,7 @@
 package com.fasterxml.jackson.annotation;
 
 import java.lang.annotation.*;
+import java.util.Objects;
 
 /**
  * Annotation used for configuring details of if and how type information is
@@ -205,10 +206,9 @@ public @interface JsonTypeInfo
      */
     
     /**
-     * Specifies kind of type metadata to use when serializing
-     * type information for instances of annotated type
-     * and its subtypes; as well as what is expected during
-     * deserialization.
+     * Specifies kind of type metadata to use when serializing type information
+     * for instances of annotated type  and its subtypes; as well as what is expected
+     * during deserialization.
      */
     public Id use();    
     
@@ -284,4 +284,106 @@ public @interface JsonTypeInfo
      * if false, type id should always be written still.
     public boolean skipWritingDefault() default false;
     */
+
+    /*
+    /**********************************************************************
+    /* Value class used to enclose information, allow for
+    /* merging of layered configuration settings.
+    /**********************************************************************
+     */
+
+    public static class Value
+        implements JacksonAnnotationValue<JsonTypeInfo>,
+            java.io.Serializable
+    {
+        private static final long serialVersionUID = 1L;
+
+        protected final static Value EMPTY = new Value(null, null, null, null, false);
+
+        protected final Id _idType;
+        protected final As _inclusionType;
+        protected final String _propertyName;
+
+        protected final Class<?> _defaultImpl;
+        protected final boolean _idVisible;
+
+        protected Value(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible)
+        {
+            _defaultImpl = defaultImpl;
+            _idType = idType;
+            _inclusionType = inclusionType;
+            _propertyName = propertyName;
+            _idVisible = idVisible;
+        }
+
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible)
+        {
+            // couple of overrides we need to apply here. First: if no propertyName specified,
+            // use Id-specific property name
+            if ((propertyName == null) || propertyName.isEmpty()) {
+                if (idType != null) {
+                    propertyName = idType.getDefaultPropertyName();
+                } else {
+                    propertyName = "";
+                }
+            }
+            // also; some "well-known" aliases to indicate "no default impl specified" (mostly
+            // due to idiotic JDK limitation of not allowing `null` values for annotation properties
+            if ((defaultImpl == JsonTypeInfo.class) || (defaultImpl == Void.class)) {
+                defaultImpl = null;
+            }
+            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible);
+        }
+
+        public static Value from(JsonTypeInfo src) {
+            if (src == null) {
+                return EMPTY;
+            }
+            return construct(src.use(), src.include(),
+                    src.property(), src.defaultImpl(), src.visible());
+        }
+
+        @Override
+        public Class<JsonTypeInfo> valueFor() {
+            return JsonTypeInfo.class;
+        }
+
+        public Class<?> getDefaultImpl() { return _defaultImpl; }
+        public Id getIdType() { return _idType; }
+        public As getInclusionType() { return _inclusionType; }
+        public String getPropertyName() { return _propertyName; }
+        public boolean getIdVisible() { return _idVisible; }
+
+        @Override
+        public String toString() {
+            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s)",
+                    _idType, _inclusionType, _propertyName, _defaultImpl, _idVisible);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(_idType, _inclusionType, _propertyName, _defaultImpl)
+                + (_idVisible ? 11 : -17);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            return (o.getClass() == getClass())
+                    && _equals(this, (Value) o);
+        }
+
+        private static boolean _equals(Value a, Value b)
+        {
+            return (a._idType == b._idType)
+                    && (a._inclusionType == b._inclusionType)
+                    && (a._defaultImpl == b._defaultImpl)
+                    && (a._idVisible == b._idVisible)
+                    && Objects.equals(a._propertyName, b._propertyName)
+            ;
+        }
+    }
 }

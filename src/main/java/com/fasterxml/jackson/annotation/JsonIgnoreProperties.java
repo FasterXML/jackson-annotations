@@ -79,10 +79,10 @@ public @interface JsonIgnoreProperties
     public boolean allowSetters() default false;
 
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Value class used to enclose information, allow for
     /* merging of layered configuration settings.
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -282,11 +282,12 @@ public @interface JsonIgnoreProperties
             return _allowSetters ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, true, _merge);
         }
+
         public Value withoutAllowSetters() {
             return !_allowSetters ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, false, _merge);
         }
-        
+
         public Value withMerge() {
             return _merge ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, true);
@@ -296,7 +297,7 @@ public @interface JsonIgnoreProperties
             return !_merge ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, false);
         }
-        
+
         @Override
         public Class<JsonIgnoreProperties> valueFor() {
             return JsonIgnoreProperties.class;
@@ -341,7 +342,7 @@ public @interface JsonIgnoreProperties
             }
             return _ignored;
         }
-        
+
         public boolean getIgnoreUnknown() {
             return _ignoreUnknown;
         }
