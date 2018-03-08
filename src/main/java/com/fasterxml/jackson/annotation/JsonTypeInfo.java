@@ -298,7 +298,9 @@ public @interface JsonTypeInfo
     {
         private static final long serialVersionUID = 1L;
 
-        protected final static Value EMPTY = new Value(null, null, null, null, false);
+        // should not really be needed usually but make sure defalts to `NONE`; other
+        // values of less interest
+        protected final static Value EMPTY = new Value(Id.NONE, As.PROPERTY, null, null, false);
 
         protected final Id _idType;
         protected final As _inclusionType;
@@ -306,6 +308,12 @@ public @interface JsonTypeInfo
 
         protected final Class<?> _defaultImpl;
         protected final boolean _idVisible;
+
+        /*
+        /**********************************************************************
+        /* Construction
+        /**********************************************************************
+         */
 
         protected Value(Id idType, As inclusionType,
                 String propertyName, Class<?> defaultImpl, boolean idVisible)
@@ -345,6 +353,12 @@ public @interface JsonTypeInfo
                     src.property(), src.defaultImpl(), src.visible());
         }
 
+        /*
+        /**********************************************************************
+        /* Simple accessors
+        /**********************************************************************
+         */
+
         @Override
         public Class<JsonTypeInfo> valueFor() {
             return JsonTypeInfo.class;
@@ -355,6 +369,21 @@ public @interface JsonTypeInfo
         public As getInclusionType() { return _inclusionType; }
         public String getPropertyName() { return _propertyName; }
         public boolean getIdVisible() { return _idVisible; }
+
+        /**
+         * Static helper method for simple(r) checking of whether there's a Value instance
+         * that indicates that polymorphic handling is (to be) enabled.
+         */
+        public static boolean isEnabled(JsonTypeInfo.Value v) {
+            return (v != null) &&
+                (v._idType != null) && (v._idType != Id.NONE);
+        }
+        
+        /*
+        /**********************************************************************
+        /* Standard methods
+        /**********************************************************************
+         */
 
         @Override
         public String toString() {
