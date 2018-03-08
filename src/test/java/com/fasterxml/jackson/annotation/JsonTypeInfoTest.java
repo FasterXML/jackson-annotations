@@ -11,12 +11,9 @@ public class JsonTypeInfoTest extends TestBase
             property = "ext")
     private final static class Anno2 { }
 
-    private final static JsonTypeInfo.Value EMPTY = JsonTypeInfo.Value.EMPTY;
-
     public void testEmpty() {
-        assertSame(EMPTY, JsonTypeInfo.Value.from(null));
-
-        assertEquals(EMPTY, EMPTY);
+        // 07-Mar-2017, tatu: Important to distinguish "none" from 'empty' value...
+        assertNull(JsonTypeInfo.Value.from(null));
     }
 
     public void testFromAnnotation() throws Exception

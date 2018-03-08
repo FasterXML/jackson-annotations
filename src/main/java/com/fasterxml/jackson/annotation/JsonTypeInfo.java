@@ -347,7 +347,7 @@ public @interface JsonTypeInfo
 
         public static Value from(JsonTypeInfo src) {
             if (src == null) {
-                return EMPTY;
+                return null;
             }
             return construct(src.use(), src.include(),
                     src.property(), src.defaultImpl(), src.visible());
