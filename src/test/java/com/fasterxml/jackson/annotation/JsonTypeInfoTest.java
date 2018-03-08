@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 public class JsonTypeInfoTest extends TestBase
 {
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true)
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true,
+            defaultImpl = JsonTypeInfo.class)
     private final static class Anno1 { }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXTERNAL_PROPERTY,
-            property = "ext")
+            property = "ext",
+            defaultImpl = Void.class)
     private final static class Anno2 { }
 
     public void testEmpty() {
@@ -25,12 +27,14 @@ public class JsonTypeInfoTest extends TestBase
         // default from annotation definition
         assertEquals("@class", v1.getPropertyName());
         assertTrue(v1.getIdVisible());
+        assertNull(v1.getDefaultImpl());
 
         JsonTypeInfo.Value v2 = JsonTypeInfo.Value.from(Anno2.class.getAnnotation(JsonTypeInfo.class));
         assertEquals(JsonTypeInfo.Id.NAME, v2.getIdType());
         assertEquals(JsonTypeInfo.As.EXTERNAL_PROPERTY, v2.getInclusionType());
         assertEquals("ext", v2.getPropertyName());
         assertFalse(v2.getIdVisible());
+        assertEquals(Void.class, v2.getDefaultImpl());
 
         assertTrue(v1.equals(v1));
         assertTrue(v2.equals(v2));
@@ -38,7 +42,7 @@ public class JsonTypeInfoTest extends TestBase
         assertFalse(v1.equals(v2));
         assertFalse(v2.equals(v1));
 
-        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=null,idVisible=true)", v1.toString());
-        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=null,idVisible=false)", v2.toString());
+        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true)", v1.toString());
+        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false)", v2.toString());
     }
 }

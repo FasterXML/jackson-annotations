@@ -257,7 +257,8 @@ public @interface JsonTypeInfo
      *  </li>
      * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
      *    itself} means "there is no default implementation" (in which
-     *   case an error results from unmappable type).
+     *   case an error results from unmappable type). Actually works for ALL
+     *   annotation types (since they can not be instantiated)
      *  </li>
      * </ul>
      */
@@ -337,9 +338,9 @@ public @interface JsonTypeInfo
                     propertyName = "";
                 }
             }
-            // also; some "well-known" aliases to indicate "no default impl specified" (mostly
-            // due to idiotic JDK limitation of not allowing `null` values for annotation properties
-            if ((defaultImpl == JsonTypeInfo.class) || (defaultImpl == Void.class)) {
+            // Although we can not do much here for special handling of `Void`, we can convert
+            // annotation types as `null` (== no default implementation)
+            if ((defaultImpl == null) || defaultImpl.isAnnotation()) {
                 defaultImpl = null;
             }
             return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible);
@@ -388,7 +389,9 @@ public @interface JsonTypeInfo
         @Override
         public String toString() {
             return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s)",
-                    _idType, _inclusionType, _propertyName, _defaultImpl, _idVisible);
+                    _idType, _inclusionType, _propertyName,
+                    ((_defaultImpl == null) ? "NULL" : _defaultImpl.getName()),
+                    _idVisible);
         }
 
         @Override
