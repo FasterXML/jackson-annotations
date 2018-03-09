@@ -356,6 +356,37 @@ public @interface JsonTypeInfo
 
         /*
         /**********************************************************************
+        /* Mutators
+        /**********************************************************************
+         */
+
+        public Value withDefaultImpl(Class<?> impl) {
+            return (impl == _defaultImpl) ? this :
+                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible);
+        }
+
+        public Value withIdType(Id idType) {
+            return (idType == _idType) ? this :
+                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible);
+        }
+
+        public Value withInclusionType(As inclusionType) {
+            return (inclusionType == _inclusionType) ? this :
+                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible);
+        }
+
+        public Value withPropertyName(String propName) {
+            return (propName == _propertyName) ? this :
+                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible);
+        }
+
+        public Value withIdVisible(boolean visible) {
+            return (visible == _idVisible) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible);
+        }
+
+        /*
+        /**********************************************************************
         /* Simple accessors
         /**********************************************************************
          */
