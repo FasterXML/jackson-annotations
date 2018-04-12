@@ -139,38 +139,13 @@ public @interface JsonFormat
      */
     public enum Shape
     {
-        /**
-         * Marker enum value that indicates "whatever" choice, meaning that annotation
-         * does NOT specify shape to use.
-         * Note that this is different from {@link Shape#NATURAL}, which
-         * specifically instructs use of the "natural" shape for datatype.
-         */
-        ANY,
+        // // // Concrete physical shapes, scalars
 
         /**
-         * Marker enum value that indicates the "default" choice for given datatype;
-         * for example, JSON String for {@link java.lang.String}, or JSON Number
-         * for Java numbers.
-         * Note that this is different from {@link Shape#ANY} in that this is actual
-         * explicit choice that overrides possible default settings.
+         * Value that indicates that (JSON) boolean type
+         * (true, false) should be used.
          */
-        NATURAL,
-        
-        /**
-         * Value that indicates shape should not be structural (that is, not
-         * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
-         */
-        SCALAR,
-
-        /**
-         * Value that indicates that (JSON) Array type should be used.
-         */
-        ARRAY,
-        
-        /**
-         * Value that indicates that (JSON) Object type should be used.
-         */
-        OBJECT,
+        BOOLEAN,
 
         /**
          * Value that indicates that a numeric (JSON) type should be used
@@ -194,20 +169,71 @@ public @interface JsonFormat
          * Value that indicates that (JSON) String type should be used.
          */
         STRING,
-        
+
         /**
-         * Value that indicates that (JSON) boolean type
-         * (true, false) should be used.
+         * Value that indicates shape should not be structural (that is, not
+         * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
          */
-        BOOLEAN
+        SCALAR,
+        
+        // // // Concrete physical shapes, structured
+
+        /**
+         * Value that indicates that (JSON) Array type should be used.
+         */
+        ARRAY,
+
+        /**
+         * Value that indicates that (JSON) Object type should be used.
+         */
+        OBJECT,
+
+        // // // Additional logical meta-types
+
+        /**
+         * Marker enum value that indicates "whatever" choice, meaning that annotation
+         * does NOT specify shape to use.
+         * Note that this is different from {@link Shape#NATURAL}, which
+         * specifically instructs use of the "natural" shape for datatype.
+         */
+        ANY,
+
+        /**
+         * Marker enum value that indicates the "default" choice for given datatype;
+         * for example, JSON String for {@link java.lang.String}, or JSON Number
+         * for Java numbers.
+         * Note that this is different from {@link Shape#ANY} in that this is actual
+         * explicit choice that overrides possible default settings.
+         */
+        NATURAL,
+
+        /**
+         * Marker enum value that indicates not only shape of {@link #OBJECT} but further
+         * handling as POJO, where applicable. Mostly makes difference at Java Object level
+         * when distinguishing handling between {@link java.util.Map} and POJO types.
+         *
+         * @since 3.0
+         */
+        POJO,
+        
         ;
 
         public boolean isNumeric() {
             return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
         }
 
+        /** @since 3.0 */
+        public static boolean isNumeric(Shape shapeOrNull) {
+            return (shapeOrNull != null) && shapeOrNull.isNumeric();
+        }
+
         public boolean isStructured() {
-            return (this == OBJECT) || (this == ARRAY);
+            return (this == OBJECT) || (this == ARRAY) || (this == POJO);
+        }
+
+        /** @since 3.0 */
+        public static boolean isStructured(Shape shapeOrNull) {
+            return (shapeOrNull != null) && shapeOrNull.isStructured();
         }
     }
 

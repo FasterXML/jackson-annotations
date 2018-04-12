@@ -29,26 +29,9 @@ public class FormatTest extends TestBase
     }
 
     public void testEquality() {
-        assertTrue(EMPTY.equals(EMPTY));
-        assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
-
         JsonFormat.Value v1 = JsonFormat.Value.forShape(Shape.BOOLEAN);
-        JsonFormat.Value v2 = JsonFormat.Value.forShape(Shape.BOOLEAN);
-        JsonFormat.Value v3 = JsonFormat.Value.forShape(Shape.SCALAR);
         
-        assertTrue(v1.equals(v2));
-        assertTrue(v2.equals(v1));
-
-        assertFalse(v1.equals(v3));
-        assertFalse(v3.equals(v1));
-        assertFalse(v2.equals(v3));
-        assertFalse(v3.equals(v2));
-
-        // not strictly guaranteed but...
-        assertFalse(v1.hashCode() == v3.hashCode());
-
         // then let's converge
-        assertEquals(v1, v3.withShape(Shape.BOOLEAN));
         assertFalse(v1.equals(v1.withPattern("ZBC")));
         assertFalse(v1.equals(v1.withFeature(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)));
         assertFalse(v1.equals(v1.withoutFeature(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)));
@@ -186,18 +169,6 @@ public class FormatTest extends TestBase
         assertFalse(dunno.equals(lenient));
     }
 
-    public void testShape() {
-        assertFalse(JsonFormat.Shape.STRING.isNumeric());
-        assertFalse(JsonFormat.Shape.STRING.isStructured());
-
-        assertTrue(JsonFormat.Shape.NUMBER_INT.isNumeric());
-        assertTrue(JsonFormat.Shape.NUMBER_FLOAT.isNumeric());
-        assertTrue(JsonFormat.Shape.NUMBER.isNumeric());
-
-        assertTrue(JsonFormat.Shape.ARRAY.isStructured());
-        assertTrue(JsonFormat.Shape.OBJECT.isStructured());
-    }
-
     public void testFeatures() {
         JsonFormat.Features f1 = JsonFormat.Features.empty();
         JsonFormat.Features f2 = f1.with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
@@ -205,7 +176,8 @@ public class FormatTest extends TestBase
         assertTrue(f1.equals(f1));
         assertFalse(f1.equals(f2));
         assertFalse(f1.equals(null));
-        assertFalse(f1.equals("foo"));
+        Object str = "foo";
+        assertFalse(f1.equals(str));
 
         assertNull(f1.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
         assertEquals(Boolean.TRUE, f2.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
