@@ -142,7 +142,7 @@ public @interface JsonAutoDetect
      */
 
     /**
-     * Helper class used to contain information from a single {@link JsonIgnoreProperties}
+     * Helper class used to contain information from a single {@link JsonAutoDetect}
      * annotation, as well as to provide possible overrides from non-annotation sources.
      */
     public static class Value
