@@ -43,6 +43,16 @@ To use annotations, you need to use Maven dependency:
 
 or download jars from Maven repository (or via quick links on [Wiki](../../wiki))
 
+
+# JPMS Configuration
+This module is strictly defined and the module-info.java is attached with the [moditect](https://github.com/moditect/moditect) plugin
+
+This allows for transitive dependencies, and will not place this library in the Automatic Named Modules.
+
+This modules name is ```com.fasterxml.jackson.annotation```
+
+-----
+
 ## Usage, simple
 
 Let's start with simple use cases: renaming or ignoring properties, and modifying types that are used.
