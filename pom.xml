@@ -28,8 +28,15 @@
   <properties>
     <!-- 02-Jun-2016, tatu: Looks like newer versions (3.0+) of bundle plugin require Java 7 (directly
             or via transitive deps), so need to downgrade
+
+        Jackson 2.7 and above Java 7 (with exception of `jackson-core`/`jackson-annotations` still Java 6),
       -->
     <version.plugin.bundle>2.5.3</version.plugin.bundle>
+      <javac.src.version>1.6</javac.src.version>
+      <javac.target.version>1.6</javac.target.version>
+
+      <maven.compiler.source>1.6</maven.compiler.source>
+      <maven.compiler.target>1.6</maven.compiler.target>
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
 
@@ -56,24 +63,10 @@
           </instructions>
 	</configuration>
       </plugin>
-	  
-		 <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.8.0</version>
-			<dependencies>
-				<dependency>
-					<groupId>org.ow2.asm</groupId>
-					<artifactId>asm</artifactId>
-					<version>7.0</version>
-				</dependency>
-			</dependencies>
-		</plugin>
 
         <plugin>
             <groupId>org.moditect</groupId>
             <artifactId>moditect-maven-plugin</artifactId>
-            <version>1.0.0.Beta1</version>
             <executions>
                 <execution>
                     <id>add-module-infos</id>
