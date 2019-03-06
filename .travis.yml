@@ -1,7 +1,8 @@
 language: java
 
+# 05-Mar-2019, tatu: can't build pre-JDK8 any more (for Moditect)
+
 jdk:
-  - openjdk7
   - openjdk8
   - oraclejdk11
 
