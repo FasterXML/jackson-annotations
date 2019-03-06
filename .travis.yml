@@ -1,10 +1,9 @@
 language: java
 
-# While code itself compiles fine on Java 6 and 7, parent pom dictates Java 8
-# (plus no other Jackson 3.x is built for pre-Java8 anyway)
+# Java 8 for Jackson 3:
 jdk:
   - openjdk8
-  - oraclejdk9
+  - oraclejdk11
 
 # Below this line is configuration for deploying to the Sonatype OSS repo
 # http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html

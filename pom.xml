@@ -27,10 +27,6 @@
 
   <properties>
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
-    <!-- 27-Sep-2017, tatu: Until update of parent poms (at least), need to
-           ensure newer versions of certain plugins
-      -->
-    <version.plugin.javadoc>3.0.0-M1</version.plugin.javadoc>
   </properties>
 
   <dependencies>
@@ -43,15 +39,24 @@
 
   <build>
     <plugins>
-      <!-- Add "Automatic Module Name" even before full Java 9 module definitions can be added -->
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <configuration>
-          <instructions combine.children="merge">
-            <Automatic-Module-Name>com.fasterxml.jackson.annotation</Automatic-Module-Name>
-          </instructions>
-       </configuration>
+        <groupId>org.moditect</groupId>
+        <artifactId>moditect-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-module-infos</id>
+            <phase>package</phase>
+            <goals>
+              <goal>add-module-info</goal>
+            </goals>
+            <configuration>
+              <overwriteExistingFiles>true</overwriteExistingFiles>
+              <module>
+                <moduleInfoFile>src/moditect/module-info.java</moduleInfoFile>
+              </module>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
