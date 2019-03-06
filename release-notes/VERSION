@@ -13,7 +13,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.10.0 (not yet released)
 
-No changes since 2.9
+#151: Add base Java 9+ module info
 
 2.9.1 (07-Sep-2017)
 
