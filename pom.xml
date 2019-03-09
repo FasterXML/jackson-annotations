@@ -40,6 +40,9 @@
   <build>
     <plugins>
       <plugin>
+         <!-- 08-Mar-2019, tatu: Would get these settings from `jackson-bom` except we 
+               do not extend it so...
+           -->
         <groupId>org.moditect</groupId>
         <artifactId>moditect-maven-plugin</artifactId>
         <executions>
