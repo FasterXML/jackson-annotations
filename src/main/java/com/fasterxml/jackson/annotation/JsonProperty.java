@@ -97,7 +97,7 @@ public @interface JsonProperty
      * Property that may be used to <b>document</b> expected default value
      * for the property: most often used as source information for generating
      * schemas (like JSON Schema or protobuf/thrift schema), or documentation.
-     * It may also be used by Jackson extension modules; core jackson databind
+     * It may also be used by Jackson extension modules; core `jackson-databind`
      * does not have any automated handling beyond simply exposing this
      * value through bean property introspection.
      *<p>
@@ -111,7 +111,7 @@ public @interface JsonProperty
 
     /**
      * Optional property that may be used to change the way visibility of
-     * accessors (getter, field-as-getter) and mutators (contructor parameter,
+     * accessors (getter, field-as-getter) and mutators (constructor parameter,
      * setter, field-as-setter) is determined, either so that otherwise
      * non-visible accessors (like private getters) may be used; or that
      * otherwise visible accessors are ignored.
