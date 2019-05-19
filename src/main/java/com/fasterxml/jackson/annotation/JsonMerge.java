@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to specify whether annotated property value should use "merging" approach,
- * in which current value is first accessed (with a getter or field) and then modified
- * with incoming data, or not: if not, assignment happens without considering current state.
+ * Annotation to specify whether annotated property value should use "merging" approach:
+ * merging meaning that the current value is first accessed (with a getter or field) and then modified
+ * with incoming data. If merging is not used assignment happens without considering current state.
  *<p>
  * Merging is only option if there is a way to introspect current state:
  * if there is accessor (getter, field) to use.
@@ -27,6 +27,20 @@ import java.lang.annotation.Target;
  * For structured types this is usually obvious; and for scalar types not -- if
  * no obvious method exists, merging is not allowed; deserializer may choose to
  * either quietly ignore it, or throw an exception.
+ * Specifically, for structured types:
+ *<ul>
+ * <li>For POJOs merging is done recursively, property by property.
+ *  </li>
+ * <li>For {@link java.util.Map}s merging is done recursively, entry by entry .
+ *  </li>
+ * <li>For {@link java.util.Collection} and Arrays, merging is done by appending
+ *   incoming data into contents of existing Collection/array (and in case of Arrays,
+ *   creating a new Array instance). NOTE! This is different from
+ *   <a href="https://tools.ietf.org/html/rfc7396">JSON Merge Patch</a>.
+ *  </li>
+ * <li>For Scalar values, incoming value replaces existing value, that is, no merging occurs.
+ *  </li>
+ *</ul>
  *<p>
  * Note that use of merging usually adds some processing overhead since it adds
  * an extra step of accessing the current state before assignment.
