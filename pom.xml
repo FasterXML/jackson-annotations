@@ -51,18 +51,6 @@
 
   <build>
     <plugins>
-      <!-- 06-Sep-2017, tatu: Try to generate "automatic module name" -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-	<!-- IMPORTANT! Parent defines plenty of defaults; make sure to merge config -->
-        <configuration>
-          <!-- note: usually would use `packageVersion.package`, but not used with annotations pkg -->
-          <instructions combine.children="merge">
-            <Automatic-Module-Name>com.fasterxml.jackson.annotation</Automatic-Module-Name>
-          </instructions>
-	   </configuration>
-      </plugin>
       <plugin>
         <!-- 08-Mar-2019, tatu: Would get these settings from `jackson-bom` except we 
               do not extend it so...
