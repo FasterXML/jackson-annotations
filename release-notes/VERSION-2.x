@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.10.0 (not yet released)
+2.10.0.p1 (19-Jul-2019)
 
 #51: Add basic Java 9+ module info
 
