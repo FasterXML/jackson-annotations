@@ -11,7 +11,7 @@
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-annotations</artifactId>
   <name>Jackson-annotations</name>
-  <version>2.10.0.pr1-SNAPSHOT</version>
+  <version>2.10.0.pr1</version>
   <packaging>bundle</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
@@ -22,7 +22,7 @@
     <connection>scm:git:git@github.com:FasterXML/jackson-annotations.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/jackson-annotations.git</developerConnection>
     <url>http://github.com/FasterXML/jackson-annotations</url>
-    <tag>HEAD</tag>
+    <tag>jackson-annotations-2.10.0.pr1</tag>
   </scm>
 
   <properties>
