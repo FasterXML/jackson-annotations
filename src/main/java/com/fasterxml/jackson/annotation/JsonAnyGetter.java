@@ -31,6 +31,9 @@ public @interface JsonAnyGetter
      * with "mix-in annotations" (aka "annotation overrides").
      * For most cases, however, default value of "true" is just fine
      * and should be omitted.
+     *
+     * @return True if annotation is enabled (normal case); false if it is to
+     *   be ignored (only useful for mix-in annotations to "mask" annotation
      */
     boolean enabled() default true;
 }

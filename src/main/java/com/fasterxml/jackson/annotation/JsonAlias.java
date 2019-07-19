@@ -28,6 +28,8 @@ public @interface JsonAlias
 {
     /**
      * One or more secondary names to accept as aliases to the official name.
+     *
+     * @return Zero or more aliases to associate with property annotated
      */
     public String[] value() default { };
 }

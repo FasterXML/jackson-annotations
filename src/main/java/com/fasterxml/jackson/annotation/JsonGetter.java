@@ -28,6 +28,9 @@ public @interface JsonGetter
      * method is used to access ("get"); empty String means that
      * name should be derived from the underlying method (using
      * standard Bean name detection rules)
+     *
+     * @return Name of the logical property (or "" to use 'default',
+     * if available)
      */
     String value() default "";
 }

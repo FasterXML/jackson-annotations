@@ -23,16 +23,21 @@ public @interface JacksonInject
     /**
      * Logical id of the value to inject; if not specified (or specified
      * as empty String), will use id based on declared type of property.
+     *
+     * @return Logical id of the value to inject
      */
     public String value() default "";
 
     /**
-     * Whether matching input value is used for annotated property or not;
+     * Whether matching value from input (if any) is used for annotated property or not;
      * if disabled (`OptBoolean.FALSE`), input value (if any) will be ignored;
      * otherwise it will override injected value.
      *<p>
-     * Default is `OptBoolean.DEFAULT`, which translates to `OptBoolean.TRUE`: this is
-     * for backwards compatibility (2.8 and earlier always allow binding input value).
+     * Default is `OptBoolean.DEFAULT`, which translates to `OptBoolean.TRUE`.
+     *
+     * @return {@link OptBoolean#TRUE} to enable use of value from input instead of
+     *    injected value, if available; {@link OptBoolean#FALSE} if injected value will
+     *    always be used regardless of input.
      */
     public OptBoolean useInput() default OptBoolean.DEFAULT;
 
