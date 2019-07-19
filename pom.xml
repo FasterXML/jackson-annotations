@@ -35,8 +35,6 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
 
-    <version.plugin.bundle>3.2.0</version.plugin.bundle>
-
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
   </properties>
 
