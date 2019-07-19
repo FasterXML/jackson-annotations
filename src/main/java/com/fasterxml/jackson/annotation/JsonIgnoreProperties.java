@@ -47,6 +47,9 @@ public @interface JsonIgnoreProperties
      * exception.
      *<p>
      * Does not have any effect on serialization.
+     *
+     * @return True if any and all unknown properties are to be ignored without
+     *   exceptions (or other special handling); false otherwise.
      */
     public boolean ignoreUnknown() default false;
 
@@ -62,6 +65,9 @@ public @interface JsonIgnoreProperties
      * Default value is `false`, which means that getters with matching names
      * will be ignored.
      * 
+     * @return True if getters should be allowed (i.e. NOT ignored); false if getters
+     *    are to be ignored
+     *
      * @since 2.6
      */
     public boolean allowGetters() default false;
@@ -78,6 +84,9 @@ public @interface JsonIgnoreProperties
      * Default value is `false`, which means that setters with matching names
      * will be ignored.
      * 
+     *
+     * @return True if setters should be allowed (i.e. NOT ignored); false if setters
+     *    are to be ignored
      * @since 2.6
      */
     public boolean allowSetters() default false;

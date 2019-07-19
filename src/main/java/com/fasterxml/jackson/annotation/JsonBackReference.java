@@ -30,10 +30,12 @@ import java.lang.annotation.Target;
 public @interface JsonBackReference
 {
     /**
-     * Logical have for the reference property pair; used to link managed and
+     * Logical name for the reference property pair; used to link managed and
      * back references. Default name can be used if there is just single
      * reference pair (for example, node class that just has parent/child linkage,
      * consisting of one managed reference and matching back reference)
+     *
+     * @return Logical name for the reference pair
      */
     public String value() default "defaultReference";
 }
