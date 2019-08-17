@@ -695,12 +695,24 @@ public @interface JsonFormat
         public Locale getLocale() { return _locale; }
 
         /**
+         * @return {@code Boolean.TRUE} if explicitly set to true; {@code Boolean.FALSE}
+         *   if explicit set to false; or {@code null} if not set either way (assuming
+         *   "default leniency" for the context)
+         *
          * @since 2.9
          */
         public Boolean getLenient() {
             return _lenient;
         }
+
         /**
+         * Convenience method equivalent to
+         *<pre>
+         *   Boolean.TRUE.equals(getLenient())
+         *</pre>
+         * that is, returns {@code true} if (and only if) leniency has been explicitly
+         * set to {code true}; but not if it is undefined.
+         *
          * @since 2.9
          */
         public boolean isLenient() {
