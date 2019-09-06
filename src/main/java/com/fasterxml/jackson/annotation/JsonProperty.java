@@ -133,15 +133,19 @@ public @interface JsonProperty
         AUTO,
 
         /**
-         * Access setting that means that the property may only be read for serialization,
+         * Access setting that means that the property may only be read for serialization
+         * (value accessed via "getter" Method, or read from Field)
          * but not written (set) during deserialization.
+         * Put another way, this would reflect "read-only POJO", in which value contained
+         * may be read but not written/set.
          */
         READ_ONLY,
 
         /**
          * Access setting that means that the property may only be written (set)
-         * for deserialization,
-         * but will not be read (get) on serialization, that is, the value of the property
+         * as part of deserialization (using "setter" method, or assigning to Field,
+         * or passed as Creator argument)
+         * but will not be read (get) for serialization, that is, the value of the property
          * is not included in serialization.
          */
         WRITE_ONLY,
