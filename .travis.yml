@@ -3,7 +3,7 @@ language: java
 # Java 8 for Jackson 3:
 jdk:
   - openjdk8
-  - oraclejdk11
+  - openjdk11
 
 # Below this line is configuration for deploying to the Sonatype OSS repo
 # http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html
