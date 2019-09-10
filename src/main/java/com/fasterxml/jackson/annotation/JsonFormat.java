@@ -209,7 +209,15 @@ public @interface JsonFormat
          * Value that indicates that (JSON) boolean type
          * (true, false) should be used.
          */
-        BOOLEAN
+        BOOLEAN,
+
+        /**
+         * Value that indicates that Binary type (native, if format supports it;
+         * encoding using Base64 if only textual types supported) should be used.
+         *
+         * @since 2.10
+         */
+        BINARY
         ;
 
         public boolean isNumeric() {
