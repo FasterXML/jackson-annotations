@@ -169,6 +169,29 @@ public class FormatTest extends TestBase
         assertFalse(dunno.equals(lenient));
     }
 
+    public void testCaseInsensitiveValues() {
+        JsonFormat.Value empty = JsonFormat.Value.empty();
+        assertNull(empty.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+
+        JsonFormat.Value insensitive = empty.withFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES);
+        assertTrue(insensitive.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+
+        JsonFormat.Value sensitive = empty.withoutFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES);
+        assertFalse(sensitive.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+    }
+
+    public void testShape() {
+        assertFalse(JsonFormat.Shape.STRING.isNumeric());
+        assertFalse(JsonFormat.Shape.STRING.isStructured());
+
+        assertTrue(JsonFormat.Shape.NUMBER_INT.isNumeric());
+        assertTrue(JsonFormat.Shape.NUMBER_FLOAT.isNumeric());
+        assertTrue(JsonFormat.Shape.NUMBER.isNumeric());
+
+        assertTrue(JsonFormat.Shape.ARRAY.isStructured());
+        assertTrue(JsonFormat.Shape.OBJECT.isStructured());
+    }
+
     public void testFeatures() {
         JsonFormat.Features f1 = JsonFormat.Features.empty();
         JsonFormat.Features f2 = f1.with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)

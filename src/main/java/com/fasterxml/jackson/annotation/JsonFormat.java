@@ -266,6 +266,14 @@ public @interface JsonFormat
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
         /**
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>.
+         * Only affects deserialization, has no effect on serialization.
+         * 
+         * @since 2.10
+         */
+        ACCEPT_CASE_INSENSITIVE_VALUES,
+
+        /**
          * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>,
          * similar constraints apply.
          */
@@ -629,10 +637,23 @@ public @interface JsonFormat
         public Shape getShape() { return _shape; }
         public Locale getLocale() { return _locale; }
 
+        /**
+         * @return {@code Boolean.TRUE} if explicitly set to true; {@code Boolean.FALSE}
+         *   if explicit set to false; or {@code null} if not set either way (assuming
+         *   "default leniency" for the context)
+         */
         public Boolean getLenient() {
             return _lenient;
         }
 
+        /**
+         * Convenience method equivalent to
+         *<pre>
+         *   Boolean.TRUE.equals(getLenient())
+         *</pre>
+         * that is, returns {@code true} if (and only if) leniency has been explicitly
+         * set to {code true}; but not if it is undefined.
+         */
         public boolean isLenient() {
             return Boolean.TRUE.equals(_lenient);
         }

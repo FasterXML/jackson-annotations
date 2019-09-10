@@ -11,7 +11,13 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.10.0.p1 (19-Jul-2019)
+2.10.0 (not yet released)
+
+#141: Add `JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES`
+ (suggested by Craig P)
+
+2.10.0.pr2 (31-Aug-2019)
+2.10.0.pr1 (19-Jul-2019)
 
 #51: Add basic Java 9+ module info
 
