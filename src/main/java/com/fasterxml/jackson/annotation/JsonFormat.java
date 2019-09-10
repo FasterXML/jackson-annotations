@@ -254,6 +254,14 @@ public @interface JsonFormat
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
         /**
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>.
+         * Only affects deserialization, has no effect on serialization.
+         * 
+         * @since 2.10
+         */
+        ACCEPT_CASE_INSENSITIVE_VALUES,
+
+        /**
          * Override for <code>SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS</code>,
          * similar constraints apply.
          */

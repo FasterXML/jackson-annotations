@@ -186,6 +186,17 @@ public class FormatTest extends TestBase
         assertFalse(dunno.equals(lenient));
     }
 
+    public void testCaseInsensitiveValues() {
+        JsonFormat.Value empty = JsonFormat.Value.empty();
+        assertNull(empty.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+
+        JsonFormat.Value insensitive = empty.withFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES);
+        assertTrue(insensitive.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+
+        JsonFormat.Value sensitive = empty.withoutFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES);
+        assertFalse(sensitive.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
+    }
+
     public void testShape() {
         assertFalse(JsonFormat.Shape.STRING.isNumeric());
         assertFalse(JsonFormat.Shape.STRING.isStructured());
