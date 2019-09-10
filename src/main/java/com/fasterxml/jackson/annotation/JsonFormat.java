@@ -142,6 +142,12 @@ public @interface JsonFormat
         // // // Concrete physical shapes, scalars
 
         /**
+         * Value that indicates that Binary type (native, if format supports it;
+         * encoding using Base64 if only textual types supported) should be used.
+         */
+        BINARY,
+
+        /**
          * Value that indicates that (JSON) boolean type
          * (true, false) should be used.
          */
@@ -215,7 +221,6 @@ public @interface JsonFormat
          * @since 3.0
          */
         POJO,
-        
         ;
 
         public boolean isNumeric() {
@@ -268,8 +273,6 @@ public @interface JsonFormat
         /**
          * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>.
          * Only affects deserialization, has no effect on serialization.
-         * 
-         * @since 2.10
          */
         ACCEPT_CASE_INSENSITIVE_VALUES,
 
