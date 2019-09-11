@@ -251,18 +251,20 @@ public @interface JsonFormat
         ACCEPT_SINGLE_VALUE_AS_ARRAY,
 
         /**
-         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>.
-         * Only affects deserialization, has no effect on serialization.
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES</code>,
+         * which allows case-insensitive matching of property names (but NOT values,
+         * see {@link #ACCEPT_CASE_INSENSITIVE_VALUES} for that).
          *<p>
-         * NOTE: starting with 2.9 can also effect Enum handling (and potentially other
-         * places where case-insensitive property values are accepted).
+         * Only affects deserialization, has no effect on serialization.
          * 
          * @since 2.8
          */
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
         /**
-         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>.
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
+         * which allows case-sensitive matching of (some) property values, such
+         * as {@code Enum}s.
          * Only affects deserialization, has no effect on serialization.
          * 
          * @since 2.10
