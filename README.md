@@ -17,7 +17,7 @@ Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LI
 [![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
 [![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
-![Coverage Status](https://coveralls.io/repos/github/FasterXML/jackson-annotations/badge.svg?branch=master)](https://coveralls.io/github/FasterXML/jackson-annotations?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/FasterXML/jackson-annotations/badge.svg?branch=master)](https://coveralls.io/github/FasterXML/jackson-annotations?branch=master)
 [![Tidelift](https://tidelift.com/badges/package/maven/com.fasterxml.jackson.core:jackson-annotations)](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=readme)
 
 -----
