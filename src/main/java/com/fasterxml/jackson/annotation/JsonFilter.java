@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * it delegates to) providing matching filters by id.
  *<p>
  * Filters to use are usually of type
- * <code>com.fasterxml.jackson.databind.ser.BeanPropertyFilter</code> and
+ * <code>com.fasterxml.jackson.databind.ser.PropertyFilter</code> and
  * are registered through <code>com.fasterxml.jackson.databind.ObjectMapper</code>
  *<p>
  * Since 2.3, this annotation can also be used on properties (fields, methods,
