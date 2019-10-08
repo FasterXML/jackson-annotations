@@ -13,7 +13,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.10.0 (26-Sep-2019)
 
-#51: Add basic Java 9+ module info
+#138: Add basic Java 9+ module info
 #141: Add `JsonFormat.Feature.ACCEPT_CASE_INSENSITIVE_PROPERTIES`
  (suggested by Craig P)
 #159: Add `JsonFormat.Shape.BINARY`
