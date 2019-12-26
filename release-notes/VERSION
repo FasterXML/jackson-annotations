@@ -10,3 +10,5 @@ mostly)
 ------------------------------------------------------------------------
 
 3.0 (not yet released)
+
+- Change `JsonInclude.value`, `JsonInclude.content` to `USE_DEFAULTS` (from `ALWAYS`)

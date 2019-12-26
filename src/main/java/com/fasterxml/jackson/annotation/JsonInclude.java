@@ -53,7 +53,7 @@ public @interface JsonInclude
      * Inclusion rule to use for instances (values) of types (Classes) or
      * properties annotated; defaults to {@link Include#ALWAYS}.
      */
-    public Include value() default Include.ALWAYS;
+    public Include value() default Include.USE_DEFAULTS;
 
     /**
      * Inclusion rule to use for entries ("content") of annotated
@@ -61,7 +61,7 @@ public @interface JsonInclude
      * {@link java.util.concurrent.atomic.AtomicReference});
      * defaults to {@link Include#ALWAYS}.
      */
-    public Include content() default Include.ALWAYS;
+    public Include content() default Include.USE_DEFAULTS;
 
     /**
      * Specifies type of "Filter Object" to use in case
