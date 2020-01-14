@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation similar to {@link javax.xml.bind.annotation.XmlRootElement},
+ * Annotation similar to {@code javax.xml.bind.annotation.XmlRootElement},
  * used to indicate name to use for root-level wrapping, if wrapping is
  * enabled. Annotation itself does not indicate that wrapping should
  * be used; but if it is, name used for serialization should be name
