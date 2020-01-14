@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * to set) or a field (of type {@link java.util.Map} or POJO) -
  * to be used as a "fallback" handler
  * for all otherwise unrecognized properties found from JSON content.
- * It is similar to {@link javax.xml.bind.annotation.XmlAnyElement}
+ * It is similar to {@code javax.xml.bind.annotation.XmlAnyElement}
  * in behavior; and can only be used to denote a single property
  * per type.
  *<p>
