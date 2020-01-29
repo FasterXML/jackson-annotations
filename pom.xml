@@ -16,6 +16,13 @@
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
   <inceptionYear>2008</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <url>http://github.com/FasterXML/jackson</url>
   <scm>
