@@ -174,9 +174,13 @@ public @interface JsonTypeInfo
          * Inclusion mechanism similar to <code>PROPERTY</code>, except that
          * property is included one-level higher in hierarchy, i.e. as sibling
          * property at same level as JSON Object to type.
-         * Note that this choice <b>can only be used for properties</b>, not
+         * Note that this mechanism <b>can only be used for properties</b>, not
          * for types (classes). Trying to use it for classes will result in
          * inclusion strategy of basic <code>PROPERTY</code> instead.
+         *<p>
+         * Note also that this mechanism <b>can not be used for container values</b>
+         * (arrays, {@link java.util.Collection}s, {@link java.util.Map}s); it only
+         * works for scalar and POJO values.
          */
         EXTERNAL_PROPERTY,
 

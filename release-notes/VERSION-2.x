@@ -13,7 +13,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.11.0 (not yet released)
 
--
+No changes since 2.10
 
 2.10.0 (26-Sep-2019)
 
