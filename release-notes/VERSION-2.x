@@ -13,7 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.11.0 (not yet released)
 
-No changes since 2.10
+- `JsonPattern.Value.pattern` retained as "", never (accidentally) exposed
+  as `null`
 
 2.10.0 (26-Sep-2019)
 

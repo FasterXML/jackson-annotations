@@ -486,7 +486,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, TimeZone tz, Features f,
                 Boolean lenient)
         {
-            _pattern = p;
+            _pattern = (p == null) ? "" : p;
             _shape = (sh == null) ? Shape.ANY : sh;
             _locale = l;
             _timezone = tz;
@@ -501,7 +501,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f,
                 Boolean lenient)
         {
-            _pattern = p;
+            _pattern = (p == null) ? "" : p;
             _shape = (sh == null) ? Shape.ANY : sh;
             _locale = l;
             _timezone = tz;
@@ -561,7 +561,7 @@ public @interface JsonFormat
             }
             return result;
         }
-        
+
         /**
          * @since 2.7
          */
@@ -626,17 +626,17 @@ public @interface JsonFormat
          * @since 2.7
          */
         public static Value forShape(Shape sh) {
-            return new Value(null, sh, null, null, null, Features.empty(), null);
+            return new Value("", sh, null, null, null, Features.empty(), null);
         }
 
         /**
          * @since 2.9
          */
         public static Value forLeniency(boolean lenient) {
-            return new Value(null, null, null, null, null, Features.empty(),
+            return new Value("", null, null, null, null, Features.empty(),
                     Boolean.valueOf(lenient));
         }
-        
+
         /**
          * @since 2.1
          */
