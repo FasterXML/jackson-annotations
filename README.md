@@ -259,17 +259,14 @@ The maintainers of `jackson-annotations` and thousands of other packages are wor
 Project-specific documentation:
 
 * [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations.
-* [Other documentation](../../wiki)
+* [jackson-annotations wiki](../../wiki)
 
-Usage:
+Backwards compatibility:
 
 * You can make Jackson 2 use Jackson 1 annotations with [jackson-legacy-introspector](https://github.com/Laures/jackson-legacy-introspector)
 
 Related:
 
 * [Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
-In addition, here are other useful links:
-* [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
- * [Annotation documentation at FasterXML Wiki](http://wiki.fasterxml.com/JacksonAnnotations) covers 1.x annotations as well as 2.0
 
 
