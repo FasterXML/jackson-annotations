@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.11.0 (not yet released)
+2.11.0 (26-Apr-2020)
 
 - `JsonPattern.Value.pattern` retained as "", never (accidentally) exposed
   as `null`
