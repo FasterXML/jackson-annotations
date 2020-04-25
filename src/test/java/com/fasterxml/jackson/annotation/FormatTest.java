@@ -38,7 +38,7 @@ public class FormatTest extends TestBase
     }
     
     public void testToString() {
-        assertEquals("JsonFormat.Value(pattern=null,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY)",
+        assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
         assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null,features=EMPTY)",
                 JsonFormat.Value.forPattern("[.]").toString());
