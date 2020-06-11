@@ -44,5 +44,11 @@ public @interface JsonSubTypes {
          * Logical type name used as the type identifier for the class
          */
         public String name() default "";
+
+        /**
+         * Logical type names used as the type identifier for the class
+         * See this <a href="https://github.com/FasterXML/jackson-annotations/issues/171">issue/improvement</a>
+         */
+        public String[] names() default "";
     }
 }
