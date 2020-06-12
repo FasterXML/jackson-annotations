@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- This module was also published with a richer model, Gradle metadata,  -->
+  <!-- which should be used instead. Do not delete the following line which  -->
+  <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+  <!-- that they should prefer consuming it instead. -->
+  <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion> 
   <parent>
     <groupId>com.fasterxml.jackson</groupId>
@@ -34,6 +39,14 @@
 
   <properties>
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
+
+    <!-- 11-Jun-2020, tatu: Mismatch between jackson-bom, annotations versions
+           need to override, no easy way to just "drop the patch level".. and although
+https://stackoverflow.com/questions/16302247/maven-property-project-artifact-selectedversion-majorversion
+           shows a possible to get major, minor version and even qualifier, not sure if that'd
+           be easy enough to make work with SNAPSHOT/release change.
+      -->
+    <bom4gmm.version>3.0.0-SNAPSHOT</bom4gmm.version>
   </properties>
 
   <!-- No additional deps, `jackson-base` includes junit and that's all -->
@@ -71,6 +84,29 @@
           <stagingProfileId>b34f19b9cc6224</stagingProfileId>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>de.jjohannes</groupId>
+        <artifactId>gradle-module-metadata-maven-plugin</artifactId>
+        <version>0.2.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>gmm</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <platformDependencies>
+            <dependency>
+              <groupId>com.fasterxml.jackson</groupId>
+              <artifactId>jackson-bom</artifactId>
+              <version>${bom4gmm.version}</version>
+            </dependency>
+          </platformDependencies>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>
