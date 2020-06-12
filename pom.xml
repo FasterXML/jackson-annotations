@@ -110,12 +110,12 @@
         </configuration>
       </plugin>
 
-      <!-- 11-Jun-2020, tatu:
+      <!-- 11-Jun-2020, tatu: As per [annotations#173], add gradle module metadata
         -->
       <plugin>
         <groupId>de.jjohannes</groupId>
         <artifactId>gradle-module-metadata-maven-plugin</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
         <executions>
           <execution>
             <goals>
