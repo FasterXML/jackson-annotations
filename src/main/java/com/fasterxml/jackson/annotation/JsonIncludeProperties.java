@@ -2,12 +2,14 @@ package com.fasterxml.jackson.annotation;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import javax.swing.text.html.HTMLDocument;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -97,6 +99,29 @@ public @interface JsonIncludeProperties
         public Set<String> getIncluded()
         {
             return _included;
+        }
+
+        /**
+         * Mutant factory method to override the current value with an another, merging the included fields.
+         */
+        public JsonIncludeProperties.Value withOverrides(JsonIncludeProperties.Value overrides) {
+            if (overrides == null || overrides.getIncluded() == null) {
+                return this;
+            }
+
+            if (_included == null) {
+                return overrides;
+            }
+
+            HashSet<String> included = new HashSet<String>(_included);
+            Iterator<String> iterator = included.iterator();
+            while (iterator.hasNext()) {
+                if (!overrides.getIncluded().contains(iterator.next())) {
+                    iterator.remove();
+                }
+            }
+
+            return new JsonIncludeProperties.Value(new HashSet<String>(included));
         }
 
         @Override
