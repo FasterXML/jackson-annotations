@@ -11,14 +11,7 @@ jdk:
 before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
 after_success: "mvn deploy --settings target/travis/settings.xml"
 
-# whitelist
-branches:
-  only:
-    - master
-    - 2.11
-
 env:
   global:
     - secure: "a2T/bJVacCzBKfGW7ycW2aVLxupCUenLpRX6Neh/WLFf5wbIjTtKZpB94sxbVGTKNT+HQmwFynWhz7Dh3251fSZ4lfGcHBnUr5lpq1vo10aMBTJaMpk5vrTLn0AxGESxqOjQQkDhasdLpoXlv1EtVn7HqHLepAr0AIUl41XggfA="
     - secure: "Gdl5m/gEm4FrCxOVnvCM13dipEhjaL4IXbEL2dsNhxwZ+lqD+8OAwObbPrTLuUZ+KTWctfsNauGTin1bDhi8m/Gh6jm71U+hGuA7/8cqgprZDhdARxG7fSOdr9Syp24JL7h5u5X43+a7m2KiC/iUcErIiVKPBcAisOj286GcFhc="
-
