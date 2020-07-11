@@ -6,7 +6,7 @@ jdk:
   - openjdk11
 
 # Below this line is configuration for deploying to the Sonatype OSS repo
-# http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html
+# https://knowm.org/configure-travis-ci-to-deploy-snapshots/
 before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
 after_success:
   - mvn deploy --settings target/travis/settings.xml"
@@ -19,6 +19,5 @@ branches:
 
 env:
   global:
-    - secure: "a2T/bJVacCzBKfGW7ycW2aVLxupCUenLpRX6Neh/WLFf5wbIjTtKZpB94sxbVGTKNT+HQmwFynWhz7Dh3251fSZ4lfGcHBnUr5lpq1vo10aMBTJaMpk5vrTLn0AxGESxqOjQQkDhasdLpoXlv1EtVn7HqHLepAr0AIUl41XggfA="
-    - secure: "Gdl5m/gEm4FrCxOVnvCM13dipEhjaL4IXbEL2dsNhxwZ+lqD+8OAwObbPrTLuUZ+KTWctfsNauGTin1bDhi8m/Gh6jm71U+hGuA7/8cqgprZDhdARxG7fSOdr9Syp24JL7h5u5X43+a7m2KiC/iUcErIiVKPBcAisOj286GcFhc="
-
+    - secure: "BmDMUlS07UDn3zGHra90YOT+U2QpTRmb02GIJmvfykmOie2q8hP6XwxKehsYBtnMHp6+5xm+bF+dA4BhjJ9l+bzXIH2FVkFTfJEo1GJJiVGq8B1DptqGGl404Eb4vD4c+cbb4GP2zKgNMc05oNsKTThE3wHdxZDbh2hjATz/b0M="
+    - secure: "XcMnwfSjRNVHs3HEutOIIGyYiHUZQZx2+DynlzkiBZ3IKpiVT0LfeIElJfWKJkwtJxGIIJghNZArylKvJXeZguB4s0XieOHxzarE1BgfcYU+vK/0pla0x66mgGEPjD/99arrGTTvZUH//jmRPc95fZJqytdIOJ7Erb4GpGLo/hM="
