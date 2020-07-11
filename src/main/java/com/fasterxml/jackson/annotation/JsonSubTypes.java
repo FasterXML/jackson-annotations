@@ -28,9 +28,9 @@ public @interface JsonSubTypes {
     public Type[] value();
 
     /**
-     * Definition of a subtype, along with optional name. If name is missing, class
-     * of the type will be checked for {@link JsonTypeName} annotation; and if that
-     * is also missing or empty, a default
+     * Definition of a subtype, along with optional name(s). If no name is defined
+     * (empty Strings are ignored), class of the type will be checked for {@link JsonTypeName}
+     * annotation; and if that is also missing or empty, a default
      * name will be constructed by type id mechanism.
      * Default name is usually based on class name.
      */
@@ -41,8 +41,17 @@ public @interface JsonSubTypes {
         public Class<?> value();
 
         /**
-         * Logical type name used as the type identifier for the class
+         * Logical type name used as the type identifier for the class, if defined; empty
+         * String means "not defined". Used unless {@link #names} is defined as non-empty.
          */
         public String name() default "";
+
+        /**
+         * (optional) Logical type names used as the type identifier for the class: used if
+         * more than one type name should be associated with the same type.
+         *
+         * @since 2.12
+         */
+        public String[] names() default {};
     }
 }
