@@ -1,16 +1,7 @@
 package com.fasterxml.jackson.annotation;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import javax.swing.text.html.HTMLDocument;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.lang.annotation.*;
+import java.util.*;
 
 /**
  * Annotation that can be used to either only include serialization of
@@ -81,7 +72,6 @@ public @interface JsonIncludeProperties
             if (src == null) {
                 return ALL;
             }
-
             return new Value(_asSet(src.value()));
         }
 
@@ -96,16 +86,27 @@ public @interface JsonIncludeProperties
             return JsonIncludeProperties.class;
         }
 
+        /**
+         * @return Names included, if any, possibly empty; {@code null} for "not defined"
+         */
         public Set<String> getIncluded()
         {
             return _included;
         }
 
         /**
-         * Mutant factory method to override the current value with an another, merging the included fields.
+         * Mutant factory method to override the current value with an another,
+         * merging the included fields so that only entries that exist in both original
+         * and override set are included, taking into account that "undefined" {@link Value}s
+         * do not count ("undefined" meaning that {@code getIncluded()} returns {@code null}).
+         * So: overriding with "undefined" returns original {@code Value} as-is; overriding an
+         * "undefined" {@code Value} returns override {@code Value} as-is.
          */
-        public JsonIncludeProperties.Value withOverrides(JsonIncludeProperties.Value overrides) {
-            if (overrides == null || overrides.getIncluded() == null) {
+        public JsonIncludeProperties.Value withOverrides(JsonIncludeProperties.Value overrides)
+        {
+            final Set<String> otherIncluded;
+
+            if (overrides == null || (otherIncluded = overrides.getIncluded()) == null) {
                 return this;
             }
 
@@ -113,15 +114,14 @@ public @interface JsonIncludeProperties
                 return overrides;
             }
 
-            HashSet<String> included = new HashSet<String>(_included);
-            Iterator<String> iterator = included.iterator();
-            while (iterator.hasNext()) {
-                if (!overrides.getIncluded().contains(iterator.next())) {
-                    iterator.remove();
+            HashSet<String> toInclude = new HashSet<String>();
+            for (String incl : otherIncluded) {
+                if (_included.contains(incl)) {
+                    toInclude.add(incl);
                 }
             }
 
-            return new JsonIncludeProperties.Value(new HashSet<String>(included));
+            return new JsonIncludeProperties.Value(toInclude);
         }
 
         @Override
@@ -132,24 +132,21 @@ public @interface JsonIncludeProperties
 
         @Override
         public int hashCode() {
-            return (_included == null ? 0 : _included.size())
-                    ;
+            return (_included == null) ? 0 : _included.size();
         }
 
         @Override
         public boolean equals(Object o) {
             if (o == this) return true;
             if (o == null) return false;
-            return (o.getClass() == getClass())
-                    && _equals(this, (Value) o);
+            return (o.getClass() == getClass()) && _equals(_included, ((Value) o)._included);
         }
 
-        private static boolean _equals(Value a, Value b)
+        private static boolean _equals(Set<String> a, Set<String> b)
         {
-            return  a._included == null ? b._included == null :
+            return a == null ? (b == null)
                     // keep this last just because it can be expensive
-                    a._included.equals(b._included)
-                    ;
+                    : a.equals(b);
         }
 
         private static Set<String> _asSet(String[] v)
