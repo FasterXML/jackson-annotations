@@ -11,12 +11,6 @@ before_install: "git clone -b travis `git config --get remote.origin.url` target
 after_success:
   - mvn deploy --settings target/travis/settings.xml"
 
-# whitelist
-branches:
-  only:
-    - master
-    - 3.0
-
 env:
   global:
     - secure: "BmDMUlS07UDn3zGHra90YOT+U2QpTRmb02GIJmvfykmOie2q8hP6XwxKehsYBtnMHp6+5xm+bF+dA4BhjJ9l+bzXIH2FVkFTfJEo1GJJiVGq8B1DptqGGl404Eb4vD4c+cbb4GP2zKgNMc05oNsKTThE3wHdxZDbh2hjATz/b0M="
