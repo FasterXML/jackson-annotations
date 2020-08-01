@@ -43,6 +43,12 @@
     <maven.compiler.target>1.6</maven.compiler.target>
 
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
+
+    <!-- 31-Jul-2020, tatu: will go in `oss-parent` for 2.12, but for 2.11 need to bump
+            bundle-plugin version to make work in JDK 15+
+          (see https://github.com/FasterXML/jackson-databind/issues/2806)
+      -->
+    <version.plugin.bundle>5.1.1</version.plugin.bundle>
   </properties>
 
   <dependencies>
