@@ -72,6 +72,8 @@
   
   <build>
     <plugins>
+      <!-- First: no replacer plugin (no Packaversion.java.in) for this package -->
+
       <plugin>
         <!-- 08-Mar-2019, tatu: Would get these settings from `jackson-bom` except we 
               do not extend it so...
@@ -101,7 +103,7 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.6</version>
+        <version>1.6.8</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>sonatype-nexus-staging</serverId>
