@@ -179,33 +179,36 @@ If you need to read and write values of Objects where there are multiple possibl
 This can be done by adding `@JsonTypeInfo` annotation on ''base class'':
 
 ```java
-// Include Java class name ("com.myempl.ImplClass") as JSON property "class"
-@JsonTypeInfo(use=Id.CLASS, include=As.PROPERTY, property="class")
-public abstract class BaseClass {
+@JsonTypeInfo(use=Id.MINIMAL_CLASS, include=As.PROPERTY, property="type") // Include Java class simple-name as JSON property "type"
+@JsonSubTypes({@Type(Car.class), @Type(Aeroplane.class)}) // Required for deserialization only  
+public abstract class Vehicle {
 }
-
-public class Impl1 extends BaseClass {
-  public int x;
+public class Car extends Vehicle {
+  public String licensePlate;
 }
-public class Impl2 extends BaseClass {
-  public String name;
+public class Aeroplane extends Vehicle {
+  public int wingSpan;
 }
 
 public class PojoWithTypedObjects {
-  public List<BaseClass> items;
+  public List<Vehicle> items;
 }
 ```
 
-and this could result in serialized JSON like:
+which gives serialized JSON like:
 
 ```json
-{ "items" : [
-  { "class":"Impl2", "name":"Bob" },
-  { "class":"Impl1", "x":13 }
+{ "items": [
+  { "type": "Car", "licensePlate": "X12345" },
+  { "type": "Aeroplane", "wingSpan": 13 }
 ]}
 ```
 
-Note that this annotation has lots of configuration possibilities: for more information check out
+Alternatively, `@JsonTypeInfo(use=DEDUCTION)` can be used to avoid requiring the 'type' field. For deserialization, types are _deduced_ based
+on the fields available. Exceptions will be raised if subtypes do not have a distinct signature of fieldnames or JSON does
+not resolve to single known signature.
+
+Note that `@JsonTypeInfo` has lots of configuration possibilities: for more information check out
 [Intro to polymorphic type handling](http://www.cowtowncoder.com/blog/archives/2010/03/entry_372.html)
 
 ### Changing property auto-detection
