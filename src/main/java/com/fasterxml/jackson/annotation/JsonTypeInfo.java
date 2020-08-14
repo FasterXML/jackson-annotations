@@ -118,6 +118,18 @@ public @interface JsonTypeInfo
         NAME("@type"),
 
         /**
+         * Means that no serialized typing-property is used. Types are <i>deduced</i> based
+         * on the fields available. Deduction is limited to the <i>names</i> of fields
+         * (not their values or, consequently, any nested descendants). Exceptions will be
+         * thrown if not enough unique information is present to select a single subtype.
+         * <br>If deduction is being used annotation properties {@code visible},
+         * {@code property} and {@code include} are ignored.
+         *
+         * @since 2.12.0.
+         */
+        DEDUCTION(null),
+
+        /**
          * Means that typing mechanism uses customized handling, with possibly
          * custom configuration. This means that semantics of other properties is
          * not defined by Jackson package, but by the custom implementation.
