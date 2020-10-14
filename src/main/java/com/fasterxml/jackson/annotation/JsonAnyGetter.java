@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  * with this annotation; if multiple methods are annotated, an exception
  * may be thrown.
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonAnyGetter

@@ -20,6 +20,8 @@ NOTE: Annotations module will never contain changes in patch versions,
  (contributed by Baptiste P)
 #175: Add `@JsonTypeInfo(use=DEDUCTION)`
  (contributed by drekbour@github)
+#177: Ability to use `@JsonAnyGetter` on fields
+ (contributed by dominikrebhan@github)
 
 2.11.0 (26-Apr-2020)
 
