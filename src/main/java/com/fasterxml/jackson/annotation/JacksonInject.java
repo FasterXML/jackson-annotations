@@ -5,8 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotation;
-
 /**
  * Jackson-specific annotation used for indicating that value of
  * annotated property will be "injected", i.e. set based on value
