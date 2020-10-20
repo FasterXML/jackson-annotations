@@ -112,7 +112,7 @@
         </configuration>
       </plugin>
 
-      <!-- 11-Jun-2020, tatu: As per [annotations#173], add gradle module metadata
+      <!-- 11-Jun-2020, tatu: [annotations#173] add gradle module metadata
         -->
       <plugin>
         <groupId>de.jjohannes</groupId>
@@ -134,6 +134,33 @@
             </dependency>
           </platformDependencies>
         </configuration>
+      </plugin>
+
+      <!-- 20-Oct-2020, tatu: [annotations#178] copy full LICENSE from main dir
+        -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-resource</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}</directory>
+                  <targetPath>META-INF</targetPath>
+                  <includes>
+                    <include>LICENSE</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>
