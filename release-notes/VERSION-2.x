@@ -11,6 +11,18 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.12.0 (not yet released)
+
+#171: `JsonSubType.Type` should accept array of names
+ (contributed by Swayam R)
+#173: Jackson version alignment with Gradle 6
+#174: Add `@JsonIncludeProperties`
+ (contributed by Baptiste P)
+#175: Add `@JsonTypeInfo(use=DEDUCTION)`
+ (contributed by drekbour@github)
+#177: Ability to use `@JsonAnyGetter` on fields
+ (contributed by dominikrebhan@github)
+
 2.11.0 (26-Apr-2020)
 
 - `JsonPattern.Value.pattern` retained as "", never (accidentally) exposed
