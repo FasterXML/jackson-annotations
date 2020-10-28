@@ -30,15 +30,7 @@ import java.lang.annotation.Target;
  *<p>
  * Boolean argument is only used so that sub-classes can "disable"
  * annotation if necessary.
- *<p>
- * NOTE: when use for Java <code>enum</code>s, one additional feature is
- * that value returned by annotated method is also considered to be the
- * value to deserialize from, not just JSON String to serialize as.
- * This is possible since set of Enum values is constant and it is possible
- * to define mapping, but can not be done in general for POJO types; as such,
- * this is not used for POJO deserialization.
  *
- * @see JsonCreator
  * @see JsonValue
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD,
