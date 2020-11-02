@@ -22,6 +22,8 @@ NOTE: Annotations module will never contain changes in patch versions,
  (contributed by drekbour@github)
 #177: Ability to use `@JsonAnyGetter` on fields
  (contributed by dominikrebhan@github)
+#179: Add `@JsonKey` annotation
+ (contributed by Kevin B)
 
 2.11.0 (26-Apr-2020)
 

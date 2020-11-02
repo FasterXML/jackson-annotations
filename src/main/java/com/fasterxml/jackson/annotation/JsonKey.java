@@ -6,11 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation 
+ * Marker annotation
  * that indicates that the value of annotated accessor (either field
  * or "getter" method [a method with non-void return type, no args])
- * is to be used as the single value to serialize for the instance,
- * instead of the usual method of collecting properties of value.
+ * is to be used as the single value to serialize for the instance.
+ * This value will be used only if the instance is being serialized
+ * as a key in a Map type.
  * Usually value will be of a simple scalar type
  * (String or Number), but it can be any serializable type (Collection,
  * Map or Bean).
@@ -29,35 +30,23 @@ import java.lang.annotation.Target;
  *<p>
  * Boolean argument is only used so that sub-classes can "disable"
  * annotation if necessary.
- *<p>
- * NOTE: when use for Java <code>enum</code>s, one additional feature is
- * that value returned by annotated method is also considered to be the
- * value to deserialize from, not just JSON String to serialize as.
- * This is possible since set of Enum values is constant and it is possible
- * to define mapping, but can not be done in general for POJO types; as such,
- * this is not used for POJO deserialization.
- *<p>
- * NOTE: When the instance is being serialized as the key of a Map type,
- * this will be ignored if an accessor is annotated with
- * {@link JsonKey}.
  *
- * @see JsonCreator
- * @see JsonKey
+ * @see JsonValue
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD,
-    ElementType.FIELD
+		ElementType.FIELD
 })
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
-public @interface JsonValue
+public @interface JsonKey
 {
-    /**
-     * Optional argument that defines whether this annotation is active
-     * or not. The only use for value 'false' if for overriding purposes.
-     * Overriding may be necessary when used
-     * with "mix-in annotations" (aka "annotation overrides").
-     * For most cases, however, default value of "true" is just fine
-     * and should be omitted.
-     */
-    boolean value() default true;
+	/**
+	 * Optional argument that defines whether this annotation is active
+	 * or not. The only use for value 'false' if for overriding purposes.
+	 * Overriding may be necessary when used
+	 * with "mix-in annotations" (aka "annotation overrides").
+	 * For most cases, however, default value of "true" is just fine
+	 * and should be omitted.
+	 */
+	boolean value() default true;
 }
