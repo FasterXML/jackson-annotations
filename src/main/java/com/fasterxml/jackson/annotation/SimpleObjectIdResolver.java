@@ -20,9 +20,15 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
     {
         if (_items == null) {
             _items = new HashMap<ObjectIdGenerator.IdKey,Object>();
-        } else if (_items.containsKey(id)) {
-            throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
-                    + "]");
+        } else {
+            Object old = _items.get(id);
+            if (old != null) {
+                // 11-Nov-2020, tatu: As per [annotations#180] allow duplicate calls:
+                if (old != ob) {
+                    throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
+                            + "]");
+                }
+            }
         }
         _items.put(id, ob);
     }
