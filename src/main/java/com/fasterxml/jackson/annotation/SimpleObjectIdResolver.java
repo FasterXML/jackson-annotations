@@ -24,10 +24,11 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
             Object old = _items.get(id);
             if (old != null) {
                 // 11-Nov-2020, tatu: As per [annotations#180] allow duplicate calls:
-                if (old != ob) {
-                    throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
-                            + "]");
+                if (old == ob) {
+                    return;
                 }
+                throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
+                        + "]");
             }
         }
         _items.put(id, ob);
