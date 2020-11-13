@@ -25,6 +25,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 #179: Add `@JsonKey` annotation
  (contributed by Kevin B)
 #180: Allow repeated calls to `SimpleObjectIdResolver.bindItem()` for same mapping
+- Add target `ElementType.ANNOTATION_TYPE` for `@JsonEnumDefaultValue` (was
+  missing for some reason)
 
 2.11.0 (26-Apr-2020)
 

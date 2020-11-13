@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * If the more than one enum value is marked with this annotation,
  * the first one to be detected will be used. Which one exactly is undetermined.
  */
-@Target(ElementType.FIELD)
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonEnumDefaultValue
