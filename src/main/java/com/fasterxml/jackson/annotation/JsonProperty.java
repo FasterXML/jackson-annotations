@@ -27,6 +27,10 @@ public enum MyEnum {
 }
 </pre>
  * as an alternative to using {@link JsonValue} annotation.
+ *<p>
+ * Starting with Jackson 2.12 it is also possible to specify {@code namespace}
+ * of property: this property is only used by certain format backends (most
+ * notably XML).
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
@@ -56,6 +60,15 @@ public @interface JsonProperty
      * <b>Empty String is not a valid value for constructor arguments</b>.
      */
     String value() default USE_DEFAULT_NAME;
+
+    /**
+     * Optional namespace to use with data formats that support such
+     * concept (specifically XML); if so, used with {@link #value} to
+     * construct fully-qualified name.
+     *
+     * @since 2.12
+     */
+    String namespace() default "";
 
     /**
      * Property that indicates whether a value (which may be explicit
