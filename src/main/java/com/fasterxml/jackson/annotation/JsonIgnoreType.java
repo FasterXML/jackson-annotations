@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * Note that this does NOT mean that properties included by annotated
  * type are ignored. Given hypothetical types:
  *<pre>
- *  @JsonIgnoreType
+ *  {@code @JsonIgnoreType}
  *  class Credentials {
  *     public String password;
  *  }
