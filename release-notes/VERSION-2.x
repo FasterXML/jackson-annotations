@@ -11,6 +11,10 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.13.0 (not yet released)
+
+No changes since 2.12
+
 2.12.0 (29-Nov-2020)
 
 #171: `JsonSubType.Type` should accept array of names
