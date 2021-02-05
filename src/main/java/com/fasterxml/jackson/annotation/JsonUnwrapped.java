@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to indicate that a property should be serialized
- * "unwrapped"; that is, if it would be serialized as JSON Object, its
+ * "unwrapped" -- that is, if it would be serialized as JSON Object, its
  * properties are instead included as properties of its containing
- * Object. For example, consider case of POJO like:
+ * Object -- and deserialized reproducing "missing" structure.
+ * For example, consider case of POJO like:
  * 
  *<pre>
  *  public class Parent {
@@ -20,7 +21,7 @@ import java.lang.annotation.Target;
  *    public String first, last;
  *  }
  *</pre>  
- * which would normally be serialized as follows (assuming @JsonUnwrapped
+ * which would normally be serialized as follows (assuming {@code @JsonUnwrapped}
  * had no effect):
  *<pre>
  *  {
@@ -48,16 +49,19 @@ import java.lang.annotation.Target;
  *  }
  *</pre>
  * Annotation can only be added to properties, and not classes, as it is contextual.
+ * When values are deserialized "wrapping" is applied so that serialized output can
+ * be read back in.
  *<p>
- * Also note that annotation only applies if
+ * Also note that annotation only applies if:
  *<ul>
- * <li>Value is serialized as JSON Object (can not unwrap JSON arrays using this
+ * <li>Value is serialized as an Object valie (can not unwrap Array values using this
  *   mechanism)
  *   </li>
- * <li>Serialization is done using <code>BeanSerializer</code>, not a custom serializer
+ * <li>Reading/writing is done using Jackson standard {@code BeanDeserializer} /
+ *  {@code BeanSerializer}; or custom deserializer/serializer MUST explicitly support similar
+ *  operation.
  *   </li>
- * <li>No type information is added; if type information needs to be added, structure can
- *   not be altered regardless of inclusion strategy; so annotation is basically ignored.
+ * <li>Will not work with polymorphic type handling ("polymorphic deserialization")
  *   </li>
  * </ul>
  */
