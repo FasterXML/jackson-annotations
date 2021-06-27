@@ -4,18 +4,20 @@ This project contains general purpose annotations for
 Jackson Data Processor, used on value and handler types.
 The only annotations not included are ones that require dependency
 to the [Databind package](../../../jackson-databind).
+Note that only annotations themselves (and related value classes) are included, but no functionality
+that uses annotations.
 
-Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Jackson-1](../../../jackson-1) SVN repository.
-Note that with version 1.x these annotations were part of the 'core jar'.
+Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Jackson-1](../../../jackson-1) repository.
 
 [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations;
 [Project Wiki](../../wiki) gives more details.
 
 Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-
-[![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
+[![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
+[![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
+[![Tidelift](https://tidelift.com/badges/package/maven/com.fasterxml.jackson.core:jackson-annotations)](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=readme)
 
 -----
 
@@ -241,22 +243,33 @@ public class POJOWithNoFields {
 
 -----
 
-# Further reading
+## Support
+
+### Community support
+
+Jackson components are supported by the Jackson community through mailing lists, Gitter forum, Github issues. See [Participation, Contributing](../../../jackson#participation-contributing) for full details.
+
+### Enterprise support
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of `jackson-annotations` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
+-----
+
+## Further reading
 
 Project-specific documentation:
 
 * [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations.
-* [Other documentation](../../wiki)
+* [jackson-annotations wiki](../../wiki)
 
-Usage:
+Backwards compatibility:
 
 * You can make Jackson 2 use Jackson 1 annotations with [jackson-legacy-introspector](https://github.com/Laures/jackson-legacy-introspector)
 
 Related:
 
 * [Databinding](https://github.com/FasterXML/jackson-databind) module has more documentation, since it is the main user of annotations.
-In addition, here are other useful links:
-* [Jackson Project Home](http://wiki.fasterxml.com/JacksonHome)
- * [Annotation documentation at FasterXML Wiki](http://wiki.fasterxml.com/JacksonAnnotations) covers 1.x annotations as well as 2.0
 
 
