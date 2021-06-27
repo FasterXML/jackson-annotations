@@ -1,17 +1,7 @@
 language: java
 
-# 05-Mar-2019, tatu: can't build pre-JDK8 any more (for Moditect)
-
 jdk:
   - openjdk8
   - openjdk11
 
-# Below this line is configuration for deploying to the Sonatype OSS repo
-# http://blog.xeiam.com/2013/05/configure-travis-ci-to-deploy-snapshots.html
-before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
-script: "[ ${TRAVIS_PULL_REQUEST} = 'false' ] && mvn -B source:jar deploy --settings target/travis/settings.xml || mvn clean verify --settings target/travis/settings.xml"
-
-env:
-  global:
-    - secure: "BmDMUlS07UDn3zGHra90YOT+U2QpTRmb02GIJmvfykmOie2q8hP6XwxKehsYBtnMHp6+5xm+bF+dA4BhjJ9l+bzXIH2FVkFTfJEo1GJJiVGq8B1DptqGGl404Eb4vD4c+cbb4GP2zKgNMc05oNsKTThE3wHdxZDbh2hjATz/b0M="
-    - secure: "XcMnwfSjRNVHs3HEutOIIGyYiHUZQZx2+DynlzkiBZ3IKpiVT0LfeIElJfWKJkwtJxGIIJghNZArylKvJXeZguB4s0XieOHxzarE1BgfcYU+vK/0pla0x66mgGEPjD/99arrGTTvZUH//jmRPc95fZJqytdIOJ7Erb4GpGLo/hM="
+script: mvn -B clean verify

@@ -14,7 +14,7 @@ Project contains versions 2.0 and above: source code for earlier (1.x) versions 
 
 Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-[![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations)
+[![Build (github)](https://github.com/FasterXML/jackson-annotations/actions/workflows/main.yml/badge.svg)](https://github.com/FasterXML/jackson-annotations/actions/workflows/main.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
 [![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
 [![Tidelift](https://tidelift.com/badges/package/maven/com.fasterxml.jackson.core:jackson-annotations)](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=readme)
