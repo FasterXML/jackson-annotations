@@ -5,3 +5,7 @@ jdk:
   - openjdk11
 
 script: mvn -B clean verify
+
+cache:
+  directories:
+  - $HOME/.m2
