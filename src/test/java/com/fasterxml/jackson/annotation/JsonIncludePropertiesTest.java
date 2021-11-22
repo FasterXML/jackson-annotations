@@ -36,7 +36,13 @@ public class JsonIncludePropertiesTest extends TestBase
         Set<String> included = v.getIncluded();
         assertEquals(2, v.getIncluded().size());
         assertEquals(_set("foo", "bar"), included);
-        assertTrue(v.toString().equals("JsonIncludeProperties.Value(included=[bar, foo])") || v.toString().equals("JsonIncludeProperties.Value(included=[foo, bar])"));
+        String tmp = v.toString();
+        boolean test1 = tmp.equals("JsonIncludeProperties.Value(included=[foo, bar])");
+        boolean test2 = tmp.equals("JsonIncludeProperties.Value(included=[bar, foo])");
+        System.out.println(tmp);
+        System.out.println(test1);
+        System.out.println(test2);
+        assertTrue(test1 || test2);
         assertEquals(v, JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class)));
     }
 
