@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Tests to verify that it is possibly to merge {@link JsonIncludeProperties.Value}
  * instances for overrides
@@ -34,7 +36,10 @@ public class JsonIncludePropertiesTest extends TestBase
         Set<String> included = v.getIncluded();
         assertEquals(2, v.getIncluded().size());
         assertEquals(_set("foo", "bar"), included);
-        assertEquals("JsonIncludeProperties.Value(included=[bar, foo])", v.toString());
+        String tmp = v.toString();
+        boolean test1 = tmp.equals("JsonIncludeProperties.Value(included=[foo, bar])");
+        boolean test2 = tmp.equals("JsonIncludeProperties.Value(included=[bar, foo])");
+        assertTrue(test1 || test2);
         assertEquals(v, JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class)));
     }
 
