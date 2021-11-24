@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
-
 /**
  * Tests to verify that it is possibly to merge {@link JsonIncludeProperties.Value}
  * instances for overrides
