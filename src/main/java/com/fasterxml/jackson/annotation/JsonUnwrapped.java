@@ -54,7 +54,7 @@ import java.lang.annotation.Target;
  *<p>
  * Also note that annotation only applies if:
  *<ul>
- * <li>Value is serialized as an Object valie (can not unwrap Array values using this
+ * <li>Value is serialized as an Object value (can not unwrap Array values using this
  *   mechanism)
  *   </li>
  * <li>Reading/writing is done using Jackson standard {@code BeanDeserializer} /
