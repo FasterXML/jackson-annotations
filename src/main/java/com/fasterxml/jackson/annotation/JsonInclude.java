@@ -190,16 +190,21 @@ public @interface JsonInclude
         NON_DEFAULT,
 
         /**
-         * Value that indicates that separate `filter` Object (specified by
+         * Value that indicates that separate {@code filter} Object (specified by
          * {@link JsonInclude#valueFilter} for value itself, and/or
          * {@link JsonInclude#contentFilter} for contents of structured types)
          * is to be used for determining inclusion criteria.
-         * Filter object's <code>equals()</code> method is called with value
-         * to serialize; if it returns <code>true</code> value is <b>excluded</b>
-         * (that is, filtered out); if <code>false</code> value is <b>included</b>.
+         * Filter object's {@code equals()} method is called with value
+         * to serialize; if it returns {@code true} value is <b>excluded</b>
+         * (that is, filtered out); if {@code false} value is <b>included</b>.
+         *<p>
+         * NOTE: although filter will be called for each non-{@code null} value,
+         * it will only be called ONCE to check whether {@code null} value is to be
+         * included or not, after filter construction: it will NOT be called for
+         * each {@code null} value encountered.
          */
         CUSTOM,
-        
+
         /**
          * Pseudo-value used to indicate that the higher-level defaults make
          * sense, to avoid overriding inclusion value. For example, if returned
@@ -208,7 +213,6 @@ public @interface JsonInclude
          * global serialization inclusion details.
          */
         USE_DEFAULTS
-        
         ;
     }
 
