@@ -66,25 +66,35 @@ public @interface JsonInclude
     /**
      * Specifies type of "Filter Object" to use in case
      * {@link #value} is {@link JsonInclude.Include#CUSTOM}:
-     * if so, an instance is created by calling <code>HandlerInstantiator</code>
-     * (of <code>ObjectMapper</code>), which by default simply calls
+     * if so, an instance is created by calling {@code HandlerInstantiator}
+     * (of  {@code ObjectMapper}), which by default simply calls
      * zero-argument constructor of the Filter Class.
+     *<p>
+     * Whether value if is to be included or not is determined by calling
+     * Filter's {@code equals(value)} method: if it returns {@code true}
+     * value is NOT included (it is "filtered out"); if {@code false} value
+     * IS included ("not filtered out").
      */
     public Class<?> valueFilter() default Void.class;
 
     /**
      * Specifies type of "Filter Object" to use in case
      * {@link #content} is {@link JsonInclude.Include#CUSTOM}:
-     * if so, an instance is created by calling <code>HandlerInstantiator</code>
-     * (of <code>ObjectMapper</code>), which by default simply calls
+     * if so, an instance is created by calling  {@code HandlerInstantiator}
+     * (of  {@code ObjectMapper}), which by default simply calls
      * zero-argument constructor of the Filter Class.
+     *<p>
+     * Whether content value if is to be included or not is determined by calling
+     * Filter's {@code equals(value)} method: if it returns {@code true}
+     * content value is NOT included (it is "filtered out"); if {@code false} content value
+     * IS included ("not filtered out").
      */
     public Class<?> contentFilter() default Void.class;
-    
+
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Value enumerations
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -194,14 +204,12 @@ public @interface JsonInclude
          * {@link JsonInclude#valueFilter} for value itself, and/or
          * {@link JsonInclude#contentFilter} for contents of structured types)
          * is to be used for determining inclusion criteria.
-         * Filter object's {@code equals()} method is called with value
+         * Filter object's {@code equals(value)} method is called with value
          * to serialize; if it returns {@code true} value is <b>excluded</b>
          * (that is, filtered out); if {@code false} value is <b>included</b>.
          *<p>
-         * NOTE: although filter will be called for each non-{@code null} value,
-         * it will only be called ONCE to check whether {@code null} value is to be
-         * included or not, after filter construction: it will NOT be called for
-         * each {@code null} value encountered.
+         * NOTE: the filter will be called for every value, including {@code null}
+         * values.
          */
         CUSTOM,
 
@@ -217,9 +225,9 @@ public @interface JsonInclude
     }
 
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Value class used to enclose information
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
