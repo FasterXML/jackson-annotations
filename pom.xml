@@ -53,11 +53,15 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
 
   <!-- Alas, need to include snapshot reference since otherwise can not find
        snapshot of parent... -->
+  <!-- 13-Jul-2022, tatu: This gets tricky; we need "jackson-base" from the NEW
+       Sonatype OSS repo, but publish via OLD repo, still (since we use old
+       group id)
+    -->
   <repositories>
     <repository>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
       <releases><enabled>false</enabled></releases>
       <snapshots><enabled>true</enabled></snapshots>
     </repository>
