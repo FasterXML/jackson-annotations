@@ -57,15 +57,19 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
        Sonatype OSS repo, but publish via OLD repo, still (since we use old
        group id)
     -->
-  <repositories>
-    <repository>
+  <distributionManagement>
+    <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-      <releases><enabled>false</enabled></releases>
-      <snapshots><enabled>true</enabled></snapshots>
+    </snapshotRepository>
+
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Nexus Release Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
-  </repositories>
+  </distributionManagement>
 
   <build>
     <plugins>
