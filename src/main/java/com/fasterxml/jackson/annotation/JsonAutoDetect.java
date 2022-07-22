@@ -193,7 +193,7 @@ public @interface JsonAutoDetect
         }
 
         /**
-         * Factory method for cnstructing instance with visibility of specified accessor
+         * Factory method for constructing instance with visibility of specified accessor
          * (or, in case of <code>ALL</code>, all of them) set as specified; and the
          * rest (if any) set as {@link Visibility#DEFAULT}).
          */

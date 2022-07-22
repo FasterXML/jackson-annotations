@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Jackson-specific annotation used for indicating that value of
  * annotated property will be "injected", i.e. set based on value
  * configured by <code>ObjectMapper</code> (usually on per-call basis).
- * Usually property is not deserialized from JSON, although it possible
+ * Usually property is not deserialized from JSON, although it is possible
  * to have injected value as default and still allow optional override
  * from JSON.
  */
@@ -47,7 +47,7 @@ public @interface JacksonInject
     /* Value class used to enclose information, allow for
     /* merging of layered configuration settings, and eventually
     /* decouple higher level handling from Annotation types
-    /* (which can not be implemented etc)
+    /* (which can not be implemented etc.)
     /**********************************************************
      */
     

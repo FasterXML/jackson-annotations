@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  * All references have logical name to allow handling multiple linkages; typical case
  * would be that where nodes have both parent/child and sibling linkages. If so,
  * pairs of references should be named differently.
- * It is an error for a class too have multiple managed references with same name,
+ * It is an error for a class to have multiple managed references with same name,
  * even if types pointed are different.
  *<p>
  * Note: only methods and fields can be annotated with this annotation: constructor

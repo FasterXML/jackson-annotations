@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to define a human readable description for a logical
+ * Annotation used to define a human-readable description for a logical
  * property.
  * Currently used to populate the description field in generated JSON
  * Schemas.
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 public @interface JsonPropertyDescription
 {
     /**
-     * Defines a human readable description of the logical property.
+     * Defines a human-readable description of the logical property.
      * Currently used to populate the description field in generated JSON
      * Schemas.
      */

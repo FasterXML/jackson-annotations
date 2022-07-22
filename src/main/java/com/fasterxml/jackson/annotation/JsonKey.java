@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * and if deserialization is needed, there is matching constructor
  * or factory method annotated with {@link JsonCreator} annotation.
  *<p>
- * Boolean argument is only used so that sub-classes can "disable"
+ * Boolean argument is only used so that subclasses can "disable"
  * annotation if necessary.
  *
  * @see JsonValue
