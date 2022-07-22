@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to define a human readable description for annotated
+ * Annotation used to define a human-readable description for annotated
  * type (class).
  * Currently used to populate the description field in generated JSON
  * Schemas.
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 public @interface JsonClassDescription
 {
     /**
-     * Defines a human readable description of the class.
+     * Defines a human-readable description of the class.
      */
     String value() default "";
 }

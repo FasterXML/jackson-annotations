@@ -7,7 +7,7 @@ package com.fasterxml.jackson.annotation;
  * choice (related: annotations are limited to primitives, so
  * {@link java.lang.Boolean} not allowed as solution).
  *<p>
- * Note: although use of `true` and `false` would be more convenient, they
+ * Note: although the use of `true` and `false` would be more convenient, they
  * can not be chosen since they are Java keyword and compiler won't allow
  * the choice. And since enum naming convention suggests all-upper-case,
  * that is what is done here.

@@ -168,7 +168,7 @@ public @interface JsonFormat
         
         /**
          * Value that indicates shape should not be structural (that is, not
-         * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
+         * {@link #ARRAY} or {@link #OBJECT}), but can be any other shape.
          */
         SCALAR,
 
@@ -301,7 +301,7 @@ public @interface JsonFormat
          * Override for <code>DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIMEZONE</code>
          * that specifies whether context provided timezone
          * <code>DeserializationContext.getTimeZone()</code> should be used to adjust Date/Time
-         * values on deserialization, even if value itself contains timezone informatio
+         * values on deserialization, even if value itself contains timezone information
          *<p>
          * NOTE: due to limitations of "old" JDK date/time types (that is,
          * {@link java.util.Date} and {@link java.util.Calendar}), this setting is only

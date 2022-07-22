@@ -87,7 +87,7 @@ public @interface JsonProperty
      * Properties, to ensure existence of property value in JSON:
      * for other properties (ones injected using a setter or mutable
      * field), no validation is performed. Support for those cases
-     * may be added in future.
+     * may be added in the future.
      * State of this property is exposed via introspection, and its
      * value is typically used by Schema generators, such as one for
      * JSON Schema.

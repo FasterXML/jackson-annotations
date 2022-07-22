@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
  * Annotation similar to {@code javax.xml.bind.annotation.XmlRootElement},
  * used to indicate name to use for root-level wrapping, if wrapping is
  * enabled. Annotation itself does not indicate that wrapping should
- * be used; but if it is, name used for serialization should be name
- * specified here, and deserializer will expect the name as well.
+ * be used; but if it is, the name used for serialization should be the
+ * name specified here, and deserializer will expect the name as well.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

@@ -46,7 +46,7 @@ public class JacksonInjectTest extends TestBase
         assertEquals("JacksonInject.Value(id=null,useInput=null)",
                 EMPTY.toString());
         int x = EMPTY.hashCode();
-        if (x == 0) { // no fixed value, but should not evalute to 0
+        if (x == 0) { // no fixed value, but should not evaluate to 0
             fail();
         }
         assertEquals(EMPTY, EMPTY);
@@ -68,7 +68,7 @@ public class JacksonInjectTest extends TestBase
         assertSame(v2, v2.withUseInput(Boolean.TRUE));
 
         int x = v2.hashCode();
-        if (x == 0) { // no fixed value, but should not evalute to 0
+        if (x == 0) { // no fixed value, but should not evaluate to 0
             fail();
         }
     }
