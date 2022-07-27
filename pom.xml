@@ -24,16 +24,16 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
-  <url>http://github.com/FasterXML/jackson</url>
+  <url>https://github.com/FasterXML/jackson</url>
   <scm>
     <connection>scm:git:git@github.com:FasterXML/jackson-annotations.git</connection>
     <developerConnection>scm:git:git@github.com:FasterXML/jackson-annotations.git</developerConnection>
-    <url>http://github.com/FasterXML/jackson-annotations</url>
+    <url>https://github.com/FasterXML/jackson-annotations</url>
     <tag>HEAD</tag>
   </scm>
 
