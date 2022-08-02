@@ -27,6 +27,15 @@ public @interface JsonSubTypes {
      */
     public Type[] value();
 
+
+    /**
+     * Subtypes of the annotated type may have logical type name and names properties.
+     * When set to true, logical type name and names are going to be checked
+     * for repeated values. Repeated values are considered a definition violation
+     * during that check.
+     */
+    public boolean failOnRepeatedNames() default false;
+
     /**
      * Definition of a subtype, along with optional name(s). If no name is defined
      * (empty Strings are ignored), class of the type will be checked for {@link JsonTypeName}
