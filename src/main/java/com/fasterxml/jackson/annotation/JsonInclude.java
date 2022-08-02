@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  *   public Map&lt;String,String&gt; entries;
  *}
  *</pre>
- * Similarly you could Maps that only contain
+ * Similarly you could exclude <code>Map</code>s that only contain
  * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
  * {@link Include#NON_DEFAULT} for more details).
  *<p>

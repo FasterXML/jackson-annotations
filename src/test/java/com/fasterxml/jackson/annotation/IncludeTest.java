@@ -125,7 +125,7 @@ public class IncludeTest extends TestBase
         assertNull(empty.getValueFilter());
         assertNull(empty.getContentFilter());
 
-        // note: filter class choices are arbitrary, just confirming assingments
+        // note: filter class choices are arbitrary, just confirming assignments
         JsonInclude.Value v1 = empty.withValueFilter(String.class);
         assertEquals(JsonInclude.Include.CUSTOM, v1.getValueInclusion());
         assertEquals(String.class, v1.getValueFilter());

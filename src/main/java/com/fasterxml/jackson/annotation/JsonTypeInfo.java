@@ -263,8 +263,8 @@ public @interface JsonTypeInfo
      * implementation to use, it does not help with structural issues that
      * may arise if type information is missing. This means that most often
      * this is used with type-name -based resolution, to cover cases
-     * where new sub-types are added, but base type is not changed to
-     * reference new sub-types.
+     * where new subtypes are added, but base type is not changed to
+     * reference new subtypes.
      *<p>
      * There are certain special values that indicate alternate behavior:
      *<ul>

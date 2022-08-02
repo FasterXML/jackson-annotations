@@ -24,7 +24,7 @@ public class JsonSetterTest extends TestBase
         assertEquals("JsonSetter.Value(valueNulls=DEFAULT,contentNulls=DEFAULT)",
                 EMPTY.toString());
         int x = EMPTY.hashCode();
-        if (x == 0) { // no fixed value, but should not evalute to 0
+        if (x == 0) { // no fixed value, but should not evaluate to 0
             fail();
         }
         assertEquals(EMPTY, EMPTY);

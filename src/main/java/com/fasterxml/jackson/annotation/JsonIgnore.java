@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  * is, without explicitly defining 'value' argument (which defaults
  * to <code>true</code>): but argument can be explicitly defined.
  * This can be done to override an existing `JsonIgnore` by explicitly
- * defining one with 'false' argument: either in a sub-class, or by
+ * defining one with 'false' argument: either in a subclass, or by
  * using "mix-in annotations".
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})

@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * or if assignment occurs using a Creator setter (constructor
  * or factory method), since there is no instance with state to introspect.
  * Merging also only has actual effect for structured types where there is an
- * obvious way to update a state (for example, POJOs have default values for properties,
+ * obvious way to update a state. For example, POJOs have default values for properties,
  * and {@link java.util.Collection}s and {@link java.util.Map}s may have existing
  * elements; whereas scalar types do not such state: an <code>int</code> has a value,
  * but no obvious and non-ambiguous way to merge state.

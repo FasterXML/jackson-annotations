@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  *</pre>
  * which would specify that property annotated would be included
  * when processing (serializing, deserializing) View identified
- * by <code>BasicView.class</code> (or its sub-class).
+ * by <code>BasicView.class</code> (or its subclass).
  * If multiple View class identifiers are included, property will
  * be part of all of them.
  *<p>
