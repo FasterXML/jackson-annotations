@@ -13,7 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.14.0 (not yet released)
 
-No changes since 2.13
+#204: Allow explicit `JsonSubTypes` repeated names check
+ (contributed by Igor S)
 
 2.13.0 (30-Sep-2021)
 

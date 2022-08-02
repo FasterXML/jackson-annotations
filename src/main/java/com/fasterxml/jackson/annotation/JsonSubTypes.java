@@ -27,12 +27,13 @@ public @interface JsonSubTypes {
      */
     public Type[] value();
 
-
     /**
      * Subtypes of the annotated type may have logical type name and names properties.
      * When set to true, logical type name and names are going to be checked
      * for repeated values. Repeated values are considered a definition violation
      * during that check.
+     *
+     * @since 2.14
      */
     public boolean failOnRepeatedNames() default false;
 
