@@ -53,9 +53,8 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
 
   <!-- Alas, need to include snapshot reference since otherwise can not find
        snapshot of parent... -->
-  <!-- 13-Jul-2022, tatu: This gets tricky; we need "jackson-base" from the NEW
-       Sonatype OSS repo, but publish via OLD repo, still (since we use old
-       group id)
+  <!-- 13-Jul-2022, tatu: This gets tricky; we need to publish via OLD repo, as per
+         here, but resolve dependency of "jackson-base" from the NEW repo.
     -->
   <distributionManagement>
     <snapshotRepository>
@@ -63,13 +62,24 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
       <name>Sonatype Nexus Snapshots</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-
     <repository>
       <id>sonatype-nexus-staging</id>
       <name>Nexus Release Repository</name>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
+
+  <!-- ... so this is the new repo to get "jackson-base"
+    -->
+  <repositories>
+    <repository>
+      <id>sonatype-nexus-new-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>
