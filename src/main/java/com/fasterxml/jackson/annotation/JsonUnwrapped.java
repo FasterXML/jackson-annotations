@@ -6,12 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to indicate that a property should be serialized
- * "unwrapped" -- that is, if it would be serialized as JSON Object, its
- * properties are instead included as properties of its containing
+ * Annotation used to indicate that a <b>POJO-valued</b> property should be
+ * serialized "unwrapped" -- that is, if it would be serialized as Object value,
+ * its properties are instead included as properties of its containing
  * Object -- and deserialized reproducing "missing" structure.
  * For example, consider case of POJO like:
- * 
  *<pre>
  *  public class Parent {
  *    public int age;
@@ -58,12 +57,16 @@ import java.lang.annotation.Target;
  *   mechanism)
  *   </li>
  * <li>Reading/writing is done using Jackson standard {@code BeanDeserializer} /
- *  {@code BeanSerializer}; or custom deserializer/serializer MUST explicitly support similar
- *  operation.
+ *  {@code BeanSerializer}; or custom deserializer/serializer MUST explicitly
+ *  support similar  operation.
  *   </li>
  * <li>Will not work with polymorphic type handling ("polymorphic deserialization")
  *   </li>
  * </ul>
+ * Specifically note that this annotation WILL NOT WORK for structured types like
+ * {@link java.util.Map}s or {@code JsonNode}s: for these types you will
+ * instead need to use {@link JsonAnyGetter} and {@link JsonAnySetter} to achieve
+ * similar operation.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
