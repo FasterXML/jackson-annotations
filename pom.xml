@@ -17,7 +17,7 @@
   <artifactId>jackson-annotations</artifactId>
   <name>Jackson-annotations</name>
   <version>3.0-SNAPSHOT</version>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
   <inceptionYear>2008</inceptionYear>
@@ -49,7 +49,7 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
     <bom4gmm.version>3.0.0-SNAPSHOT</bom4gmm.version>
 
     <!-- for Reproducible Builds -->
-    <project.build.outputTimestamp>2022-09-18T00:00:00Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2022-11-27T00:00:00Z</project.build.outputTimestamp>
   </properties>
 
   <!-- No additional deps, `jackson-base` includes junit and that's all -->
@@ -154,6 +154,31 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
         </executions>
       </plugin>
 
+      <!-- 27-Nov-2022, tatu: Since we don't get defaults from "jackson-base"
+	     need to configure Felix-bundle/Maven-jar plugins wrt Reproducible Build
+	-->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
