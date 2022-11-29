@@ -12,9 +12,9 @@ import java.lang.annotation.Target;
  * or non-static object field to be used (serialized, deserialized) as
  * a logical property.
  *<p>
- * Default value ("") indicates that the field name is used
- * as the property name without any modifications, but it
- * can be specified to non-empty value to specify different
+ * Default value ("") indicates that the field's first variable
+ * name is used as the property name without any modifications,
+ * but it can be specified to non-empty value to specify different
  * name. Property name refers to name used externally, as
  * the field name in JSON objects.
  *<p>
@@ -39,7 +39,7 @@ public @interface JsonProperty
 {
     /**
      * Special value that indicates that handlers should use the default
-     * name (derived from method or field name) for property.
+     * name (derived from method or field's first variable name) for property.
      * 
      * @since 2.1
      */
@@ -57,11 +57,18 @@ public @interface JsonProperty
     /**
      * Defines name of the logical property, i.e. JSON object field
      * name to use for the property. If value is empty String (which is the
-     * default), will try to use name of the field that is annotated.
+     * default), will try to use name of the field's first variable that is
+     * annotated.
      * Note that there is
      * <b>no default name available for constructor arguments</b>,
      * meaning that
      * <b>Empty String is not a valid value for constructor arguments</b>.
+     * <p>
+     * Note that
+     * <b>this annotation MUST NOT be used when declaring a field with
+     * multiple variables on a single line. If you wish to use this
+     * annotation, split declarations onto multiple lines with one per line
+     * so that there is only one variable declared per field</b>.
      */
     String value() default USE_DEFAULT_NAME;
 
