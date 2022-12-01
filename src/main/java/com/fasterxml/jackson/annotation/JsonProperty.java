@@ -8,15 +8,27 @@ import java.lang.annotation.Target;
 /**
  * Marker annotation that can be used to define a non-static
  * method as a "setter" or "getter" for a logical property
- * (depending on its signature),
- * or non-static object field to be used (serialized, deserialized) as
- * a logical property.
+ * accessor (depending on its signature),
+ * or a non-static Object field to be used (serialized, deserialized)
+ * as a logical property (to assign value or get value from)
  *<p>
- * Default value ("") indicates that the field name is used
- * as the property name without any modifications, but it
- * can be specified to non-empty value to specify different
- * name. Property name refers to name used externally, as
- * the field name in JSON objects.
+ * Value ("") indicates that the name of field (or, derived name
+ * of an accessor method (setter / getter)) is to be used
+ * as the property name without any modifications; a non-empty value
+ * can be used to specify a different name.
+ * Property name refers to the name used externally, as the property
+ * name in JSON objects (as opposed to internal name of field in
+ * Java Object).
+ *<p>
+ * NOTE: annotation with non-empty Value can NOT be used if declaring multiple
+ * Java fields in a single declaration like:
+ *<pre>
+ * public class POJO {
+ *    \@JsonProperty("a")
+ *    public int a, b, c;
+ *</pre>
+ * since it would associate same annotation for all fields, leading to name
+ * collision.
  *<p>
  * Starting with Jackson 2.6 this annotation may also be
  * used to change serialization of <code>Enum</code> like so:
