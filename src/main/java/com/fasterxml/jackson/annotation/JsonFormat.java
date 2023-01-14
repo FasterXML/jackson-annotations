@@ -261,6 +261,9 @@ public @interface JsonFormat
          */
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
+        READ_UNKNOWN_ENUM_VALUES_AS_NULL,
+        READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
+
         /**
          * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
          * which allows case-sensitive matching of (some) property values, such
