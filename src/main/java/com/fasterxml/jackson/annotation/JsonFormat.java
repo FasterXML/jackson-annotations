@@ -273,6 +273,23 @@ public @interface JsonFormat
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
 
         /**
+         * Override for <code>DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL</code>,
+         * which allows unknown Enum values to be parsed as null values.
+         *
+         * @since 2.15
+         */
+        READ_UNKNOWN_ENUM_VALUES_AS_NULL,
+
+        /**
+         * Override for <code>DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE</code>,
+         * which allows unknown Enum values to be ignored and a predefined value specified through
+         * {@link com.fasterxml.jackson.annotation.JsonEnumDefaultValue @JsonEnumDefaultValue} annotation.
+         *
+         * @since 2.15
+         */
+        READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
+
+        /**
          * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
          * which allows case-sensitive matching of (some) property values, such
          * as {@code Enum}s.

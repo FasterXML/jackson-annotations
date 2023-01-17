@@ -251,7 +251,7 @@ Jackson components are supported by the Jackson community through mailing lists,
 
 ### Enterprise support
 
-Available as part of the Tidelift Subscription.
+Available as part of the [Tidelift](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations) Subscription.
 
 The maintainers of `jackson-annotations` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
 
