@@ -13,7 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.15.0 (not yet released)
 
-No changes since 2.14
+#211: Add `JsonFormat.Feature`s: READ_UNKNOWN_ENUM_VALUES_AS_NULL,
+  READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE
 
 2.14.0 (05-Nov-2022)
 
