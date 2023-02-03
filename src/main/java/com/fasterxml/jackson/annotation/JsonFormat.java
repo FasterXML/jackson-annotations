@@ -29,7 +29,7 @@ import java.util.TimeZone;
  *    used to change between numeric (index) and textual (name or <code>toString()</code>);
  *    but it is also possible to use {@link Shape#OBJECT} to serialize (but not deserialize)
  *    {@link java.lang.Enum}s as JSON Objects (as if they were POJOs). NOTE: serialization
- *     as JSON Object only works with class annotation; 
+ *     as JSON Object only works with class annotation;
  *    will not work as per-property annotation.
  *   </li>
  * <li>{@link java.util.Collection}s can be serialized as (and deserialized from) JSON Objects,
@@ -67,7 +67,7 @@ public @interface JsonFormat
      * default, usually UTC, but may be changed on <code>ObjectMapper</code>.
      */
     public final static String DEFAULT_TIMEZONE = "##default";
-    
+
     /**
      * Datatype-specific additional piece of configuration that may be used
      * to further refine formatting aspects. This may, for example, determine
@@ -93,7 +93,7 @@ public @interface JsonFormat
      * set to another locale.
      */
     public String locale() default DEFAULT_LOCALE;
-    
+
     /**
      * {@link java.util.TimeZone} to use for serialization (if needed).
      * Special value of {@link #DEFAULT_TIMEZONE}
@@ -111,7 +111,7 @@ public @interface JsonFormat
      * Note that underlying default setting depends on datatype (or more precisely
      * deserializer for it): for most date/time types, default is for leniency
      * to be enabled.
-     * 
+     *
      * @since 2.9
      */
     public OptBoolean lenient() default OptBoolean.DEFAULT;
@@ -165,7 +165,7 @@ public @interface JsonFormat
          * @since 2.8
          */
         NATURAL,
-        
+
         /**
          * Value that indicates shape should not be structural (that is, not
          * {@link #ARRAY} or {@link #OBJECT}), but can be any other shape.
@@ -176,7 +176,7 @@ public @interface JsonFormat
          * Value that indicates that (JSON) Array type should be used.
          */
         ARRAY,
-        
+
         /**
          * Value that indicates that (JSON) Object type should be used.
          */
@@ -204,7 +204,7 @@ public @interface JsonFormat
          * Value that indicates that (JSON) String type should be used.
          */
         STRING,
-        
+
         /**
          * Value that indicates that (JSON) boolean type
          * (true, false) should be used.
@@ -256,7 +256,7 @@ public @interface JsonFormat
          * see {@link #ACCEPT_CASE_INSENSITIVE_VALUES} for that).
          *<p>
          * Only affects deserialization, has no effect on serialization.
-         * 
+         *
          * @since 2.8
          */
         ACCEPT_CASE_INSENSITIVE_PROPERTIES,
@@ -283,7 +283,7 @@ public @interface JsonFormat
          * which allows case-sensitive matching of (some) property values, such
          * as {@code Enum}s.
          * Only affects deserialization, has no effect on serialization.
-         * 
+         *
          * @since 2.10
          */
         ACCEPT_CASE_INSENSITIVE_VALUES,
@@ -341,7 +341,7 @@ public @interface JsonFormat
         private final int _enabled, _disabled;
 
         private final static Features EMPTY = new Features(0, 0);
-        
+
         private Features(int e, int d) {
             _enabled = e;
             _disabled = d;
@@ -350,11 +350,11 @@ public @interface JsonFormat
         public static Features empty() {
             return EMPTY;
         }
-        
+
         public static Features construct(JsonFormat f) {
             return construct(f.with(), f.without());
         }
-        
+
         public static Features construct(Feature[] enabled, Feature[] disabled)
         {
             int e = 0;
@@ -384,12 +384,12 @@ public @interface JsonFormat
             // If not, calculate combination with overrides
             int newE = (_enabled & ~overrideD) | overrideE;
             int newD = (_disabled & ~overrideE) | overrideD;
-            
+
             // one more thing; no point in creating new instance if there's no change
             if ((newE == _enabled) && (newD == _disabled)) {
                 return this;
             }
-            
+
             return new Features(newE, newD);
         }
 
@@ -473,11 +473,11 @@ public @interface JsonFormat
 
         // lazily constructed when created from annotations
         private transient TimeZone _timezone;
-        
+
         public Value() {
             this("", Shape.ANY, "", "", Features.empty(), null);
         }
-        
+
         public Value(JsonFormat ann) {
             this(ann.pattern(), ann.shape(), ann.locale(), ann.timezone(),
                     Features.construct(ann), ann.lenient().asBoolean());
@@ -531,7 +531,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f) {
             this(p, sh, l, tzStr, tz, f, null);
         }
-        
+
         @Deprecated // since 2.9
         public Value(String p, Shape sh, String localeStr, String tzStr, Features f) {
             this(p, sh, localeStr, tzStr, f, null);
@@ -540,7 +540,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, Locale l, TimeZone tz, Features f) {
             this(p, sh, l, tz, f, null);
         }
-        
+
         /**
          * @since 2.7
          */
@@ -622,7 +622,7 @@ public @interface JsonFormat
             // timezone not merged, just choose one
             String tzStr = overrides._timezoneStr;
             TimeZone tz;
-            
+
             if ((tzStr == null) || tzStr.isEmpty()) { // no overrides, use space
                 tzStr = _timezoneStr;
                 tz = _timezone;
@@ -724,7 +724,7 @@ public @interface JsonFormat
         public Class<JsonFormat> valueFor() {
             return JsonFormat.class;
         }
-        
+
         public String getPattern() { return _pattern; }
         public Shape getShape() { return _shape; }
         public Locale getLocale() { return _locale; }
@@ -758,7 +758,7 @@ public @interface JsonFormat
          * Alternate access (compared to {@link #getTimeZone()}) which is useful
          * when caller just wants time zone id to convert, but not as JDK
          * provided {@link TimeZone}
-         * 
+         *
          * @since 2.4
          */
         public String timeZoneAsString() {
@@ -767,7 +767,7 @@ public @interface JsonFormat
             }
             return _timezoneStr;
         }
-        
+
         public TimeZone getTimeZone() {
             TimeZone tz = _timezone;
             if (tz == null) {
@@ -784,14 +784,14 @@ public @interface JsonFormat
          * @since 2.4
          */
         public boolean hasShape() { return _shape != Shape.ANY; }
-        
+
         /**
          * @since 2.4
          */
         public boolean hasPattern() {
             return (_pattern != null) && (_pattern.length() > 0);
         }
-        
+
         /**
          * @since 2.4
          */
@@ -867,7 +867,7 @@ public @interface JsonFormat
             if (o.getClass() != getClass()) return false;
             Value other = (Value) o;
 
-            if ((_shape != other._shape) 
+            if ((_shape != other._shape)
                     || !_features.equals(other._features)) {
                 return false;
             }

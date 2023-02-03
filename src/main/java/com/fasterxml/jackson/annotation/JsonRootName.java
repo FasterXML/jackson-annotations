@@ -32,7 +32,7 @@ public @interface JsonRootName
      * @since 2.4
      */
     public String namespace() default "";
-    
+
     /*
      * Optional marker property that can be defined as <code>true</code> to force
      * wrapping of root element, regardless of whether globally

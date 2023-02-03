@@ -36,12 +36,12 @@ public class ObjectIdGenerators
         public final Class<?> getScope() {
             return _scope;
         }
-        
+
         @Override
         public boolean canUseFor(ObjectIdGenerator<?> gen) {
             return (gen.getClass() == getClass()) && (gen.getScope() == _scope);
         }
-        
+
         @Override
         public abstract T generateId(Object forPojo);
     }
@@ -51,7 +51,7 @@ public class ObjectIdGenerators
     /* Implementation classes
     /**********************************************************
      */
-    
+
     /**
      * Abstract marker class used to allow explicitly specifying
      * that no generator is used; which also implies that no
@@ -59,7 +59,7 @@ public class ObjectIdGenerators
      */
     @SuppressWarnings("serial")
     public abstract static class None extends ObjectIdGenerator<Object> { }
-    
+
     /**
      * Abstract place-holder class which is used to denote case
      * where Object Identifier to use comes from a POJO property
@@ -74,7 +74,7 @@ public class ObjectIdGenerators
 
         protected PropertyGenerator(Class<?> scope) { super(scope); }
     }
-    
+
     /**
      * Simple sequence-number based generator, which uses basic Java
      * <code>int</code>s (starting with value 1) as Object Identifiers.
@@ -92,12 +92,12 @@ public class ObjectIdGenerators
         }
 
         protected int initialValue() { return 1; }
-        
+
         @Override
         public ObjectIdGenerator<Integer> forScope(Class<?> scope) {
             return (_scope == scope) ? this : new IntSequenceGenerator(scope, _nextValue);
         }
-        
+
         @Override
         public ObjectIdGenerator<Integer> newForSerialization(Object context) {
             return new IntSequenceGenerator(_scope, initialValue());
@@ -111,7 +111,7 @@ public class ObjectIdGenerators
             }
             return new IdKey(getClass(), _scope, key);
         }
-        
+
         @Override
         public Integer generateId(Object forPojo) {
             // 02-Apr-2015, tatu: As per [annotations#56], should check for null
@@ -149,7 +149,7 @@ public class ObjectIdGenerators
         public ObjectIdGenerator<UUID> forScope(Class<?> scope) {
             return this;
         }
-        
+
         /**
          * Can just return base instance since this is essentially scopeless
          */

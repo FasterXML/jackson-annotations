@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation used to indicate when value of the annotated property (when
- * used for a field, method or constructor parameter), or all 
+ * used for a field, method or constructor parameter), or all
  * properties of the annotated class, is to be serialized.
  * Without annotation property values are always included, but by using
  * this annotation one can specify simple exclusion rules to reduce
@@ -62,7 +62,7 @@ public @interface JsonInclude
      * {@link java.util.Map}s and referential types (like
      * {@link java.util.concurrent.atomic.AtomicReference});
      * defaults to {@link Include#ALWAYS}.
-     * 
+     *
      * @since 2.5
      */
     public Include content() default Include.ALWAYS;
@@ -231,7 +231,7 @@ public @interface JsonInclude
          * Pseudo-value used to indicate that the higher-level defaults make
          * sense, to avoid overriding inclusion value. For example, if returned
          * for a property this would use defaults for the class that contains
-         * property, if any defined; and if none defined for that, then 
+         * property, if any defined; and if none defined for that, then
          * global serialization inclusion details.
          *
          * @since 2.6
@@ -273,7 +273,7 @@ public @interface JsonInclude
          * @since 2.9
          */
         protected final Class<?> _contentFilter;
-        
+
         public Value(JsonInclude src) {
             this(src.value(), src.content(),
                     src.valueFilter(), src.contentFilter());
@@ -400,7 +400,7 @@ public @interface JsonInclude
             }
             return new Value(valueIncl, contentIncl, valueFilter, contentFilter);
         }
-        
+
         /**
          * Factory method to use for constructing an instance from instance of
          * {@link JsonInclude}
@@ -502,7 +502,7 @@ public @interface JsonInclude
         public Class<?> getContentFilter() {
             return _contentFilter;
         }
-        
+
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder(80);
@@ -531,7 +531,7 @@ public @interface JsonInclude
             if (o == null) return false;
             if (o.getClass() != getClass()) return false;
             Value other = (Value) o;
-            
+
             return (other._valueInclusion == _valueInclusion)
                     && (other._contentInclusion == _contentInclusion)
                     && (other._valueFilter == _valueFilter)

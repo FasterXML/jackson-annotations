@@ -13,7 +13,7 @@ public interface ObjectIdResolver {
      * Method called when a POJO is deserialized and has an Object Identifier.
      * Method exists so that implementation can keep track of existing object in
      * JSON stream that could be useful for further resolution.
-     * 
+     *
      * @param id The Object Identifier
      * @param pojo The POJO associated to that Identifier
      */
@@ -22,7 +22,7 @@ public interface ObjectIdResolver {
     /**
      * Method called when deserialization encounters the given Object Identifier
      * and requires the POJO associated with it.
-     * 
+     *
      * @param id The Object Identifier
      * @return The POJO, or null if unable to resolve.
      */
@@ -37,7 +37,7 @@ public interface ObjectIdResolver {
      * <code>com.fasterxml.jackson.databind.DeserializationContext</code>, but
      * can not be declared here as type itself (as well as call to this object)
      * comes from databind package.
-     * 
+     *
      * @param context
      *            Deserialization context object used (of type
      *            <code>com.fasterxml.jackson.databind.DeserializationContext</code>)
@@ -51,7 +51,7 @@ public interface ObjectIdResolver {
      * Object Ids of specific resolver type; determination is based by passing a
      * configured "blueprint" (prototype) instance; from which the actual
      * instances are created (using {@link #newForDeserialization}).
-     * 
+     *
      * @return True if this instance can be used as-is; false if not
      */
     boolean canUseFor(ObjectIdResolver resolverType);

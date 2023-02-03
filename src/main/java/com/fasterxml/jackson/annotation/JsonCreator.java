@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  *<p>
  * NOTE: As of Jackson 2.6, use of {@link JsonProperty#required()} is supported
  * for Creator methods (but not necessarily for regular setters or fields!).
- * 
+ *
  * @see JsonProperty
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})
@@ -56,7 +56,7 @@ public @interface JsonCreator
      *<p>
      * Default value of {@link Mode#DEFAULT} means that caller is to use standard
      * heuristics for choosing mode to use.
-     * 
+     *
      * @since 2.5
      */
     public Mode mode() default Mode.DEFAULT;

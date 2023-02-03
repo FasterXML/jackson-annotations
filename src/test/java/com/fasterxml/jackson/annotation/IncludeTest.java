@@ -16,7 +16,7 @@ public class IncludeTest extends TestBase
     @JsonInclude(value=JsonInclude.Include.CUSTOM, valueFilter=Integer.class,
             content=JsonInclude.Include.CUSTOM, contentFilter=Long.class)
     private final static class Custom { }
-    
+
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
 
@@ -72,7 +72,7 @@ public class IncludeTest extends TestBase
 
         assertEquals(Include.USE_DEFAULTS, empty.getValueInclusion());
         assertEquals(Include.USE_DEFAULTS, empty.getContentInclusion());
-        
+
         JsonInclude.Value v2 = empty.withValueInclusion(Include.NON_ABSENT);
 
         assertEquals(Include.NON_ABSENT, v2.getValueInclusion());

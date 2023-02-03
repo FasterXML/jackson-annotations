@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 
 /**
  * Simple implementation of {@link ObjectIdResolver}
- * 
+ *
  * @author Pascal Gélinas
  */
 public class SimpleObjectIdResolver implements ObjectIdResolver {

@@ -64,7 +64,7 @@ public @interface JsonIgnoreProperties
      *<p>
      * Default value is `false`, which means that getters with matching names
      * will be ignored.
-     * 
+     *
      * @return True if getters should be allowed (i.e. NOT ignored); false if getters
      *    are to be ignored
      *
@@ -83,7 +83,7 @@ public @interface JsonIgnoreProperties
      *<p>
      * Default value is `false`, which means that setters with matching names
      * will be ignored.
-     * 
+     *
      *
      * @return True if setters should be allowed (i.e. NOT ignored); false if setters
      *    are to be ignored
@@ -236,7 +236,7 @@ public @interface JsonIgnoreProperties
             return state ? EMPTY.withIgnoreUnknown()
                     : EMPTY.withoutIgnoreUnknown();
         }
-        
+
         /**
          * Mutant factory method that merges values of this value with given override
          * values, so that any explicitly defined inclusion in overrides has precedence over
@@ -273,11 +273,11 @@ public @interface JsonIgnoreProperties
         public Value withIgnored(String... ignored) {
             return construct(_asSet(ignored), _ignoreUnknown, _allowGetters, _allowSetters, _merge);
         }
-        
+
         public Value withoutIgnored() {
             return construct(null, _ignoreUnknown, _allowGetters, _allowSetters, _merge);
         }
-        
+
         public Value withIgnoreUnknown() {
             return _ignoreUnknown ? this :
                 construct(_ignored, true, _allowGetters, _allowSetters, _merge);
@@ -304,7 +304,7 @@ public @interface JsonIgnoreProperties
             return !_allowSetters ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, false, _merge);
         }
-        
+
         public Value withMerge() {
             return _merge ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, true);
@@ -314,7 +314,7 @@ public @interface JsonIgnoreProperties
             return !_merge ? this :
                 construct(_ignored, _ignoreUnknown, _allowGetters, _allowSetters, false);
         }
-        
+
         @Override
         public Class<JsonIgnoreProperties> valueFor() {
             return JsonIgnoreProperties.class;
@@ -359,7 +359,7 @@ public @interface JsonIgnoreProperties
             }
             return _ignored;
         }
-        
+
         public boolean getIgnoreUnknown() {
             return _ignoreUnknown;
         }

@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  *<pre>
  *  // Include Java class name ("com.myempl.ImplClass") as JSON property "class"
  *  &#064;JsonTypeInfo(use=Id.CLASS, include=As.PROPERTY, property="class")
- *  
+ *
  *  // Include logical type name (defined in impl classes) as wrapper; 2 annotations
  *  &#064;JsonTypeInfo(use=Id.NAME, include=As.WRAPPER_OBJECT)
  *  &#064;JsonSubTypes({com.myemp.Impl1.class, com.myempl.Impl2.class})
@@ -64,13 +64,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonTypeInfo
-{    
+{
     /*
     /**********************************************************
     /* Value enumerations used for properties
     /**********************************************************
      */
-    
+
     /**
      * Definition of different type identifiers that can be included in JSON
      * during serialization, and used for deserialization.
@@ -212,27 +212,27 @@ public @interface JsonTypeInfo
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
-         * 
+         *
          * @since 2.3.0 but databind <b>only since 2.5.0</b>.
          */
         EXISTING_PROPERTY
         ;
     }
-    
+
     /*
     /**********************************************************
     /* Annotation properties
     /**********************************************************
      */
-    
+
     /**
      * Specifies kind of type metadata to use when serializing
      * type information for instances of annotated type
      * and its subtypes; as well as what is expected during
      * deserialization.
      */
-    public Id use();    
-    
+    public Id use();
+
     /**
      * Specifies mechanism to use for including type metadata (if any; for
      * {@link Id#NONE} nothing is included); used when serializing,
@@ -298,7 +298,7 @@ public @interface JsonTypeInfo
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
      * <code>JsonDeserializer</code>.
-     * 
+     *
      * @since 2.0
      */
     public boolean visible() default false;
@@ -314,7 +314,7 @@ public @interface JsonTypeInfo
      * @since 2.5
     public boolean skipWritingDefault() default false;
     /*
-    
+
     /*
     /**********************************************************
     /* Helper classes
@@ -325,7 +325,7 @@ public @interface JsonTypeInfo
      * This marker class that is only to be used with <code>defaultImpl</code>
      * annotation property, to indicate that there is no default implementation
      * specified.
-     * 
+     *
      * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
      *    if such behavior is needed; this is rarely necessary.
      */

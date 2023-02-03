@@ -35,7 +35,7 @@ public class JsonSetterTest extends TestBase
     public void testFromAnnotation() throws Exception
     {
         assertSame(EMPTY, JsonSetter.Value.from(null)); // legal
-        
+
         JsonSetter ann = Bogus.class.getField("field").getAnnotation(JsonSetter.class);
         JsonSetter.Value v = JsonSetter.Value.from(ann);
         assertEquals(Nulls.FAIL, v.getValueNulls());

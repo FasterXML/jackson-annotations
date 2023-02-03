@@ -28,7 +28,7 @@ public @interface JsonIdentityReference
      * Note that if value of 'true' is used, deserialization may require
      * additional contextual information, and possibly using a custom
      * id resolver -- the default handling may not be sufficient.
-     * 
+     *
      * @since 2.1
      */
     public boolean alwaysAsId() default false;

@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * {@link JsonTypeInfo.As#PROPERTY}), but is more commonly embedded
  * in a different place, as per inclusion rules (see {@link JsonTypeInfo}
  * for details).
- * 
+ *
  * @since 2.0
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
