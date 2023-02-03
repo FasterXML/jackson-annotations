@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  *  public class Name {
  *    public String first, last;
  *  }
- *</pre>  
+ *</pre>
  * which would normally be serialized as follows (assuming {@code @JsonUnwrapped}
  * had no effect):
  *<pre>

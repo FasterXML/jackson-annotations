@@ -14,7 +14,7 @@ import java.util.Objects;
  *<pre>
  *  // Include Java class name ("com.myempl.ImplClass") as JSON property "class"
  *  &#064;JsonTypeInfo(use=Id.CLASS, include=As.PROPERTY, property="class")
- *  
+ *
  *  // Include logical type name (defined in impl classes) as wrapper; 2 annotations
  *  &#064;JsonTypeInfo(use=Id.NAME, include=As.WRAPPER_OBJECT)
  *  &#064;JsonSubTypes({com.myemp.Impl1.class, com.myempl.Impl2.class})
@@ -62,13 +62,13 @@ import java.util.Objects;
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonTypeInfo
-{    
+{
     /*
     /**********************************************************
     /* Value enumerations used for properties
     /**********************************************************
      */
-    
+
     /**
      * Definition of different type identifiers that can be included in JSON
      * during serialization, and used for deserialization.
@@ -214,20 +214,20 @@ public @interface JsonTypeInfo
         EXISTING_PROPERTY
         ;
     }
-    
+
     /*
     /**********************************************************
     /* Annotation properties
     /**********************************************************
      */
-    
+
     /**
      * Specifies kind of type metadata to use when serializing type information
      * for instances of annotated type  and its subtypes; as well as what is expected
      * during deserialization.
      */
-    public Id use();    
-    
+    public Id use();
+
     /**
      * Specifies mechanism to use for including type metadata (if any; for
      * {@link Id#NONE} nothing is included); used when serializing,
@@ -426,7 +426,7 @@ public @interface JsonTypeInfo
             return (v != null) &&
                 (v._idType != null) && (v._idType != Id.NONE);
         }
-        
+
         /*
         /**********************************************************************
         /* Standard methods

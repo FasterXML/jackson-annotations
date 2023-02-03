@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  *<p>
  * NOTE: As of Jackson 2.6, use of {@link JsonProperty#required()} is supported
  * for Creator methods (but not necessarily for regular setters or fields!).
- * 
+ *
  * @see JsonProperty
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR})

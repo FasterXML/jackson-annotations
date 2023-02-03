@@ -61,7 +61,7 @@ public @interface JsonProperty
      * values.
      */
     public final static int INDEX_UNKNOWN = -1;
-    
+
     /**
      * Defines name of the logical property, i.e. JSON object field
      * name to use for the property. If value is empty String (which is the
@@ -135,7 +135,7 @@ public @interface JsonProperty
      * solely based on visibility and other annotations.
      */
     Access access() default Access.AUTO;
-    
+
     /**
      * Various options for {@link #access} property, specifying how property
      * may be accessed during serialization ("read") and deserialization ("write")

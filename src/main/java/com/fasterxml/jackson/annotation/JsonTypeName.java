@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * has. Used with {@link JsonTypeInfo} (and specifically its
  * {@link JsonTypeInfo#use} property) to establish relationship
  * between type names and types.
- * 
+ *
  * @author tatu
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})

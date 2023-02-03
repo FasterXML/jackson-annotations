@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation 
+ * Marker annotation
  * that indicates that the value of annotated accessor (either field
  * or "getter" method [a method with non-void return type, no args])
  * is to be used as the single value to serialize for the instance,

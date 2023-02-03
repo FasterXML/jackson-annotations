@@ -14,7 +14,7 @@ import java.lang.reflect.Modifier;
  * public member methods that return a value, do not take argument,
  * and have prefix "get" in their name.
  *<p>
- * Default setting for all accessors is {@link Visibility#DEFAULT}, which 
+ * Default setting for all accessors is {@link Visibility#DEFAULT}, which
  * in turn means that the global defaults are used. Defaults
  * are different for different accessor types (getters need to be public;
  * setters can have any access modifier, for example).
@@ -63,7 +63,7 @@ public @interface JsonAutoDetect
          * types.
          */
         NONE,
-        
+
         /**
          * Value that indicates that default visibility level (whatever it is,
          * depends on context) is to be used. This usually means that inherited
@@ -91,7 +91,7 @@ public @interface JsonAutoDetect
             }
         }
     }
-    
+
     /**
      * Minimum visibility required for auto-detecting regular getter methods.
      */
@@ -101,10 +101,10 @@ public @interface JsonAutoDetect
      * Minimum visibility required for auto-detecting is-getter methods.
      */
     Visibility isGetterVisibility() default Visibility.DEFAULT;
-    
+
     /**
      * Minimum visibility required for auto-detecting setter methods.
-     */    
+     */
     Visibility setterVisibility() default Visibility.DEFAULT;
 
     /**
@@ -131,7 +131,7 @@ public @interface JsonAutoDetect
 
     /**
      * Minimum visibility required for auto-detecting member fields.
-     */ 
+     */
     Visibility fieldVisibility() default Visibility.DEFAULT;
 
     /*
@@ -209,7 +209,7 @@ public @interface JsonAutoDetect
             return construct(src.fieldVisibility(),
                     src.getterVisibility(), src.isGetterVisibility(), src.setterVisibility(),
                     src.creatorVisibility(), src.scalarConstructorVisibility());
-                    
+
         }
 
         /**
@@ -292,7 +292,7 @@ public @interface JsonAutoDetect
             return construct(_fieldVisibility, _getterVisibility, _isGetterVisibility,
                     _setterVisibility, _creatorVisibility, v);
         }
-        
+
         public static Value merge(Value base, Value overrides)
         {
             return (base == null) ? overrides
@@ -318,7 +318,7 @@ public @interface JsonAutoDetect
         private static Visibility _override(Visibility base, Visibility override) {
             return (override == Visibility.DEFAULT) ? base : override;
         }
-        
+
         @Override
         public Class<JsonAutoDetect> valueFor() {
             return JsonAutoDetect.class;

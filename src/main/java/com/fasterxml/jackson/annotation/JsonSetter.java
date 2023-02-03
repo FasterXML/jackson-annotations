@@ -66,7 +66,7 @@ public @interface JsonSetter
         private final Nulls _nulls;
 
         private final Nulls _contentNulls;
-        
+
         /**
          * Default instance used in place of "default settings".
          */
@@ -81,7 +81,7 @@ public @interface JsonSetter
         public Class<JsonSetter> valueFor() {
             return JsonSetter.class;
         }
-        
+
         // for JDK serialization
         protected Object readResolve() {
             if (_empty(_nulls, _contentNulls)) {
@@ -150,7 +150,7 @@ public @interface JsonSetter
         public static Value forValueNulls(Nulls nulls, Nulls contentNulls) {
             return construct(nulls, contentNulls);
         }
-        
+
         public static Value forContentNulls(Nulls nulls) {
             return construct(Nulls.DEFAULT, nulls);
         }
@@ -203,7 +203,7 @@ public @interface JsonSetter
             }
             return construct(valueNulls, contentNulls);
         }
-        
+
         public Value withContentNulls(Nulls nulls) {
             if (nulls == null) {
                 nulls = Nulls.DEFAULT;
@@ -238,7 +238,7 @@ public @interface JsonSetter
         /* Std method overrides
         /**********************************************************
          */
-        
+
         @Override
         public String toString() {
             return String.format("JsonSetter.Value(valueNulls=%s,contentNulls=%s)",
@@ -267,7 +267,7 @@ public @interface JsonSetter
         /* Internal methods
         /**********************************************************
          */
-        
+
         private static boolean _empty(Nulls nulls, Nulls contentNulls) {
             return (nulls == Nulls.DEFAULT)
                     && (contentNulls == Nulls.DEFAULT);

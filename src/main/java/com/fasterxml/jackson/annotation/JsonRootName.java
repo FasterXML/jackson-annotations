@@ -30,7 +30,7 @@ public @interface JsonRootName
      * construct fully-qualified name.
      */
     public String namespace() default "";
-    
+
     /*
      * Optional marker property that can be defined as <code>true</code> to force
      * wrapping of root element, regardless of whether globally

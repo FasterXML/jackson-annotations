@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  * Note: only methods and fields can be annotated with this annotation: constructor
  * arguments should NOT be annotated, as they can not be either managed or back
  * references.
- * 
+ *
  * @author tatu
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD})

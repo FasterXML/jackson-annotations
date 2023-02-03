@@ -30,13 +30,13 @@ public class FormatTest extends TestBase
 
     public void testEquality() {
         JsonFormat.Value v1 = JsonFormat.Value.forShape(Shape.BOOLEAN);
-        
+
         // then let's converge
         assertFalse(v1.equals(v1.withPattern("ZBC")));
         assertFalse(v1.equals(v1.withFeature(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)));
         assertFalse(v1.equals(v1.withoutFeature(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)));
     }
-    
+
     public void testToString() {
         assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
@@ -66,7 +66,7 @@ public class FormatTest extends TestBase
         assertFalse(EMPTY.hasTimeZone());
 
         assertNull(EMPTY.getLocale());
-        
+
         // then with a non-empty one
         final String TEST_PATTERN = "format-string"; // not parsed, usage varies
 

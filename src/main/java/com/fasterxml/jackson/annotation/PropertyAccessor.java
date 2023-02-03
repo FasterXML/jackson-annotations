@@ -63,7 +63,7 @@ public enum PropertyAccessor
      * @since 3.0
      */
     SCALAR_CONSTRUCTOR,
-    
+
     /**
      * This pseudo-type indicates that none of accessors if affected.
      */

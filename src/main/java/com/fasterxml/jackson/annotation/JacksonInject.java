@@ -47,7 +47,7 @@ public @interface JacksonInject
     /* (which can not be implemented etc.)
     /**********************************************************
      */
-    
+
     /**
      * Helper class used to contain information from a single {@link JacksonInject}
      * annotation, as well as to provide possible overrides from non-annotation sources.
@@ -58,7 +58,7 @@ public @interface JacksonInject
     {
         private static final long serialVersionUID = 1L;
 
-        protected final static Value EMPTY = new Value(null, null);        
+        protected final static Value EMPTY = new Value(null, null);
 
         /**
          * Id to use to access injected value; if `null`, "default" name, derived
@@ -142,7 +142,7 @@ public @interface JacksonInject
         /* Accessors
         /**********************************************************
          */
-        
+
         public Object getId() { return _id; }
         public Boolean getUseInput() { return _useInput; }
 
@@ -159,7 +159,7 @@ public @interface JacksonInject
         /* Std method overrides
         /**********************************************************
          */
-        
+
         @Override
         public String toString() {
             return String.format("JacksonInject.Value(id=%s,useInput=%s)",

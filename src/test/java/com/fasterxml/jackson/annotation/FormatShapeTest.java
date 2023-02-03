@@ -16,7 +16,7 @@ public class FormatShapeTest extends TestBase
         JsonFormat.Value v1 = JsonFormat.Value.forShape(Shape.BOOLEAN);
         JsonFormat.Value v2 = JsonFormat.Value.forShape(Shape.BOOLEAN);
         JsonFormat.Value v3 = JsonFormat.Value.forShape(Shape.SCALAR);
-        
+
         assertTrue(v1.equals(v2));
         assertTrue(v2.equals(v1));
 
@@ -27,7 +27,7 @@ public class FormatShapeTest extends TestBase
 
         // not strictly guaranteed but...
         assertFalse(v1.hashCode() == v3.hashCode());
-    
+
         assertEquals(v1, v3.withShape(Shape.BOOLEAN));
     }
 
@@ -64,7 +64,7 @@ public class FormatShapeTest extends TestBase
         assertFalse(Shape.isNumeric(Shape.POJO));
         assertTrue(Shape.POJO.isStructured());
         assertTrue(Shape.isStructured(Shape.POJO));
-        
+
         assertFalse(Shape.ANY.isNumeric());
         assertFalse(Shape.isNumeric(Shape.ANY));
         assertFalse(Shape.ANY.isStructured());
