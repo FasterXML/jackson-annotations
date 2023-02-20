@@ -18,6 +18,30 @@ import java.lang.annotation.Target;
  *  public String name;
  *}
  *</pre>
+ * </p>
+ * <p>
+ * NOTE: When there is more than one <b>alias-to-key match</b>, "Last one wins"
+ * rule is applied to the key of deserialization target object. But the same
+ * rule does NOT apply to the order of {@link JsonAlias#value()} field.
+ * </p>
+ * <p>
+ * For example,
+ * <pre>
+ * public class Person {
+ *    &#64;JsonAlias({ "name", "fullName" })
+ *    public String description;
+ * }
+ * </pre>
+ * below JSON object will be deserialized with <code>description</code> field value of "Jackson".
+ * <pre>
+ *  { "fullName": "Faster Jackson", "name": "Jackson"}
+ * </pre>
+ * And below JSON object will be deserialized with <code>description</code>
+ * field value of "Faster Jackson".
+ * <pre>
+ *  { "name": "Jackson", "fullName": "Faster Jackson"}
+ * </pre>
+ * </p>
  *
  * @since 2.9
  */
