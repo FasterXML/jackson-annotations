@@ -18,31 +18,22 @@ import java.lang.annotation.Target;
  *  public String name;
  *}
  *</pre>
- * </p>
  * <p>
- * NOTE: When there is more than one <b>alias-to-key match</b>, "Last one wins"
- * rule is applied to the key of deserialization target object. But the same
- * rule does NOT apply to the order of {@link JsonAlias#value()} field.
- * </p>
- * <p>
- * For example,
+ * NOTE: Order of alias declaration has no effect. All properties are assigned
+ * in the order they come from incoming JSON document. If same property is
+ * assigned more than once with different value, later will remain.
+ * For example, deserializing
  * <pre>
  * public class Person {
  *    &#64;JsonAlias({ "name", "fullName" })
- *    public String description;
+ *    public String name;
  * }
  * </pre>
- * below JSON object will be deserialized with <code>description</code> field value of "Jackson".
+ * from
  * <pre>
- *  { "fullName": "Faster Jackson", "name": "Jackson"}
+ * { "fullName": "Faster Jackson", "name": "Jackson" }
  * </pre>
- * And below JSON object will be deserialized with <code>description</code>
- * field value of "Faster Jackson".
- * <pre>
- *  { "name": "Jackson", "fullName": "Faster Jackson"}
- * </pre>
- * </p>
- *
+ * will have value "Jackson".
  * @since 2.9
  */
 @Target({ElementType.ANNOTATION_TYPE, // for combo-annotations
