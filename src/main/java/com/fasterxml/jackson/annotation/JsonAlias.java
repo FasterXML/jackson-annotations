@@ -18,6 +18,22 @@ import java.lang.annotation.Target;
  *  public String name;
  *}
  *</pre>
+ * <p>
+ * NOTE: Order of alias declaration has no effect. All properties are assigned
+ * in the order they come from incoming JSON document. If same property is
+ * assigned more than once with different value, later will remain.
+ * For example, deserializing
+ * <pre>
+ * public class Person {
+ *    &#64;JsonAlias({ "name", "fullName" })
+ *    public String name;
+ * }
+ * </pre>
+ * from
+ * <pre>
+ * { "fullName": "Faster Jackson", "name": "Jackson" }
+ * </pre>
+ * will have value "Jackson".
  */
 @Target({ElementType.ANNOTATION_TYPE, // for combo-annotations
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER// for properties (field, setter, ctor param)
