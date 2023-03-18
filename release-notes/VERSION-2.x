@@ -11,7 +11,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.15.0 (not yet released)
+2.15.0-rc1 (18-Mar-2023)
 
 #211: Add `JsonFormat.Feature`s: READ_UNKNOWN_ENUM_VALUES_AS_NULL,
   READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE
