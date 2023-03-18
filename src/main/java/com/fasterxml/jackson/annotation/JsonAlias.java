@@ -34,6 +34,26 @@ import java.lang.annotation.Target;
  * { "fullName": "Faster Jackson", "name": "Jackson" }
  * </pre>
  * will have value "Jackson".
+ * <p>
+ * Also, can be used with enums where incoming JSON properties may not match the defined
+ * enum values. For instance, if you have an enum called {@code Size} with values
+ * {@code SMALL}, {@code MEDIUM}, and {@code LARGE}, you can use this annotation
+ * to define alternate values for each enum value. This way, the deserialization
+ * process can map the incoming JSON values to the correct enum values.
+ * <p>Sample implementation:
+ * <pre>public enum Size {
+ *     &#64;JsonAlias({ "small", "s", "S" })
+ *     SMALL,
+ *
+ *     &#64;JsonAlias({ "medium", "m", "M" })
+ *     MEDIUM,
+ *
+ *     &#64;JsonAlias({ "large", "l", "L" })
+ *     LARGE
+ * }</pre>
+ * <p>
+ * During deserialization, any of these JSON structures will be valid
+ * and correctly mapped to the MEDIUM enum value: {"size": "m"}, {"size": "medium"}, or {"size": "M"}.
  */
 @Target({ElementType.ANNOTATION_TYPE, // for combo-annotations
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER// for properties (field, setter, ctor param)
