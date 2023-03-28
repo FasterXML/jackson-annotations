@@ -11,14 +11,11 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-Not yet released
-
-#214: Add NOTICE file with copyright information
-
-2.15.0-rc1 (18-Mar-2023)
+2.15.0-rc2 (28-Mar-2023)
 
 #211: Add `JsonFormat.Feature`s: READ_UNKNOWN_ENUM_VALUES_AS_NULL,
   READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE
+#214: Add NOTICE file with copyright information
 
 2.14.0 (05-Nov-2022)
 
