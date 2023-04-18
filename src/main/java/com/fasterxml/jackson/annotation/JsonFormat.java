@@ -279,6 +279,15 @@ public @interface JsonFormat
         READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
 
         /**
+         * Override for {@code DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE},
+         * (counterpart to {@link #WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS}),
+         * similar constraints apply.
+         *
+         * @since 2.15
+         */
+        READ_DATE_TIMESTAMPS_AS_NANOSECONDS,
+
+        /**
          * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
          * which allows case-sensitive matching of (some) property values, such
          * as {@code Enum}s.
