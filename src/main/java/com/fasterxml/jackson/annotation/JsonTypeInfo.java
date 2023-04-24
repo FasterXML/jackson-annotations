@@ -313,7 +313,7 @@ public @interface JsonTypeInfo
      *
      * @since 2.5
     public boolean skipWritingDefault() default false;
-    /*
+    */
 
     /*
     /**********************************************************
@@ -333,18 +333,19 @@ public @interface JsonTypeInfo
     public abstract static class None {}
 
     /**
-     * Determines whether strict type ID handling should be used for this type or not. This is per-type configuration of
-     * {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES} and will <strong>always</strong>
-     * override the global configuration.
+     * Specifies whether the type ID should be strictly required during polymorphic deserialization of its subtypes.
      * <p>
-     * If set to {@link OptBoolean#TRUE}, then {@code InvalidTypeIdException} will be thrown if no type information
-     * is provided during polymorphic deserialization for this type;
-     * if set to {@link OptBoolean#FALSE}, then the deserialization may proceed without the type information assuming
-     * sub-type is a legitimate target (non-abstract);
-     * if set to {@link OptBoolean#DEFAULT}, then global configuration of
-     * {@code MapperFeature.REQUIRE_TYPE_ID_FOR_SUBTYPES} is used for type id handling.
+     * If set to {@link OptBoolean#TRUE}, an {@code InvalidTypeIdException} will be thrown if no type 
+     * information is provided. 
+     * If set to {@link OptBoolean#FALSE}, deserialization may proceed without type information if the 
+     * subtype is a legitimate target (non-abstract). 
+     * If set to {@link OptBoolean#DEFAULT}, the global configuration of 
+     * {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES} is used for type ID handling.
+     * <p>
+     * NOTE: This setting is specific to this type and will <strong>always override</strong> the global 
+     * configuration of {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES}.
      *
      * @since 2.16
      */
-    OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
+    public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
 }
