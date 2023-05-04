@@ -126,6 +126,8 @@ public @interface JsonTypeInfo
          * thrown if not enough unique information is present to select a single subtype.
          * <br>If deduction is being used annotation properties {@code visible},
          * {@code property} and {@code include} are ignored.
+         * <p>
+         * On serialization, no type ID is written, and only regular properties are included.
          *
          * @since 2.12.0.
          */
