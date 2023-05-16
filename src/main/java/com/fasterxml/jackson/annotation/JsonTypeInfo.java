@@ -344,7 +344,6 @@ public @interface JsonTypeInfo
         protected final Class<?> _defaultImpl;
         protected final boolean _idVisible;
         protected final Boolean _requireTypeIdForSubtypes;
-        
 
         /*
         /**********************************************************************
