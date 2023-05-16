@@ -127,7 +127,7 @@ public @interface JsonTypeInfo
          * <p>
          * On serialization, no type ID is written, and only regular properties are included.
          *
-         * @since 2.12.0.
+         * @since 2.12
          */
         DEDUCTION(null),
 
@@ -212,6 +212,11 @@ public @interface JsonTypeInfo
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
+<<<<<<< HEAD
+=======
+         *
+         * @since 2.3 but databind <b>only since 2.5</b>.
+>>>>>>> 2.16
          */
         EXISTING_PROPERTY
         ;
@@ -296,13 +301,24 @@ public @interface JsonTypeInfo
 
     // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
     //   Hope for better luck with 3.0 or later
+
+    // public boolean skipWritingDefault() default false;
+
     /**
-     * Property that defines whether type serializer is allowed to omit writing
-     * of type id, in case that value written has type same as {@link #defaultImpl()}.
-     * If true, omission is allowed (although writer may or may not be able to do that);
-     * if false, type id should always be written still.
-    public boolean skipWritingDefault() default false;
-    */
+     * Specifies whether the type ID should be strictly required during polymorphic
+     * deserialization of its subtypes.
+     * <p>
+     * If set to {@link OptBoolean#TRUE}, an {@code InvalidTypeIdException} will
+     * be thrown if no type information is provided. 
+     * If set to {@link OptBoolean#FALSE}, deserialization may proceed without
+     * type information if the  subtype is a legitimate target (non-abstract). 
+     * If set to {@link OptBoolean#DEFAULT}, the global configuration of 
+     * {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES} is used for type ID handling.
+     * <p>
+     * NOTE: This setting is specific to this type and will <strong>always override</strong>
+     * the global configuration of {@code MapperFeature.REQUIRE_TYPE_ID_FOR_SUBTYPES}.
+     */
+    public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
 
     /*
     /**********************************************************************
