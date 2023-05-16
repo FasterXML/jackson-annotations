@@ -305,16 +305,6 @@ public @interface JsonTypeInfo
      */
     public boolean visible() default false;
 
-    // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
-    //   Hope for better luck in future
-    /*
-     * Property that defines whether type serializer is allowed to omit writing
-     * of type id, in case that value written has type same as {@link #defaultImpl()}.
-     * If true, omission is allowed (although writer may or may not be able to do that);
-     * if false, type id should always be written still.
-     */
-    // public boolean skipWritingDefault() default false;
-
     /*
     /**********************************************************
     /* Helper classes
