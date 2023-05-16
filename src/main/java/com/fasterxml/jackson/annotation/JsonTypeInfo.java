@@ -315,7 +315,7 @@ public @interface JsonTypeInfo
      *
      * @since 2.5
     public boolean skipWritingDefault() default false;
-    /*
+    */
 
     /*
     /**********************************************************
@@ -332,5 +332,22 @@ public @interface JsonTypeInfo
      *    if such behavior is needed; this is rarely necessary.
      */
     @Deprecated
-    public abstract static class None { }
+    public abstract static class None {}
+
+    /**
+     * Specifies whether the type ID should be strictly required during polymorphic deserialization of its subtypes.
+     * <p>
+     * If set to {@link OptBoolean#TRUE}, an {@code InvalidTypeIdException} will be thrown if no type 
+     * information is provided. 
+     * If set to {@link OptBoolean#FALSE}, deserialization may proceed without type information if the 
+     * subtype is a legitimate target (non-abstract). 
+     * If set to {@link OptBoolean#DEFAULT}, the global configuration of 
+     * {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES} is used for type ID handling.
+     * <p>
+     * NOTE: This setting is specific to this type and will <strong>always override</strong> the global 
+     * configuration of {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES}.
+     *
+     * @since 2.16
+     */
+    public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
 }
