@@ -129,7 +129,7 @@ public @interface JsonTypeInfo
          * <p>
          * On serialization, no type ID is written, and only regular properties are included.
          *
-         * @since 2.12.0.
+         * @since 2.12
          */
         DEDUCTION(null),
 
@@ -215,7 +215,7 @@ public @interface JsonTypeInfo
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
          *
-         * @since 2.3.0 but databind <b>only since 2.5.0</b>.
+         * @since 2.3 but databind <b>only since 2.5</b>.
          */
         EXISTING_PROPERTY
         ;
@@ -306,16 +306,14 @@ public @interface JsonTypeInfo
     public boolean visible() default false;
 
     // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
-    //   Hope for better luck with 2.8 or later
-    /**
+    //   Hope for better luck in future
+    /*
      * Property that defines whether type serializer is allowed to omit writing
      * of type id, in case that value written has type same as {@link #defaultImpl()}.
      * If true, omission is allowed (although writer may or may not be able to do that);
      * if false, type id should always be written still.
-     *
-     * @since 2.5
-    public boolean skipWritingDefault() default false;
-    */
+     */
+    // public boolean skipWritingDefault() default false;
 
     /*
     /**********************************************************
@@ -335,17 +333,18 @@ public @interface JsonTypeInfo
     public abstract static class None {}
 
     /**
-     * Specifies whether the type ID should be strictly required during polymorphic deserialization of its subtypes.
+     * Specifies whether the type ID should be strictly required during polymorphic
+     * deserialization of its subtypes.
      * <p>
-     * If set to {@link OptBoolean#TRUE}, an {@code InvalidTypeIdException} will be thrown if no type 
-     * information is provided. 
-     * If set to {@link OptBoolean#FALSE}, deserialization may proceed without type information if the 
-     * subtype is a legitimate target (non-abstract). 
+     * If set to {@link OptBoolean#TRUE}, an {@code InvalidTypeIdException} will
+     * be thrown if no type information is provided. 
+     * If set to {@link OptBoolean#FALSE}, deserialization may proceed without
+     * type information if the  subtype is a legitimate target (non-abstract). 
      * If set to {@link OptBoolean#DEFAULT}, the global configuration of 
      * {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES} is used for type ID handling.
      * <p>
-     * NOTE: This setting is specific to this type and will <strong>always override</strong> the global 
-     * configuration of {@code MapperFeature#REQUIRE_TYPE_ID_FOR_SUBTYPES}.
+     * NOTE: This setting is specific to this type and will <strong>always override</strong>
+     * the global configuration of {@code MapperFeature.REQUIRE_TYPE_ID_FOR_SUBTYPES}.
      *
      * @since 2.16
      */

@@ -11,6 +11,12 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.16.0 (not yet released)
+
+#223: Add new `OptBoolean` valued property in `@JsonTypeInfo` to allow
+  per-type configuration of strict type id handling
+ (contributed by Joo-Hyuk K)
+
 2.15.0 (23-Apr-2023)
 
 #211: Add `JsonFormat.Feature`s: READ_UNKNOWN_ENUM_VALUES_AS_NULL,
