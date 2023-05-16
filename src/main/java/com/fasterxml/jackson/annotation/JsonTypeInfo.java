@@ -212,11 +212,6 @@ public @interface JsonTypeInfo
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
-<<<<<<< HEAD
-=======
-         *
-         * @since 2.3 but databind <b>only since 2.5</b>.
->>>>>>> 2.16 
          */
         EXISTING_PROPERTY
         ;
@@ -298,11 +293,6 @@ public @interface JsonTypeInfo
      * <code>JsonDeserializer</code>.
      */
     public boolean visible() default false;
-
-    // 19-Dec-2014, tatu: Was hoping to implement for 2.5, but didn't quite make it.
-    //   Hope for better luck with 3.0 or later
-
-    // public boolean skipWritingDefault() default false;
 
     /**
      * Specifies whether the type ID should be strictly required during polymorphic
