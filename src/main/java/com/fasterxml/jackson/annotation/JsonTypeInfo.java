@@ -216,7 +216,7 @@ public @interface JsonTypeInfo
 =======
          *
          * @since 2.3 but databind <b>only since 2.5</b>.
->>>>>>> 2.16
+>>>>>>> 2.16 
          */
         EXISTING_PROPERTY
         ;
