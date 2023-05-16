@@ -78,28 +78,25 @@ public class JsonTypeInfoTest extends TestBase
     }
 
     public void testWithRequireTypeIdForSubtypes() {
-        // Create an empty JsonTypeInfo.Value object
         JsonTypeInfo.Value empty = JsonTypeInfo.Value.EMPTY;
         assertNull(empty.getRequireTypeIdForSubtypes());
 
-        // Set requireTypeIdForSubtypes to OptBoolean.TRUE
         JsonTypeInfo.Value requireTypeIdTrue = empty.withRequireTypeIdForSubtypes(Boolean.TRUE);
         assertEquals(Boolean.TRUE, requireTypeIdTrue.getRequireTypeIdForSubtypes());
 
-        // Set requireTypeIdForSubtypes to OptBoolean.FALSE
         JsonTypeInfo.Value requireTypeIdFalse = empty.withRequireTypeIdForSubtypes(Boolean.FALSE);
         assertEquals(Boolean.FALSE, requireTypeIdFalse.getRequireTypeIdForSubtypes());
 
-        // Set requireTypeIdForSubtypes to OptBoolean.DEFAULT
         JsonTypeInfo.Value requireTypeIdDefault = empty.withRequireTypeIdForSubtypes(null);
         assertNull(requireTypeIdDefault.getRequireTypeIdForSubtypes());
     }
     
     public void testDefaultValueForRequireTypeIdForSubtypes() {
+        // default value
         JsonTypeInfo.Value v3 = JsonTypeInfo.Value.from(Anno3.class.getAnnotation(JsonTypeInfo.class));
         assertNull(v3.getRequireTypeIdForSubtypes());
         
-        // toString
+        // toString()
         assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext," 
                 + "defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=null)", v3.toString());
     }
