@@ -335,7 +335,7 @@ public @interface JsonTypeInfo
 
         // should not really be needed usually but make sure defalts to `NONE`; other
         // values of less interest
-        protected final static Value EMPTY = new Value(Id.NONE, As.PROPERTY, null, null, false);
+        protected final static Value EMPTY = new Value(Id.NONE, As.PROPERTY, null, null, false, null);
 
         protected final Id _idType;
         protected final As _inclusionType;
@@ -343,6 +343,8 @@ public @interface JsonTypeInfo
 
         protected final Class<?> _defaultImpl;
         protected final boolean _idVisible;
+        protected final Boolean _requireTypeIdForSubtypes;
+        
 
         /*
         /**********************************************************************
@@ -351,17 +353,18 @@ public @interface JsonTypeInfo
          */
 
         protected Value(Id idType, As inclusionType,
-                String propertyName, Class<?> defaultImpl, boolean idVisible)
+                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
         {
             _defaultImpl = defaultImpl;
             _idType = idType;
             _inclusionType = inclusionType;
             _propertyName = propertyName;
             _idVisible = idVisible;
+            _requireTypeIdForSubtypes = requireTypeIdForSubtypes;
         }
 
         public static Value construct(Id idType, As inclusionType,
-                String propertyName, Class<?> defaultImpl, boolean idVisible)
+                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
         {
             // couple of overrides we need to apply here. First: if no propertyName specified,
             // use Id-specific property name
@@ -377,7 +380,7 @@ public @interface JsonTypeInfo
             if ((defaultImpl == null) || defaultImpl.isAnnotation()) {
                 defaultImpl = null;
             }
-            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible);
+            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes);
         }
 
         public static Value from(JsonTypeInfo src) {
@@ -385,7 +388,7 @@ public @interface JsonTypeInfo
                 return null;
             }
             return construct(src.use(), src.include(),
-                    src.property(), src.defaultImpl(), src.visible());
+                    src.property(), src.defaultImpl(), src.visible(), src.requireTypeIdForSubtypes().asBoolean());
         }
 
         /*
@@ -396,27 +399,32 @@ public @interface JsonTypeInfo
 
         public Value withDefaultImpl(Class<?> impl) {
             return (impl == _defaultImpl) ? this :
-                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible);
+                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible, _requireTypeIdForSubtypes);
         }
 
         public Value withIdType(Id idType) {
             return (idType == _idType) ? this :
-                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible);
+                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
         }
 
         public Value withInclusionType(As inclusionType) {
             return (inclusionType == _inclusionType) ? this :
-                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible);
+                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
         }
 
         public Value withPropertyName(String propName) {
             return (propName == _propertyName) ? this :
-                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible);
+                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
         }
 
         public Value withIdVisible(boolean visible) {
             return (visible == _idVisible) ? this :
-                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible);
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible, _requireTypeIdForSubtypes);
+        }
+        
+        public Value withRequireTypeIdForSubtypes(Boolean requireTypeIdForSubtypes) {
+            return (_requireTypeIdForSubtypes == requireTypeIdForSubtypes) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, requireTypeIdForSubtypes);
         }
 
         /*
@@ -435,6 +443,7 @@ public @interface JsonTypeInfo
         public As getInclusionType() { return _inclusionType; }
         public String getPropertyName() { return _propertyName; }
         public boolean getIdVisible() { return _idVisible; }
+        public Boolean getRequireTypeIdForSubtypes() { return _requireTypeIdForSubtypes; }
 
         /**
          * Static helper method for simple(r) checking of whether there's a Value instance
@@ -453,15 +462,16 @@ public @interface JsonTypeInfo
 
         @Override
         public String toString() {
-            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s)",
+            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s" 
+                            + ",requireTypeIdForSubtypes=%s)",
                     _idType, _inclusionType, _propertyName,
                     ((_defaultImpl == null) ? "NULL" : _defaultImpl.getName()),
-                    _idVisible);
+                    _idVisible, _requireTypeIdForSubtypes);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(_idType, _inclusionType, _propertyName, _defaultImpl)
+            return Objects.hash(_idType, _inclusionType, _propertyName, _defaultImpl, _requireTypeIdForSubtypes)
                 + (_idVisible ? 11 : -17);
         }
 
@@ -480,6 +490,7 @@ public @interface JsonTypeInfo
                     && (a._defaultImpl == b._defaultImpl)
                     && (a._idVisible == b._idVisible)
                     && Objects.equals(a._propertyName, b._propertyName)
+                    && Objects.equals(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
             ;
         }
     }
