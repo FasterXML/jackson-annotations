@@ -5,14 +5,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 public class JsonTypeInfoTest extends TestBase
 {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true,
-            defaultImpl = JsonTypeInfo.class)
+            defaultImpl = JsonTypeInfo.class, requireTypeIdForSubtypes = OptBoolean.TRUE)
     private final static class Anno1 { }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXTERNAL_PROPERTY,
             property = "ext",
-            defaultImpl = Void.class)
+            defaultImpl = Void.class, requireTypeIdForSubtypes = OptBoolean.FALSE)
     private final static class Anno2 { }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.EXTERNAL_PROPERTY,
+            property = "ext",
+            defaultImpl = Void.class)
+    private final static class Anno3 { }
+    
     public void testEmpty() {
         // 07-Mar-2017, tatu: Important to distinguish "none" from 'empty' value...
         assertNull(JsonTypeInfo.Value.from(null));
@@ -28,6 +33,7 @@ public class JsonTypeInfoTest extends TestBase
         assertEquals("@class", v1.getPropertyName());
         assertTrue(v1.getIdVisible());
         assertNull(v1.getDefaultImpl());
+        assertTrue(v1.getRequireTypeIdForSubtypes());
 
         JsonTypeInfo.Value v2 = JsonTypeInfo.Value.from(Anno2.class.getAnnotation(JsonTypeInfo.class));
         assertEquals(JsonTypeInfo.Id.NAME, v2.getIdType());
@@ -35,6 +41,7 @@ public class JsonTypeInfoTest extends TestBase
         assertEquals("ext", v2.getPropertyName());
         assertFalse(v2.getIdVisible());
         assertEquals(Void.class, v2.getDefaultImpl());
+        assertFalse(v2.getRequireTypeIdForSubtypes());
 
         assertTrue(v1.equals(v1));
         assertTrue(v2.equals(v2));
@@ -42,8 +49,8 @@ public class JsonTypeInfoTest extends TestBase
         assertFalse(v1.equals(v2));
         assertFalse(v2.equals(v1));
 
-        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true)", v1.toString());
-        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false)", v2.toString());
+        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true,requireTypeIdForSubtypes=true)", v1.toString());
+        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=false)", v2.toString());
     }
 
     public void testMutators() throws Exception
@@ -68,5 +75,32 @@ public class JsonTypeInfoTest extends TestBase
         assertFalse(v.withIdVisible(false).getIdVisible());
 
         assertEquals("foobar", v.withPropertyName("foobar").getPropertyName());
+    }
+
+    public void testWithRequireTypeIdForSubtypes() {
+        // Create an empty JsonTypeInfo.Value object
+        JsonTypeInfo.Value empty = JsonTypeInfo.Value.EMPTY;
+        assertNull(empty.getRequireTypeIdForSubtypes());
+
+        // Set requireTypeIdForSubtypes to OptBoolean.TRUE
+        JsonTypeInfo.Value requireTypeIdTrue = empty.withRequireTypeIdForSubtypes(Boolean.TRUE);
+        assertEquals(Boolean.TRUE, requireTypeIdTrue.getRequireTypeIdForSubtypes());
+
+        // Set requireTypeIdForSubtypes to OptBoolean.FALSE
+        JsonTypeInfo.Value requireTypeIdFalse = empty.withRequireTypeIdForSubtypes(Boolean.FALSE);
+        assertEquals(Boolean.FALSE, requireTypeIdFalse.getRequireTypeIdForSubtypes());
+
+        // Set requireTypeIdForSubtypes to OptBoolean.DEFAULT
+        JsonTypeInfo.Value requireTypeIdDefault = empty.withRequireTypeIdForSubtypes(null);
+        assertNull(requireTypeIdDefault.getRequireTypeIdForSubtypes());
+    }
+    
+    public void testDefaultValueForRequireTypeIdForSubtypes() {
+        JsonTypeInfo.Value v3 = JsonTypeInfo.Value.from(Anno3.class.getAnnotation(JsonTypeInfo.class));
+        assertNull(v3.getRequireTypeIdForSubtypes());
+        
+        // toString
+        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext," 
+                + "defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=null)", v3.toString());
     }
 }
