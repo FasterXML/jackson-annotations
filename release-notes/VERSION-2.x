@@ -16,6 +16,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 #223: Add new `OptBoolean` valued property in `@JsonTypeInfo` to allow
   per-type configuration of strict type id handling
  (contributed by Joo-Hyuk K)
+#229: Add `JsonTypeInfo.Value` object (backport from 3.0)
+ (contributed by Joo-Hyuk K)
 
 2.15.0 (23-Apr-2023)
 
