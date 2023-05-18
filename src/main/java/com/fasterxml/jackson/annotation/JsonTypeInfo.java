@@ -1,7 +1,9 @@
 package com.fasterxml.jackson.annotation;
 
-import java.lang.annotation.*;
-import java.util.Objects;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Annotation used for configuring details of if and how type information is
@@ -92,7 +94,7 @@ public @interface JsonTypeInfo
          * package name is included that is needed to construct fully-qualified name
          * given fully-qualified name of the declared supertype; additionally a single
          * leading dot ('.') must be used to indicate that partial class name is used.
-         * For example, for supertype "com.foo.Base", and concrete type
+         * For example, for supertype "com.foobar.Base", and concrete type
          * "com.foo.Impl", only ".Impl" would be included; and for "com.foo.impl.Impl2"
          * only ".impl.Impl2" would be included.
          *<br>
@@ -212,6 +214,8 @@ public @interface JsonTypeInfo
          * whereas with {@link JsonTypeId}, output of regular property is suppressed.
          * This mostly matters with respect to output order; this choice is the only
          * way to ensure specific placement of type id during serialization.
+         *
+         * @since 2.3 but databind <b>only since 2.5</b>.
          */
         EXISTING_PROPERTY
         ;
@@ -224,9 +228,10 @@ public @interface JsonTypeInfo
      */
 
     /**
-     * Specifies kind of type metadata to use when serializing type information
-     * for instances of annotated type  and its subtypes; as well as what is expected
-     * during deserialization.
+     * Specifies kind of type metadata to use when serializing
+     * type information for instances of annotated type
+     * and its subtypes; as well as what is expected during
+     * deserialization.
      */
     public Id use();
 
@@ -272,11 +277,15 @@ public @interface JsonTypeInfo
      *<ul>
      * <li>{@link java.lang.Void} means that objects with unmappable (or missing)
      *    type are to be mapped to null references.
+     *    For backwards compatibility (2.5 and below), value of
+     *    <code>com.fasterxml.jackson.databind.annotation.NoClass</code> is also allowed
+     *    for such usage.
      *  </li>
      * <li>Placeholder value of {@link JsonTypeInfo} (that is, this annotation type
      *    itself} means "there is no default implementation" (in which
-     *   case an error results from unmappable type). Actually works for ALL
-     *   annotation types (since they can not be instantiated)
+     *   case an error results from unmappable type).
+     *   For backwards compatibility with earlier versions (2.5 and below),
+     *   value of {@link JsonTypeInfo.None} may also be used.
      *  </li>
      * </ul>
      */
@@ -291,8 +300,27 @@ public @interface JsonTypeInfo
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
      * <code>JsonDeserializer</code>.
+     *
+     * @since 2.0
      */
     public boolean visible() default false;
+
+    /*
+    /**********************************************************
+    /* Helper classes
+    /**********************************************************
+     */
+
+    /**
+     * This marker class that is only to be used with <code>defaultImpl</code>
+     * annotation property, to indicate that there is no default implementation
+     * specified.
+     *
+     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
+     *    if such behavior is needed; this is rarely necessary.
+     */
+    @Deprecated
+    public abstract static class None {}
 
     /**
      * Specifies whether the type ID should be strictly required during polymorphic
@@ -307,6 +335,8 @@ public @interface JsonTypeInfo
      * <p>
      * NOTE: This setting is specific to this type and will <strong>always override</strong>
      * the global configuration of {@code MapperFeature.REQUIRE_TYPE_ID_FOR_SUBTYPES}.
+     *
+     * @since 2.16
      */
     public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
 
