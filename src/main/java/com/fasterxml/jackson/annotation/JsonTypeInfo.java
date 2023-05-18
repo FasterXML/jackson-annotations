@@ -339,4 +339,195 @@ public @interface JsonTypeInfo
      * @since 2.16
      */
     public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
+
+    /*
+    /**********************************************************************
+    /* Value class used to enclose information, allow for
+    /* merging of layered configuration settings.
+    /**********************************************************************
+     */
+
+    public static class Value
+        implements JacksonAnnotationValue<JsonTypeInfo>,
+            java.io.Serializable
+    {
+        private static final long serialVersionUID = 1L;
+
+        // should not really be needed usually but make sure defalts to `NONE`; other
+        // values of less interest
+        protected final static Value EMPTY = new Value(Id.NONE, As.PROPERTY, null, null, false, null);
+
+        protected final Id _idType;
+        protected final As _inclusionType;
+        protected final String _propertyName;
+
+        protected final Class<?> _defaultImpl;
+        protected final boolean _idVisible;
+        protected final Boolean _requireTypeIdForSubtypes;
+
+        /*
+        /**********************************************************************
+        /* Construction
+        /**********************************************************************
+         */
+
+        protected Value(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
+        {
+            _defaultImpl = defaultImpl;
+            _idType = idType;
+            _inclusionType = inclusionType;
+            _propertyName = propertyName;
+            _idVisible = idVisible;
+            _requireTypeIdForSubtypes = requireTypeIdForSubtypes;
+        }
+
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
+        {
+            // couple of overrides we need to apply here. First: if no propertyName specified,
+            // use Id-specific property name
+            if ((propertyName == null) || propertyName.isEmpty()) {
+                if (idType != null) {
+                    propertyName = idType.getDefaultPropertyName();
+                } else {
+                    propertyName = "";
+                }
+            }
+            // Although we can not do much here for special handling of `Void`, we can convert
+            // annotation types as `null` (== no default implementation)
+            if ((defaultImpl == null) || defaultImpl.isAnnotation()) {
+                defaultImpl = null;
+            }
+            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes);
+        }
+
+        public static Value from(JsonTypeInfo src) {
+            if (src == null) {
+                return null;
+            }
+            return construct(src.use(), src.include(),
+                    src.property(), src.defaultImpl(), src.visible(), src.requireTypeIdForSubtypes().asBoolean());
+        }
+
+        /*
+        /**********************************************************************
+        /* Mutators
+        /**********************************************************************
+         */
+
+        public Value withDefaultImpl(Class<?> impl) {
+            return (impl == _defaultImpl) ? this :
+                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible, _requireTypeIdForSubtypes);
+        }
+
+        public Value withIdType(Id idType) {
+            return (idType == _idType) ? this :
+                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+        }
+
+        public Value withInclusionType(As inclusionType) {
+            return (inclusionType == _inclusionType) ? this :
+                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+        }
+
+        public Value withPropertyName(String propName) {
+            return (propName == _propertyName) ? this :
+                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+        }
+
+        public Value withIdVisible(boolean visible) {
+            return (visible == _idVisible) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible, _requireTypeIdForSubtypes);
+        }
+        
+        public Value withRequireTypeIdForSubtypes(Boolean requireTypeIdForSubtypes) {
+            return (_requireTypeIdForSubtypes == requireTypeIdForSubtypes) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, requireTypeIdForSubtypes);
+        }
+
+        /*
+        /**********************************************************************
+        /* Simple accessors
+        /**********************************************************************
+         */
+
+        @Override
+        public Class<JsonTypeInfo> valueFor() {
+            return JsonTypeInfo.class;
+        }
+
+        public Class<?> getDefaultImpl() { return _defaultImpl; }
+        public Id getIdType() { return _idType; }
+        public As getInclusionType() { return _inclusionType; }
+        public String getPropertyName() { return _propertyName; }
+        public boolean getIdVisible() { return _idVisible; }
+        public Boolean getRequireTypeIdForSubtypes() { return _requireTypeIdForSubtypes; }
+
+        /**
+         * Static helper method for simple(r) checking of whether there's a Value instance
+         * that indicates that polymorphic handling is (to be) enabled.
+         */
+        public static boolean isEnabled(JsonTypeInfo.Value v) {
+            return (v != null) &&
+                (v._idType != null) && (v._idType != Id.NONE);
+        }
+
+        /*
+        /**********************************************************************
+        /* Standard methods
+        /**********************************************************************
+         */
+
+        @Override
+        public String toString() {
+            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s" 
+                            + ",requireTypeIdForSubtypes=%s)",
+                    _idType, _inclusionType, _propertyName,
+                    ((_defaultImpl == null) ? "NULL" : _defaultImpl.getName()),
+                    _idVisible, _requireTypeIdForSubtypes);
+        }
+
+        @Override
+        public int hashCode() {
+            int hashCode = 1;
+            hashCode = 31 * hashCode + (_idType != null ? _idType.hashCode() : 0);
+            hashCode = 31 * hashCode + (_inclusionType != null ? _inclusionType.hashCode() : 0);
+            hashCode = 31 * hashCode + (_propertyName != null ? _propertyName.hashCode() : 0);
+            hashCode = 31 * hashCode + (_defaultImpl != null ? _defaultImpl.hashCode() : 0);
+            hashCode = 31 * hashCode + (_requireTypeIdForSubtypes ? 11 : -17);
+            hashCode = 31 * hashCode + (_idVisible ? 11 : -17);
+            return hashCode;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (o == null) return false;
+            return (o.getClass() == getClass())
+                    && _equals(this, (Value) o);
+        }
+
+        private static boolean _equals(Value a, Value b)
+        {
+            return (a._idType == b._idType)
+                    && (a._inclusionType == b._inclusionType)
+                    && (a._defaultImpl == b._defaultImpl)
+                    && (a._idVisible == b._idVisible)
+                    && _equal(a._propertyName, b._propertyName)
+                    && _equal(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
+            ;
+        }
+
+        private static <T> boolean _equal(T value1, T value2)
+        {
+            if (value1 == null) {
+                return (value2 == null);
+            }
+            if (value2 == null) {
+                return false;
+            }
+            return value1.equals(value2);
+        }
+    }
 }
