@@ -121,7 +121,7 @@ public @interface JsonTypeInfo
 
         /**
          * Means that the simple name of the Java class, equivalent to the value returned by {@link Class#getSimpleName()},
-         * is used as the type identifier.
+         * is used as the default type identifier, unless explicit name is specified by annotation {@link JsonTypeName}.
          *<br>
          * For instance: 
          * <ul>
