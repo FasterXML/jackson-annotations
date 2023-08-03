@@ -129,7 +129,7 @@ public @interface JsonTypeInfo
          *     <li>For an inner class "com.example.MyClass$Inner", only "Inner" is used.</li>
          * </ul>
          * <b>Note:</b> This approach reduces verbosity but requires the simple names to be unique 
-         * to avoid conflicts. If multiple classes share the same simple name, the first one declared
+         * to avoid conflicts. If multiple classes share the same simple name, <b>the first one declared</b>
          * will be used. This approach should be used with careful consideration of your type hierarchy.
          *
          * @since 2.16
