@@ -134,7 +134,7 @@ public @interface JsonTypeInfo
          *
          * @since 2.16
          */
-        SIMPLE_NAME("@simple"),
+        SIMPLE_NAME("@type"),
 
         /**
          * Means that no serialized typing-property is used. Types are <i>deduced</i> based
