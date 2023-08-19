@@ -61,6 +61,8 @@ public class JsonTypeInfoTest extends TestBase
         assertSame(v, v.withIdType(JsonTypeInfo.Id.CLASS));
         JsonTypeInfo.Value v2 = v.withIdType(JsonTypeInfo.Id.MINIMAL_CLASS);
         assertEquals(JsonTypeInfo.Id.MINIMAL_CLASS, v2.getIdType());
+        JsonTypeInfo.Value v3 = v.withIdType(JsonTypeInfo.Id.SIMPLE_NAME);
+        assertEquals(JsonTypeInfo.Id.SIMPLE_NAME, v3.getIdType());
 
         assertEquals(JsonTypeInfo.As.PROPERTY, v.getInclusionType());
         assertSame(v, v.withInclusionType(JsonTypeInfo.As.PROPERTY));
