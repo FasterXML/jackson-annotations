@@ -18,6 +18,8 @@ NOTE: Annotations module will never contain changes in patch versions,
  (contributed by Joo-Hyuk K)
 #229: Add `JsonTypeInfo.Value` object (backport from 3.0)
  (contributed by Joo-Hyuk K)
+#234: Add new `JsonTypeInfo.Id.SIMPLE_NAME`
+ (contributed by Joo-Hyuk K)
 
 2.15.0 (23-Apr-2023)
 
