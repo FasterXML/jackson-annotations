@@ -120,6 +120,23 @@ public @interface JsonTypeInfo
         NAME("@type"),
 
         /**
+         * Means that the simple name of the Java class, equivalent to the value returned by {@link Class#getSimpleName()},
+         * is used as the default type identifier, unless explicit name is specified by annotation {@link JsonTypeName}.
+         *<br>
+         * For instance: 
+         * <ul>
+         *     <li>For a class "com.example.MyClass", only "MyClass" is used.</li>
+         *     <li>For an inner class "com.example.MyClass$Inner", only "Inner" is used.</li>
+         * </ul>
+         * <b>Note:</b> This approach reduces verbosity but requires the simple names to be unique 
+         * to avoid conflicts. If multiple classes share the same simple name, <b>the last declared one</b>
+         * will be used. This approach should be used with careful consideration of your type hierarchy.
+         *
+         * @since 2.16
+         */
+        SIMPLE_NAME("@type"),
+
+        /**
          * Means that no serialized typing-property is used. Types are <i>deduced</i> based
          * on the fields available. Deduction is limited to the <i>names</i> of fields
          * (not their values or, consequently, any nested descendants). Exceptions will be
