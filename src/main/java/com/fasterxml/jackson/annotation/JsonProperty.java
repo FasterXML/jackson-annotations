@@ -103,6 +103,14 @@ public @interface JsonProperty
      * State of this property is exposed via introspection, and its
      * value is typically used by Schema generators, such as one for
      * JSON Schema.
+     *<p>
+     * Also note that the required value must come <b>directly</b> from the
+     * input source (e.g., JSON) and not from secondary sources, such as
+     * defaulting logic or absent value providers.
+     * If secondary sources are expected to supply the value,
+     * this property should be set to {@code false}. This is important because
+     * validation of {@code required} properties occurs before the application of
+     * secondary sources.
      *
      * @since 2.0
      */
