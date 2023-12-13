@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  *<p>
  * To base inclusion on value of contained value(s), you will typically also need
  * to specify {@link #content()} annotation; for example, specifying only
- * {@link #value} as {@link Include#NON_EMPTY} for a {link java.util.Map} would
+ * {@link #value} as {@link Include#NON_EMPTY} for a {@link java.util.Map} would
  * exclude <code>Map</code>s with no values, but would include <code>Map</code>s
  * with `null` values. To exclude Map with only `null` value, you would use both
  * annotations like so:
@@ -130,7 +130,7 @@ public @interface JsonInclude
          *<ul>
          *  <li>null</li>
          *  <li>"absent" value of a referential type (like Java 8 `Optional`, or
-         *     {link java.util.concurrent.atomic.AtomicReference}); that is, something
+         *     {@link java.util.concurrent.atomic.AtomicReference}); that is, something
          *     that would not deference to a non-null value.
          * </ul>
          * This option is mostly used to work with "Optional"s (Java 8, Guava).
