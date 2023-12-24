@@ -122,7 +122,7 @@ public @interface JsonInclude
          *<ul>
          *  <li>null</li>
          *  <li>"absent" value of a referential type (like Java 8 `Optional`, or
-         *     {link java.util.concurrent.atomic.AtomicReference}); that is, something
+         *     {@link java.util.concurrent.atomic.AtomicReference}); that is, something
          *     that would not deference to a non-null value.
          * </ul>
          * This option is mostly used to work with "Optional"s (Java 8, Guava).
