@@ -19,10 +19,12 @@ import java.lang.annotation.Target;
  * If used, all otherwise unmapped key-value pairs from JSON Object values
  * are added using mutator.
  *<p>
- * NOTE: ability to annotate fields was added in version 2.8; previously, only
+ * NOTE: ability to annotate fields was added in version 2.8; earlier only
  * methods could be annotated.
+ *<p>
+ * NOTE: ability to annotate (constructor) parameters was added in version 2.17.
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonAnySetter
