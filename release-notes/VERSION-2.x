@@ -14,7 +14,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 2.17.0 (not yet released)
 
 #242: Allow `@JsonAnySetter` on `ElementType.PARAMETER` (for use on
-  constructor parameter)
+  constructor parameters)
 
 2.16.0 (15-Nov-2023)
 
