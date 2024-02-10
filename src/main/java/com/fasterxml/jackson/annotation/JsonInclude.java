@@ -70,7 +70,7 @@ public @interface JsonInclude
      * (of  {@code ObjectMapper}), which by default simply calls
      * zero-argument constructor of the Filter Class.
      *<p>
-     * Whether value if is to be included or not is determined by calling
+     * Whether the value is to be included or not is determined by calling
      * Filter's {@code equals(value)} method: if it returns {@code true}
      * value is NOT included (it is "filtered out"); if {@code false} value
      * IS included ("not filtered out").
@@ -84,7 +84,7 @@ public @interface JsonInclude
      * (of  {@code ObjectMapper}), which by default simply calls
      * zero-argument constructor of the Filter Class.
      *<p>
-     * Whether content value if is to be included or not is determined by calling
+     * Whether the content value is to be included or not is determined by calling
      * Filter's {@code equals(value)} method: if it returns {@code true}
      * content value is NOT included (it is "filtered out"); if {@code false} content value
      * IS included ("not filtered out").
