@@ -11,6 +11,10 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.18.0 (not yet released)
+
+No changes since 2.17
+
 2.17.0 (not yet released)
 
 #242: Allow `@JsonAnySetter` on `ElementType.PARAMETER` (for use on
