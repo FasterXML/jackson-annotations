@@ -2,18 +2,22 @@ package com.fasterxml.jackson.annotation;
 
 import java.util.*;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Tests to verify that it is possibly to merge {@link JsonIgnoreProperties.Value}
  * instances for overrides
  */
-public class JsonIgnorePropertiesTest extends TestBase
-{
+public class JsonIgnorePropertiesTest {
     @JsonIgnoreProperties(value={ "foo", "bar" }, ignoreUnknown=true)
     private final static class Bogus {
     }
 
     private final JsonIgnoreProperties.Value EMPTY = JsonIgnoreProperties.Value.empty();
 
+    @Test
     public void testEmpty() {
         // ok to try to create from null; gives empty
         assertSame(EMPTY, JsonIgnoreProperties.Value.from(null));
@@ -23,6 +27,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertFalse(EMPTY.getAllowSetters());
     }
 
+    @Test
     public void testEquality() {
         assertEquals(EMPTY, EMPTY);
 
@@ -35,6 +40,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertFalse(v.equals(EMPTY));
     }
 
+    @Test
     public void testFromAnnotation() throws Exception
     {
         JsonIgnoreProperties.Value v = JsonIgnoreProperties.Value.from(
@@ -48,6 +54,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertEquals(_set("foo", "bar"), ign);
     }
 
+    @Test
     public void testFactories() {
         assertSame(EMPTY, JsonIgnoreProperties.Value.forIgnoreUnknown(false));
         assertSame(EMPTY, JsonIgnoreProperties.Value.forIgnoredProperties());
@@ -71,6 +78,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertEquals(_set("a", "b"), vdeser.findIgnoredForSerialization());
     }
 
+    @Test
     public void testMutantFactories()
     {
         assertEquals(2, EMPTY.withIgnored("a", "b").getIgnored().size());
@@ -89,6 +97,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertFalse(EMPTY.withoutMerge().getMerge());
     }
 
+    @Test
     public void testSimpleMerge()
     {
         JsonIgnoreProperties.Value v1 = EMPTY.withIgnoreUnknown().withAllowGetters();
@@ -117,6 +126,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertSame(v2b, v2b.withOverrides(EMPTY));
     }
 
+    @Test
     public void testMergeIgnoreProperties()
     {
         JsonIgnoreProperties.Value v1 = EMPTY.withIgnored("a");
@@ -131,6 +141,7 @@ public class JsonIgnorePropertiesTest extends TestBase
         assertTrue(all.contains("c"));
     }
 
+    @Test
     public void testToString() {
         assertEquals(
                 "JsonIgnoreProperties.Value(ignored=[],ignoreUnknown=false,allowGetters=false,allowSetters=true,merge=true)",

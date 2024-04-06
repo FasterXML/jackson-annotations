@@ -4,9 +4,12 @@ import java.lang.reflect.Member;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 // Silly test for JsonAutoDetect.Visibility type, for code coverage
-public class VisibilityTest extends TestBase
-{
+public class VisibilityTest {
     static class Bogus {
         public String value;
     }
@@ -21,6 +24,7 @@ public class VisibilityTest extends TestBase
     private final static JsonAutoDetect.Value NO_OVERRIDES = JsonAutoDetect.Value.noOverrides();
     private final static JsonAutoDetect.Value DEFAULTS = JsonAutoDetect.Value.defaultVisibility();
 
+    @Test
     public void testAnnotationProperties() throws Exception
     {
         Member m = Bogus.class.getField("value");
@@ -37,6 +41,7 @@ public class VisibilityTest extends TestBase
         assertFalse(JsonAutoDetect.Visibility.DEFAULT.isVisible(m));
     }
 
+    @Test
     public void testBasicValueProperties() {
         JsonAutoDetect.Value v = JsonAutoDetect.Value.DEFAULT;
         assertEquals(JsonAutoDetect.class, v.valueFor());
@@ -53,6 +58,7 @@ public class VisibilityTest extends TestBase
         assertFalse(v.equals("foo"));
     }
 
+    @Test
     public void testEquality() {
         assertEquals(NO_OVERRIDES, NO_OVERRIDES);
         assertEquals(DEFAULTS, DEFAULTS);
@@ -60,6 +66,7 @@ public class VisibilityTest extends TestBase
         assertFalse(NO_OVERRIDES.equals(DEFAULTS));
     }
 
+    @Test
     public void testFromAnnotation()
     {
         JsonAutoDetect ann = Custom.class.getAnnotation(JsonAutoDetect.class);
@@ -76,6 +83,7 @@ public class VisibilityTest extends TestBase
         assertEquals(ann.creatorVisibility(), v.getCreatorVisibility());
     }
 
+    @Test
     public void testToString() {
         assertEquals(
 "JsonAutoDetect.Value(fields=PUBLIC_ONLY,getters=PUBLIC_ONLY,"+
@@ -87,6 +95,7 @@ public class VisibilityTest extends TestBase
                 JsonAutoDetect.Value.noOverrides().toString());
     }
 
+    @Test
     public void testSimpleMerge() {
         JsonAutoDetect.Value base = JsonAutoDetect.Value.construct(
                 Visibility.ANY,
@@ -124,6 +133,7 @@ public class VisibilityTest extends TestBase
         assertSame(overrides, JsonAutoDetect.Value.merge(overrides, null));
     }
 
+    @Test
     public void testFactoryMethods() {
         JsonAutoDetect.Value v = JsonAutoDetect.Value.construct(PropertyAccessor.FIELD,
                 Visibility.ANY);
@@ -142,6 +152,7 @@ public class VisibilityTest extends TestBase
         assertEquals(Visibility.NONE, all.getCreatorVisibility());
     }
 
+    @Test
     public void testSimpleChanges() {
         assertSame(NO_OVERRIDES, NO_OVERRIDES.withFieldVisibility(Visibility.DEFAULT));
         JsonAutoDetect.Value v = NO_OVERRIDES.withCreatorVisibility(Visibility.PUBLIC_ONLY);

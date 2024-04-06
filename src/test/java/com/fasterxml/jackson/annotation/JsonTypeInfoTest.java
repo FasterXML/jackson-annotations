@@ -2,8 +2,11 @@ package com.fasterxml.jackson.annotation;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
-public class JsonTypeInfoTest extends TestBase
-{
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class JsonTypeInfoTest {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true,
             defaultImpl = JsonTypeInfo.class, requireTypeIdForSubtypes = OptBoolean.TRUE)
     private final static class Anno1 { }
@@ -17,12 +20,14 @@ public class JsonTypeInfoTest extends TestBase
             property = "ext",
             defaultImpl = Void.class)
     private final static class Anno3 { }
-    
+
+    @Test
     public void testEmpty() {
         // 07-Mar-2017, tatu: Important to distinguish "none" from 'empty' value...
         assertNull(JsonTypeInfo.Value.from(null));
     }
 
+    @Test
     public void testFromAnnotation() throws Exception
     {
         JsonTypeInfo.Value v1 = JsonTypeInfo.Value.from(Anno1.class.getAnnotation(JsonTypeInfo.class));
@@ -53,6 +58,7 @@ public class JsonTypeInfoTest extends TestBase
         assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=false)", v2.toString());
     }
 
+    @Test
     public void testMutators() throws Exception
     {
         JsonTypeInfo.Value v = JsonTypeInfo.Value.from(Anno1.class.getAnnotation(JsonTypeInfo.class));
@@ -79,6 +85,7 @@ public class JsonTypeInfoTest extends TestBase
         assertEquals("foobar", v.withPropertyName("foobar").getPropertyName());
     }
 
+    @Test
     public void testWithRequireTypeIdForSubtypes() {
         JsonTypeInfo.Value empty = JsonTypeInfo.Value.EMPTY;
         assertNull(empty.getRequireTypeIdForSubtypes());
@@ -92,7 +99,8 @@ public class JsonTypeInfoTest extends TestBase
         JsonTypeInfo.Value requireTypeIdDefault = empty.withRequireTypeIdForSubtypes(null);
         assertNull(requireTypeIdDefault.getRequireTypeIdForSubtypes());
     }
-    
+
+    @Test
     public void testDefaultValueForRequireTypeIdForSubtypes() {
         // default value
         JsonTypeInfo.Value v3 = JsonTypeInfo.Value.from(Anno3.class.getAnnotation(JsonTypeInfo.class));

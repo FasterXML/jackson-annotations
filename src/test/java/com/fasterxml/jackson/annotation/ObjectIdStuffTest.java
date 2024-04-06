@@ -2,9 +2,13 @@ package com.fasterxml.jackson.annotation;
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 // Test mostly to keep code coverage decent
-public class ObjectIdStuffTest extends TestBase
-{
+public class ObjectIdStuffTest {
+    @Test
     public void testObjectIdGenerator()
     {
         ObjectIdGenerator.IdKey k = new ObjectIdGenerator.IdKey(String.class, Object.class, "id1");
@@ -21,6 +25,7 @@ public class ObjectIdStuffTest extends TestBase
         assertFalse(k2.equals(k));
     }
 
+    @Test
     public void testIntSequenceGenerator()
     {
         ObjectIdGenerators.IntSequenceGenerator gen = new ObjectIdGenerators.IntSequenceGenerator();
@@ -30,6 +35,7 @@ public class ObjectIdStuffTest extends TestBase
         assertEquals(Integer.valueOf(0), id);
     }
 
+    @Test
     public void testStringIdGenerator()
     {
         ObjectIdGenerators.StringIdGenerator gen = new ObjectIdGenerators.StringIdGenerator();
@@ -37,6 +43,7 @@ public class ObjectIdStuffTest extends TestBase
         assertNotNull(id);
     }
 
+    @Test
     public void testUUIDGenerator()
     {
         ObjectIdGenerators.UUIDGenerator gen = new ObjectIdGenerators.UUIDGenerator();
