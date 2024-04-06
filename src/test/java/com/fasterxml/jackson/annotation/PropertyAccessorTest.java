@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Silly test for PropertyAccessor, for code coverage
-public class PropertyAccessorTest {
+public class PropertyAccessorTest
+{
     @Test
     public void testProperties()
     {

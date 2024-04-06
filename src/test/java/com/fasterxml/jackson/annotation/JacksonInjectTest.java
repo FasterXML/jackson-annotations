@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JacksonInjectTest {
+public class JacksonInjectTest
+{
     private final static class Bogus {
         @JacksonInject(value="inject", useInput=OptBoolean.FALSE)
         public int field;

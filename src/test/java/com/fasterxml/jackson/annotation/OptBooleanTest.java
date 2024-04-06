@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Silly test for OptBoolean, for code coverage
-public class OptBooleanTest {
+public class OptBooleanTest
+{
     @Test
     public void testProperties()
     {

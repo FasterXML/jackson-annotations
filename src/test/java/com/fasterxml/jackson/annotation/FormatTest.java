@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests to verify that it is possibly to merge {@link JsonFormat.Value}
  * instances for overrides.
  */
-public class FormatTest {
+public class FormatTest
+{
     private final JsonFormat.Value EMPTY = JsonFormat.Value.empty();
 
     @JsonFormat(shape=JsonFormat.Shape.BOOLEAN, pattern="xyz", timezone="bogus")

@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests to verify that it is possibly to merge {@link JsonIgnoreProperties.Value}
  * instances for overrides
  */
-public class JsonIgnorePropertiesTest {
+public class JsonIgnorePropertiesTest
+{
     @JsonIgnoreProperties(value={ "foo", "bar" }, ignoreUnknown=true)
     private final static class Bogus {
     }

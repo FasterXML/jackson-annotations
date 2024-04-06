@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Silly test for JsonAutoDetect.Visibility type, for code coverage
-public class VisibilityTest {
+public class VisibilityTest
+{
     static class Bogus {
         public String value;
     }

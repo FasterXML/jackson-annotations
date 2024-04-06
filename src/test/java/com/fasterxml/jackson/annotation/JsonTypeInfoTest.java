@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonTypeInfoTest {
+public class JsonTypeInfoTest
+{
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true,
             defaultImpl = JsonTypeInfo.class, requireTypeIdForSubtypes = OptBoolean.TRUE)
     private final static class Anno1 { }

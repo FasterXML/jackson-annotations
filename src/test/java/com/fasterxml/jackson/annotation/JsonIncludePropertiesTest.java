@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests to verify that it is possibly to merge {@link JsonIncludeProperties.Value}
  * instances for overrides
  */
-public class JsonIncludePropertiesTest {
+public class JsonIncludePropertiesTest
+{
     @JsonIncludeProperties(value = {"foo", "bar"})
     private final static class Bogus
     {

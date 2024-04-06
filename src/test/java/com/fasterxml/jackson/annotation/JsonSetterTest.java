@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonSetterTest {
+public class JsonSetterTest
+{
     private final static class Bogus {
         @JsonSetter(nulls=Nulls.FAIL, contentNulls=Nulls.SKIP)
         public int field;

@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Test mostly to keep code coverage decent
-public class ObjectIdStuffTest {
+public class ObjectIdStuffTest
+{
     @Test
     public void testObjectIdGenerator()
     {
