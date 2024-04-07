@@ -1,6 +1,10 @@
 package com.fasterxml.jackson.annotation;
 
-public class JacksonInjectTest extends TestBase
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class JacksonInjectTest
 {
     private final static class Bogus {
         @JacksonInject(value="inject", useInput=OptBoolean.FALSE)
@@ -12,6 +16,7 @@ public class JacksonInjectTest extends TestBase
 
     private final JacksonInject.Value EMPTY = JacksonInject.Value.empty();
 
+    @Test
     public void testEmpty()
     {
         assertNull(EMPTY.getId());
@@ -24,6 +29,7 @@ public class JacksonInjectTest extends TestBase
         assertSame(EMPTY, JacksonInject.Value.construct("", null));
     }
 
+    @Test
     public void testFromAnnotation() throws Exception
     {
         assertSame(EMPTY, JacksonInject.Value.from(null)); // legal
@@ -42,6 +48,7 @@ public class JacksonInjectTest extends TestBase
         assertSame(EMPTY, v);
     }
 
+    @Test
     public void testStdMethods() {
         assertEquals("JacksonInject.Value(id=null,useInput=null)",
                 EMPTY.toString());
@@ -54,6 +61,7 @@ public class JacksonInjectTest extends TestBase
         assertFalse(EMPTY.equals("xyz"));
     }
 
+    @Test
     public void testFactories() throws Exception
     {
         JacksonInject.Value v = EMPTY.withId("name");

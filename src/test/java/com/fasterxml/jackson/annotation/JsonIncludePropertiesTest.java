@@ -1,15 +1,16 @@
 package com.fasterxml.jackson.annotation;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests to verify that it is possibly to merge {@link JsonIncludeProperties.Value}
  * instances for overrides
  */
-public class JsonIncludePropertiesTest extends TestBase
+public class JsonIncludePropertiesTest
 {
     @JsonIncludeProperties(value = {"foo", "bar"})
     private final static class Bogus
@@ -18,6 +19,7 @@ public class JsonIncludePropertiesTest extends TestBase
 
     private final JsonIncludeProperties.Value ALL = JsonIncludeProperties.Value.all();
 
+    @Test
     public void testAll()
     {
         assertSame(ALL, JsonIncludeProperties.Value.from(null));
@@ -27,6 +29,7 @@ public class JsonIncludePropertiesTest extends TestBase
         assertEquals(0, ALL.hashCode());
     }
 
+    @Test
     public void testFromAnnotation()
     {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
@@ -41,6 +44,7 @@ public class JsonIncludePropertiesTest extends TestBase
         assertEquals(v, JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class)));
     }
 
+    @Test
     public void testWithOverridesAll() {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
         v = v.withOverrides(ALL);
@@ -49,6 +53,7 @@ public class JsonIncludePropertiesTest extends TestBase
         assertEquals(_set("foo", "bar"), included);
     }
 
+    @Test
     public void testWithOverridesEmpty() {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
         v = v.withOverrides(new JsonIncludeProperties.Value(Collections.<String>emptySet()));
@@ -56,6 +61,7 @@ public class JsonIncludePropertiesTest extends TestBase
         assertEquals(0, included.size());
     }
 
+    @Test
     public void testWithOverridesMerge() {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
         v = v.withOverrides(new JsonIncludeProperties.Value(_set("foo")));

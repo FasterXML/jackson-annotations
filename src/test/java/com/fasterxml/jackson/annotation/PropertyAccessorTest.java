@@ -1,8 +1,13 @@
 package com.fasterxml.jackson.annotation;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 // Silly test for PropertyAccessor, for code coverage
-public class PropertyAccessorTest extends TestBase
+public class PropertyAccessorTest
 {
+    @Test
     public void testProperties()
     {
         assertTrue(PropertyAccessor.ALL.creatorEnabled());

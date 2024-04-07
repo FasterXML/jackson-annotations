@@ -3,17 +3,22 @@ package com.fasterxml.jackson.annotation;
 import com.fasterxml.jackson.annotation.JsonFormat.Feature;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Tests to verify that it is possibly to merge {@link JsonFormat.Value}
  * instances for overrides.
  */
-public class FormatTest extends TestBase
+public class FormatTest
 {
     private final JsonFormat.Value EMPTY = JsonFormat.Value.empty();
 
     @JsonFormat(shape=JsonFormat.Shape.BOOLEAN, pattern="xyz", timezone="bogus")
     private final static class Bogus { }
 
+    @Test
     public void testEmptyInstanceDefaults() {
         JsonFormat.Value empty = JsonFormat.Value.empty();
         for (Feature f : Feature.values()) {
@@ -28,6 +33,7 @@ public class FormatTest extends TestBase
         assertFalse(empty.isLenient());
     }
 
+    @Test
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
         assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
@@ -54,6 +60,7 @@ public class FormatTest extends TestBase
         assertFalse(v1.equals(v1.withoutFeature(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)));
     }
 
+    @Test
     public void testToString() {
         assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
@@ -61,6 +68,7 @@ public class FormatTest extends TestBase
                 JsonFormat.Value.forPattern("[.]").toString());
     }
 
+    @Test
     public void testFromAnnotation()
     {
         JsonFormat ann = Bogus.class.getAnnotation(JsonFormat.class);
@@ -74,6 +82,7 @@ public class FormatTest extends TestBase
         assertSame(EMPTY, JsonFormat.Value.from(null));
     }
 
+    @Test
     public void testSimpleMerge()
     {
         // Start with an empty instance
@@ -131,6 +140,7 @@ public class FormatTest extends TestBase
         assertFalse(merged.hasTimeZone());
     }
 
+    @Test
     public void testMultiMerge()
     {
         final String TEST_PATTERN = "format-string"; // not parsed, usage varies
@@ -148,6 +158,7 @@ public class FormatTest extends TestBase
     /**********************************************************
      */
 
+    @Test
     public void testLeniency() {
         JsonFormat.Value empty = JsonFormat.Value.empty();
         assertFalse(empty.hasLenient());
@@ -186,6 +197,7 @@ public class FormatTest extends TestBase
         assertFalse(dunno.equals(lenient));
     }
 
+    @Test
     public void testCaseInsensitiveValues() {
         JsonFormat.Value empty = JsonFormat.Value.empty();
         assertNull(empty.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
@@ -197,6 +209,7 @@ public class FormatTest extends TestBase
         assertFalse(sensitive.getFeature(Feature.ACCEPT_CASE_INSENSITIVE_VALUES));
     }
 
+    @Test
     public void testShape() {
         assertFalse(JsonFormat.Shape.STRING.isNumeric());
         assertFalse(JsonFormat.Shape.STRING.isStructured());
@@ -209,6 +222,7 @@ public class FormatTest extends TestBase
         assertTrue(JsonFormat.Shape.OBJECT.isStructured());
     }
 
+    @Test
     public void testFeatures() {
         JsonFormat.Features f1 = JsonFormat.Features.empty();
         JsonFormat.Features f2 = f1.with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)

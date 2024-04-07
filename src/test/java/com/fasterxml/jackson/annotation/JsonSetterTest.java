@@ -1,6 +1,10 @@
 package com.fasterxml.jackson.annotation;
 
-public class JsonSetterTest extends TestBase
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class JsonSetterTest
 {
     private final static class Bogus {
         @JsonSetter(nulls=Nulls.FAIL, contentNulls=Nulls.SKIP)
@@ -9,6 +13,7 @@ public class JsonSetterTest extends TestBase
 
     private final JsonSetter.Value EMPTY = JsonSetter.Value.empty();
 
+    @Test
     public void testEmpty()
     {
         assertEquals(Nulls.DEFAULT, EMPTY.getValueNulls());
@@ -20,6 +25,7 @@ public class JsonSetterTest extends TestBase
         assertNull(EMPTY.nonDefaultContentNulls());
     }
 
+    @Test
     public void testStdMethods() {
         assertEquals("JsonSetter.Value(valueNulls=DEFAULT,contentNulls=DEFAULT)",
                 EMPTY.toString());
@@ -32,6 +38,7 @@ public class JsonSetterTest extends TestBase
         assertFalse(EMPTY.equals("xyz"));
     }
 
+    @Test
     public void testFromAnnotation() throws Exception
     {
         assertSame(EMPTY, JsonSetter.Value.from(null)); // legal
@@ -42,12 +49,14 @@ public class JsonSetterTest extends TestBase
         assertEquals(Nulls.SKIP, v.getContentNulls());
     }
 
+    @Test
     public void testConstruct() throws Exception
     {
         JsonSetter.Value v = JsonSetter.Value.construct(null, null);
         assertSame(EMPTY, v);
     }
 
+    @Test
     public void testFactories() throws Exception
     {
         JsonSetter.Value v = JsonSetter.Value.forContentNulls(Nulls.SET);
@@ -61,6 +70,7 @@ public class JsonSetterTest extends TestBase
         assertEquals(Nulls.SKIP, skip.nonDefaultValueNulls());
     }
 
+    @Test
     public void testSimpleMerge()
     {
         JsonSetter.Value v = EMPTY.withContentNulls(Nulls.SKIP);
@@ -69,6 +79,7 @@ public class JsonSetterTest extends TestBase
         assertEquals(Nulls.FAIL, v.getValueNulls());
     }
 
+    @Test
     public void testWithMethods()
     {
         JsonSetter.Value v = EMPTY.withContentNulls(null);
