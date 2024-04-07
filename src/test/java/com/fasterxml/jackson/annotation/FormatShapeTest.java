@@ -1,14 +1,19 @@
 package com.fasterxml.jackson.annotation;
 
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests to verify `shape`-related aspects of {@link JsonFormat.Value} handling.
  */
-public class FormatShapeTest extends TestBase
+public class FormatShapeTest
 {
     private final JsonFormat.Value EMPTY = JsonFormat.Value.empty();
 
+    @Test
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
         assertTrue(new JsonFormat.Value().equals(new JsonFormat.Value()));
@@ -31,6 +36,7 @@ public class FormatShapeTest extends TestBase
         assertEquals(v1, v3.withShape(Shape.BOOLEAN));
     }
 
+    @Test
     public void testShape()
     {
         assertFalse(Shape.STRING.isNumeric());
