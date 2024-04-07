@@ -2,11 +2,15 @@ package com.fasterxml.jackson.annotation;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Tests to verify that it is possibly to merge {@link JsonInclude.Value}
  * instances for overrides
  */
-public class IncludeTest extends TestBase
+public class IncludeTest
 {
     private final JsonInclude.Value EMPTY = JsonInclude.Value.empty();
 
@@ -17,6 +21,7 @@ public class IncludeTest extends TestBase
             content=JsonInclude.Include.CUSTOM, contentFilter=Long.class)
     private final static class Custom { }
 
+    @Test
     public void testEquality() {
         assertTrue(EMPTY.equals(EMPTY));
 
@@ -33,6 +38,7 @@ public class IncludeTest extends TestBase
         assertFalse(v3.equals(v2));
     }
 
+    @Test
     public void testFromAnnotation()
     {
         JsonInclude ann = Bogus.class.getAnnotation(JsonInclude.class);
@@ -41,6 +47,7 @@ public class IncludeTest extends TestBase
         assertEquals(Include.NON_DEFAULT, v.getContentInclusion());
     }
 
+    @Test
     public void testFromAnnotationWithCustom()
     {
         JsonInclude ann = Custom.class.getAnnotation(JsonInclude.class);
@@ -55,6 +62,7 @@ public class IncludeTest extends TestBase
                 v.toString());
     }
 
+    @Test
     public void testStdOverrides() {
         assertEquals("JsonInclude.Value(value=NON_ABSENT,content=USE_DEFAULTS)",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
@@ -66,6 +74,7 @@ public class IncludeTest extends TestBase
         assertFalse(EMPTY.equals(""));
     }
 
+    @Test
     public void testSimpleMerge()
     {
         JsonInclude.Value empty = JsonInclude.Value.empty();
@@ -100,6 +109,7 @@ public class IncludeTest extends TestBase
     }
 
     // for [annotations#76]
+    @Test
     public void testContentMerge76()
     {
         JsonInclude.Value v1 = JsonInclude.Value.empty()
@@ -119,6 +129,7 @@ public class IncludeTest extends TestBase
         assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
     }
 
+    @Test
     public void testFilters()
     {
         JsonInclude.Value empty = JsonInclude.Value.empty();
