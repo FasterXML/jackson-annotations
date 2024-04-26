@@ -21,7 +21,7 @@ public enum PropertyAccessor
      *<p>
      * Since version 1.3, this does <b>NOT</b> include "is getters" (methods
      * that return boolean and named 'isXxx' for property 'xxx'); instead,
-     * {@link #IS_GETTER} is used}.
+     * {@link #IS_GETTER} is used.
      */
     GETTER,
 
