@@ -16,7 +16,7 @@ public enum PropertyAccessor
      * Getters are methods used to get a POJO field value for serialization,
      * or, under certain conditions also for de-serialization. Latter
      * can be used for effectively setting Collection or Map values
-     * in absence of setters, iff returned value is not a copy but
+     * in absence of setters, if returned value is not a copy but
      * actual value of the logical property.
      *<p>
      * Since version 1.3, this does <b>NOT</b> include "is getters" (methods
