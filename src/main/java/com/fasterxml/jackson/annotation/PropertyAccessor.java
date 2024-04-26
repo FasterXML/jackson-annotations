@@ -63,8 +63,6 @@ public enum PropertyAccessor
     ALL
     ;
 
-    private PropertyAccessor() { }
-
     public boolean creatorEnabled() {
         return (this == CREATOR) || (this == ALL);
     }
