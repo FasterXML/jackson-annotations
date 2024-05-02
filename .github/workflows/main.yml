@@ -21,13 +21,12 @@ permissions:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: 'ubuntu-latest'
     strategy:
       fail-fast: false
       matrix:
         # Alas, as long as JDK6 is target, cannot run against 14+
         java_version: ['8', '11']
-        os: ['ubuntu-20.04']
     env:
       JAVA_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
     steps:
