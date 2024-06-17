@@ -50,7 +50,8 @@ jobs:
     - name: Deploy snapshot
       if: github.event_name != 'pull_request' && matrix.java_version == '8' && endsWith(steps.projectVersion.outputs.version, '-SNAPSHOT')
       env:
-        CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME3 }}
-        CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD3 }}
+        # 17-Jun-2024, tatu: Do NOT use v3 credentials since namespace still "com.fasterxml"
+        CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
+        CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
         # MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       run: ./mvnw -B -ff -DskipTests -ntp source:jar deploy
