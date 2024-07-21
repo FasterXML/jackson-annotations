@@ -13,7 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.18.0 (not yet released)
 
-No changes since 2.17
+#258: Add `ElementType.PARAMETER` to `@JsonIgnore` to allow use for Constructor
+  parameters
 
 2.17.0 (12-Mar-2024)
 
