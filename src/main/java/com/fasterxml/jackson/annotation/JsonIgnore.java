@@ -46,7 +46,8 @@ import java.lang.annotation.Target;
  * defining one with 'false' argument: either in a subclass, or by
  * using "mix-in annotations".
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
+@Target({ElementType.ANNOTATION_TYPE,
+    ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonIgnore
