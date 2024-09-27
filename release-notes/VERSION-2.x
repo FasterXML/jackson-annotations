@@ -11,7 +11,11 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.18.0 (not yet released)
+2.19.0 (not yet released)
+
+No changes since 2.18
+
+2.18.0 (26-Sep-2024)
 
 No changes since 2.17
 
