@@ -28,6 +28,8 @@ public @interface JsonFilter
 {
     /**
      * Id of filter to use; if empty String (""), no filter is to be used.
+     *
+     * @return Id of filter to use.
      */
     public String value();
 }
