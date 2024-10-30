@@ -138,13 +138,18 @@ public @interface JsonTypeInfo
 
         /**
          * Means that no serialized typing-property is used. Types are <i>deduced</i> based
-         * on the fields available. Deduction is limited to the <i>names</i> of fields
-         * (not their values or, consequently, any nested descendants). Exceptions will be
-         * thrown if not enough unique information is present to select a single subtype.
+         * on the Object properties available in the input.
+         * Deduction is limited to the <i>names</i> of properties
+         * (not their values or, consequently, any nested values). Exceptions will be
+         * thrown if not enough unique information is present to select a single sub-type.
          * <br>If deduction is being used annotation properties {@code visible},
          * {@code property} and {@code include} are ignored.
          * <p>
-         * On serialization, no type ID is written, and only regular properties are included.
+         * NOTE: being Property-based, will essentially only work for POJOs and not for
+         * other kinds of types (like arrays, {@link java.util.Collection}s, {@link java.util.Map}s,
+         * scalars, etc); similarly, serialized form must be (JSON) Object.
+         * <p>
+         * On serialization, no type Id is written, and only regular properties are included.
          *
          * @since 2.12
          */

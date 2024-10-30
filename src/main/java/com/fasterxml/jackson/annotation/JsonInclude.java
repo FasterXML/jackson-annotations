@@ -54,6 +54,8 @@ public @interface JsonInclude
     /**
      * Inclusion rule to use for instances (values) of types (Classes) or
      * properties annotated; defaults to {@link Include#ALWAYS}.
+     *
+     * @return Inclusion rule for value itself
      */
     public Include value() default Include.ALWAYS;
 
@@ -62,6 +64,8 @@ public @interface JsonInclude
      * {@link java.util.Map}s and referential types (like
      * {@link java.util.concurrent.atomic.AtomicReference});
      * defaults to {@link Include#ALWAYS}.
+     *
+     * @return Inclusion rule for content (elements, values of structured types)
      *
      * @since 2.5
      */
