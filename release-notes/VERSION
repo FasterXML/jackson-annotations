@@ -12,4 +12,5 @@ mostly)
 3.0 (not yet released)
 
 #272: Require JDK17 for jackson-annotations 3.0 for proper `module-info.java`
+#274: Change 3.0 to use `module-info.java` directly for build (instead of via Moditect)
 - Change `JsonInclude.value`, `JsonInclude.content` to `USE_DEFAULTS` (from `ALWAYS`)

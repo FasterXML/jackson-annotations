@@ -62,7 +62,6 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${version.junit5}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -99,11 +98,6 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.moditect</groupId>
-        <artifactId>moditect-maven-plugin</artifactId>
-      </plugin>
-
       <!-- 08-Nov-2019, tatu: Copied from
            https://github.com/stephenc/git-timestamp-maven-plugin/blob/master/pom.xml#L327-L337
          -->
