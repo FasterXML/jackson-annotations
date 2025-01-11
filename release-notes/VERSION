@@ -11,5 +11,5 @@ mostly)
 
 3.0 (not yet released)
 
-#267: Raise minimum Java version for `jackson-annotations` to Java 8 for Jackson 3.x
+#272: Require JDK17 for jackson-annotations 3.0 for proper `module-info.java`
 - Change `JsonInclude.value`, `JsonInclude.content` to `USE_DEFAULTS` (from `ALWAYS`)

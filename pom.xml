@@ -38,11 +38,11 @@
   </scm>
 
   <properties>
-    <!-- 01-Dec-2024, tatu: [annotations#267] Retain Java 8 baseline
-	   for annotations (up from Jackson 2.x Java 1.6 baselin)
+    <!-- 11-Jan-2025, tatu: [annotations#272] JDK 17 for Jackson 3.x
+          (up from Jackson 2.x Java 1.6 baseline for annotations)
       -->
-    <javac.src.version>1.8</javac.src.version>
-    <javac.target.version>1.8</javac.target.version>
+    <javac.src.version>17</javac.src.version>
+    <javac.target.version>17</javac.target.version>
     
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
 
