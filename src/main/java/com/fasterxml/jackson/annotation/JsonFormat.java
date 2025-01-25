@@ -17,10 +17,15 @@ import java.util.TimeZone;
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
  *<p>
- * As of Jackson 2.6, known special handling includes:
+ * As of Jackson 2.18, known special handling includes:
  *<ul>
- * <li>{@link java.util.Date}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ * <li>{@link java.util.Date} or {@link java.util.Calendar} : Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
+ *   </li>
+ * <li>{@code java.time.*}: Types in the {@code java.time} package can use
+ *    {@link Shape#STRING} for serialization and deserialization. When {@link Shape#STRING}
+ *    is used, the pattern property typically follows
+ *    {@link java.time.format.DateTimeFormatter}-compatible formatting rules.
  *   </li>
  * <li>Can be used on Classes (types) as well, for modified default behavior, possibly
  *   overridden by per-property annotation
