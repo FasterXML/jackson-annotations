@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * collision.
  *<p>
  * Starting with Jackson 2.6 this annotation may also be
- * used to change serialization of <code>Enum</code> like so:
+ * used to change serialization of {@code Enum} like so:
  *<pre>
 public enum MyEnum {
     {@literal @JsonProperty}("theFirstValue") THE_FIRST_VALUE,
@@ -39,6 +39,11 @@ public enum MyEnum {
 }
 </pre>
  * as an alternative to using {@link JsonValue} annotation.
+ *<br />
+ * NOTE: for {@code Enum}s, empty String is a valid value (and
+ * missing {@code value} is taken as empty String), unlike for regular
+ * properties, and does NOT mean "use default Enum name".
+ * (handling fixed in Jackson 2.19)
  *<p>
  * Starting with Jackson 2.12 it is also possible to specify {@code namespace}
  * of property: this property is only used by certain format backends (most
