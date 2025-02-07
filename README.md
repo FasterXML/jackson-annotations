@@ -30,6 +30,9 @@ In addition to regular usage (see below), there are couple of noteworthy improve
 
 * [Mix-in annotations](../../wiki/Mixin-Annotations) allow associating annotations on third-party classes ''without modifying classes''.
 * Jackson annotations support full inheritance: meaning that you can ''override annotation definitions'', and not just class annotations but also method/field annotations!
+* Jackson annotations will also be inherited from interfaces:
+  * predence between base class and implemented interfaces is such that base-class has lower precedence than interfaces;
+  * if multiple interfaces are implemented, then the precedence depends on the order as returned by the JVM.
 
 ### Maven, Java package
 
