@@ -94,9 +94,9 @@ public @interface JsonTypeInfo
          * package name is included that is needed to construct fully-qualified name
          * given fully-qualified name of the declared supertype; additionally a single
          * leading dot ('.') must be used to indicate that partial class name is used.
-         * For example, for supertype "com.foobar.Base", and concrete type
-         * "com.foo.Impl", only ".Impl" would be included; and for "com.foo.impl.Impl2"
-         * only ".impl.Impl2" would be included.
+         * For example, for supertype {@code com.foo.Base}, and concrete type
+         * {@code com.foo.Impl}, only {@code .Impl} would be included;
+         * and for {@code com.foo.impl.Impl2}  only {@code .impl.Impl2} would be included.
          *<br>
          * <b>NOTE</b>: leading dot ('.') MUST be used to denote partial (minimal) name;
          * if it is missing, value is assumed to be fully-qualified name. Fully-qualified
