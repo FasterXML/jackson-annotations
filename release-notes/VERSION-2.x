@@ -14,6 +14,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 2.19.0 (not yet released)
 
 #280: Minor change to `module-info.java`: use "open module"
+#281: [gradle-module-metadata-maven-plugin] update to version 1.0
+ (contributed by @jjohannes)
 
 2.18.0 (26-Sep-2024)
 
