@@ -39,7 +39,7 @@ public enum MyEnum {
 }
 </pre>
  * as an alternative to using {@link JsonValue} annotation.
- *<br />
+ *<br>
  * NOTE: for {@code Enum}s, empty String is a valid value (and
  * missing {@code value} is taken as empty String), unlike for regular
  * properties, and does NOT mean "use default Enum name".
