@@ -113,28 +113,6 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
         </configuration>
       </plugin>
 
-      <!-- 11-Jun-2020, tatu: [annotations#173] add gradle module metadata -->
-      <plugin>
-        <groupId>de.jjohannes</groupId>
-        <artifactId>gradle-module-metadata-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>gmm</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <platformDependencies>
-            <dependency>
-              <groupId>com.fasterxml.jackson</groupId>
-              <artifactId>jackson-bom</artifactId>
-              <version>${bom4gmm.version}</version>
-            </dependency>
-          </platformDependencies>
-        </configuration>
-      </plugin>
-
       <!-- 20-Oct-2020, tatu: [annotations#178] copy full LICENSE from main dir -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -184,6 +162,30 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
           <archive>
             <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
           </archive>
+        </configuration>
+      </plugin>
+
+
+      <!-- 11-Jun-2020, tatu: [annotations#173] add gradle module metadata -->
+      <!-- 28-Feb-2025, jjohannes: Apply plugin last as it has to be the last of all 'package phase' plugins -->
+      <plugin>
+        <groupId>org.gradlex</groupId>
+        <artifactId>gradle-module-metadata-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>gmm</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <platformDependencies>
+            <dependency>
+              <groupId>com.fasterxml.jackson</groupId>
+              <artifactId>jackson-bom</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </platformDependencies>
         </configuration>
       </plugin>
     </plugins>
