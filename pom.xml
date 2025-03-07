@@ -8,9 +8,9 @@
   <modelVersion>4.0.0</modelVersion> 
   <parent>
     <groupId>tools.jackson</groupId>
-    <!-- As of 3.0, extends `jackson-base` just like all other components; 2.x did not -->
+    <!-- In 3.0+, extends `jackson-base` just like all other components; 2.x did not -->
     <artifactId>jackson-base</artifactId>
-    <version>3.0.0-rc1</version>
+    <version>3.0.0-rc2-SNAPSHOT</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
