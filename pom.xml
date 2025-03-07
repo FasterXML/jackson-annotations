@@ -10,7 +10,7 @@
     <groupId>tools.jackson</groupId>
     <!-- As of 3.0, extends `jackson-base` just like all other components; 2.x did not -->
     <artifactId>jackson-base</artifactId>
-    <version>3.0.0-rc1-SNAPSHOT</version>
+    <version>3.0.0-rc1</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
@@ -109,6 +109,9 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
         <configuration>
           <serverId>sonatype-nexus-staging</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+	  <!-- 07-Mar-2025, tatu: NOTE! "OLD" staging profile since we are
+                still under "com.fasterxml" unlike all other components
+            -->
           <stagingProfileId>b34f19b9cc6224</stagingProfileId>
         </configuration>
       </plugin>
