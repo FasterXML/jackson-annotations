@@ -85,29 +85,28 @@ public @interface JsonProperty
     String namespace() default "";
 
     /**
-     * Property similar to {@link #isRequired}, but one that only
-     * allows two values ({@code true} and {@code false}), defaulting
-     * to {@code false}.
-     *
-     * @deprecated Since 3.0 use {@link #isRequired} instead
+     * Property similar to {@link #isRequired} but one that has lower precedence
+     * and where only value of {@code true} has effect (if and only if
+     * {@link #isRequired} has value of {@code OptBoolean.DEFAULT}):
+     * specifying of value {@code false} basically means "use default settings".
      */
-    @Deprecated
     boolean required() default false;
 
     /**
      * Property that MAY indicate whether a value (which may be explicit
      * null) is required for a property during deserialization or not.
-     * If required ({code OptBoolean.TRUE}), {@code Deserializer} should indicate
-     * this as a validity problem (usually by throwing an exception,
+     * If specified as required ({code OptBoolean.TRUE}), deserialization
+     * should indicate a validity problem if no
+     * value is present in incoming content(usually by throwing an exception,
      * but this may be sent via problem handlers that can try to
-     * rectify the problem, for example, by supplying a default value) if no
-     * value is present in incoming content. If not required ({code OptBoolean.FALSE}),
-     * no checking is to be done.
-     * If not specified ({code OptBoolean.DEFAULT}) checking depends on higher
+     * rectify the problem, for example, by supplying a default value).
+     * If marked as not required ({code OptBoolean.FALSE}), no checking
+     * for value existence should be done.
+     * If not specified ({code OptBoolean.DEFAULT}), checking depends on higher
      * level settings (some modules may specify default "required-ness" for certain
      * kinds of properties).
      *<p>
-     * Note that as of 3.0, this property is only used for Creator
+     * Note that as of 3.0, possible validation is only done for Creator
      * Properties, to ensure existence of property value in JSON:
      * for other properties (ones injected using a setter or mutable
      * field), no validation is performed. Support for those cases
@@ -124,9 +123,9 @@ public @interface JsonProperty
      * validation of {@code required} properties occurs before the application of
      * secondary sources.
      *<p>
-     * Default value ({@link OptBoolean#DEFAULT}) means that "required-ness"
-     * is not specified by this annotation -- it is up to more general settings
-     * (per-class, global) to determine whether the property is required or not.
+     * NOTE: the older property, {@link #required()},
+     * may still be used, but will have lower precedence than this annotation --
+     * basically it is only considered if this property has value {@code OptBoolean.DEFAULT}.
      */
     OptBoolean isRequired() default OptBoolean.DEFAULT;
     
@@ -147,8 +146,7 @@ public @interface JsonProperty
      * value through bean property introspection.
      *<p>
      * It is possible that in future this annotation could be used for value
-     * defaulting, and especially for default values of Creator properties,
-     * since they support {@link #required()} in 2.6 and above.
+     * defaulting.
      */
     String defaultValue() default "";
 
