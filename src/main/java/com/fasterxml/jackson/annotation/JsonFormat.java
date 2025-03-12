@@ -6,9 +6,9 @@ import java.util.TimeZone;
 
 /**
  * General-purpose annotation used for configuring details of how
- * values of properties are to be serialized.
+ * values of properties are to be serialized and deserialized.
  * Unlike most other Jackson annotations, annotation does not
- * have specific universal interpretation: instead, effect depends on datatype
+ * have specific universal interpretation: instead, effects depend on datatype
  * of property being annotated (or more specifically, deserializer
  * and serializer being used).
  *<p>
@@ -19,7 +19,7 @@ import java.util.TimeZone;
  *<p>
  * As of Jackson 3.0, known special handling includes:
  *<ul>
- * <li>{@link java.util.Date} or {@link java.util.Calendar} : Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ * <li>{@link java.util.Date} or {@link java.util.Calendar}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
  *   </li>
  * <li>{@code java.time.*}: Types in the {@code java.time} package can use

@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  * since it would associate same annotation for all fields, leading to name
  * collision.
  *<p>
- * Starting with Jackson 2.6 this annotation may also be
+ * This annotation may also be
  * used to change serialization of {@code Enum} like so:
  *<pre>
 public enum MyEnum {
@@ -39,13 +39,12 @@ public enum MyEnum {
 }
 </pre>
  * as an alternative to using {@link JsonValue} annotation.
- *<br />
+ *<br>
  * NOTE: for {@code Enum}s, empty String is a valid value (and
  * missing {@code value} is taken as empty String), unlike for regular
  * properties, and does NOT mean "use default Enum name".
- * (handling fixed in Jackson 2.19)
  *<p>
- * Starting with Jackson 2.12 it is also possible to specify {@code namespace}
+ * It is also possible to specify {@code namespace}
  * of property: this property is only used by certain format backends (most
  * notably XML).
  */
@@ -82,21 +81,33 @@ public @interface JsonProperty
      * Optional namespace to use with data formats that support such
      * concept (specifically XML); if so, used with {@link #value} to
      * construct fully-qualified name.
-     *
-     * @since 2.12
      */
     String namespace() default "";
 
     /**
-     * Property that indicates whether a value (which may be explicit
-     * null) is expected for property during deserialization or not.
-     * If expected, <code>BeanDeserialized</code> should indicate
+     * Property similar to {@link #isRequired}, but one that only
+     * allows two values ({@code true} and {@code false}), defaulting
+     * to {@code false}.
+     *
+     * @deprecated Since 3.0 use {@link #isRequired} instead
+     */
+    @Deprecated
+    boolean required() default false;
+
+    /**
+     * Property that MAY indicate whether a value (which may be explicit
+     * null) is required for a property during deserialization or not.
+     * If required ({code OptBoolean.TRUE}), {@code Deserializer} should indicate
      * this as a validity problem (usually by throwing an exception,
      * but this may be sent via problem handlers that can try to
-     * rectify the problem, for example, by supplying a default
-     * value).
+     * rectify the problem, for example, by supplying a default value) if no
+     * value is present in incoming content. If not required ({code OptBoolean.FALSE}),
+     * no checking is to be done.
+     * If not specified ({code OptBoolean.DEFAULT}) checking depends on higher
+     * level settings (some modules may specify default "required-ness" for certain
+     * kinds of properties).
      *<p>
-     * Note that as of 2.6, this property is only used for Creator
+     * Note that as of 3.0, this property is only used for Creator
      * Properties, to ensure existence of property value in JSON:
      * for other properties (ones injected using a setter or mutable
      * field), no validation is performed. Support for those cases
@@ -112,9 +123,13 @@ public @interface JsonProperty
      * this property should be set to {@code false}. This is important because
      * validation of {@code required} properties occurs before the application of
      * secondary sources.
+     *<p>
+     * Default value ({@link OptBoolean#DEFAULT}) means that "required-ness"
+     * is not specified by this annotation -- it is up to more general settings
+     * (per-class, global) to determine whether the property is required or not.
      */
-    boolean required() default false;
-
+    OptBoolean isRequired() default OptBoolean.DEFAULT;
+    
     /**
      * Property that indicates numerical index of this property (relative
      * to other properties specified for the Object). This index
