@@ -9,7 +9,7 @@ mostly)
 === Releases ===
 ------------------------------------------------------------------------
 
-3.0 (not yet released)
+3.0-rc1 (07-Mar-2025)
 
 #272: Require JDK17 for jackson-annotations 3.0 for proper `module-info.java`
 #274: Change 3.0 to use `module-info.java` directly for build (instead of via Moditect)
