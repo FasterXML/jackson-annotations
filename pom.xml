@@ -187,7 +187,7 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
         <configuration>
           <platformDependencies>
             <dependency>
-              <groupId>com.fasterxml.jackson</groupId>
+              <groupId>tools.jackson</groupId>
               <artifactId>jackson-bom</artifactId>
               <version>${bom4gmm.version}</version>
             </dependency>
