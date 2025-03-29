@@ -9,6 +9,15 @@ mostly)
 === Releases ===
 ------------------------------------------------------------------------
 
+3.0-rc3 (not yet released)
+
+#286: jackson-annotations `3.0.0-rc2` not usable by gradle
+ (fixed by @pjfanning)
+
+3.0-rc2 (28-Mar-2025)
+
+No changes since rc1.
+
 3.0-rc1 (07-Mar-2025)
 
 #272: Require JDK17 for jackson-annotations 3.0 for proper `module-info.java`
