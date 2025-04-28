@@ -84,7 +84,6 @@
       <plugin>
         <groupId>org.cyclonedx</groupId>
         <artifactId>cyclonedx-maven-plugin</artifactId>
-        <version>${cyclonedx-maven-plugin.version}</version>
         <configuration>
           <skipNotDeployed>true</skipNotDeployed>
           <classifier>sbom-cyclonedx</classifier>
