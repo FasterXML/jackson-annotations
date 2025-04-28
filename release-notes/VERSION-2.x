@@ -11,6 +11,10 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
+2.20.0 (not yet released)
+
+- Generate SBOMs [JSTEP-14]
+
 2.19.0 (24-Apr-2025)
 
 #280: Minor change to `module-info.java`: use "open module"
