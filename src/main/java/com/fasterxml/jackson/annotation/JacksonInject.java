@@ -42,6 +42,19 @@ public @interface JacksonInject
      */
     public OptBoolean useInput() default OptBoolean.DEFAULT;
 
+    /**
+     * Whether to throw an exception when the ObjectMapper doesn't find
+     * the injectable value.
+     *<p>
+     * Default is `OptBoolean.FALSE` for backwards compatibility
+     *
+     * @return {@link OptBoolean#FALSE} to throw an exception; {@link OptBoolean#TRUE}
+     * to avoid throwing it.
+     *
+     * @since 2.20
+     */
+    public OptBoolean optional() default OptBoolean.FALSE;
+
     /*
     /**********************************************************
     /* Value class used to enclose information, allow for
@@ -63,7 +76,7 @@ public @interface JacksonInject
     {
         private static final long serialVersionUID = 1L;
 
-        protected final static Value EMPTY = new Value(null, null);
+        protected final static Value EMPTY = new Value(null, null, null);
 
         /**
          * Id to use to access injected value; if `null`, "default" name, derived
@@ -73,9 +86,12 @@ public @interface JacksonInject
 
         protected final Boolean _useInput;
 
-        protected Value(Object id, Boolean useInput) {
+        protected final Boolean _optional;
+
+        protected Value(Object id, Boolean useInput, Boolean optional) {
             _id = id;
             _useInput = useInput;
+            _optional = optional;
         }
 
         @Override
@@ -93,25 +109,28 @@ public @interface JacksonInject
             return EMPTY;
         }
 
-        public static Value construct(Object id, Boolean useInput) {
+        public static Value construct(Object id, Boolean useInput, Boolean optional) {
             if ("".equals(id)) {
                 id = null;
             }
-            if (_empty(id, useInput)) {
+            if (_empty(id, useInput, optional)) {
                 return EMPTY;
             }
-            return new Value(id, useInput);
+            if (optional == null) {
+                optional = false;
+            }
+            return new Value(id, useInput, optional);
         }
 
         public static Value from(JacksonInject src) {
             if (src == null) {
                 return EMPTY;
             }
-            return construct(src.value(), src.useInput().asBoolean());
+            return construct(src.value(), src.useInput().asBoolean(), src.optional().asBoolean());
         }
 
         public static Value forId(Object id) {
-            return construct(id, null);
+            return construct(id, null, null);
         }
 
         /*
@@ -128,7 +147,7 @@ public @interface JacksonInject
             } else if (id.equals(_id)) {
                 return this;
             }
-            return new Value(id, _useInput);
+            return new Value(id, _useInput, _optional);
         }
 
         public Value withUseInput(Boolean useInput) {
@@ -139,7 +158,18 @@ public @interface JacksonInject
             } else if (useInput.equals(_useInput)) {
                 return this;
             }
-            return new Value(_id, useInput);
+            return new Value(_id, useInput, _optional);
+        }
+
+        public Value withOptional(Boolean optional) {
+            if (optional == null) {
+                if (_optional == null) {
+                    return this;
+                }
+            } else if (optional.equals(_optional)) {
+                return this;
+            }
+            return new Value(_id, _useInput, optional);
         }
 
         /*
@@ -150,6 +180,7 @@ public @interface JacksonInject
 
         public Object getId() { return _id; }
         public Boolean getUseInput() { return _useInput; }
+        public Boolean getOptional() { return _optional; }
 
         public boolean hasId() {
             return _id != null;
@@ -167,8 +198,8 @@ public @interface JacksonInject
 
         @Override
         public String toString() {
-            return String.format("JacksonInject.Value(id=%s,useInput=%s)",
-                    _id, _useInput);
+            return String.format("JacksonInject.Value(id=%s,useInput=%s,optional=%s)",
+                    _id, _useInput, _optional);
         }
 
         @Override
@@ -180,6 +211,9 @@ public @interface JacksonInject
             if (_useInput != null) {
                 h += _useInput.hashCode();
             }
+            if (_optional != null) {
+                h += _optional.hashCode();
+            }
             return h;
         }
 
@@ -189,12 +223,14 @@ public @interface JacksonInject
             if (o == null) return false;
             if (o.getClass() == getClass()) {
                 Value other = (Value) o;
-                if (OptBoolean.equals(_useInput, other._useInput)) {
-                    if (_id == null) {
-                        return other._id == null;
-                    }
-                    return _id.equals(other._id);
-                }
+                boolean idEquals = _id == null && other._id == null
+                        || _id != null && _id.equals(other._id);
+                boolean useInputEquals = _useInput == null && other._useInput == null
+                        || _useInput != null && _useInput.equals(other._useInput);
+                boolean optionalEquals = _optional == null && other._optional == null
+                        || _optional != null && _optional.equals(other._optional);
+
+                return idEquals && useInputEquals && optionalEquals;
             }
             return false;
         }
@@ -205,8 +241,8 @@ public @interface JacksonInject
         /**********************************************************
          */
 
-        private static boolean _empty(Object id, Boolean useInput) {
-            return (id == null) && (useInput == null);
+        private static boolean _empty(Object id, Boolean useInput, Boolean optional) {
+            return (id == null) && (useInput == null) && optional == null;
         }
     }
 }
