@@ -109,15 +109,20 @@ public @interface JacksonInject
             return EMPTY;
         }
 
+        @Deprecated //since 2.20
+        public static Value construct(Object id, Boolean useInput) {
+            return construct(id, useInput, null);
+        }
+
+        /**
+         * @since 2.20
+         */
         public static Value construct(Object id, Boolean useInput, Boolean optional) {
             if ("".equals(id)) {
                 id = null;
             }
             if (_empty(id, useInput, optional)) {
                 return EMPTY;
-            }
-            if (optional == null) {
-                optional = false;
             }
             return new Value(id, useInput, optional);
         }
@@ -223,14 +228,13 @@ public @interface JacksonInject
             if (o == null) return false;
             if (o.getClass() == getClass()) {
                 Value other = (Value) o;
-                boolean idEquals = _id == null && other._id == null
-                        || _id != null && _id.equals(other._id);
-                boolean useInputEquals = _useInput == null && other._useInput == null
-                        || _useInput != null && _useInput.equals(other._useInput);
-                boolean optionalEquals = _optional == null && other._optional == null
-                        || _optional != null && _optional.equals(other._optional);
 
-                return idEquals && useInputEquals && optionalEquals;
+                return (_id == null && other._id == null
+                        || _id != null && _id.equals(other._id))
+                        && (_useInput == null && other._useInput == null
+                        || _useInput != null && _useInput.equals(other._useInput))
+                        && (_optional == null && other._optional == null
+                        || _optional != null && _optional.equals(other._optional));
             }
             return false;
         }
