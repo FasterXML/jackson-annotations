@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JacksonInjectTest
 {
     private final static class Bogus {
-        @JacksonInject(value="inject", useInput=OptBoolean.FALSE)
+        @JacksonInject(value="inject", useInput=OptBoolean.FALSE,
+                optional=OptBoolean.FALSE)
         public int field;
 
         @JacksonInject
@@ -48,8 +49,8 @@ public class JacksonInjectTest
 
         JacksonInject ann2 = Bogus.class.getField("vanilla").getAnnotation(JacksonInject.class);
         v = JacksonInject.Value.from(ann2);
-        assertEquals(JacksonInject.Value.construct(null, null, false), v,
-                "optional should be false by default");
+        assertEquals(JacksonInject.Value.construct(null, null, null), v,
+                "optional should be `null` by default");
 
         JacksonInject optionalField = Bogus.class.getField("optionalField")
                 .getAnnotation(JacksonInject.class);
@@ -57,6 +58,7 @@ public class JacksonInjectTest
         assertEquals(JacksonInject.Value.construct(null, null, true), v);
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testStdMethods() {
         assertEquals("JacksonInject.Value(id=null,useInput=null,optional=null)",
