@@ -13,6 +13,8 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.20.0 (not yet released)
 
+#291: Add `optional` property for `@JacksonInject` to allow optionally injected values
+ (contributed by @giulong)
 - Generate SBOMs [JSTEP-14]
 
 2.19.0 (24-Apr-2025)
