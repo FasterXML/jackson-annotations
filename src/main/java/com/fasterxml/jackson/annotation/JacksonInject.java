@@ -43,17 +43,20 @@ public @interface JacksonInject
     public OptBoolean useInput() default OptBoolean.DEFAULT;
 
     /**
-     * Whether to throw an exception when the ObjectMapper doesn't find
-     * the injectable value.
+     * Whether to throw an exception when the {@code ObjectMapper} does not find
+     * the value to inject.
      *<p>
-     * Default is `OptBoolean.FALSE` for backwards compatibility
+     * Default is {@code OptBoolean.DEFAULT} for backwards-compatibility: in this
+     * case {@code ObjectMapper} defaults are used (which in turn are same
+     * as {code OptBoolean.FALSE}).
      *
      * @return {@link OptBoolean#FALSE} to throw an exception; {@link OptBoolean#TRUE}
-     * to avoid throwing it.
+     * to avoid throwing it; or {@link OptBoolean#DEFAULT} to use configure defaults
+     * (which are same as {@link OptBoolean#FALSE} for Jackson 2.x)
      *
      * @since 2.20
      */
-    public OptBoolean optional() default OptBoolean.FALSE;
+    public OptBoolean optional() default OptBoolean.DEFAULT;
 
     /*
     /**********************************************************
