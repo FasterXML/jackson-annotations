@@ -78,9 +78,21 @@
     <plugins>
       <!-- First: no replacer plugin (no Packaversion.java.in) for this package -->
 
+      <!-- 28-Apr-2025, tatu: Will get these settings from `jackson-bom` in 3.x but
+	     2.x does not extend it so...
+        -->
+      <plugin>
+        <groupId>org.cyclonedx</groupId>
+        <artifactId>cyclonedx-maven-plugin</artifactId>
+        <configuration>
+          <skipNotDeployed>true</skipNotDeployed>
+          <classifier>sbom-cyclonedx</classifier>
+        </configuration>
+      </plugin>
+
       <plugin>
         <!-- 08-Mar-2019, tatu: Would get these settings from `jackson-bom` except we 
-              do not extend it so...
+              do not extend it (in 2.x) so...
           -->
         <groupId>org.moditect</groupId>
         <artifactId>moditect-maven-plugin</artifactId>
