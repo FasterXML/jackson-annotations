@@ -1,16 +1,12 @@
 name: Build and Deploy Snapshot
 on:
   push:
-    branches:
-    - 3.x
-    - 2.x
+    branches: [2.*]
     paths-ignore:
     - "README.md"
     - "release-notes/*"
   pull_request:
-    branches:
-    - 3.x
-    - 2.x
+    branches: [2.*]
     paths-ignore:
     - "README.md"
     - "release-notes/*"
@@ -19,7 +15,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: 'ubuntu-24.04'
+    runs-on: 'ubuntu-latest'
     strategy:
       fail-fast: false
       matrix:
