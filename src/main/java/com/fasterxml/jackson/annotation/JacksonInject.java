@@ -50,18 +50,15 @@ public @interface JacksonInject
      * @return {@link OptBoolean#FALSE} to throw an exception; {@link OptBoolean#TRUE}
      * to avoid throwing it; or {@link OptBoolean#DEFAULT} to use configure defaults
      * (which are same as {@link OptBoolean#FALSE} for Jackson 2.x)
-     *
-     * @since 2.20
      */
     public OptBoolean optional() default OptBoolean.DEFAULT;
 
     /*
-    /**********************************************************
-    /* Value class used to enclose information, allow for
-    /* merging of layered configuration settings, and eventually
-    /* decouple higher level handling from Annotation types
-    /* (which can not be implemented etc.)
-    /**********************************************************
+    /**********************************************************************
+    /* Value class used to enclose information, allow for  merging of layered
+    /* configuration settings, and eventually decouple higher level handling
+    /* from Annotation types (which can not be implemented etc.)
+    /**********************************************************************
      */
 
     /**
@@ -98,23 +95,15 @@ public @interface JacksonInject
         }
 
         /*
-        /**********************************************************
+        /******************************************************************
         /* Factory methods
-        /**********************************************************
+        /******************************************************************
          */
 
         public static Value empty() {
             return EMPTY;
         }
 
-        @Deprecated //since 2.20
-        public static Value construct(Object id, Boolean useInput) {
-            return construct(id, useInput, null);
-        }
-
-        /**
-         * @since 2.20
-         */
         public static Value construct(Object id, Boolean useInput, Boolean optional) {
             if ("".equals(id)) {
                 id = null;
@@ -137,9 +126,9 @@ public @interface JacksonInject
         }
 
         /*
-        /**********************************************************
+        /******************************************************************
         /* Mutant factory methods
-        /**********************************************************
+        /******************************************************************
          */
 
         public Value withId(Object id) {
@@ -176,9 +165,9 @@ public @interface JacksonInject
         }
 
         /*
-        /**********************************************************
+        /******************************************************************
         /* Accessors
-        /**********************************************************
+        /******************************************************************
          */
 
         public Object getId() { return _id; }
@@ -194,9 +183,9 @@ public @interface JacksonInject
         }
 
         /*
-        /**********************************************************
-        /* Std method overrides
-        /**********************************************************
+        /******************************************************************
+        /* Standard method overrides
+        /******************************************************************
          */
 
         @Override
@@ -238,9 +227,9 @@ public @interface JacksonInject
         }
 
         /*
-        /**********************************************************
+        /******************************************************************
         /* Other
-        /**********************************************************
+        /******************************************************************
          */
 
         private static boolean _empty(Object id, Boolean useInput, Boolean optional) {
