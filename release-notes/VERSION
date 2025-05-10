@@ -9,6 +9,10 @@ mostly)
 === Releases ===
 ------------------------------------------------------------------------
 
+3.0-rc4 (10-May-2025)
+
+No changes since rc3.
+
 3.0-rc3 (13-Apr-2025)
 
 #286: jackson-annotations `3.0.0-rc2` not usable by gradle
