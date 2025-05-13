@@ -87,9 +87,19 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
     </repository>
   </distributionManagement>
 
-  <!-- ... so this is the new repo to get "jackson-base"
+  <!-- 13-May-2025, tatu: And yet more! Tools.jackson comes from the new
+      Sonatype Central Portal: so yet more needed
     -->
   <repositories>
+    <!-- New Sonatype Central Portal (2025/5+) snapshots -->
+    <repository>
+      <id>central-snapshots</id>
+      <name>Sonatype Central Portal (snapshots)</name>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+    <!-- "Old new" Snapshot repo -->
     <repository>
       <id>sonatype-nexus-new-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
@@ -101,6 +111,9 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
 
   <build>
     <plugins>
+      <!-- 13-May-2025, tatu: Left in place until "com.fasterxml" namespace moved
+             to Sonatype Central Portal
+        -->
       <!-- 08-Nov-2019, tatu: Copied from
            https://github.com/stephenc/git-timestamp-maven-plugin/blob/master/pom.xml#L327-L337
          -->
