@@ -71,7 +71,6 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
 
   <!-- Alas, need to include snapshot reference since otherwise can not find
        snapshot of parent... -->
-  <distributionManagement>
   <repositories>
     <!-- New Sonatype Central Portal (2025/5+) snapshots -->
     <repository>
