@@ -17,6 +17,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 2.20 (not yet released)
 
 #294: Drop patch number from version for 2.20 and later (no more 2.20.0)
+#296: Drop Java 6 compatibility for 2.20 (Java 8 baseline)
 
 2.19.1 (13-Jun-2025)
 
