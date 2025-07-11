@@ -1,3 +1,7 @@
+NOTE: OBSOLETE -- Jackson 3.x will use 2.x `jackson-annotations`
+
+------------------------------------------------------------------------
+
 Project: jackson-annotations
 Versions: 3.x (for earlier, see VERSION-2.x)
 

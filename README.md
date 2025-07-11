@@ -1,3 +1,9 @@
+# WARNING! Obsolete branch!
+
+As of 10-Jul-2025 this branch (`3.x`) is obsolete: as per [JSTEP-1](https://github.com/FasterXML/jackson-future-ideas/wiki/JSTEP-1) Jackson 3.x will use 2.x versions of `jackson-annotations` -- so there will not be 3.x versions.
+
+------
+
 # Overview
 
 This project contains general purpose annotations for
