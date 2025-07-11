@@ -13,7 +13,7 @@ NOTE: Annotations module will never contain changes in patch versions,
 
 2.20.0 (not yet released)
 
-No changes since 2.19
+#294: Drop patch number from version for 2.20 and later (no more 2.20.0)
 
 2.19.1 (13-Jun-2025)
 
