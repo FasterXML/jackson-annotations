@@ -1,19 +1,22 @@
 Project: jackson-annotations
 
-NOTE: Annotations module will never contain changes in patch versions,
- only .0 releases can have changes. We may still release patch versions, but
- they will be identical to .0 versions, and only released for convenience
- (developers can line up all Jackson components with same patch version number).
- Main components will typically depend on .0 versions: please do NOT file
- issues against this being a bug; it is intentional.
+NOTE: Annotations module is released with "simple" version like 2.20 without
+ "patch" number -- except for rare case of critical fixes.
+ This change occurred with Jackson 2.20: prior to it, patch number was included
+ but was meaningless: usually every patch version of a minor release was
+ identical.
+
+NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
+ 3.x `jackson-annotations` versions released (there were RC versions up
+ to 3.0-rc5 but not after that).
 
 ------------------------------------------------------------------------
 === Releases ===
 ------------------------------------------------------------------------
 
-2.20.0 (not yet released)
+2.20 (not yet released)
 
-No changes since 2.19
+#294: Drop patch number from version for 2.20 and later (no more 2.20.0)
 
 2.19.1 (13-Jun-2025)
 
