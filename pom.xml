@@ -155,15 +155,6 @@ https://stackoverflow.com/questions/16302247/maven-property-project-artifact-sel
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <platformDependencies>
-            <dependency>
-              <groupId>tools.jackson</groupId>
-              <artifactId>jackson-bom</artifactId>
-              <version>${bom4gmm.version}</version>
-            </dependency>
-          </platformDependencies>
-        </configuration>
       </plugin>
       <!-- 28-Apr-2025, tatu: SBOM generation [JSTEP-14] -->
       <plugin>
