@@ -41,7 +41,8 @@ jobs:
       id: projectVersion
       run: echo "version=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.5.1:evaluate -DforceStdout -Dexpression=project.version -q)" >> $GITHUB_OUTPUT
     - name: Deploy snapshot
-      if: ${{ github.event_name != 'pull_request' && matrix.java_version == '17' && endsWith(steps.projectVersion.outputs.version, '-SNAPSHOT') }}
+      # 14-Jul-2025, tatu: No longer published; 3.x branch not used
+      if: ${{ github.event_name != 'pull_request' && matrix.java_version == '17' && endsWith(steps.projectVersion.outputs.version, '-SNAPSHOT') && false }}
       env:
         CI_DEPLOY_USERNAME: ${{ secrets.CENTRAL_DEPLOY_USERNAME }}
         CI_DEPLOY_PASSWORD: ${{ secrets.CENTRAL_DEPLOY_PASSWORD }}
