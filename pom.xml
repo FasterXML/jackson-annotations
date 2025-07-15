@@ -182,15 +182,9 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <platformDependencies>
-            <dependency>
-              <groupId>com.fasterxml.jackson</groupId>
-              <artifactId>jackson-bom</artifactId>
-              <version>${project.version}</version>
-            </dependency>
-          </platformDependencies>
-        </configuration>
+        <!-- 15-Jul-2025, tatu: With annotations 2.x used for both 2.x AND
+               3.x should not try to force alignment
+          -->
       </plugin>
     </plugins>
   </build>
