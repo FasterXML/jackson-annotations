@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
  * @author Pascal Gélinas
  */
 public class SimpleObjectIdResolver implements ObjectIdResolver {
-    protected Map<IdKey,Object> _items;
+    protected Map<IdKey, Object> _items;
 
     public SimpleObjectIdResolver() { }
 
@@ -19,7 +19,7 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
     public void bindItem(IdKey id, Object ob)
     {
         if (_items == null) {
-            _items = new HashMap<ObjectIdGenerator.IdKey,Object>();
+            _items = new HashMap<>();
         } else {
             Object old = _items.get(id);
             if (old != null) {
@@ -27,11 +27,28 @@ public class SimpleObjectIdResolver implements ObjectIdResolver {
                 if (old == ob) {
                     return;
                 }
-                throw new IllegalStateException("Already had POJO for id (" + id.key.getClass().getName() + ") [" + id
-                        + "]");
+                throw new IllegalStateException(String.format(
+"Object Id conflict: Id %s already bound to an Object %s: attempt to re-bind to a different Object %s",
+                id.toString(), _desc(old), _desc(ob)));
             }
         }
         _items.put(id, ob);
+    }
+
+    private String _desc(Object ob) {
+        if (ob == null) { 
+            return "(null)";
+        }
+        String desc;
+        if (ob instanceof String) {
+            desc = "\""+ob+"\"";
+        } else {
+            desc = ob.toString();
+            if (desc.length() > 100) {
+                desc = desc.substring(0, 100) + "[... truncated]";
+            }
+        }
+        return  ("(type: `"+ob.getClass().getName()+"`, value: "+desc+")");
     }
 
     @Override

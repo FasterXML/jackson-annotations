@@ -17,7 +17,7 @@ import java.util.TimeZone;
  * or String (such as ISO-8601 compatible time value) -- as well as configuring
  * exact details with {@link #pattern} property.
  *<p>
- * As of Jackson 3.0, known special handling includes:
+ * As of Jackson 2.20, known special handling includes:
  *<ul>
  * <li>{@link java.util.Date} or {@link java.util.Calendar}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
@@ -149,6 +149,8 @@ public @interface JsonFormat
         /**
          * Value that indicates that Binary type (native, if format supports it;
          * encoding using Base64 if only textual types supported) should be used.
+         *
+         * @since 2.10
          */
         BINARY,
 
@@ -183,7 +185,7 @@ public @interface JsonFormat
 
         /**
          * Value that indicates shape should not be structural (that is, not
-         * {@link #ARRAY} or {@link #OBJECT}, but can be any other shape.
+         * {@link #ARRAY} or {@link #OBJECT}), but can be any other shape.
          */
         SCALAR,
 
@@ -232,7 +234,7 @@ public @interface JsonFormat
             return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
         }
 
-        /** @since 3.0 */
+        /** @since 2.20 */
         public static boolean isNumeric(Shape shapeOrNull) {
             return (shapeOrNull != null) && shapeOrNull.isNumeric();
         }
@@ -241,7 +243,7 @@ public @interface JsonFormat
             return (this == OBJECT) || (this == ARRAY) || (this == POJO);
         }
 
-        /** @since 3.0 */
+        /** @since 2.20 */
         public static boolean isStructured(Shape shapeOrNull) {
             return (shapeOrNull != null) && shapeOrNull.isStructured();
         }
@@ -531,6 +533,9 @@ public @interface JsonFormat
             _lenient = lenient;
         }
 
+        /**
+         * @since 2.7
+         */
         public final static Value empty() {
             return EMPTY;
         }
