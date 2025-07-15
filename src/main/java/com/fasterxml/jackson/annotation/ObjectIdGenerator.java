@@ -1,5 +1,7 @@
 package com.fasterxml.jackson.annotation;
 
+import java.util.Objects;
+
 /**
  * Definition of API used for constructing Object Identifiers
  * (as annotated using {@link JsonIdentityInfo}).
@@ -148,18 +150,13 @@ public abstract class ObjectIdGenerator<T>
         private final int hashCode;
 
         public IdKey(Class<?> type, Class<?> scope, Object key) {
-            if (key == null) {
-                throw new IllegalArgumentException("Can not construct IdKey for null key");
-            }
-            this.type = type;
+            this.type = Objects.requireNonNull(type, "Type must not be null");
+            // Scope can be null
             this.scope = scope;
-            this.key = key;
+            this.key = Objects.requireNonNull(key, "Key must not be null");
 
-            int h = key.hashCode() + type.getName().hashCode();
-            if (scope != null) {
-                h ^= scope.getName().hashCode();
-            }
-            hashCode = h;
+            hashCode = Objects.hashCode(key) + Objects.hashCode(type.getName())
+                ^ Objects.hashCode(scope);
         }
 
         @Override
@@ -178,7 +175,7 @@ public abstract class ObjectIdGenerator<T>
         @Override
         public String toString() {
             return String.format("[ObjectId: key=%s, type=%s, scope=%s]", key,
-                    (type == null) ? "NONE" : type.getName(),
+                    type.getName(),
                     (scope == null) ? "NONE" : scope.getName());
         }
     }
