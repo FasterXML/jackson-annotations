@@ -110,7 +110,7 @@ public @interface JsonAutoDetect
     /**
      * Minimum visibility required for auto-detecting Creator methods,
      * except for no-argument constructors (which are always detected
-     * no matter what), and (since 3.0) single-scalar-argument
+     * no matter what), and (since 2.20) single-scalar-argument
      * Creators for which there is separate setting.
      */
     Visibility creatorVisibility() default Visibility.DEFAULT;
@@ -125,7 +125,7 @@ public @interface JsonAutoDetect
      * Default value is more permissive than that of general Creators:
      * all non-private scalar-constructors are detected by default.
      *
-     * @since 3.0
+     * @since 2.20
      */
     Visibility scalarConstructorVisibility() default Visibility.DEFAULT;
 
@@ -182,7 +182,7 @@ public @interface JsonAutoDetect
         protected final Visibility _creatorVisibility;
 
         /**
-         * @since 3.0
+         * @since 2.20
          */
         protected final Visibility _scalarConstructorVisibility;
 
@@ -250,6 +250,15 @@ public @interface JsonAutoDetect
                 break;
             }
             return construct(fields, getters, isGetters, setters, creators, scalarCtors);
+        }
+
+        @Deprecated // since 2.20
+        public static Value construct(Visibility fields,
+                Visibility getters, Visibility isGetters, Visibility setters,
+                Visibility creators)
+        {
+            return construct(fields, getters, isGetters, setters, creators,
+                    Visibility.DEFAULT);
         }
 
         public static Value construct(Visibility fields,

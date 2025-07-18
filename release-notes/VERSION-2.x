@@ -22,6 +22,10 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 #296: Drop Java 6 compatibility for 2.20 (Java 8 baseline)
 - Dropped Gradle BOM alignment configuration (as 2.20+ will be used by Jackson 3.x)
 
+2.19.2 (18-Jul-2025)
+
+Minor forwards-compatibility changes.
+
 2.19.1 (13-Jun-2025)
 
 #291: Add `optional` property for `@JacksonInject` to allow optionally injected values
