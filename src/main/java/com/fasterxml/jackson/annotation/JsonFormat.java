@@ -19,7 +19,7 @@ import java.util.TimeZone;
  *<p>
  * As of Jackson 2.20, known special handling includes:
  *<ul>
- * <li>{@link java.util.Date} or {@link java.util.Calendar}: Shape can  be {@link Shape#STRING} or {@link Shape#NUMBER};
+ * <li>{@link java.util.Date} or {@link java.util.Calendar}: Shape can be {@link Shape#STRING} or {@link Shape#NUMBER};
  *    pattern may contain {@link java.text.SimpleDateFormat}-compatible pattern definition.
  *   </li>
  * <li>{@code java.time.*}: Types in the {@code java.time} package can use
@@ -41,10 +41,14 @@ import java.util.TimeZone;
  *    if {@link Shape#OBJECT} is used. NOTE: can ONLY be used as class annotation;
  *    will not work as per-property annotation.
  *   </li>
- * <li>{@link java.lang.Number} subclasses can be serialized as full objects if
- *    {@link Shape#OBJECT} is used. Otherwise the default behavior of serializing to a
- *    scalar number value will be preferred. NOTE: can ONLY be used as class annotation;
- *    will not work as per-property annotation.
+ *  <li>{@link java.lang.Number} subclasses can use {@link Shape#STRING} to serialize to a string.
+ *    This is useful to prevent large numeric values from being rounded to their closest double
+ *    values when deserialized by JSON parsers (for instance <code>JSON.parse()</code> in web
+ *    browsers) that do not support numbers with more than 53 bits of precision.
+ *    <p>
+ *    They can also be serialized to full objects if {@link Shape#OBJECT} is used.
+ *    Otherwise, the default behavior of serializing to a scalar number value will be preferred.
+ *    NOTE: can ONLY be used as class annotation; will not work as per-property annotation.
  *   </li>
  *</ul>
  *
