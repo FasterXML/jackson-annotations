@@ -4,6 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Objects;
 
 /**
  * Annotation used for configuring details of if and how type information is
@@ -536,20 +537,9 @@ public @interface JsonTypeInfo
                     && (a._inclusionType == b._inclusionType)
                     && (a._defaultImpl == b._defaultImpl)
                     && (a._idVisible == b._idVisible)
-                    && _equal(a._propertyName, b._propertyName)
-                    && _equal(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
+                    && Objects.equals(a._propertyName, b._propertyName)
+                    && Objects.equals(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
             ;
-        }
-
-        private static <T> boolean _equal(T value1, T value2)
-        {
-            if (value1 == null) {
-                return (value2 == null);
-            }
-            if (value2 == null) {
-                return false;
-            }
-            return value1.equals(value2);
         }
     }
 }

@@ -14,6 +14,8 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 === Releases ===
 ------------------------------------------------------------------------
 
+- Use `Objects.equals()` for comparison (with Java 8 baseline)
+
 2.20-rc1 (04-Aug-2025)
 
 #293: Improve duplicate Id with different associated object error message

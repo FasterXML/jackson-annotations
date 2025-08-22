@@ -2,6 +2,7 @@ package com.fasterxml.jackson.annotation;
 
 import java.lang.annotation.*;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -900,22 +901,11 @@ public @interface JsonFormat
                     || !_features.equals(other._features)) {
                 return false;
             }
-            return _equal(_lenient, other._lenient)
-                    && _equal(_timezoneStr, other._timezoneStr)
-                    && _equal(_pattern, other._pattern)
-                    && _equal(_timezone, other._timezone)
-                    && _equal(_locale, other._locale);
-        }
-
-        private static <T> boolean _equal(T value1, T value2)
-        {
-            if (value1 == null) {
-                return (value2 == null);
-            }
-            if (value2 == null) {
-                return false;
-            }
-            return value1.equals(value2);
+            return Objects.equals(_lenient, other._lenient)
+                    && Objects.equals(_timezoneStr, other._timezoneStr)
+                    && Objects.equals(_pattern, other._pattern)
+                    && Objects.equals(_timezone, other._timezone)
+                    && Objects.equals(_locale, other._locale);
         }
     }
 }

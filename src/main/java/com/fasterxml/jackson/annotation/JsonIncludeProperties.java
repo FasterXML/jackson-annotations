@@ -139,14 +139,8 @@ public @interface JsonIncludeProperties
         public boolean equals(Object o) {
             if (o == this) return true;
             if (o == null) return false;
-            return (o.getClass() == getClass()) && _equals(_included, ((Value) o)._included);
-        }
-
-        private static boolean _equals(Set<String> a, Set<String> b)
-        {
-            return a == null ? (b == null)
-                    // keep this last just because it can be expensive
-                    : a.equals(b);
+            return (o.getClass() == getClass())
+                    && Objects.equals(_included, ((Value) o)._included);
         }
 
         private static Set<String> _asSet(String[] v)

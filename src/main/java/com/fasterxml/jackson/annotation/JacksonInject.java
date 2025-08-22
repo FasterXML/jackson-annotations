@@ -4,6 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.Objects;
 
 /**
  * Jackson-specific annotation used for indicating that value of
@@ -226,12 +227,9 @@ public @interface JacksonInject
             if (o.getClass() == getClass()) {
                 Value other = (Value) o;
 
-                return (_id == null && other._id == null
-                        || _id != null && _id.equals(other._id))
-                        && (_useInput == null && other._useInput == null
-                        || _useInput != null && _useInput.equals(other._useInput))
-                        && (_optional == null && other._optional == null
-                        || _optional != null && _optional.equals(other._optional));
+                return Objects.equals(_id, other._id)
+                        && Objects.equals(_useInput, other._useInput)
+                        && Objects.equals(_optional, other._optional);
             }
             return false;
         }
@@ -243,7 +241,7 @@ public @interface JacksonInject
          */
 
         private static boolean _empty(Object id, Boolean useInput, Boolean optional) {
-            return (id == null) && (useInput == null) && optional == null;
+            return (id == null) && (useInput == null) && (optional == null);
         }
     }
 }
