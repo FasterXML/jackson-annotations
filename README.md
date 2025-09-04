@@ -24,10 +24,10 @@ Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LI
 
 ## Release notes
 
-Release notes are available in [release-notes](./release-notes/).
+Release notes for this component/repo are available in [Jackson Releases](https://github.com/FasterXML/jackson/wiki/Jackson-Releases) page (unified for all official Jackson components).
 
 NOTE: Annotations module is released with "simple" version like 2.20 without "patch" number -- except for rare case of critical fixes.
-This change occurred with Jackson 2.20: prior to it, patch number was included but was meaningless: usually every patch version of a minor release was identical.
+This change occurred with Jackson 2.20: prior to it, patch number was included but was meaningless: every patch version of a minor release was identical.
 
 NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate 3.x `jackson-annotations` versions released (there were RC versions up to 3.0-rc5 but not after that).
 
@@ -230,9 +230,9 @@ Note that `@JsonTypeInfo` has lots of configuration possibilities: for more info
 
 The default Jackson property detection rules will find:
 
-* All ''public'' fields
-* All ''public'' getters ('getXxx()' methods)
-* All setters ('setXxx(value)' methods), ''regardless of visibility'')
+* All `public` fields
+* All `public` getters (`getXxx()` methods)
+* All setters (`setXxx(value)` methods), **regardless of visibility**)
 
 But if this does not work, you can change visibility levels by using annotation `@JsonAutoDetect`.
 If you wanted, for example, to auto-detect ALL fields (similar to how packages like GSON work), you could do:
