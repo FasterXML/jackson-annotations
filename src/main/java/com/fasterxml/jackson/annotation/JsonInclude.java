@@ -262,6 +262,49 @@ public @interface JsonInclude
     {
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Value that indicates that property is to be always included,
+         * independent of value of the property.
+         */
+        public final static Value ALL_ALWAYS = Value
+                .construct(Include.ALWAYS, Include.ALWAYS);
+
+        /**
+         * Value that indicates that only properties with non-null
+         * values are to be included.
+         */
+        public final static Value ALL_NON_NULL = Value
+                .construct(Include.NON_NULL, Include.NON_NULL);
+
+        /**
+         * Value that indicates that properties are included unless their value
+         * is:
+         * <ul>
+         *  <li>null</li>
+         *  <li>"absent" value of a referential type (like Java 8 `Optional`, or
+         *     {@link java.util.concurrent.atomic.AtomicReference}); that is, something
+         *     that would not deference to a non-null value.
+         * </ul>
+         * This option is mostly used to work with "Optional"s (Java 8, Guava).
+         */
+        public final static Value ALL_NON_ABSENT = Value
+                .construct(Include.NON_ABSENT, Include.NON_ABSENT);
+
+        /**
+         * Value that indicates that only properties with null value,
+         * or what is considered empty, are not to be included.
+         * See {@link Include#NON_EMPTY} for further details.
+         */
+        public final static Value ALL_NON_EMPTY = Value
+                .construct(Include.NON_EMPTY, Include.NON_EMPTY);
+
+        /**
+         * The equivalent to {@link Include#NON_DEFAULT} for specifying
+         * inclusion of non-defaults for both values and content.
+         */
+        public final static Value ALL_NON_DEFAULT = Value
+                .construct(Include.NON_DEFAULT, Include.NON_DEFAULT);
+
         protected final static Value EMPTY = new Value(Include.USE_DEFAULTS,
                 Include.USE_DEFAULTS, null, null);
 
