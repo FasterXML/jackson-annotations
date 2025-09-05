@@ -271,6 +271,11 @@ public @interface JsonInclude
         /**
          * Value that indicates that property is to be always included,
          * independent of value of the property.
+         * <p>
+         * This will specify the same setting for including a value both
+         * on <b>Java object level</b> as well as when <b>contained</b>
+         * in an object reference (see {@link JsonInclude} for further
+         * details on this distinction)
          *
          * @since 2.21
          */
@@ -280,6 +285,11 @@ public @interface JsonInclude
         /**
          * Value that indicates that only properties with non-null
          * values are to be included.
+         * <p>
+         * This will specify the same setting for including a value both
+         * on <b>Java object level</b> as well as when <b>contained</b>
+         * in an object reference (see {@link JsonInclude} for further
+         * details on this distinction)
          *
          * @since 2.21
          */
@@ -296,6 +306,11 @@ public @interface JsonInclude
          *     that would not deference to a non-null value.
          * </ul>
          * This option is mostly used to work with "Optional"s (Java 8, Guava).
+         * <p>
+         * This will specify the same setting for including a value both
+         * on <b>Java object level</b> as well as when <b>contained</b>
+         * in an object reference (see {@link JsonInclude} for further
+         * details on this distinction)
          *
          * @since 2.21
          */
@@ -306,6 +321,11 @@ public @interface JsonInclude
          * Value that indicates that only properties with null value,
          * or what is considered empty, are not to be included.
          * See {@link Include#NON_EMPTY} for further details.
+         * <p>
+         * This will specify the same setting for including a value both
+         * on <b>Java object level</b> as well as when <b>contained</b>
+         * in an object reference (see {@link JsonInclude} for further
+         * details on this distinction)
          *
          * @since 2.21
          */
@@ -315,6 +335,11 @@ public @interface JsonInclude
         /**
          * The equivalent to {@link Include#NON_DEFAULT} for specifying
          * inclusion of non-defaults for both values and content.
+         * <p>
+         * This will specify the same setting for including a value both
+         * on <b>Java object level</b> as well as when <b>contained</b>
+         * in an object reference (see {@link JsonInclude} for further
+         * details on this distinction)
          *
          * @since 2.21
          */
