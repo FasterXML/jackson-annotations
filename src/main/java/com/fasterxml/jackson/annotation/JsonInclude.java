@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation used to indicate when value of the annotated property (when
  * used for a field, method or constructor parameter), or all
- * properties of the annotated class, is to be serialized.
+ * properties of the annotated class (when used for a class), is to be serialized.
  * Without annotation property values are always included, but by using
  * this annotation one can specify simple exclusion rules to reduce
  * amount of properties to write out.
@@ -19,29 +19,35 @@ import java.lang.annotation.Target;
  * it is possible that JSON null values are output, if object reference
  * in question is not `null`. An example is {@link java.util.concurrent.atomic.AtomicReference}
  * instance constructed to reference <code>null</code> value: such a value
- * would be serialized as JSON null, and not filtered out.
+ * would be serialized as JSON {@code null}, and not filtered out.
  *<p>
- * To base inclusion on value of contained value(s), you will typically also need
+ * To base inclusion on value of <b>contained</b> value(s) (like {@code java.util.Map}
+ * entries), you will typically also need
  * to specify {@link #content()} annotation; for example, specifying only
  * {@link #value} as {@link Include#NON_EMPTY} for a {@link java.util.Map} would
- * exclude <code>Map</code>s with no values, but would include <code>Map</code>s
- * with `null` values. To exclude Map with only `null` value, you would use both
- * annotations like so:
+ * exclude {@link java.util.Map}s with no entries (empty {@code Map}s),
+ * but would include <code>Map</code>s elements with {@code null} values (even
+ * though {@code null}s are considered "empty" values).
+ * To exclude {@code Map}s with only `null`-valued entries,
+ * you would use both annotations like so:
  *<pre>
  *public class Bean {
  *   {@literal @JsonInclude}(value=Include.NON_EMPTY, content=Include.NON_NULL)
  *   public Map&lt;String,String&gt; entries;
  *}
  *</pre>
- * Similarly you could exclude <code>Map</code>s that only contain
- * "empty" elements, or "non-default" values (see {@link Include#NON_EMPTY} and
+ * (in which case filtering first excludes {@code Map} entries with {@code null} values
+ * and then excludes {@code Map}s that have no entries left).
+ * <br>
+ * Similarly you could exclude <code>Map</code>s map entries with
+ * "empty" values, or "non-default" values (see {@link Include#NON_EMPTY} and
  * {@link Include#NON_DEFAULT} for more details).
  *<p>
- * In addition to `Map`s, `content` concept is also supported for referential
+ * In addition to {@code Map}s, {@code content} concept is also supported for referential
  * types (like {@link java.util.concurrent.atomic.AtomicReference}).
- * Note that `content` is NOT currently (as of Jackson 2.9) supported for
- * arrays or {@link java.util.Collection}s, but supported may be added in
- * future versions.
+ * Note that `content` is NOT currently (as of Jackson 2.20) supported for
+ * arrays or {@link java.util.Collection}s; support may be added in
+ * future versions (but if so, will be configurable to allow disabling it).
  *
  * @since 2.0
  */
