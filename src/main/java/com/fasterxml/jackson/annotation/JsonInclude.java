@@ -269,13 +269,13 @@ public @interface JsonInclude
         private static final long serialVersionUID = 1L;
 
         /**
-         * Value that indicates that property is to be always included,
+         * Constant that indicates that property is to be always included,
          * independent of value of the property.
          * <p>
          * This will specify the same setting for including a value both
          * on <b>Java object level</b> as well as when <b>contained</b>
          * in an object reference (see {@link JsonInclude} for further
-         * details on this distinction)
+         * details on this distinction).
          *
          * @since 2.21
          */
@@ -283,13 +283,13 @@ public @interface JsonInclude
                 .construct(Include.ALWAYS, Include.ALWAYS);
 
         /**
-         * Value that indicates that only properties with non-null
+         * Constant that indicates that only properties with non-null
          * values are to be included.
          * <p>
          * This will specify the same setting for including a value both
          * on <b>Java object level</b> as well as when <b>contained</b>
          * in an object reference (see {@link JsonInclude} for further
-         * details on this distinction)
+         * details on this distinction).
          *
          * @since 2.21
          */
@@ -297,7 +297,7 @@ public @interface JsonInclude
                 .construct(Include.NON_NULL, Include.NON_NULL);
 
         /**
-         * Value that indicates that properties are included unless their value
+         * Constant that indicates that properties are included unless their value
          * is:
          * <ul>
          *  <li>null</li>
@@ -310,7 +310,7 @@ public @interface JsonInclude
          * This will specify the same setting for including a value both
          * on <b>Java object level</b> as well as when <b>contained</b>
          * in an object reference (see {@link JsonInclude} for further
-         * details on this distinction)
+         * details on this distinction).
          *
          * @since 2.21
          */
@@ -318,14 +318,14 @@ public @interface JsonInclude
                 .construct(Include.NON_ABSENT, Include.NON_ABSENT);
 
         /**
-         * Value that indicates that only properties with null value,
+         * Constant that indicates that only properties with null value,
          * or what is considered empty, are not to be included.
          * See {@link Include#NON_EMPTY} for further details.
          * <p>
          * This will specify the same setting for including a value both
          * on <b>Java object level</b> as well as when <b>contained</b>
          * in an object reference (see {@link JsonInclude} for further
-         * details on this distinction)
+         * details on this distinction).
          *
          * @since 2.21
          */
@@ -339,7 +339,7 @@ public @interface JsonInclude
          * This will specify the same setting for including a value both
          * on <b>Java object level</b> as well as when <b>contained</b>
          * in an object reference (see {@link JsonInclude} for further
-         * details on this distinction)
+         * details on this distinction).
          *
          * @since 2.21
          */
