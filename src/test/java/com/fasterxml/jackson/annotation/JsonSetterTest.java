@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonSetterTest
+    extends AnnotationTestUtil
 {
     private final static class Bogus {
         @JsonSetter(nulls=Nulls.FAIL, contentNulls=Nulls.SKIP)
@@ -47,6 +48,12 @@ public class JsonSetterTest
         JsonSetter.Value v = JsonSetter.Value.from(ann);
         assertEquals(Nulls.FAIL, v.getValueNulls());
         assertEquals(Nulls.SKIP, v.getContentNulls());
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonSetter.Value deser = jdkDeserialize(b);
+
+        assertEquals(v, deser);
     }
 
     @Test

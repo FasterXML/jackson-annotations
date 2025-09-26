@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * instances for overrides
  */
 public class JsonIncludePropertiesTest
+    extends AnnotationTestUtil
 {
     @JsonIncludeProperties(value = {"foo", "bar"})
     private final static class Bogus
@@ -42,6 +43,12 @@ public class JsonIncludePropertiesTest
         boolean test2 = tmp.equals("JsonIncludeProperties.Value(included=[bar, foo])");
         assertTrue(test1 || test2);
         assertEquals(v, JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class)));
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonIncludeProperties.Value deser = jdkDeserialize(b);
+
+        assertEquals(v, deser);
     }
 
     @Test
