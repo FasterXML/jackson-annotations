@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests to verify that it is possibly to merge {@link JsonInclude.Value}
  * instances for overrides
  */
-public class IncludeTest
+public class JsonIncludeTest
+    extends AnnotationTestUtil
 {
     private final JsonInclude.Value EMPTY = JsonInclude.Value.empty();
 
@@ -45,6 +46,12 @@ public class IncludeTest
         JsonInclude.Value v = JsonInclude.Value.from(ann);
         assertEquals(Include.NON_EMPTY, v.getValueInclusion());
         assertEquals(Include.NON_DEFAULT, v.getContentInclusion());
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonInclude.Value deser = jdkDeserialize(b);
+
+        assertEquals(v, deser);
     }
 
     @Test

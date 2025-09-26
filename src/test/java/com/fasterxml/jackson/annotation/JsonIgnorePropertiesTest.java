@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * instances for overrides
  */
 public class JsonIgnorePropertiesTest
+    extends AnnotationTestUtil
 {
     @JsonIgnoreProperties(value={ "foo", "bar" }, ignoreUnknown=true)
     private final static class Bogus {
@@ -53,6 +54,12 @@ public class JsonIgnorePropertiesTest
         Set<String> ign = v.getIgnored();
         assertEquals(2, v.getIgnored().size());
         assertEquals(_set("foo", "bar"), ign);
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonIgnoreProperties.Value deser = jdkDeserialize(b);
+
+        assertEquals(v, deser);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonTypeInfoTest
+    extends AnnotationTestUtil
 {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, visible=true,
             defaultImpl = JsonTypeInfo.class, requireTypeIdForSubtypes = OptBoolean.TRUE)
@@ -57,6 +58,12 @@ public class JsonTypeInfoTest
 
         assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true,requireTypeIdForSubtypes=true)", v1.toString());
         assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=false)", v2.toString());
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v1);
+        JsonTypeInfo.Value deser = jdkDeserialize(b);
+
+        assertEquals(v1, deser);
     }
 
     @Test

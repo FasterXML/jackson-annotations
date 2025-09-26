@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Silly test for JsonAutoDetect.Visibility type, for code coverage
-public class VisibilityTest
+public class JsonAutoDetectTest
+    extends AnnotationTestUtil
 {
     static class Bogus {
         public String value;
@@ -82,6 +83,12 @@ public class VisibilityTest
         assertEquals(ann.isGetterVisibility(), v.getIsGetterVisibility());
         assertEquals(ann.setterVisibility(), v.getSetterVisibility());
         assertEquals(ann.creatorVisibility(), v.getCreatorVisibility());
+
+        // Let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonAutoDetect.Value deser = jdkDeserialize(b);
+
+        assertEquals(v, deser);
     }
 
     @Test
