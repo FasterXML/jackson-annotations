@@ -1,6 +1,6 @@
 Project: jackson-annotations
 
-NOTE: Annotations module will never contain changes in patch versions,
+NOTE: Annotations module will only VERY rarely contain changes in patch versions,
  only .0 releases can have changes. We may still release patch versions, but
  they will be identical to .0 versions, and only released for convenience
  (developers can line up all Jackson components with same patch version number).
@@ -11,7 +11,16 @@ NOTE: Annotations module will never contain changes in patch versions,
 === Releases ===
 ------------------------------------------------------------------------
 
-2.19.0-rc2 (07-Apr-2025)
+2.19.2 (18-Jul-2025)
+
+- Minor forwards-compatibility changes (to support upcoming Jackson 3.0)
+ (only mentioned wrt binary-compability checking tools)
+
+2.19.1 (13-Jun-2025)
+
+- No functional changes, but released via Sonatype Central Portal
+
+2.19.0 (24-Apr-2025)
 
 #280: Minor change to `module-info.java`: use "open module"
 #281: [gradle-module-metadata-maven-plugin] update to version 1.0

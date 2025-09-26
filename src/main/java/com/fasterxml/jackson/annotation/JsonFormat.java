@@ -152,40 +152,20 @@ public @interface JsonFormat
      */
     public enum Shape
     {
+        // // // Concrete physical shapes, scalars
         /**
-         * Marker enum value that indicates "whatever" choice, meaning that annotation
-         * does NOT specify shape to use.
-         * Note that this is different from {@link Shape#NATURAL}, which
-         * specifically instructs use of the "natural" shape for datatype.
-         */
-        ANY,
-
-        /**
-         * Marker enum value that indicates the "default" choice for given datatype;
-         * for example, JSON String for {@link java.lang.String}, or JSON Number
-         * for Java numbers.
-         * Note that this is different from {@link Shape#ANY} in that this is actual
-         * explicit choice that overrides possible default settings.
+         * Value that indicates that Binary type (native, if format supports it;
+         * encoding using Base64 if only textual types supported) should be used.
          *
-         * @since 2.8
+         * @since 2.10
          */
-        NATURAL,
+        BINARY,
 
         /**
-         * Value that indicates shape should not be structural (that is, not
-         * {@link #ARRAY} or {@link #OBJECT}), but can be any other shape.
+         * Value that indicates that (JSON) boolean type
+         * (true, false) should be used.
          */
-        SCALAR,
-
-        /**
-         * Value that indicates that (JSON) Array type should be used.
-         */
-        ARRAY,
-
-        /**
-         * Value that indicates that (JSON) Object type should be used.
-         */
-        OBJECT,
+        BOOLEAN,
 
         /**
          * Value that indicates that a numeric (JSON) type should be used
@@ -211,26 +191,71 @@ public @interface JsonFormat
         STRING,
 
         /**
-         * Value that indicates that (JSON) boolean type
-         * (true, false) should be used.
+         * Value that indicates shape should not be structural (that is, not
+         * {@link #ARRAY} or {@link #OBJECT}), but can be any other shape.
          */
-        BOOLEAN,
+        SCALAR,
+
+        // // // Concrete physical shapes, structured
 
         /**
-         * Value that indicates that Binary type (native, if format supports it;
-         * encoding using Base64 if only textual types supported) should be used.
-         *
-         * @since 2.10
+         * Value that indicates that (JSON) Array type should be used.
          */
-        BINARY
+        ARRAY,
+
+        /**
+         * Value that indicates that (JSON) Object type should be used.
+         */
+        OBJECT,
+
+        // // // Additional logical meta-types
+
+        /**
+         * Marker enum value that indicates "whatever" choice, meaning that annotation
+         * does NOT specify shape to use.
+         * Note that this is different from {@link Shape#NATURAL}, which
+         * specifically instructs use of the "natural" shape for datatype.
+         */
+        ANY,
+
+        /**
+         * Marker enum value that indicates the "default" choice for given datatype;
+         * for example, JSON String for {@link java.lang.String}, or JSON Number
+         * for Java numbers.
+         * Note that this is different from {@link Shape#ANY} in that this is actual
+         * explicit choice that overrides possible default settings.
+         *
+         * @since 2.8
+         */
+        NATURAL,
+
+        /**
+         * Marker enum value that indicates not only shape of {@link #OBJECT} but further
+         * handling as POJO, where applicable. Mostly makes difference at Java Object level
+         * when distinguishing handling between {@link java.util.Map} and POJO types.
+         *
+         * @since 2.20
+         */
+        POJO,
+
         ;
 
         public boolean isNumeric() {
             return (this == NUMBER) || (this == NUMBER_INT) || (this == NUMBER_FLOAT);
         }
 
+        /** @since 2.20 */
+        public static boolean isNumeric(Shape shapeOrNull) {
+            return (shapeOrNull != null) && shapeOrNull.isNumeric();
+        }
+
         public boolean isStructured() {
-            return (this == OBJECT) || (this == ARRAY);
+            return (this == OBJECT) || (this == ARRAY) || (this == POJO);
+        }
+
+        /** @since 2.20 */
+        public static boolean isStructured(Shape shapeOrNull) {
+            return (shapeOrNull != null) && shapeOrNull.isStructured();
         }
     }
 
@@ -550,6 +575,7 @@ public @interface JsonFormat
         public Value(String p, Shape sh, String localeStr, String tzStr, Features f) {
             this(p, sh, localeStr, tzStr, f, null);
         }
+
         @Deprecated // since 2.9
         public Value(String p, Shape sh, Locale l, TimeZone tz, Features f) {
             this(p, sh, l, tz, f, null);
