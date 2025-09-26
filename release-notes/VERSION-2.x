@@ -18,6 +18,8 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 #314: Add `JsonInclude.Value` convenience constants
  (contributed by @runeflobakk)
+#316: Make `JsonFormat.Features` java.io.Serializable
+ (requested by @tiger9800)
 
 2.20 (28-Aug-2025)
 

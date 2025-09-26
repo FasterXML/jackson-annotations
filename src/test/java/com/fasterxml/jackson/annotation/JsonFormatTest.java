@@ -11,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests to verify that it is possibly to merge {@link JsonFormat.Value}
  * instances for overrides.
  */
-public class FormatTest
+public class JsonFormatTest
+    extends AnnotationTestUtil
 {
     private final JsonFormat.Value EMPTY = JsonFormat.Value.empty();
 
@@ -71,6 +72,10 @@ public class FormatTest
     @Test
     public void testFromAnnotation()
     {
+        // Trivial case first:
+        assertSame(EMPTY, JsonFormat.Value.from(null));
+
+        // then real one
         JsonFormat ann = Bogus.class.getAnnotation(JsonFormat.class);
         JsonFormat.Value v = JsonFormat.Value.from(ann);
         assertEquals("xyz", v.getPattern());
@@ -78,8 +83,11 @@ public class FormatTest
         // note: since it's not valid, should not try access as real thing
         assertEquals("bogus", v.timeZoneAsString());
 
-        // also:
-        assertSame(EMPTY, JsonFormat.Value.from(null));
+        // [annotations#316]: let's also verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JsonFormat.Value v2 = jdkDeserialize(b);
+
+        assertEquals(v, v2);
     }
 
     @Test

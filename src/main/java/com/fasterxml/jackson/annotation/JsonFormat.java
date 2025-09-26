@@ -381,7 +381,10 @@ public @interface JsonFormat
      * @since 2.6
      */
     public static class Features
+        implements java.io.Serializable // @since 2.21
     {
+        private static final long serialVersionUID = 1L;
+
         private final int _enabled, _disabled;
 
         private final static Features EMPTY = new Features(0, 0);

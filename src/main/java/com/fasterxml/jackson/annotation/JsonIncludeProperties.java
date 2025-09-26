@@ -47,7 +47,8 @@ public @interface JsonIncludeProperties
      *
      * @since 2.12
      */
-    public static class Value implements JacksonAnnotationValue<JsonIncludeProperties>, java.io.Serializable
+    public static class Value implements JacksonAnnotationValue<JsonIncludeProperties>,
+        java.io.Serializable
     {
         private static final long serialVersionUID = 1L;
 

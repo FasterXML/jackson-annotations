@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JacksonInjectTest
+    extends AnnotationTestUtil
 {
     private final static class Bogus {
         @JacksonInject(value="inject", useInput=OptBoolean.FALSE,
@@ -47,6 +48,11 @@ public class JacksonInjectTest
         assertFalse(v.equals(EMPTY));
         assertFalse(EMPTY.equals(v));
 
+        // Verify JDK serializability
+        byte[] b = jdkSerialize(v);
+        JacksonInject.Value v2 = jdkDeserialize(b);
+        assertEquals(v, v2);
+        
         JacksonInject ann2 = Bogus.class.getField("vanilla").getAnnotation(JacksonInject.class);
         v = JacksonInject.Value.from(ann2);
         assertEquals(JacksonInject.Value.construct(null, null, null), v,
