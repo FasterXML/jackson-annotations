@@ -81,10 +81,13 @@ public @interface JsonFormat
     public final static String DEFAULT_TIMEZONE = "##default";
 
     /**
-     * Value that indicates the default radix(numeric base) to use for outputting {@link java.lang.Number} properties
-     * when {@link Shape#STRING} is specified.
+     * Value that indicates the default radix(numeric base) should be used when outputting
+     * {@link java.lang.Number} properties when {@link Shape#STRING} is specified.
+     * This is a marker signaling that {@link JsonFormat.Value} with this radix should
+     * not override the radix of another {@link JsonFormat.Value}.
+     * @since 2.21
      */
-    public final static byte DEFAULT_RADIX = 10;
+    public final static int DEFAULT_RADIX = -1;
 
     /**
      * Datatype-specific additional piece of configuration that may be used
@@ -142,7 +145,7 @@ public @interface JsonFormat
      *
      * @since 2.21
      */
-    public byte radix() default DEFAULT_RADIX;
+    public int radix() default DEFAULT_RADIX;
 
     /**
      * Set of {@link JsonFormat.Feature}s to explicitly enable with respect
@@ -539,7 +542,7 @@ public @interface JsonFormat
         /**
          * @since 2.21
          */
-        private final byte _radix;
+        private final int _radix;
 
         // lazily constructed when created from annotations
         private transient TimeZone _timezone;
@@ -557,7 +560,7 @@ public @interface JsonFormat
          * @since 2.21
          */
         public Value(String p, Shape sh, String localeStr, String tzStr, Features f,
-                Boolean lenient, byte radix)
+                Boolean lenient, int radix)
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
@@ -586,7 +589,7 @@ public @interface JsonFormat
          * @since 2.21
          */
         public Value(String p, Shape sh, Locale l, TimeZone tz, Features f,
-                Boolean lenient, byte radix)
+                Boolean lenient, int radix)
         {
             _pattern = (p == null) ? "" : p;
             _shape = (sh == null) ? Shape.ANY : sh;
@@ -619,7 +622,7 @@ public @interface JsonFormat
          * @since 2.21
          */
         public Value(String p, Shape sh, Locale l, String tzStr, TimeZone tz, Features f,
-                Boolean lenient, byte radix)
+                Boolean lenient, int radix)
         {
             _pattern = (p == null) ? "" : p;
             _shape = (sh == null) ? Shape.ANY : sh;
@@ -718,6 +721,10 @@ public @interface JsonFormat
             if (lenient == null) {
                 lenient = _lenient;
             }
+            int radix = overrides._radix;
+            if(radix == DEFAULT_RADIX) {
+                radix = _radix;
+            }
 
             // timezone not merged, just choose one
             String tzStr = overrides._timezoneStr;
@@ -729,7 +736,7 @@ public @interface JsonFormat
             } else {
                 tz = overrides._timezone;
             }
-            return new Value(p, sh, l, tzStr, tz, f, lenient, overrides._radix);
+            return new Value(p, sh, l, tzStr, tz, f, lenient, radix);
         }
 
         /**
@@ -860,9 +867,11 @@ public @interface JsonFormat
         }
 
         /**
+         * @return radix to use for serializing subclasses of {@link Number} as strings.
+         * If set to -1, a custom radix has not been specified.
          * @since 2.21
          */
-        public byte getRadix() { return _radix; }
+        public int getRadix() { return _radix; }
 
         /**
          * Convenience method equivalent to
@@ -940,12 +949,12 @@ public @interface JsonFormat
         }
 
         /**
-         * Accessor for checking whether non-default (non-10) radix has been specified.
+         * Accessor for checking whether non-default (neither special default marker -1 nor 10) radix has been specified.
          *
          * @since 2.21
          */
         public boolean hasNonDefaultRadix() {
-            return _radix != DEFAULT_RADIX;
+            return _radix != DEFAULT_RADIX && _radix != 10;
         }
 
         /**

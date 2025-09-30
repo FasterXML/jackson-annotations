@@ -148,14 +148,6 @@ public class JsonFormatTest
         assertFalse(merged.hasLocale());
         assertEquals(TEST_SHAPE, merged.getShape());
         assertFalse(merged.hasTimeZone());
-
-        //radix always overrides
-        byte binaryRadix = 2;
-        final JsonFormat.Value v3 = JsonFormat.Value.forRadix(binaryRadix);
-        merged = EMPTY.withOverrides(v3);
-        assertEquals(DEFAULT_RADIX, EMPTY.getRadix());
-        assertEquals(binaryRadix, merged.getRadix());
-
     }
 
     @Test
@@ -269,5 +261,27 @@ public class JsonFormatTest
         });
         assertEquals(Boolean.FALSE, f4.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
         assertEquals(Boolean.TRUE, f4.get(Feature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS));
+    }
+
+    @Test
+    void testRadix() {
+        //Non-Default radix overrides the default
+        byte binaryRadix = 2;
+        final JsonFormat.Value v = JsonFormat.Value.forRadix(binaryRadix);
+        JsonFormat.Value merged = EMPTY.withOverrides(v);
+        assertEquals(DEFAULT_RADIX, EMPTY.getRadix());
+        assertEquals(binaryRadix, merged.getRadix());
+
+        //Default does not override
+        final JsonFormat.Value v2 = JsonFormat.Value.forRadix(binaryRadix);
+        merged = v2.withOverrides(EMPTY);
+        assertEquals(binaryRadix, v2.getRadix());
+        assertEquals(binaryRadix, merged.getRadix());
+
+        JsonFormat.Value emptyWithBinaryRadix = EMPTY.withRadix(binaryRadix);
+        assertEquals(binaryRadix, emptyWithBinaryRadix.getRadix());
+
+        JsonFormat.Value forBinaryRadix = JsonFormat.Value.forRadix(binaryRadix);
+        assertEquals(binaryRadix, forBinaryRadix.getRadix());
     }
 }
