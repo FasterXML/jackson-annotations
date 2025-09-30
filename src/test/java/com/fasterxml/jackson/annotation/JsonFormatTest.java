@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import org.junit.jupiter.api.Test;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.DEFAULT_RADIX;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,6 +31,7 @@ public class JsonFormatTest
         assertFalse(empty.hasShape());
         assertFalse(empty.hasTimeZone());
         assertFalse(empty.hasLenient());
+        assertFalse(empty.hasNonDefaultRadix());
 
         assertFalse(empty.isLenient());
     }
@@ -63,9 +65,9 @@ public class JsonFormatTest
 
     @Test
     public void testToString() {
-        assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY)",
+        assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY,radix=10)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
-        assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null,features=EMPTY)",
+        assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null,features=EMPTY,radix=10)",
                 JsonFormat.Value.forPattern("[.]").toString());
     }
 
@@ -146,6 +148,14 @@ public class JsonFormatTest
         assertFalse(merged.hasLocale());
         assertEquals(TEST_SHAPE, merged.getShape());
         assertFalse(merged.hasTimeZone());
+
+        //radix always overrides
+        byte binaryRadix = 2;
+        final JsonFormat.Value v3 = JsonFormat.Value.forRadix(binaryRadix);
+        merged = EMPTY.withOverrides(v3);
+        assertEquals(DEFAULT_RADIX, EMPTY.getRadix());
+        assertEquals(binaryRadix, merged.getRadix());
+
     }
 
     @Test
