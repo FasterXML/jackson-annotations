@@ -266,7 +266,7 @@ public class JsonFormatTest
     @Test
     void testRadix() {
         //Non-Default radix overrides the default
-        byte binaryRadix = 2;
+        int binaryRadix = 2;
         final JsonFormat.Value v = JsonFormat.Value.forRadix(binaryRadix);
         JsonFormat.Value merged = EMPTY.withOverrides(v);
         assertEquals(DEFAULT_RADIX, EMPTY.getRadix());
