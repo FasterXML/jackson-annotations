@@ -65,9 +65,9 @@ public class JsonFormatTest
 
     @Test
     public void testToString() {
-        assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY,radix=10)",
+        assertEquals("JsonFormat.Value(pattern=,shape=STRING,lenient=null,locale=null,timezone=null,features=EMPTY,radix=-1)",
                 JsonFormat.Value.forShape(JsonFormat.Shape.STRING).toString());
-        assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null,features=EMPTY,radix=10)",
+        assertEquals("JsonFormat.Value(pattern=[.],shape=ANY,lenient=null,locale=null,timezone=null,features=EMPTY,radix=-1)",
                 JsonFormat.Value.forPattern("[.]").toString());
     }
 

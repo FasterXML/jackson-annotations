@@ -81,10 +81,8 @@ public @interface JsonFormat
     public final static String DEFAULT_TIMEZONE = "##default";
 
     /**
-     * Value that indicates the default radix(numeric base) should be used when outputting
-     * {@link java.lang.Number} properties when {@link Shape#STRING} is specified.
-     * This is a marker signaling that {@link JsonFormat.Value} with this radix should
-     * not override the radix of another {@link JsonFormat.Value}.
+     * This is a marker signaling that a configured default radix should be used, which typically means 10,
+     * when serializing {@link java.lang.Number} properties with {@link Shape#STRING}.
      * @since 2.21
      */
     public final static int DEFAULT_RADIX = -1;
@@ -764,7 +762,7 @@ public @interface JsonFormat
         /**
         * @since 2.21
         */
-        public static Value forRadix(byte radix) {
+        public static Value forRadix(int radix) {
             return new Value("", null, null, null, null, Features.empty(),
                     null, radix);
         }
@@ -818,7 +816,7 @@ public @interface JsonFormat
         /**
          * @since 2.21
          */
-        public Value withRadix(byte radix) {
+        public Value withRadix(int radix) {
             if (radix == _radix) {
                 return this;
             }
@@ -949,12 +947,12 @@ public @interface JsonFormat
         }
 
         /**
-         * Accessor for checking whether non-default (neither special default marker -1 nor 10) radix has been specified.
+         * Accessor for checking whether non-default radix has been specified.
          *
          * @since 2.21
          */
         public boolean hasNonDefaultRadix() {
-            return _radix != DEFAULT_RADIX && _radix != 10;
+            return _radix != DEFAULT_RADIX;
         }
 
         /**
