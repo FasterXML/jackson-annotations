@@ -6,17 +6,21 @@
   <!-- that they should prefer consuming it instead. -->
   <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion> 
+
+  <!-- 15-Oct-2025, tatu: NOTE - THIS IS OBSOLETE - Jackson 3.x depends on 2.x
+    version of `jackson-annotations` so 3.x is not used at all
+    -->
+  
   <parent>
     <groupId>tools.jackson</groupId>
-    <!-- In 3.0+, extends `jackson-base` just like all other components; 2.x did not -->
     <artifactId>jackson-base</artifactId>
-    <version>3.0.0-rc6-SNAPSHOT</version>
+    <version>3.0.0</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-annotations</artifactId>
   <name>Jackson-annotations</name>
-  <version>3.0-rc6-SNAPSHOT</version>
+  <version>3.0-NEVER-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
