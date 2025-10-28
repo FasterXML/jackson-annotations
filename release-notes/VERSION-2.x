@@ -18,8 +18,6 @@ NOTE: Annotations module will only VERY rarely contain changes in patch versions
 
 2.19.1 (13-Jun-2025)
 
-- No functional changes, but released via Sonatype Central Portal
-
 2.19.0 (24-Apr-2025)
 
 #280: Minor change to `module-info.java`: use "open module"
@@ -27,6 +25,10 @@ NOTE: Annotations module will only VERY rarely contain changes in patch versions
  (contributed by @jjohannes)
 #284: Add `OptBoolean` valued `@JsonProperty.isRequired` to
   (eventually) replace `@JsonProperty.required`
+
+2.18.5 (27-Oct-2025)
+
+- No functional changes, but released via Sonatype Central Portal
 
 2.18.0 (26-Sep-2024)
 
