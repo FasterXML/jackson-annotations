@@ -18,10 +18,12 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 #314: Add `JsonInclude.Value` convenience constants
  (contributed by @runeflobakk)
+#315: Add `@JsonDeserializeAs`
 #316: Make `JsonFormat.Features` java.io.Serializable
  (requested by @tiger9800)
 #320: Add `radix` property to `@JsonFormat` annotation
  (contributed by @tiger9800)
+#324: Add `@JsonSerializeAs`
 - Fix SBOM generation, publishing
 
 2.20 (28-Aug-2025)
