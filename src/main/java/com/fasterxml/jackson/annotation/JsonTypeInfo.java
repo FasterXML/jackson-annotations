@@ -80,7 +80,8 @@ public @interface JsonTypeInfo
         /**
          * This means that no explicit type metadata is included, and typing is
          * purely done using contextual information possibly augmented with other
-         * annotations.
+         * annotations. Or, format-specific metadata mechanism is used.
+         * Typically used with {@link As#NOTHING}.
          */
         NONE(null),
 
@@ -175,7 +176,7 @@ public @interface JsonTypeInfo
 
     /**
      * Definition of standard type inclusion mechanisms for type metadata.
-     * Used for standard metadata types, except for {@link Id#NONE}.
+     * Used for standard metadata types.
      * May or may not be used for custom types ({@link Id#CUSTOM}).
      */
     public enum As {
@@ -240,7 +241,17 @@ public @interface JsonTypeInfo
          *
          * @since 2.3 but databind <b>only since 2.5</b>.
          */
-        EXISTING_PROPERTY
+        EXISTING_PROPERTY,
+
+        /**
+         * Pseudo-value used as marker for case where no in-data Type Id is included:
+         * either because separate metadata (using format native mechanism) is used,
+         * or inference mechanism is used or possibly no Type Id is used at all
+         * (to match {@link Id#NONE} case).
+         *
+         * @since 2.21
+         */
+        NOTHING
         ;
     }
 
@@ -376,9 +387,9 @@ public @interface JsonTypeInfo
     {
         private static final long serialVersionUID = 1L;
 
-        // should not really be needed usually but make sure defalts to `NONE`; other
+        // should not really be needed usually but make sure defaults to `NONE`; other
         // values of less interest
-        protected final static Value EMPTY = new Value(Id.NONE, As.PROPERTY, null, null, false, null);
+        protected final static Value EMPTY = new Value(Id.NONE, As.NOTHING, null, null, false, null);
 
         protected final Id _idType;
         protected final As _inclusionType;
@@ -493,7 +504,8 @@ public @interface JsonTypeInfo
          */
         public static boolean isEnabled(JsonTypeInfo.Value v) {
             return (v != null) &&
-                (v._idType != null) && (v._idType != Id.NONE);
+                (v._idType != null) && (v._idType != Id.NONE)
+                && (v._inclusionType != As.NOTHING);
         }
 
         /*
