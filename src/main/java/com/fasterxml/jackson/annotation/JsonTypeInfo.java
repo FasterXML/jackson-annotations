@@ -333,7 +333,7 @@ public @interface JsonTypeInfo
      *<p>
      * Default value is false, meaning that Jackson handles and removes
      * the type identifier from JSON content that is passed to
-     * <code>JsonDeserializer</code>.
+     * <code>JsonDeserializer</code> (2.x) / <code>ValueDeserializer</code> (3.x).
      *
      * @since 2.0
      */

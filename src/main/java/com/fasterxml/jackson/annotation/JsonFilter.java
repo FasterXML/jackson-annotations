@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * it delegates to) providing matching filters by id.
  *<p>
  * Filters to use are usually of type
- * <code>tools.jackson.databind.ser.PropertyFilter</code> and
+ * <code>PropertyFilter</code> and
  * are registered through <code>ObjectMapper</code>
  *<p>
  * Since 2.3, this annotation can also be used on properties (fields, methods,
