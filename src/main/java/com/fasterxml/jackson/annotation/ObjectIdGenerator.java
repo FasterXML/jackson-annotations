@@ -84,7 +84,6 @@ public abstract class ObjectIdGenerator<T>
      * (next id to produce).
      *<p>
      * Note that actual type of 'context' is
-     * Should probably be
      * <code>SerializerProvider</code> (2.x) / <code>SerializationContext</code> (3.x),
      * but can not be declared here as type itself (as well as call
      * to this object) comes from databind package.
