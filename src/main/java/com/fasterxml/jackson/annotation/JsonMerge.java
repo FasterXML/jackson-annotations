@@ -22,8 +22,8 @@ import java.lang.annotation.Target;
  * but no obvious and non-ambiguous way to merge state.
  *<p>
  * Merging is applied by using a deserialization method that accepts existing state
- * as an argument: it is then up to <code>JsonDeserializer</code> implementation
- * to use that base state in a way that makes sense without further configuration.
+ * as an argument: it is then up to <code>JsonDeserializer</code> (2.x) / <code>ValueDeserializer</code> (3.x)
+ * implementation to use that base state in a way that makes sense without further configuration.
  * For structured types this is usually obvious; and for scalar types not -- if
  * no obvious method exists, merging is not allowed; deserializer may choose to
  * either quietly ignore it, or throw an exception.

@@ -111,7 +111,8 @@ public @interface JsonFormat
      * Datatype-specific additional piece of configuration that may be used
      * to further refine formatting aspects. This may, for example, determine
      * low-level format String used for {@link java.util.Date} serialization;
-     * however, exact use is determined by specific <code>JsonSerializer</code>
+     * however, exact use is determined by specific <code>JsonSerializer</code> (2.x)
+     * / <code>ValueSerializer</code> (3.x)
      */
     public String pattern() default "";
 
@@ -309,7 +310,8 @@ public @interface JsonFormat
      * or <code>DeserializationFeature</code>, as noted by entries.
      *<p>
      * Note that whether specific setting has an effect depends on whether
-     * <code>JsonSerializer</code> / <code>JsonDeserializer</code> being used
+     * <code>JsonSerializer</code> (2.x) / <code>ValueSerializer</code> (3.x)
+     * or <code>JsonDeserializer</code> (2.x) / <code>ValueDeserializer</code> (3.x) being used
      * takes the format setting into account. If not, please file an issue
      * for adding support via issue tracker for package that has handlers
      * (if you know which one; if not, just use `jackson-databind`).

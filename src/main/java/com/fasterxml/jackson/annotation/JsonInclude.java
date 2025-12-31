@@ -183,7 +183,8 @@ public @interface JsonInclude
          *  and for other types, null values are excluded but other exclusions (if any).
          *<p>
          * Note that this default handling can be overridden by custom
-         * <code>JsonSerializer</code> implementation: if method <code>isEmpty()</code>
+         * <code>JsonSerializer</code> (2.x) / <code>ValueSerializer</code> (3.x)
+         * implementation: if method <code>isEmpty()</code>
          * is overridden, it will be called to see if non-null values are
          * considered empty (null is always considered empty).
          *<p>
