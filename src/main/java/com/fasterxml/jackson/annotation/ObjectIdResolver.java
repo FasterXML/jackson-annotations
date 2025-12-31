@@ -32,13 +32,13 @@ public interface ObjectIdResolver {
      * objects).
      * <p>
      * Note that actual type of 'context' is
-     * <code>com.fasterxml.jackson.databind.DeserializationContext</code>, but
+     * <code>tools.jackson.databind.DeserializationContext</code>, but
      * can not be declared here as type itself (as well as call to this object)
      * comes from databind package.
      *
      * @param context
      *            Deserialization context object used (of type
-     *            <code>com.fasterxml.jackson.databind.DeserializationContext</code>)
+     *            <code>tools.jackson.databind.DeserializationContext</code>)
      *            ; may be needed by more complex resolvers to access contextual
      *            information such as configuration.
      */

@@ -221,7 +221,7 @@ on the fields available. Exceptions will be raised if subtypes do not have a dis
 not resolve to single known signature.
 
 Note that `@JsonTypeInfo` has lots of configuration possibilities: for more information check out
-[Intro to polymorphic type handling](http://www.cowtowncoder.com/blog/archives/2010/03/entry_372.html)
+[Intro to polymorphic type handling](../../../jackson-docs/wiki/JacksonPolymorphicDeserialization)
 
 ### Changing property auto-detection
 
