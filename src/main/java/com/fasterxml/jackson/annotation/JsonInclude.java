@@ -39,9 +39,13 @@ import java.lang.annotation.Target;
  *<p>
  * In addition to `Map`s, `content` concept is also supported for referential
  * types (like {@link java.util.concurrent.atomic.AtomicReference}).
- * Note that `content` is NOT currently (as of Jackson 2.9) supported for
- * arrays or {@link java.util.Collection}s, but supported may be added in
- * future versions.
+ *<pre>
+ * As of Jackson 3.1.0, {@link #content()} also supports {@link java.util.Collection}'s
+ * when {@code tools.jackson.databind.SerializationFeature#APPLY_JSON_INCLUDE_FOR_COLLECTIONS}
+ * feature is enabled --disabled by default for backward-compatibility. (see [databind#5369] for more detail)
+ *<pre>
+ * Note that `content` is NOT currently (as of Jackson 3.1.0) supported for
+ * arrays, but supported may be added in future versions.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD,
     ElementType.TYPE, ElementType.PARAMETER})
