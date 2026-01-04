@@ -50,10 +50,9 @@ import java.lang.annotation.Target;
  * arrays or {@link java.util.Collection}s; support may be added in
  * future versions (but if so, will be configurable to allow disabling it).
  *<pre>
- * (For Jackson 3 only) As of Jackson 3.1.0, {@link #content()} also supports {@link java.util.Collection}'s
- * when {@code tools.jackson.databind.SerializationFeature#APPLY_JSON_INCLUDE_FOR_COLLECTIONS}
- * feature is enabled --disabled by default for backward-compatibility. (see [databind#5369] for more detail)
- * Note that `content` is NOT currently (as of Jackson 3.1.0) supported for arrays, but may be supported in future versions.
+ * (For Jackson 3 only) As of Jackson 3.1.0, {@link #content()} also supports {@link java.util.Collection}s
+ * and Arrays when {@code tools.jackson.databind.SerializationFeature#APPLY_JSON_INCLUDE_FOR_CONTAINERS}
+ * feature is enabled -- disabled by default for backward-compatibility (see [databind#5369] for more detail).
  *
  * @since 2.0
  */
