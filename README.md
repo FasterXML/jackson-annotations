@@ -26,11 +26,7 @@ Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LI
 This module only defines Jackson annotations and their basic semantics.
 Actual handling and interpretation of annotations (such as inclusion rules,
 container content handling, or Optional value processing) is implemented
-by jackson-databind.
-
-As a result, certain annotation attributes (for example `content` inclusion
-settings on `@JsonInclude`) may only be fully applied when used at the
-property level, depending on databind behavior.
+by [jackson-databind](https://github.com/FasterXML/jackson-databind).
 
 -----
 
