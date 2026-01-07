@@ -20,6 +20,14 @@ Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LI
 [![Tidelift](https://tidelift.com/badges/package/maven/com.fasterxml.jackson.core:jackson-annotations)](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=readme)
 [![OpenSSF  Scorecard](https://api.securityscorecards.dev/projects/github.com/FasterXML/jackson-annotations/badge)](https://securityscorecards.dev/viewer/?uri=github.com/FasterXML/jackson-annotations)
 
+
+### Note on annotation handling
+
+This module only defines Jackson annotations and their basic semantics.
+Actual handling and interpretation of annotations (such as inclusion rules,
+container content handling, or Optional value processing) is implemented
+by [jackson-databind](https://github.com/FasterXML/jackson-databind).
+
 -----
 
 ## Release notes
