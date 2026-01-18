@@ -10,13 +10,13 @@
     <groupId>com.fasterxml.jackson</groupId>
     <!-- this is one of few Jackson modules that depends on parent and NOT jackson-bom -->
     <artifactId>jackson-parent</artifactId>
-    <version>2.21</version>
+    <version>2.22-SNAPSHOT</version>
   </parent>
 
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-annotations</artifactId>
   <name>Jackson-annotations</name>
-  <version>2.21.1-SNAPSHOT</version>
+  <version>2.22-SNAPSHOT</version>
   <packaging>jar</packaging>
   <description>Core annotations used for value types, used by Jackson data binding package.
   </description>
@@ -38,11 +38,7 @@
   </scm>
 
   <properties>
-    <!-- 04-Mar-2019, tatu: Retain Java6/JDK1.6 compatibility for annotations for Jackson 2.x,
-             but use Moditect to get JDK9+ module info support; need newer bundle plugin as well
-    -->
-    <!-- 10-Jul-2025, tatu: Time to move on; leave at defaults for Java/JDK 8
-      -->
+    <!-- 10-Jul-2025, tatu: Time to move on; leave at defaults for Java/JDK 8 -->
     <osgi.export>com.fasterxml.jackson.annotation.*;version=${project.version}</osgi.export>
 
     <!-- for Reproducible Builds -->
