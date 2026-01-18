@@ -14,7 +14,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 === Releases ===
 ------------------------------------------------------------------------
 
-2.21 (not yet released)
+2.21 (18-Jan-2026)
 
 #314: Add `JsonInclude.Value` convenience constants
  (contributed by @runeflobakk)
