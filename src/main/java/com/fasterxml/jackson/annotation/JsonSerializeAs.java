@@ -19,6 +19,7 @@ import java.lang.annotation.Target;
  *  </li>
  * <li>{@code key}s of {@link java.util.Map}s
  *  </li>
+ *</ul>
  *<p>
  * To indicate that no override is to be used, {@code Void.class} is used
  * as the marker (will use declared type) -- this is necessary as Annotation
@@ -32,7 +33,7 @@ import java.lang.annotation.Target;
  *   public ValueImpl value;
  *
  *   &#64;JsonSerializeAs(keys = GenericKey.class, content = GenericValue.class)
- *   public Map&lt;KeyImpl, ValueImpl> props;
+ *   public Map&lt;KeyImpl, ValueImpl&gt; props;
  * }
  *</pre>
  */

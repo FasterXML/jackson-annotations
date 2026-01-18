@@ -45,11 +45,11 @@ import java.lang.annotation.Target;
  *<p>
  * In addition to {@code Map}s, {@code content} concept is also supported for referential
  * types (like {@link java.util.concurrent.atomic.AtomicReference}).
- *<pre>
+ *<p>
  * (For Jackson 2 only) Note that `content` is NOT currently (as of Jackson 2.20) supported for
  * arrays or {@link java.util.Collection}s; support may be added in
  * future versions (but if so, will be configurable to allow disabling it).
- *<pre>
+ *<p>
  * (For Jackson 3 only) As of Jackson 3.1.0, {@link #content()} also supports {@link java.util.Collection}s
  * and Arrays when {@code tools.jackson.databind.SerializationFeature#APPLY_JSON_INCLUDE_FOR_CONTAINERS}
  * feature is enabled -- disabled by default for backward-compatibility (see [databind#5369] for more detail).
