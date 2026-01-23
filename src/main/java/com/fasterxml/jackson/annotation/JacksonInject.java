@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Jackson-specific annotation used for indicating that value of
  * annotated property will be "injected", i.e. set based on value
- * configured by <code>ObjectMapper</code> (usually on per-call basis).
+ * configured by {@code ObjectMapper} or {@code ObjectReader} (usually on per-call basis).
  * Usually property is not deserialized from JSON, although it is possible
  * to have injected value as default and still allow optional override
  * from JSON.
@@ -21,7 +21,8 @@ public @interface JacksonInject
 {
     /**
      * Logical id of the value to inject; if not specified (or specified
-     * as empty String), will use id based on declared type of property.
+     * as empty String), will use id based on declared <b>type</b> of property
+     * (NOT name of property).
      *
      * @return Logical id of the value to inject
      */
@@ -41,11 +42,11 @@ public @interface JacksonInject
     public OptBoolean useInput() default OptBoolean.DEFAULT;
 
     /**
-     * Whether to throw an exception when the {@code ObjectMapper} does not find
-     * the value to inject.
+     * Whether to throw an exception when the value to inject is not found from
+     * {@code ObjectMapper} or {@code ObjectReader} used for reading.
      *<p>
      * Default is {@code OptBoolean.DEFAULT} for backwards-compatibility: in this
-     * case {@code ObjectMapper} defaults are used (which in turn are same
+     * case mapper/reader defaults are used (which in turn are same
      * as {code OptBoolean.FALSE}).
      *
      * @return {@link OptBoolean#FALSE} to throw an exception; {@link OptBoolean#TRUE}
@@ -78,7 +79,8 @@ public @interface JacksonInject
 
         /**
          * Id to use to access injected value; if `null`, "default" name, derived
-         * from accessor will be used.
+         * from the <b>type</b> of accessor will be used (specifically, class name
+         * of Field type, or setter parameter type).
          */
         protected final Object _id;
 
