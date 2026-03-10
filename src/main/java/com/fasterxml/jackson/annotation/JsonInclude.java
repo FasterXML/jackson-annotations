@@ -222,6 +222,9 @@ public @interface JsonInclude
          * <li>Date/time values that have timestamp (`long` value of milliseconds since
          *   epoch, see {@link java.util.Date}) of `0L` are excluded</li>
          * </ul>
+         *<p>
+         * NOTE: Jackson 3.2 has more configurability (via new {@code MapperFeature})
+         * to configure applicability of this setting for global default inclusion.
          */
         NON_DEFAULT,
 
