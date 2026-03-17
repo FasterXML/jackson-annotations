@@ -18,6 +18,11 @@ public class JsonIncludePropertiesTest
     {
     }
 
+    @JsonIncludeProperties(order = OptBoolean.TRUE, value = {"id", "code", "name"})
+    private final static class Ordered
+    {
+    }
+
     private final JsonIncludeProperties.Value ALL = JsonIncludeProperties.Value.all();
 
     @Test
@@ -25,8 +30,9 @@ public class JsonIncludePropertiesTest
     {
         assertSame(ALL, JsonIncludeProperties.Value.from(null));
         assertNull(ALL.getIncluded());
+        assertNull(ALL.getOrdered());
         assertEquals(ALL, ALL);
-        assertEquals("JsonIncludeProperties.Value(included=null)", ALL.toString());
+        assertEquals("JsonIncludeProperties.Value(included=null,ordered=null)", ALL.toString());
         assertEquals(0, ALL.hashCode());
     }
 
@@ -38,9 +44,10 @@ public class JsonIncludePropertiesTest
         Set<String> included = v.getIncluded();
         assertEquals(2, v.getIncluded().size());
         assertEquals(_set("foo", "bar"), included);
+        assertNull(v.getOrdered());
         String tmp = v.toString();
-        boolean test1 = tmp.equals("JsonIncludeProperties.Value(included=[foo, bar])");
-        boolean test2 = tmp.equals("JsonIncludeProperties.Value(included=[bar, foo])");
+        boolean test1 = tmp.equals("JsonIncludeProperties.Value(included=[foo, bar],ordered=null)");
+        boolean test2 = tmp.equals("JsonIncludeProperties.Value(included=[bar, foo],ordered=null)");
         assertTrue(test1 || test2);
         assertEquals(v, JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class)));
 
@@ -75,6 +82,29 @@ public class JsonIncludePropertiesTest
         Set<String> included = v.getIncluded();
         assertEquals(1, included.size());
         assertEquals(_set("foo"), included);
+    }
+
+    @Test
+    public void testFromAnnotationOrdered()
+    {
+        JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(
+                Ordered.class.getAnnotation(JsonIncludeProperties.class));
+        assertNotNull(v);
+        assertEquals(3, v.getIncluded().size());
+        assertEquals(Boolean.TRUE, v.getOrdered());
+    }
+
+    @Test
+    public void testOrderedEquality()
+    {
+        JsonIncludeProperties.Value v1 = new JsonIncludeProperties.Value(_set("a", "b"), Boolean.TRUE);
+        JsonIncludeProperties.Value v2 = new JsonIncludeProperties.Value(_set("a", "b"), Boolean.FALSE);
+        JsonIncludeProperties.Value v3 = new JsonIncludeProperties.Value(_set("a", "b"), Boolean.TRUE);
+        JsonIncludeProperties.Value v4 = new JsonIncludeProperties.Value(_set("a", "b"), null);
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1, v4);
+        assertNotEquals(v2, v4);
+        assertEquals(v1, v3);
     }
 
     private Set<String> _set(String... args)

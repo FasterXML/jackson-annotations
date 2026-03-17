@@ -16,7 +16,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 2.22 (not yet released)
 
-No changes since 2.21.
+#339: Add `OptBoolean` valued property "order" in `@JsonIncludeProperties`
 
 2.21 (18-Jan-2026)
 
