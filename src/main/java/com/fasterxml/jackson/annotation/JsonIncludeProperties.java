@@ -36,7 +36,13 @@ public @interface JsonIncludeProperties
 
     /**
      * Property that can be enabled to indicate that the order of properties
-     * in {@link #value()} is the order in which properties should be serialized.
+     * in {@link #value()} is the order in which properties should be serialized;
+     * that is, {@link #value()} should be used as if it was
+     * {@link JsonPropertyOrder#value()} (unless that annotation already
+     * exists. This is useful in reducing amount of annotation duplication.
+     *<p>
+     * Property defaults to {@link OptBoolean#DEFAULT}, meaning "undefined"
+     * (which effectively translates into {@code OptBoolean.FALSE}).
      *
      * @since 2.22
      */
@@ -73,7 +79,8 @@ public @interface JsonIncludeProperties
 
         /**
          * Whether the order of properties in {@link #_included} defines
-         * the serialization order. {@code null} indicates "not set".
+         * the serialization order. {@code null} indicates "not defined"
+         * (and generally is used as {@code Boolean.FALSE}).
          *
          * @since 2.22
          */
