@@ -34,6 +34,14 @@ public @interface JsonIncludeProperties
      */
     public String[] value() default {};
 
+    /**
+     * Property that can be enabled to indicate that the order of properties
+     * in {@link #value()} is the order in which properties should be serialized.
+     *
+     * @since 2.22
+     */
+    public OptBoolean order() default OptBoolean.DEFAULT;
+
     /*
     /**********************************************************
     /* Value class used to enclose information, allow for
@@ -55,7 +63,7 @@ public @interface JsonIncludeProperties
         /**
          * Default instance has no explicitly included fields
          */
-        protected final static JsonIncludeProperties.Value ALL = new JsonIncludeProperties.Value(null);
+        protected final static JsonIncludeProperties.Value ALL = new JsonIncludeProperties.Value(null, null);
 
         /**
          * Name of the properties to include.
@@ -63,9 +71,30 @@ public @interface JsonIncludeProperties
          */
         protected final Set<String> _included;
 
+        /**
+         * Whether the order of properties in {@link #_included} defines
+         * the serialization order. {@code null} indicates "not set".
+         *
+         * @since 2.22
+         */
+        protected final Boolean _ordered;
+
+        /**
+         * @deprecated Since 2.22, use {@link #Value(Set, Boolean)} instead.
+         */
+        @Deprecated
         protected Value(Set<String> included)
         {
+            this(included, null);
+        }
+
+        /**
+         * @since 2.22
+         */
+        protected Value(Set<String> included, Boolean ordered)
+        {
             _included = included;
+            _ordered = ordered;
         }
 
         public static JsonIncludeProperties.Value from(JsonIncludeProperties src)
@@ -73,7 +102,7 @@ public @interface JsonIncludeProperties
             if (src == null) {
                 return ALL;
             }
-            return new Value(_asSet(src.value()));
+            return new Value(_asSet(src.value()), src.order().asBoolean());
         }
 
         public static JsonIncludeProperties.Value all()
@@ -93,6 +122,17 @@ public @interface JsonIncludeProperties
         public Set<String> getIncluded()
         {
             return _included;
+        }
+
+        /**
+         * @return Whether the order of properties in {@link #getIncluded()} defines
+         *   the serialization order; {@code null} if not set.
+         *
+         * @since 2.22
+         */
+        public Boolean getOrdered()
+        {
+            return _ordered;
         }
 
         /**
@@ -122,18 +162,20 @@ public @interface JsonIncludeProperties
                 }
             }
 
-            return new JsonIncludeProperties.Value(toInclude);
+            Boolean ordered = (overrides._ordered != null) ? overrides._ordered : _ordered;
+            return new JsonIncludeProperties.Value(toInclude, ordered);
         }
 
         @Override
         public String toString() {
-            return String.format("JsonIncludeProperties.Value(included=%s)",
-                    _included);
+            return String.format("JsonIncludeProperties.Value(included=%s,ordered=%s)",
+                    _included, _ordered);
         }
 
         @Override
         public int hashCode() {
-            return (_included == null) ? 0 : _included.size();
+            return ((_included == null) ? 0 : _included.size())
+                    + (Boolean.TRUE.equals(_ordered) ? 1 : 0);
         }
 
         @Override
@@ -141,6 +183,7 @@ public @interface JsonIncludeProperties
             if (o == this) return true;
             if (o == null) return false;
             return (o.getClass() == getClass())
+                    && Objects.equals(_ordered, ((Value) o)._ordered)
                     && Objects.equals(_included, ((Value) o)._included);
         }
 
