@@ -364,7 +364,8 @@ public @interface JsonFormat
         READ_DATE_TIMESTAMPS_AS_NANOSECONDS,
 
         /**
-         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>
+         * and <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS</code>,
          * which allows case-sensitive matching of (some) property values, such
          * as {@code Enum}s.
          * Only affects deserialization, has no effect on serialization.
