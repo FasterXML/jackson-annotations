@@ -374,6 +374,24 @@ public @interface JsonTypeInfo
      */
     public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
 
+    /**
+     * Property that defines whether serialization of type id should be skipped
+     * when the runtime type of the value is the same as {@link #defaultImpl()}.
+     * This is useful because during deserialization, if no type id is present,
+     * {@code defaultImpl} is used as the fallback type -- so the type id is redundant
+     * for that type.
+     *<p>
+     * When enabled ({@link OptBoolean#TRUE}), the type id will NOT be written
+     * if the actual runtime class of the value exactly matches {@code defaultImpl}.
+     * Subclasses of {@code defaultImpl} will still have their type id written.
+     *<p>
+     * Default value is {@link OptBoolean#DEFAULT} (which means {@code FALSE}),
+     * preserving backwards-compatible behavior of always writing type id.
+     *
+     * @since 2.22
+     */
+    public OptBoolean skipWriteForDefaultImpl() default OptBoolean.DEFAULT;
+
     /*
     /**********************************************************************
     /* Value class used to enclose information, allow for
@@ -399,6 +417,11 @@ public @interface JsonTypeInfo
         protected final boolean _idVisible;
         protected final Boolean _requireTypeIdForSubtypes;
 
+        /**
+         * @since 2.21
+         */
+        protected final Boolean _skipWriteForDefaultImpl;
+
         /*
         /**********************************************************************
         /* Construction
@@ -408,16 +431,41 @@ public @interface JsonTypeInfo
         protected Value(Id idType, As inclusionType,
                 String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
         {
+            this(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
+        }
+
+        /**
+         * @since 2.21
+         */
+        protected Value(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes, Boolean skipWriteForDefaultImpl)
+        {
             _defaultImpl = defaultImpl;
             _idType = idType;
             _inclusionType = inclusionType;
             _propertyName = propertyName;
             _idVisible = idVisible;
             _requireTypeIdForSubtypes = requireTypeIdForSubtypes;
+            _skipWriteForDefaultImpl = skipWriteForDefaultImpl;
         }
 
+        /**
+         * @deprecated Since 2.21 use the 7-argument overload
+         */
+        @Deprecated
         public static Value construct(Id idType, As inclusionType,
                 String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
+        {
+            return construct(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
+        }
+
+        /**
+         * @since 2.21
+         */
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes, Boolean skipWriteForDefaultImpl)
         {
             // couple of overrides we need to apply here. First: if no propertyName specified,
             // use Id-specific property name
@@ -433,7 +481,8 @@ public @interface JsonTypeInfo
             if ((defaultImpl == null) || defaultImpl.isAnnotation()) {
                 defaultImpl = null;
             }
-            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes);
+            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible,
+                    requireTypeIdForSubtypes, skipWriteForDefaultImpl);
         }
 
         public static Value from(JsonTypeInfo src) {
@@ -441,7 +490,9 @@ public @interface JsonTypeInfo
                 return null;
             }
             return construct(src.use(), src.include(),
-                    src.property(), src.defaultImpl(), src.visible(), src.requireTypeIdForSubtypes().asBoolean());
+                    src.property(), src.defaultImpl(), src.visible(),
+                    src.requireTypeIdForSubtypes().asBoolean(),
+                    src.skipWriteForDefaultImpl().asBoolean());
         }
 
         /*
@@ -452,32 +503,40 @@ public @interface JsonTypeInfo
 
         public Value withDefaultImpl(Class<?> impl) {
             return (impl == _defaultImpl) ? this :
-                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
 
         public Value withIdType(Id idType) {
             return (idType == _idType) ? this :
-                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
 
         public Value withInclusionType(As inclusionType) {
             return (inclusionType == _inclusionType) ? this :
-                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
 
         public Value withPropertyName(String propName) {
             return (propName == _propertyName) ? this :
-                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
 
         public Value withIdVisible(boolean visible) {
             return (visible == _idVisible) ? this :
-                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
-        
+
         public Value withRequireTypeIdForSubtypes(Boolean requireTypeIdForSubtypes) {
             return (_requireTypeIdForSubtypes == requireTypeIdForSubtypes) ? this :
-                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
+        }
+
+        /**
+         * @since 2.21
+         */
+        public Value withSkipWriteForDefaultImpl(Boolean skipWrite) {
+            return (_skipWriteForDefaultImpl == skipWrite) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes, skipWrite);
         }
 
         /*
@@ -499,6 +558,11 @@ public @interface JsonTypeInfo
         public Boolean getRequireTypeIdForSubtypes() { return _requireTypeIdForSubtypes; }
 
         /**
+         * @since 2.21
+         */
+        public Boolean getSkipWriteForDefaultImpl() { return _skipWriteForDefaultImpl; }
+
+        /**
          * Static helper method for simple(r) checking of whether there's a Value instance
          * that indicates that polymorphic handling is (to be) enabled.
          */
@@ -516,11 +580,11 @@ public @interface JsonTypeInfo
 
         @Override
         public String toString() {
-            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s" 
-                            + ",requireTypeIdForSubtypes=%s)",
+            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s"
+                            + ",requireTypeIdForSubtypes=%s,skipWriteForDefaultImpl=%s)",
                     _idType, _inclusionType, _propertyName,
                     ((_defaultImpl == null) ? "NULL" : _defaultImpl.getName()),
-                    _idVisible, _requireTypeIdForSubtypes);
+                    _idVisible, _requireTypeIdForSubtypes, _skipWriteForDefaultImpl);
         }
 
         @Override
@@ -532,6 +596,7 @@ public @interface JsonTypeInfo
             hashCode = 31 * hashCode + (_defaultImpl != null ? _defaultImpl.hashCode() : 0);
             hashCode = 31 * hashCode + (_requireTypeIdForSubtypes ? 11 : -17);
             hashCode = 31 * hashCode + (_idVisible ? 11 : -17);
+            hashCode = 31 * hashCode + (_skipWriteForDefaultImpl != null ? _skipWriteForDefaultImpl.hashCode() : 0);
             return hashCode;
         }
 
@@ -551,6 +616,7 @@ public @interface JsonTypeInfo
                     && (a._idVisible == b._idVisible)
                     && Objects.equals(a._propertyName, b._propertyName)
                     && Objects.equals(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
+                    && Objects.equals(a._skipWriteForDefaultImpl, b._skipWriteForDefaultImpl)
             ;
         }
     }
