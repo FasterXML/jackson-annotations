@@ -545,7 +545,7 @@ public @interface JsonTypeInfo
         /**
          * @since 2.22
          */
-        public Value withSkipWriteForDefaultImpl(Boolean writeTypeIdForDefaultImpl) {
+        public Value withWriteTypeIdForDefaultImpl(Boolean writeTypeIdForDefaultImpl) {
             return (_writeTypeIdForDefaultImpl == writeTypeIdForDefaultImpl) ? this :
                 new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible,
                         _requireTypeIdForSubtypes, writeTypeIdForDefaultImpl);
