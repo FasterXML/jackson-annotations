@@ -70,7 +70,7 @@ public class JsonIncludePropertiesTest
     @Test
     public void testWithOverridesEmpty() {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
-        v = v.withOverrides(new JsonIncludeProperties.Value(Collections.<String>emptySet()));
+        v = v.withOverrides(new JsonIncludeProperties.Value(Collections.<String>emptySet(), false));
         Set<String> included = v.getIncluded();
         assertEquals(0, included.size());
     }
@@ -78,7 +78,7 @@ public class JsonIncludePropertiesTest
     @Test
     public void testWithOverridesMerge() {
         JsonIncludeProperties.Value v = JsonIncludeProperties.Value.from(Bogus.class.getAnnotation(JsonIncludeProperties.class));
-        v = v.withOverrides(new JsonIncludeProperties.Value(_set("foo")));
+        v = v.withOverrides(new JsonIncludeProperties.Value(_set("foo"), false));
         Set<String> included = v.getIncluded();
         assertEquals(1, included.size());
         assertEquals(_set("foo"), included);
