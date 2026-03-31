@@ -418,7 +418,7 @@ public @interface JsonTypeInfo
         protected final Boolean _requireTypeIdForSubtypes;
 
         /**
-         * @since 2.21
+         * @since 2.22
          */
         protected final Boolean _writeTypeIdForDefaultImpl;
 
@@ -427,12 +427,6 @@ public @interface JsonTypeInfo
         /* Construction
         /**********************************************************************
          */
-
-        protected Value(Id idType, As inclusionType,
-                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
-        {
-            this(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
-        }
 
         /**
          * @since 2.22
@@ -451,14 +445,13 @@ public @interface JsonTypeInfo
         }
 
         /**
-         * @deprecated Since 2.21 use the 7-argument overload
+         * @deprecated Since 2.22 use the 7-argument overload
          */
         @Deprecated
-        public static Value construct(Id idType, As inclusionType,
-                String propertyName, Class<?> defaultImpl, boolean idVisible,
-                Boolean requireTypeIdForSubtypes)
+        protected Value(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
         {
-            return construct(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
+            this(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
         }
 
         /**
@@ -484,6 +477,17 @@ public @interface JsonTypeInfo
             }
             return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible,
                     requireTypeIdForSubtypes, writeTypeIdForDefaultImpl);
+        }
+
+        /**
+         * @deprecated Since 2.22 use the 7-argument overload
+         */
+        @Deprecated
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes)
+        {
+            return construct(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
         }
 
         public static Value from(JsonTypeInfo src) {
@@ -570,6 +574,13 @@ public @interface JsonTypeInfo
          */
         public Boolean getWriteTypeIdForDefaultImpl() { return _writeTypeIdForDefaultImpl; }
 
+        /**
+         * @since 2.22
+         */
+        public boolean shouldWriteTypeIdForDefaultImpl() {
+            return (_writeTypeIdForDefaultImpl == null) || _writeTypeIdForDefaultImpl.booleanValue();
+        }
+        
         /**
          * Static helper method for simple(r) checking of whether there's a Value instance
          * that indicates that polymorphic handling is (to be) enabled.
