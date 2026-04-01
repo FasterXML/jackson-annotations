@@ -264,6 +264,23 @@ public class JsonFormatTest
     }
 
     @Test
+    void testWithTimeZonePreservesRadix() {
+        int binaryRadix = 2;
+        JsonFormat.Value v = JsonFormat.Value.forRadix(binaryRadix);
+        JsonFormat.Value withTz = v.withTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        assertEquals(binaryRadix, withTz.getRadix());
+    }
+
+    @Test
+    void testRadixInHashCode() {
+        JsonFormat.Value v1 = JsonFormat.Value.forRadix(2);
+        JsonFormat.Value v2 = JsonFormat.Value.forRadix(16);
+        // Not equal, so hashCodes should (very likely) differ
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
+    @Test
     void testRadix() {
         //Non-Default radix overrides the default
         int binaryRadix = 2;
