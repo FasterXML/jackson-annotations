@@ -613,9 +613,9 @@ public @interface JsonTypeInfo
             hashCode = 31 * hashCode + (_inclusionType != null ? _inclusionType.hashCode() : 0);
             hashCode = 31 * hashCode + (_propertyName != null ? _propertyName.hashCode() : 0);
             hashCode = 31 * hashCode + (_defaultImpl != null ? _defaultImpl.hashCode() : 0);
-            hashCode = 31 * hashCode + (_requireTypeIdForSubtypes ? 11 : -17);
+            hashCode = 31 * hashCode + Objects.hashCode(_requireTypeIdForSubtypes);
             hashCode = 31 * hashCode + (_idVisible ? 11 : -17);
-            hashCode = 31 * hashCode + (_writeTypeIdForDefaultImpl != null ? _writeTypeIdForDefaultImpl.hashCode() : 0);
+            hashCode = 31 * hashCode + Objects.hashCode(_writeTypeIdForDefaultImpl);
             return hashCode;
         }
 
