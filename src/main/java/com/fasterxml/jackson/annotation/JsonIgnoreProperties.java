@@ -384,7 +384,7 @@ public @interface JsonIgnoreProperties
 
         @Override
         public int hashCode() {
-            return (_ignored.size())
+            return _ignored.hashCode()
                     + (_ignoreUnknown ? 1 : -3)
                     + (_allowGetters ? 3 : -7)
                     + (_allowSetters ? 7 : -11)

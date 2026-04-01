@@ -137,6 +137,30 @@ public class JsonIncludeTest
     }
 
     @Test
+    public void testHashCodeIncludesFilters()
+    {
+        JsonInclude.Value v1 = new JsonInclude.Value(Include.CUSTOM, Include.CUSTOM,
+                Integer.class, Long.class);
+        JsonInclude.Value v2 = new JsonInclude.Value(Include.CUSTOM, Include.CUSTOM,
+                String.class, Double.class);
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
+    // Verify that withOverrides() properly detects content filter changes
+    @Test
+    public void testWithOverridesContentFilter()
+    {
+        JsonInclude.Value base = new JsonInclude.Value(Include.NON_EMPTY, Include.NON_EMPTY,
+                null, null);
+        JsonInclude.Value overrideContentFilter = new JsonInclude.Value(
+                Include.USE_DEFAULTS, Include.USE_DEFAULTS, null, Long.class);
+
+        JsonInclude.Value merged = base.withOverrides(overrideContentFilter);
+        assertEquals(Long.class, merged.getContentFilter());
+    }
+
+    @Test
     public void testFilters()
     {
         JsonInclude.Value empty = JsonInclude.Value.empty();

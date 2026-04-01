@@ -95,6 +95,14 @@ public class JsonIncludePropertiesTest
     }
 
     @Test
+    public void testHashCodeIncludesContents() {
+        JsonIncludeProperties.Value v1 = new JsonIncludeProperties.Value(_set("a", "b"), null);
+        JsonIncludeProperties.Value v2 = new JsonIncludeProperties.Value(_set("c", "d"), null);
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
+    @Test
     public void testOrderedEquality()
     {
         JsonIncludeProperties.Value v1 = new JsonIncludeProperties.Value(_set("a", "b"), Boolean.TRUE);

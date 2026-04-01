@@ -150,6 +150,14 @@ public class JsonIgnorePropertiesTest
     }
 
     @Test
+    public void testHashCodeIncludesIgnoredContents() {
+        JsonIgnoreProperties.Value v1 = EMPTY.withIgnored("a", "b");
+        JsonIgnoreProperties.Value v2 = EMPTY.withIgnored("c", "d");
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
+    @Test
     public void testToString() {
         assertEquals(
                 "JsonIgnoreProperties.Value(ignored=[],ignoreUnknown=false,allowGetters=false,allowSetters=true,merge=true)",

@@ -448,7 +448,7 @@ public @interface JsonInclude
 
             boolean viDiff = (vi != _valueInclusion) && (vi != Include.USE_DEFAULTS);
             boolean ciDiff = (ci != _contentInclusion) && (ci != Include.USE_DEFAULTS);
-            boolean filterDiff = (vf != _valueFilter) || (cf != _valueFilter);
+            boolean filterDiff = (vf != _valueFilter) || (cf != _contentFilter);
 
             if (viDiff) {
                 if (ciDiff) {
@@ -619,7 +619,9 @@ public @interface JsonInclude
         @Override
         public int hashCode() {
             return (_valueInclusion.hashCode() << 2)
-                    + _contentInclusion.hashCode();
+                    + _contentInclusion.hashCode()
+                    + ((_valueFilter == null) ? 0 : _valueFilter.hashCode())
+                    + ((_contentFilter == null) ? 0 : _contentFilter.hashCode());
         }
 
         @Override
