@@ -484,18 +484,24 @@ public @interface JsonFormat
 
         public Features with(Feature...features) {
             int e = _enabled;
+            int d = _disabled;
             for (Feature f : features) {
-                e |= (1 << f.ordinal());
+                int mask = (1 << f.ordinal());
+                e |= mask;
+                d &= ~mask;
             }
-            return (e == _enabled) ? this : new Features(e, _disabled);
+            return (e == _enabled && d == _disabled) ? this : new Features(e, d);
         }
 
         public Features without(Feature...features) {
+            int e = _enabled;
             int d = _disabled;
             for (Feature f : features) {
-                d |= (1 << f.ordinal());
+                int mask = (1 << f.ordinal());
+                d |= mask;
+                e &= ~mask;
             }
-            return (d == _disabled) ? this : new Features(_enabled, d);
+            return (d == _disabled && e == _enabled) ? this : new Features(e, d);
         }
 
         public Boolean get(Feature f) {
@@ -1038,7 +1044,6 @@ public @interface JsonFormat
             return Objects.equals(_lenient, other._lenient)
                     && Objects.equals(_timezoneStr, other._timezoneStr)
                     && Objects.equals(_pattern, other._pattern)
-                    && Objects.equals(_timezone, other._timezone)
                     && Objects.equals(_locale, other._locale)
                     && Objects.equals(_radix, other._radix);
         }

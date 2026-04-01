@@ -264,6 +264,37 @@ public class JsonFormatTest
     }
 
     @Test
+    void testFeaturesWithClearsDisabled() {
+        // with() after without() on same feature should result in enabled
+        JsonFormat.Features f = JsonFormat.Features.empty()
+                .without(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        assertEquals(Boolean.TRUE, f.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
+    }
+
+    @Test
+    void testFeaturesWithoutClearsEnabled() {
+        // without() after with() on same feature should result in disabled
+        JsonFormat.Features f = JsonFormat.Features.empty()
+                .with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .without(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        assertEquals(Boolean.FALSE, f.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
+    }
+
+    @Test
+    void testEqualsIgnoresTransientTimezone() {
+        // Two Values created from same timezone string should be equal
+        // regardless of whether getTimeZone() has been called
+        JsonFormat.Value v1 = new JsonFormat.Value("", Shape.ANY, "", "UTC",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        JsonFormat.Value v2 = new JsonFormat.Value("", Shape.ANY, "", "UTC",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        // Force lazy _timezone population on v1 only
+        v1.getTimeZone();
+        assertEquals(v1, v2);
+    }
+
+    @Test
     void testWithTimeZonePreservesRadix() {
         int binaryRadix = 2;
         JsonFormat.Value v = JsonFormat.Value.forRadix(binaryRadix);
