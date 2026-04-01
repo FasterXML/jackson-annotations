@@ -1045,7 +1045,7 @@ public @interface JsonFormat
                     && Objects.equals(_timezoneStr, other._timezoneStr)
                     && Objects.equals(_pattern, other._pattern)
                     && Objects.equals(_locale, other._locale)
-                    && Objects.equals(_radix, other._radix);
+                    && (_radix == other._radix);
         }
     }
 }
