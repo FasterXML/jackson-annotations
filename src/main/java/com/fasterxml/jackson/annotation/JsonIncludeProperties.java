@@ -181,7 +181,7 @@ public @interface JsonIncludeProperties
 
         @Override
         public int hashCode() {
-            return ((_included == null) ? 0 : _included.size())
+            return ((_included == null) ? 0 : _included.hashCode())
                     + (Boolean.TRUE.equals(_ordered) ? 1 : 0);
         }
 

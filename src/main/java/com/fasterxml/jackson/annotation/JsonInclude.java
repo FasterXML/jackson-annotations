@@ -619,7 +619,9 @@ public @interface JsonInclude
         @Override
         public int hashCode() {
             return (_valueInclusion.hashCode() << 2)
-                    + _contentInclusion.hashCode();
+                    + _contentInclusion.hashCode()
+                    + ((_valueFilter == null) ? 0 : _valueFilter.hashCode())
+                    + ((_contentFilter == null) ? 0 : _contentFilter.hashCode());
         }
 
         @Override

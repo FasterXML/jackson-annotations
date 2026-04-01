@@ -136,6 +136,17 @@ public class JsonIncludeTest
         assertEquals(JsonInclude.Include.NON_ABSENT, v21.getValueInclusion());
     }
 
+    @Test
+    public void testHashCodeIncludesFilters()
+    {
+        JsonInclude.Value v1 = new JsonInclude.Value(Include.CUSTOM, Include.CUSTOM,
+                Integer.class, Long.class);
+        JsonInclude.Value v2 = new JsonInclude.Value(Include.CUSTOM, Include.CUSTOM,
+                String.class, Double.class);
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
     // Verify that withOverrides() properly detects content filter changes
     @Test
     public void testWithOverridesContentFilter()
