@@ -368,6 +368,9 @@ public @interface JsonTypeInfo
      * if the actual runtime class of the value exactly matches {@code defaultImpl}.
      * Subclasses of {@code defaultImpl} will still have their type id written.
      *<p>
+     * NOTE: support for this feature is only added in Jackson 3.x, specifically
+     * 3.2. It is not supported by Jackson 2.x.
+     *<p>
      * Default value is {@link OptBoolean#DEFAULT} (which means {@code TRUE}),
      * preserving backwards-compatible behavior of always writing type id.
      *
