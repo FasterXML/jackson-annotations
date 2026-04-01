@@ -822,7 +822,7 @@ public @interface JsonFormat
          */
         public Value withTimeZone(TimeZone tz) {
             return new Value(_pattern, _shape, _locale, null, tz,
-                    _features, _lenient);
+                    _features, _lenient, _radix);
         }
 
         /**
@@ -1020,6 +1020,7 @@ public @interface JsonFormat
                  hash += _locale.hashCode();
              }
              hash ^= _features.hashCode();
+             hash += _radix;
              return hash;
         }
 

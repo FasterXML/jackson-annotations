@@ -448,7 +448,7 @@ public @interface JsonInclude
 
             boolean viDiff = (vi != _valueInclusion) && (vi != Include.USE_DEFAULTS);
             boolean ciDiff = (ci != _contentInclusion) && (ci != Include.USE_DEFAULTS);
-            boolean filterDiff = (vf != _valueFilter) || (cf != _valueFilter);
+            boolean filterDiff = (vf != _valueFilter) || (cf != _contentFilter);
 
             if (viDiff) {
                 if (ciDiff) {
