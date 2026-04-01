@@ -67,9 +67,9 @@ import java.util.Objects;
 public @interface JsonTypeInfo
 {
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Value enumerations used for properties
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -256,9 +256,9 @@ public @interface JsonTypeInfo
     }
 
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Annotation properties
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -339,23 +339,6 @@ public @interface JsonTypeInfo
      */
     public boolean visible() default false;
 
-    /*
-    /**********************************************************
-    /* Helper classes
-    /**********************************************************
-     */
-
-    /**
-     * This marker class that is only to be used with <code>defaultImpl</code>
-     * annotation property, to indicate that there is no default implementation
-     * specified.
-     *
-     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
-     *    if such behavior is needed; this is rarely necessary.
-     */
-    @Deprecated // since 2.5
-    public abstract static class None {}
-
     /**
      * Specifies whether the type ID should be strictly required during polymorphic
      * deserialization of its subtypes.
@@ -373,6 +356,44 @@ public @interface JsonTypeInfo
      * @since 2.16
      */
     public OptBoolean requireTypeIdForSubtypes() default OptBoolean.DEFAULT;
+
+    /**
+     * Property that defines whether serialization of type id should be done
+     * when the runtime type of the value is the same as {@link #defaultImpl()}.
+     * Skipping write can be useful since during deserialization, if no type id is present,
+     * {@code defaultImpl} is used as the fallback type -- so the type id is redundant
+     * for that type.
+     *<p>
+     * When disabled ({@link OptBoolean#FALSE}), the type id will NOT be written
+     * if the actual runtime class of the value exactly matches {@code defaultImpl}.
+     * Subclasses of {@code defaultImpl} will still have their type id written.
+     *<p>
+     * NOTE: support for this feature is only added in Jackson 3.x, specifically
+     * 3.2. It is not supported by Jackson 2.x.
+     *<p>
+     * Default value is {@link OptBoolean#DEFAULT} (which means {@code TRUE}),
+     * preserving backwards-compatible behavior of always writing type id.
+     *
+     * @since 2.22
+     */
+    public OptBoolean writeTypeIdForDefaultImpl() default OptBoolean.DEFAULT;
+
+    /*
+    /**********************************************************************
+    /* Helper classes
+    /**********************************************************************
+     */
+
+    /**
+     * This marker class that is only to be used with <code>defaultImpl</code>
+     * annotation property, to indicate that there is no default implementation
+     * specified.
+     *
+     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
+     *    if such behavior is needed; this is rarely necessary.
+     */
+    @Deprecated // since 2.5
+    public abstract static class None {}
 
     /*
     /**********************************************************************
@@ -399,14 +420,23 @@ public @interface JsonTypeInfo
         protected final boolean _idVisible;
         protected final Boolean _requireTypeIdForSubtypes;
 
+        /**
+         * @since 2.22
+         */
+        protected final Boolean _writeTypeIdForDefaultImpl;
+
         /*
         /**********************************************************************
         /* Construction
         /**********************************************************************
          */
 
+        /**
+         * @since 2.22
+         */
         protected Value(Id idType, As inclusionType,
-                String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes, Boolean writeTypeIdForDefaultImpl)
         {
             _defaultImpl = defaultImpl;
             _idType = idType;
@@ -414,10 +444,25 @@ public @interface JsonTypeInfo
             _propertyName = propertyName;
             _idVisible = idVisible;
             _requireTypeIdForSubtypes = requireTypeIdForSubtypes;
+            _writeTypeIdForDefaultImpl = writeTypeIdForDefaultImpl;
         }
 
-        public static Value construct(Id idType, As inclusionType,
+        /**
+         * @deprecated Since 2.22 use the 7-argument overload
+         */
+        @Deprecated
+        protected Value(Id idType, As inclusionType,
                 String propertyName, Class<?> defaultImpl, boolean idVisible, Boolean requireTypeIdForSubtypes)
+        {
+            this(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
+        }
+
+        /**
+         * @since 2.22
+         */
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes, Boolean writeTypeIdForDefaultImpl)
         {
             // couple of overrides we need to apply here. First: if no propertyName specified,
             // use Id-specific property name
@@ -433,7 +478,19 @@ public @interface JsonTypeInfo
             if ((defaultImpl == null) || defaultImpl.isAnnotation()) {
                 defaultImpl = null;
             }
-            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes);
+            return new Value(idType, inclusionType, propertyName, defaultImpl, idVisible,
+                    requireTypeIdForSubtypes, writeTypeIdForDefaultImpl);
+        }
+
+        /**
+         * @deprecated Since 2.22 use the 7-argument overload
+         */
+        @Deprecated
+        public static Value construct(Id idType, As inclusionType,
+                String propertyName, Class<?> defaultImpl, boolean idVisible,
+                Boolean requireTypeIdForSubtypes)
+        {
+            return construct(idType, inclusionType, propertyName, defaultImpl, idVisible, requireTypeIdForSubtypes, null);
         }
 
         public static Value from(JsonTypeInfo src) {
@@ -441,7 +498,9 @@ public @interface JsonTypeInfo
                 return null;
             }
             return construct(src.use(), src.include(),
-                    src.property(), src.defaultImpl(), src.visible(), src.requireTypeIdForSubtypes().asBoolean());
+                    src.property(), src.defaultImpl(), src.visible(),
+                    src.requireTypeIdForSubtypes().asBoolean(),
+                    src.writeTypeIdForDefaultImpl().asBoolean());
         }
 
         /*
@@ -452,32 +511,47 @@ public @interface JsonTypeInfo
 
         public Value withDefaultImpl(Class<?> impl) {
             return (impl == _defaultImpl) ? this :
-                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, impl, _idVisible,
+                        _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
 
         public Value withIdType(Id idType) {
             return (idType == _idType) ? this :
-                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(idType, _inclusionType, _propertyName, _defaultImpl, _idVisible,
+                        _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
 
         public Value withInclusionType(As inclusionType) {
             return (inclusionType == _inclusionType) ? this :
-                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, inclusionType, _propertyName, _defaultImpl, _idVisible,
+                        _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
 
         public Value withPropertyName(String propName) {
             return (propName == _propertyName) ? this :
-                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, propName, _defaultImpl, _idVisible,
+                        _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
 
         public Value withIdVisible(boolean visible) {
             return (visible == _idVisible) ? this :
-                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible, _requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, visible,
+                        _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
-        
+
         public Value withRequireTypeIdForSubtypes(Boolean requireTypeIdForSubtypes) {
             return (_requireTypeIdForSubtypes == requireTypeIdForSubtypes) ? this :
-                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible, requireTypeIdForSubtypes);
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible,
+                        requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
+        }
+
+        /**
+         * @since 2.22
+         */
+        public Value withWriteTypeIdForDefaultImpl(Boolean writeTypeIdForDefaultImpl) {
+            return (_writeTypeIdForDefaultImpl == writeTypeIdForDefaultImpl) ? this :
+                new Value(_idType, _inclusionType, _propertyName, _defaultImpl, _idVisible,
+                        _requireTypeIdForSubtypes, writeTypeIdForDefaultImpl);
         }
 
         /*
@@ -499,6 +573,18 @@ public @interface JsonTypeInfo
         public Boolean getRequireTypeIdForSubtypes() { return _requireTypeIdForSubtypes; }
 
         /**
+         * @since 2.22
+         */
+        public Boolean getWriteTypeIdForDefaultImpl() { return _writeTypeIdForDefaultImpl; }
+
+        /**
+         * @since 2.22
+         */
+        public boolean shouldWriteTypeIdForDefaultImpl() {
+            return (_writeTypeIdForDefaultImpl == null) || _writeTypeIdForDefaultImpl.booleanValue();
+        }
+
+        /**
          * Static helper method for simple(r) checking of whether there's a Value instance
          * that indicates that polymorphic handling is (to be) enabled.
          */
@@ -516,11 +602,11 @@ public @interface JsonTypeInfo
 
         @Override
         public String toString() {
-            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s" 
-                            + ",requireTypeIdForSubtypes=%s)",
+            return String.format("JsonTypeInfo.Value(idType=%s,includeAs=%s,propertyName=%s,defaultImpl=%s,idVisible=%s"
+                            + ",requireTypeIdForSubtypes=%s,writeTypeIdForDefaultImpl=%s)",
                     _idType, _inclusionType, _propertyName,
                     ((_defaultImpl == null) ? "NULL" : _defaultImpl.getName()),
-                    _idVisible, _requireTypeIdForSubtypes);
+                    _idVisible, _requireTypeIdForSubtypes, _writeTypeIdForDefaultImpl);
         }
 
         @Override
@@ -530,8 +616,9 @@ public @interface JsonTypeInfo
             hashCode = 31 * hashCode + (_inclusionType != null ? _inclusionType.hashCode() : 0);
             hashCode = 31 * hashCode + (_propertyName != null ? _propertyName.hashCode() : 0);
             hashCode = 31 * hashCode + (_defaultImpl != null ? _defaultImpl.hashCode() : 0);
-            hashCode = 31 * hashCode + (_requireTypeIdForSubtypes ? 11 : -17);
+            hashCode = 31 * hashCode + Objects.hashCode(_requireTypeIdForSubtypes);
             hashCode = 31 * hashCode + (_idVisible ? 11 : -17);
+            hashCode = 31 * hashCode + Objects.hashCode(_writeTypeIdForDefaultImpl);
             return hashCode;
         }
 
@@ -551,6 +638,7 @@ public @interface JsonTypeInfo
                     && (a._idVisible == b._idVisible)
                     && Objects.equals(a._propertyName, b._propertyName)
                     && Objects.equals(a._requireTypeIdForSubtypes, b._requireTypeIdForSubtypes)
+                    && Objects.equals(a._writeTypeIdForDefaultImpl, b._writeTypeIdForDefaultImpl)
             ;
         }
     }
