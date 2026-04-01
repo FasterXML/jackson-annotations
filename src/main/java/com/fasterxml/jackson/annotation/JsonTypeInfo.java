@@ -67,9 +67,9 @@ import java.util.Objects;
 public @interface JsonTypeInfo
 {
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Value enumerations used for properties
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -256,9 +256,9 @@ public @interface JsonTypeInfo
     }
 
     /*
-    /**********************************************************
+    /**********************************************************************
     /* Annotation properties
-    /**********************************************************
+    /**********************************************************************
      */
 
     /**
@@ -339,23 +339,6 @@ public @interface JsonTypeInfo
      */
     public boolean visible() default false;
 
-    /*
-    /**********************************************************
-    /* Helper classes
-    /**********************************************************
-     */
-
-    /**
-     * This marker class that is only to be used with <code>defaultImpl</code>
-     * annotation property, to indicate that there is no default implementation
-     * specified.
-     *
-     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
-     *    if such behavior is needed; this is rarely necessary.
-     */
-    @Deprecated // since 2.5
-    public abstract static class None {}
-
     /**
      * Specifies whether the type ID should be strictly required during polymorphic
      * deserialization of its subtypes.
@@ -391,6 +374,23 @@ public @interface JsonTypeInfo
      * @since 2.22
      */
     public OptBoolean writeTypeIdForDefaultImpl() default OptBoolean.DEFAULT;
+
+    /*
+    /**********************************************************************
+    /* Helper classes
+    /**********************************************************************
+     */
+
+    /**
+     * This marker class that is only to be used with <code>defaultImpl</code>
+     * annotation property, to indicate that there is no default implementation
+     * specified.
+     *
+     * @deprecated Since 2.5, use any Annotation type (such as {@link JsonTypeInfo}),
+     *    if such behavior is needed; this is rarely necessary.
+     */
+    @Deprecated // since 2.5
+    public abstract static class None {}
 
     /*
     /**********************************************************************
