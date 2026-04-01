@@ -580,7 +580,7 @@ public @interface JsonTypeInfo
         public boolean shouldWriteTypeIdForDefaultImpl() {
             return (_writeTypeIdForDefaultImpl == null) || _writeTypeIdForDefaultImpl.booleanValue();
         }
-        
+
         /**
          * Static helper method for simple(r) checking of whether there's a Value instance
          * that indicates that polymorphic handling is (to be) enabled.

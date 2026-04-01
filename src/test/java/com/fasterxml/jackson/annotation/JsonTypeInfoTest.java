@@ -56,8 +56,8 @@ public class JsonTypeInfoTest
         assertFalse(v1.equals(v2));
         assertFalse(v2.equals(v1));
 
-        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true,requireTypeIdForSubtypes=true)", v1.toString());
-        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=false)", v2.toString());
+        assertEquals("JsonTypeInfo.Value(idType=CLASS,includeAs=PROPERTY,propertyName=@class,defaultImpl=NULL,idVisible=true,requireTypeIdForSubtypes=true,writeTypeIdForDefaultImpl=null)", v1.toString());
+        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=false,writeTypeIdForDefaultImpl=null)", v2.toString());
 
         // Let's also verify JDK serializability
         byte[] b = jdkSerialize(v1);
@@ -115,7 +115,7 @@ public class JsonTypeInfoTest
         assertNull(v3.getRequireTypeIdForSubtypes());
         
         // toString()
-        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext," 
-                + "defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=null)", v3.toString());
+        assertEquals("JsonTypeInfo.Value(idType=NAME,includeAs=EXTERNAL_PROPERTY,propertyName=ext,"
+                + "defaultImpl=java.lang.Void,idVisible=false,requireTypeIdForSubtypes=null,writeTypeIdForDefaultImpl=null)", v3.toString());
     }
 }
