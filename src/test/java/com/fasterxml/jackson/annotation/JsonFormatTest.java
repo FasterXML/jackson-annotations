@@ -311,6 +311,35 @@ public class JsonFormatTest
         assertNotEquals(v1.hashCode(), v2.hashCode());
     }
 
+    // [annotations#344]: Locale parsing with language, country, variant
+    @Test
+    void testLocaleParsingWithCountry() {
+        // Simple language-only
+        JsonFormat.Value v = new JsonFormat.Value("", Shape.ANY, "en", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en"), v.getLocale());
+
+        // Language + country with underscore
+        v = new JsonFormat.Value("", Shape.ANY, "en_US", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+
+        // Language + country with hyphen
+        v = new JsonFormat.Value("", Shape.ANY, "en-US", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+
+        // Language + country + variant
+        v = new JsonFormat.Value("", Shape.ANY, "en_US_POSIX", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US", "POSIX"), v.getLocale());
+
+        // German locale
+        v = new JsonFormat.Value("", Shape.ANY, "de_DE", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("de", "DE"), v.getLocale());
+    }
+
     @Test
     void testRadix() {
         //Non-Default radix overrides the default

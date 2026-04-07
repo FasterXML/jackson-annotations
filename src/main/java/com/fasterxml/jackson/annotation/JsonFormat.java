@@ -591,7 +591,7 @@ public @interface JsonFormat
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
-                            null : new Locale(localeStr),
+                            null : _parseLocale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
                     null, f, lenient, radix);
@@ -606,7 +606,7 @@ public @interface JsonFormat
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
-                            null : new Locale(localeStr),
+                            null : _parseLocale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
                     null, f, lenient);
@@ -1046,6 +1046,34 @@ public @interface JsonFormat
                     && Objects.equals(_pattern, other._pattern)
                     && Objects.equals(_locale, other._locale)
                     && (_radix == other._radix);
+        }
+
+        /**
+         * Helper method for parsing locale string into {@link Locale},
+         * handling both underscore and hyphen as separator (so both
+         * "en_US" and "en-US" work), as well as optional variant
+         * (like "en_US_POSIX").
+         *
+         * @since 2.22
+         */
+        private static Locale _parseLocale(String localeStr) {
+            final int len = localeStr.length();
+            for (int i = 0; i < len; ++i) {
+                char c = localeStr.charAt(i);
+                if (c == '_' || c == '-') {
+                    String language = localeStr.substring(0, i);
+                    String rest = localeStr.substring(i + 1);
+                    // Look for second separator for variant
+                    for (int j = 0, rlen = rest.length(); j < rlen; ++j) {
+                        char c2 = rest.charAt(j);
+                        if (c2 == '_' || c2 == '-') {
+                            return new Locale(language, rest.substring(0, j), rest.substring(j + 1));
+                        }
+                    }
+                    return new Locale(language, rest);
+                }
+            }
+            return new Locale(localeStr);
         }
     }
 }
