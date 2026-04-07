@@ -19,6 +19,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 #339: Add `OptBoolean` valued property "order" in `@JsonIncludeProperties`
 #342: Add `@JsonTypeInfo.writeTypeIdForDefaultImpl` to allow skipping
   writing of type id for values of default type
+#344: Improve `Locale` handling in `JsonFormat.Value`
 
 2.21 (18-Jan-2026)
 
