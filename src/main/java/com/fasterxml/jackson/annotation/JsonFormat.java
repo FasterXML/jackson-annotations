@@ -364,7 +364,8 @@ public @interface JsonFormat
         READ_DATE_TIMESTAMPS_AS_NANOSECONDS,
 
         /**
-         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>,
+         * Override for <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_VALUES</code>
+         * and <code>MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS</code>,
          * which allows case-sensitive matching of (some) property values, such
          * as {@code Enum}s.
          * Only affects deserialization, has no effect on serialization.
@@ -483,18 +484,24 @@ public @interface JsonFormat
 
         public Features with(Feature...features) {
             int e = _enabled;
+            int d = _disabled;
             for (Feature f : features) {
-                e |= (1 << f.ordinal());
+                int mask = (1 << f.ordinal());
+                e |= mask;
+                d &= ~mask;
             }
-            return (e == _enabled) ? this : new Features(e, _disabled);
+            return (e == _enabled && d == _disabled) ? this : new Features(e, d);
         }
 
         public Features without(Feature...features) {
+            int e = _enabled;
             int d = _disabled;
             for (Feature f : features) {
-                d |= (1 << f.ordinal());
+                int mask = (1 << f.ordinal());
+                d |= mask;
+                e &= ~mask;
             }
-            return (d == _disabled) ? this : new Features(_enabled, d);
+            return (d == _disabled && e == _enabled) ? this : new Features(e, d);
         }
 
         public Boolean get(Feature f) {
@@ -584,7 +591,7 @@ public @interface JsonFormat
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
-                            null : new Locale(localeStr),
+                            null : _parseLocale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
                     null, f, lenient, radix);
@@ -599,7 +606,7 @@ public @interface JsonFormat
         {
             this(p, sh,
                     (localeStr == null || localeStr.length() == 0 || DEFAULT_LOCALE.equals(localeStr)) ?
-                            null : new Locale(localeStr),
+                            null : _parseLocale(localeStr),
                     (tzStr == null || tzStr.length() == 0 || DEFAULT_TIMEZONE.equals(tzStr)) ?
                             null : tzStr,
                     null, f, lenient);
@@ -821,7 +828,7 @@ public @interface JsonFormat
          */
         public Value withTimeZone(TimeZone tz) {
             return new Value(_pattern, _shape, _locale, null, tz,
-                    _features, _lenient);
+                    _features, _lenient, _radix);
         }
 
         /**
@@ -1019,6 +1026,7 @@ public @interface JsonFormat
                  hash += _locale.hashCode();
              }
              hash ^= _features.hashCode();
+             hash += _radix;
              return hash;
         }
 
@@ -1036,9 +1044,36 @@ public @interface JsonFormat
             return Objects.equals(_lenient, other._lenient)
                     && Objects.equals(_timezoneStr, other._timezoneStr)
                     && Objects.equals(_pattern, other._pattern)
-                    && Objects.equals(_timezone, other._timezone)
                     && Objects.equals(_locale, other._locale)
-                    && Objects.equals(_radix, other._radix);
+                    && (_radix == other._radix);
+        }
+
+        /**
+         * Helper method for parsing locale string into {@link Locale},
+         * handling both underscore and hyphen as separator (so both
+         * "en_US" and "en-US" work), as well as optional variant
+         * (like "en_US_POSIX").
+         *
+         * @since 2.22
+         */
+        private static Locale _parseLocale(String localeStr) {
+            final int len = localeStr.length();
+            for (int i = 0; i < len; ++i) {
+                char c = localeStr.charAt(i);
+                if (c == '_' || c == '-') {
+                    String language = localeStr.substring(0, i);
+                    String rest = localeStr.substring(i + 1);
+                    // Look for second separator for variant
+                    for (int j = 0, rlen = rest.length(); j < rlen; ++j) {
+                        char c2 = rest.charAt(j);
+                        if (c2 == '_' || c2 == '-') {
+                            return new Locale(language, rest.substring(0, j), rest.substring(j + 1));
+                        }
+                    }
+                    return new Locale(language, rest);
+                }
+            }
+            return new Locale(localeStr);
         }
     }
 }

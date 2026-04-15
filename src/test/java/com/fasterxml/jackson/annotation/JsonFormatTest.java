@@ -264,6 +264,83 @@ public class JsonFormatTest
     }
 
     @Test
+    void testFeaturesWithClearsDisabled() {
+        // with() after without() on same feature should result in enabled
+        JsonFormat.Features f = JsonFormat.Features.empty()
+                .without(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        assertEquals(Boolean.TRUE, f.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
+    }
+
+    @Test
+    void testFeaturesWithoutClearsEnabled() {
+        // without() after with() on same feature should result in disabled
+        JsonFormat.Features f = JsonFormat.Features.empty()
+                .with(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .without(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        assertEquals(Boolean.FALSE, f.get(Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY));
+    }
+
+    @Test
+    void testEqualsIgnoresTransientTimezone() {
+        // Two Values created from same timezone string should be equal
+        // regardless of whether getTimeZone() has been called
+        JsonFormat.Value v1 = new JsonFormat.Value("", Shape.ANY, "", "UTC",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        JsonFormat.Value v2 = new JsonFormat.Value("", Shape.ANY, "", "UTC",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        // Force lazy _timezone population on v1 only
+        v1.getTimeZone();
+        assertEquals(v1, v2);
+    }
+
+    @Test
+    void testWithTimeZonePreservesRadix() {
+        int binaryRadix = 2;
+        JsonFormat.Value v = JsonFormat.Value.forRadix(binaryRadix);
+        JsonFormat.Value withTz = v.withTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        assertEquals(binaryRadix, withTz.getRadix());
+    }
+
+    @Test
+    void testRadixInHashCode() {
+        JsonFormat.Value v1 = JsonFormat.Value.forRadix(2);
+        JsonFormat.Value v2 = JsonFormat.Value.forRadix(16);
+        // Not equal, so hashCodes should (very likely) differ
+        assertNotEquals(v1, v2);
+        assertNotEquals(v1.hashCode(), v2.hashCode());
+    }
+
+    // [annotations#344]: Locale parsing with language, country, variant
+    @Test
+    void testLocaleParsingWithCountry() {
+        // Simple language-only
+        JsonFormat.Value v = new JsonFormat.Value("", Shape.ANY, "en", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en"), v.getLocale());
+
+        // Language + country with underscore
+        v = new JsonFormat.Value("", Shape.ANY, "en_US", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+
+        // Language + country with hyphen
+        v = new JsonFormat.Value("", Shape.ANY, "en-US", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+
+        // Language + country + variant
+        v = new JsonFormat.Value("", Shape.ANY, "en_US_POSIX", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("en", "US", "POSIX"), v.getLocale());
+
+        // German locale
+        v = new JsonFormat.Value("", Shape.ANY, "de_DE", "",
+                JsonFormat.Features.empty(), null, DEFAULT_RADIX);
+        assertEquals(new java.util.Locale("de", "DE"), v.getLocale());
+    }
+
+    @Test
     void testRadix() {
         //Non-Default radix overrides the default
         int binaryRadix = 2;
