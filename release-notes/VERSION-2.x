@@ -16,6 +16,9 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 2.22 (not yet released)
 
+#78: Add `@JsonApplyView` to allow changing active JsonView on submodels
+ (requested by Michael I)
+ (contributed by @f-aubert)
 #339: Add `OptBoolean` valued property "order" in `@JsonIncludeProperties`
 #342: Add `@JsonTypeInfo.writeTypeIdForDefaultImpl` to allow skipping
   writing of type id for values of default type
