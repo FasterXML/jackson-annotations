@@ -27,6 +27,8 @@ No changes since 2.22
 #342: Add `@JsonTypeInfo.writeTypeIdForDefaultImpl` to allow skipping
   writing of type id for values of default type
 #344: Improve `Locale` handling in `JsonFormat.Value`
+#512: Add `@JsonWrapped` annotation for grouping bean properties into a
+  nested JSON object (inverse of `@JsonUnwrapped`)
 
 2.21 (18-Jan-2026)
 
