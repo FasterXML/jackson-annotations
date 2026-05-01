@@ -44,9 +44,10 @@ import java.lang.annotation.Target;
  *       its own name within the wrapper object. Note: existing interaction limitations
  *       around {@code @JsonView}, {@code @JsonFilter}, and {@code @JsonInclude} on
  *       inner wrapped fields still apply — see the remaining bullets below.</li>
- *   <li>The wrapper name ({@code value()}) must be non-empty, unless explicitly disabling
- *       wrapping: an empty {@code value()} ({@code @JsonWrapped("")}) disables wrapping —
- *       useful in mix-ins to suppress wrapping defined in a supertype.</li>
+ *   <li>To disable wrapping via a mix-in annotation, use {@code enabled=false}
+ *       (e.g. {@code @JsonWrapped(value="name", enabled=false)}); this is the standard
+ *       Jackson override idiom. Alternatively, an empty {@code value()} ({@code @JsonWrapped("")})
+ *       also disables wrapping.</li>
  *   <li>The wrapper name must not conflict with an existing non-wrapped property on the same bean.</li>
  *   <li>Not supported on {@code @JsonCreator} constructor or factory-method parameters.</li>
  *   <li>MVP limitation: {@code @JsonView} on inner wrapped fields is ignored — the wrapper
@@ -59,9 +60,9 @@ import java.lang.annotation.Target;
  * </ul>
  *
  * @see JsonUnwrapped
- * @since 2.22
+ * @since 2.23
  */
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotation
 public @interface JsonWrapped {
@@ -71,4 +72,11 @@ public @interface JsonWrapped {
      * wrapping defined in a supertype).
      */
     String value();
+
+    /**
+     * Property that is usually only used when overriding (masking) annotations,
+     * using mix-in annotations. Otherwise default value of {@code true} is fine,
+     * and value need not be explicitly included.
+     */
+    boolean enabled() default true;
 }
