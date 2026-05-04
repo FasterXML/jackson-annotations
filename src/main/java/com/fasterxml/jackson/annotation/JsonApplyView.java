@@ -14,8 +14,15 @@ import java.lang.annotation.Target;
  *  &#064;JsonApplyView(BasicView.class)
  *  public MyValue value;
  *</pre>
- * which would specify that property annotated would be processed
- * using View identified by {@code BasicView.class}.
+ * which specifies that the property annotated (and nested values reach through it)
+ * would be processed using View identified by {@code BasicView.class}.
+ *<p>
+ * It is also possible to disable View processing for given property by:
+ *<pre>
+ *  &#064;JsonApplyView(JsonApplyView.NONE.class)
+ *  public MyValue fullValue;
+ *</pre>
+ * which similarly applies to properties reachable via {@code fullValue}.
  *<p>
  * Note: initially processing only covers serialization.
  *
@@ -32,10 +39,11 @@ public @interface JsonApplyView
      * special value {@link JsonApplyView.NONE} indicates that no View
      * should used.
      */
-    public Class<?> value() default NONE.class;
+    public Class<?> value();
 
     /**
-     * Special view indicating no views should be used for processing annotated property.
+     * Special view indicating no views should be used for processing annotated property:
+     * usually implemented by setting "Active View" to {@code null} value.
      */
     static public interface NONE {}
 }
