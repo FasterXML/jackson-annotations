@@ -12,11 +12,11 @@ Project contains versions 2.0 and above: source code for earlier (1.x) versions 
 [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations;
 [Project Wiki](../../wiki) gives more details.
 
-Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+Project is licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 [![Build (github)](https://github.com/FasterXML/jackson-annotations/actions/workflows/main.yml/badge.svg)](https://github.com/FasterXML/jackson-annotations/actions/workflows/main.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
-[![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fasterxml.jackson.core/jackson-annotations.svg)](https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-annotations)
+[![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
 [![Tidelift](https://tidelift.com/badges/package/maven/com.fasterxml.jackson.core:jackson-annotations)](https://tidelift.com/subscription/pkg/maven-com-fasterxml-jackson-core-jackson-annotations?utm_source=maven-com-fasterxml-jackson-core-jackson-annotations&utm_medium=referral&utm_campaign=readme)
 [![OpenSSF  Scorecard](https://api.securityscorecards.dev/projects/github.com/FasterXML/jackson-annotations/badge)](https://securityscorecards.dev/viewer/?uri=github.com/FasterXML/jackson-annotations)
 
