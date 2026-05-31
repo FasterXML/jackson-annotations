@@ -14,7 +14,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 === Releases ===
 ------------------------------------------------------------------------
 
-2.22 (not yet released)
+2.22 (31-May-2026)
 
 #78: Add `@JsonApplyView` to allow changing active JsonView on submodels
  (requested by Michael I)
