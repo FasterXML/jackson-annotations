@@ -24,8 +24,9 @@ import java.lang.annotation.Target;
  * Java fields in a single declaration like:
  *<pre>
  * public class POJO {
- *    \@JsonProperty("a")
- *    public int a, b, c;
+ *   {@literal @JsonProperty}("a")
+ *   public int a, b, c;
+ * }
  *</pre>
  * since it would associate same annotation for all fields, leading to name
  * collision.
@@ -33,11 +34,11 @@ import java.lang.annotation.Target;
  * Starting with Jackson 2.6 this annotation may also be
  * used to change serialization of {@code Enum} like so:
  *<pre>
-public enum MyEnum {
-    {@literal @JsonProperty}("theFirstValue") THE_FIRST_VALUE,
-    {@literal @JsonProperty}("another_value") ANOTHER_VALUE;
-}
-</pre>
+ * public enum MyEnum {
+ *   {@literal @JsonProperty}("theFirstValue") THE_FIRST_VALUE,
+ *   {@literal @JsonProperty}("another_value") ANOTHER_VALUE;
+ * }
+ *</pre>
  * as an alternative to using {@link JsonValue} annotation.
  *<br>
  * NOTE: for {@code Enum}s, empty String is a valid value (and
@@ -49,7 +50,7 @@ public enum MyEnum {
  * of property: this property is only used by certain format backends (most
  * notably XML).
  *<p>
- * NOTE: if a exclusion marker like {@link JsonIgnore} is also present,
+ * NOTE: if an exclusion marker like {@link JsonIgnore} is also present,
  * property accessor is excluded; ignoral has higher precedence over inclusion.
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
