@@ -16,8 +16,8 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 2.23 (not yet released)
 
-#346: Add `@JsonWrapped` annotation for grouping bean properties into a
-  nested JSON object (inverse of `@JsonUnwrapped`)
+#346: Add `@JsonWrapped` annotation
+ (contributed by @sri-adarsh-kumar)
 
 2.22 (31-May-2026)
 
