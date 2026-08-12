@@ -18,6 +18,8 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 #346: Add `@JsonWrapped` annotation
  (contributed by @sri-adarsh-kumar)
+#357: Add `@JsonPointer` annotation for binding a property from a nested
+  JSON value selected with JSON Pointer syntax
 
 2.22 (31-May-2026)
 
