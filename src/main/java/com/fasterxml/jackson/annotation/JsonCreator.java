@@ -94,6 +94,13 @@ public @interface JsonCreator
         PROPERTIES,
 
         /**
+         * Mode that indicates that the creator is to be used **either** of the two modes:
+         * delegating or property-based. This is useful for cases where a single-argument
+         * creator can be used for both delegating and property-based binding.
+         */
+        DELEGATING_AND_PROPERTIES,
+
+        /**
          * Pseudo-mode that indicates that creator is not to be used. This can be used as a result
          * value for explicit disabling, usually either by custom annotation introspector,
          * or by annotation mix-ins (for example when choosing different creator).
