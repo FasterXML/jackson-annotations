@@ -60,7 +60,7 @@ import java.lang.annotation.Target;
  * </ul>
  *
  * @see JsonUnwrapped
- * @since 2.23
+ * @since 2.24
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
