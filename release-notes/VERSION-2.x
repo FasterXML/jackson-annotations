@@ -16,7 +16,8 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 
 2.23 (not yet released)
 
-No changes since 2.22
+#346: Add `@JsonWrapped` annotation
+ (contributed by @sri-adarsh-kumar)
 
 2.22 (31-May-2026)
 
