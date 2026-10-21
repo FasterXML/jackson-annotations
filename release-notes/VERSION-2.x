@@ -14,6 +14,11 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 === Releases ===
 ------------------------------------------------------------------------
 
+2.24 (not yet released)
+
+#42: Add `@JsonWrapped` (to complement `@JsonUnwrapped`)
+ (contributed by @sri-adarsh-kumar)
+
 2.23 (not yet released)
 
 No changes since 2.22
