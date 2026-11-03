@@ -49,10 +49,7 @@ public class JsonAutoDetectTest
         assertEquals(JsonAutoDetect.class, v.valueFor());
 
         // and then standard method override basics...
-        int x = v.hashCode();
-        if (x == 0) { // not guaranteed in theory but...
-            fail();
-        }
+        assertNotEquals(0, v.hashCode());
 
         assertTrue(v.equals(v));
         // mostly to ensure no NPE or class cast exception:

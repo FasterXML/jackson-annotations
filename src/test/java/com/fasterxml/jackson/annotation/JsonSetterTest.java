@@ -30,10 +30,7 @@ public class JsonSetterTest
     public void testStdMethods() {
         assertEquals("JsonSetter.Value(valueNulls=DEFAULT,contentNulls=DEFAULT)",
                 EMPTY.toString());
-        int x = EMPTY.hashCode();
-        if (x == 0) { // no fixed value, but should not evaluate to 0
-            fail();
-        }
+        assertNotEquals(0, EMPTY.hashCode());
         assertEquals(EMPTY, EMPTY);
         assertFalse(EMPTY.equals(null));
         assertFalse(EMPTY.equals("xyz"));
