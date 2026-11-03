@@ -73,10 +73,7 @@ public class JsonIncludeTest
     public void testStdOverrides() {
         assertEquals("JsonInclude.Value(value=NON_ABSENT,content=USE_DEFAULTS)",
                 JsonInclude.Value.construct(Include.NON_ABSENT, null).toString());
-        int x = EMPTY.hashCode();
-        if (x == 0) {
-            fail();
-        }
+        assertNotEquals(0, EMPTY.hashCode());
         assertFalse(EMPTY.equals(null));
         assertFalse(EMPTY.equals(""));
     }
