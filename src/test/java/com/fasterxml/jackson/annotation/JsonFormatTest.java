@@ -317,27 +317,27 @@ public class JsonFormatTest
         // Simple language-only
         JsonFormat.Value v = new JsonFormat.Value("", Shape.ANY, "en", "",
                 JsonFormat.Features.empty(), null, DEFAULT_RADIX);
-        assertEquals(new java.util.Locale("en"), v.getLocale());
+        assertEquals(java.util.Locale.ENGLISH, v.getLocale());
 
         // Language + country with underscore
         v = new JsonFormat.Value("", Shape.ANY, "en_US", "",
                 JsonFormat.Features.empty(), null, DEFAULT_RADIX);
-        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+        assertEquals(java.util.Locale.US, v.getLocale());
 
         // Language + country with hyphen
         v = new JsonFormat.Value("", Shape.ANY, "en-US", "",
                 JsonFormat.Features.empty(), null, DEFAULT_RADIX);
-        assertEquals(new java.util.Locale("en", "US"), v.getLocale());
+        assertEquals(java.util.Locale.US, v.getLocale());
 
         // Language + country + variant
         v = new JsonFormat.Value("", Shape.ANY, "en_US_POSIX", "",
                 JsonFormat.Features.empty(), null, DEFAULT_RADIX);
-        assertEquals(new java.util.Locale("en", "US", "POSIX"), v.getLocale());
+        assertEquals(new java.util.Locale.Builder().setLanguage("en").setRegion("US").setVariant("POSIX").build(), v.getLocale());
 
         // German locale
         v = new JsonFormat.Value("", Shape.ANY, "de_DE", "",
                 JsonFormat.Features.empty(), null, DEFAULT_RADIX);
-        assertEquals(new java.util.Locale("de", "DE"), v.getLocale());
+        assertEquals(java.util.Locale.GERMANY, v.getLocale());
     }
 
     @Test
