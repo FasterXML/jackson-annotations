@@ -14,7 +14,7 @@ NOTE: Jackson 3.x components rely on 2.x annotations; there are no separate
 === Releases ===
 ------------------------------------------------------------------------
 
-2.23 (not yet released)
+2.23 (07-Nov-2026)
 
 No changes since 2.22
 
